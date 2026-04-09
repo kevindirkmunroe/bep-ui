@@ -23,3 +23,8 @@ export interface PlatformRowProps {
     platformData: PlatformData;
     reload: () => void;
 }
+
+export interface CreateEventFormProps {
+    userId: string; // we'll handle null before rendering
+    onSuccess: () => void;
+}
