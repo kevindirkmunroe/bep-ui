@@ -1,4 +1,4 @@
-import {Event} from "./platformTypes.interface";
+import {Event} from "./platforms/platformTypes.interface";
 export function EventSummary( {event} : {event : Event}) {
     return (
         <div style={{ marginBottom: 20 }}>

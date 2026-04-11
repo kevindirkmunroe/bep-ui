@@ -6,17 +6,21 @@ interface User {
 }
 
 interface UserInfoProps {
-    user: User;
+    user: User[];
 }
 
 export default function UserInfo( {user}  : UserInfoProps) {
+    let u: User = {company: "", first_name: "", last_name: "", email:""};
+    if(user.length > 0){
+        u = user[0];
+    }
     return (
         <div style={{ marginBottom: 30 }}>
             <h2>
-                {user.first_name} {user.last_name}
+                <b>{u.first_name} {u.last_name}</b>
             </h2>
-            <p>{user.company}</p>
-            <p>{user.email}</p>
+            <p>{u.company}</p>
+            <p>{u.email}</p>
         </div>
     );
 }

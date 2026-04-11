@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./components/LoginPage";
 import Dashboard from "./components/dashboard/Dashboard.js";
-import PromoteDashboard from "./components/dashboard/PromoteDashboard.js";
+import PromoteDashboard from "./components/dashboard/events/PromoteDashboard.tsx";
 
 export default function App() {
   return (

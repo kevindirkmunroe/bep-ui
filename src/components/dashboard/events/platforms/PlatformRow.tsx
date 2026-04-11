@@ -2,7 +2,7 @@ import axios from "axios";
 import {Event, PlatformRowProps, Platform} from "./platformTypes.interface"
 function getPlatformUrl(platform: Platform){
     const urls: Record<Platform, string> = {
-        funcheapsf: "https://sf.funcheap.com/submit-event/",
+        funcheapsf: "https://sf.funcheap.com/submit-form",
         dothebay: "https://dothebay.com/submit_event"
     };
 
@@ -45,13 +45,16 @@ export function PlatformRow({ event, platformData, reload } : PlatformRowProps) 
             }
         );
 
-        // 2. store event for extension
-        localStorage.setItem(
-            "event_data",
-            JSON.stringify({
-                ...event,
-                platform
-            })
+        // 2. post event for extension
+        window.postMessage(
+            {
+                type: "SET_EVENT",
+                payload: {
+                    ...event,
+                    platform
+                }
+            },
+            "*"
         );
 
         // 3. open submission page
