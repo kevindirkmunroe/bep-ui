@@ -7,6 +7,8 @@ import { EventSummary } from "./EventSummary";
 import {ProgressBar} from "./platforms/ProgressBar";
 import {PlatformList} from "./platforms/PlatformList";
 import {Event} from "./platforms/platformTypes.interface";
+import { useUser } from "../../../UserContext";
+
 
 export default function PromoteDashboard() {
     const navigate = useNavigate();
@@ -25,10 +27,12 @@ export default function PromoteDashboard() {
 
     if (!event || !event.platforms) return <div>Loading...</div>;
 
+
+    const { userId } = useUser();
     return (
         <div style={{ padding: 40 }}>
             <div style={{marginBottom: 20}}>
-                <button onClick={() => alert('TODO: navigate to /dashboard/${user.user_id}')}>
+                <button onClick={() => navigate(`/dashboard/${userId}`)}>
                     &lt; Back To Events
                 </button>
             </div>
