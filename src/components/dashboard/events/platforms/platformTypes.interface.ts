@@ -1,4 +1,4 @@
-export type Platform = "funcheapsf" | "dothebay";
+export type Platform = "funcheapsf" | "visitoakland";
 
 export interface PlatformData {
     platform: Platform;
@@ -9,6 +9,8 @@ export interface PlatformData {
 // todo I think snapshot is missing (snapshot= event processed for target platform)
 
 export interface Event {
+    name: string;
+    email: string;
     event_id: string;
     title: string;
     description?: string;
@@ -27,4 +29,5 @@ export interface PlatformRowProps {
 export interface CreateEventFormProps {
     userId: string; // we'll handle null before rendering
     onSuccess: () => void;
+    onCancel: () => void;
 }

@@ -5,6 +5,7 @@ import {CreateEventFormProps} from "./events/platforms/platformTypes.interface";
 export default function CreateEventForm({
                                             userId,
                                             onSuccess,
+                                            onCancel,
                                         }: CreateEventFormProps) {
     const [form, setForm] = useState({
         title: "",
@@ -51,7 +52,8 @@ export default function CreateEventForm({
                 onChange={handleChange}
             />
 
-            <button onClick={handleSubmit}>Save</button>
+            &nbsp;<button onClick={handleSubmit}>Save</button>&nbsp;
+            <button onClick={() => onCancel()}>Cancel</button>
         </div>
     );
 }

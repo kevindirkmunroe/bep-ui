@@ -43,6 +43,7 @@ export default function Dashboard() {
                 <CreateEventForm
                     userId={userId}
                     onSuccess={loadData}
+                    onCancel={() => setShowForm(false)}
                 />
             )}
             <EventsList events={events} />

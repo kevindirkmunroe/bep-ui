@@ -1,13 +1,6 @@
 import axios from "axios";
-import {Event, PlatformRowProps, Platform} from "./platformTypes.interface"
-function getPlatformUrl(platform: Platform){
-    const urls: Record<Platform, string> = {
-        funcheapsf: "https://sf.funcheap.com/submit-form",
-        dothebay: "https://dothebay.com/submit_event"
-    };
-
-    return urls[platform];
-}
+import {Event, PlatformRowProps} from "./platformTypes.interface"
+import {getPlatformUrl} from "./platformData";
 
 function buildPayload(event: Event, platform: string) {
     if (platform === "funcheapsf") {
@@ -21,11 +14,14 @@ function buildPayload(event: Event, platform: string) {
         };
     }
 
-    if (platform === "dothebay") {
+    if (platform === "visitoakland") {
         return {
+            name: event.name,
+            email: event.email,
             title: event.title,
             description: event.description,
-            date: event.start_datetime
+            date: event.start_datetime,
+            location: event.location_name
         };
     }
 
