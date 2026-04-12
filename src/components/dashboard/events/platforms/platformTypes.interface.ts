@@ -23,6 +23,7 @@ export interface Event {
 export interface PlatformRowProps {
     event: Event;
     platformData: PlatformData;
+    updatePlatformStatus: (platform: string, status: string) => void;
     reload: () => void;
 }
 

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { EventSummary } from "./EventSummary";
 import {ProgressBar} from "./platforms/ProgressBar";
 import {PlatformList} from "./platforms/PlatformList";
-import {Event} from "./platforms/platformTypes.interface";
+import {Event, PlatformData} from "./platforms/platformTypes.interface";
 import { useUser } from "../../../UserContext";
 
 
@@ -22,12 +22,26 @@ export default function PromoteDashboard() {
 
     const loadEvent = async () => {
         const res = await axios.get(`/events/${eventId}`);
+        console.log("[PromoteDashboard] RELOAD RESPONSE:", res.data);
         setEvent(res.data);
     };
 
+    const updatePlatformStatus = (platform: string, status: string) => {
+        setEvent(prev => {
+            if (!prev) return prev;
+
+            return {
+                ...prev,
+                platforms: prev.platforms.map(p =>
+                    p.platform === platform
+                        ? { ...p, status }
+                        : p
+                )
+            };
+        });
+    };
+
     if (!event || !event.platforms) return <div>Loading...</div>;
-
-
     const { userId } = useUser();
     return (
         <div style={{ padding: 40 }}>
@@ -38,7 +52,7 @@ export default function PromoteDashboard() {
             </div>
             <EventSummary event={event} />
             <ProgressBar platforms={event.platforms} />
-            <PlatformList event={event} reload={loadEvent}/>
+            <PlatformList event={event} reload={loadEvent} updatePlatformStatus={updatePlatformStatus}/>
         </div>
     );
 }

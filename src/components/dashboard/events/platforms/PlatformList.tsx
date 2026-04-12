@@ -2,9 +2,10 @@ import {PlatformRow} from "./PlatformRow";
 import {Event} from "./platformTypes.interface";
 
 export function PlatformList(
-    {event, reload}:
+    {event, reload, updatePlatformStatus}:
         {event: Event;
-         reload: () => Promise<void>;}
+         reload: () => Promise<void>;
+         updatePlatformStatus: (platform: string, status: string) => void}
     ) {
     return (
         <div>
@@ -13,6 +14,7 @@ export function PlatformList(
                     key={p.platform}
                     event={event}
                     platformData={p}
+                    updatePlatformStatus={updatePlatformStatus}
                     reload={reload}
                 />
             ))}

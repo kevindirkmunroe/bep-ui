@@ -28,7 +28,7 @@ function buildPayload(event: Event, platform: string) {
     return {};
 }
 
-export function PlatformRow({ event, platformData, reload } : PlatformRowProps) {
+export function PlatformRow({ event, platformData, updatePlatformStatus, reload } : PlatformRowProps) {
     const { platform, status } = platformData;
 
     const handleOpen = async () => {
@@ -56,16 +56,24 @@ export function PlatformRow({ event, platformData, reload } : PlatformRowProps) 
         // 3. open submission page
         window.open(getPlatformUrl(platform), "_blank");
 
-        reload();
+        await reload();
     };
 
     const handleSubmit = async () => {
-        await axios.patch(
-            `/events/${event.event_id}/platforms/${platform}`,
-            { status: "submitted" }
-        );
+        console.log(`[PlatformRow] updating platform ${platform} to 'submitted'`);
+        updatePlatformStatus(platform, 'submitted');
 
-        reload();
+        try{
+            await axios.patch(
+                `/events/${event.event_id}/platforms/${platform}`,
+                { status: "submitted" }
+            );
+            console.log("[PlatformRow] reload fn:", reload);
+            await reload();
+        }catch(err){
+            // rollback if needed
+            updatePlatformStatus(platform, "in_progress");
+        }
     };
 
     return (
