@@ -8,9 +8,12 @@ export default function CreateEventForm({
                                             onCancel,
                                         }: CreateEventFormProps) {
     const [form, setForm] = useState({
+        name: "",
+        email: "",
         title: "",
         location_name: "",
         start_datetime: "",
+        description: ""
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +38,16 @@ export default function CreateEventForm({
             <h3>Create Event</h3>
 
             <input
+                name="name"
+                placeholder="Name"
+                onChange={handleChange}
+            />
+            <input
+                name="email"
+                placeholder="Email"
+                onChange={handleChange}
+            />
+            <input
                 name="title"
                 placeholder="Event Title"
                 onChange={handleChange}
@@ -49,6 +62,12 @@ export default function CreateEventForm({
             <input
                 name="start_datetime"
                 type="datetime-local"
+                onChange={handleChange}
+            />
+
+            <input
+                name="description"
+                placeholder="Description"
                 onChange={handleChange}
             />
 

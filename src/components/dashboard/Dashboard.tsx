@@ -19,15 +19,23 @@ export default function Dashboard() {
     }, []);
 
     const loadData = async () => {
+        setShowForm(false);
         try {
             const userRes = await axios.get(`/users/${userId}`);
-            const eventsRes = await axios.get(`/users/${userId}/events`);
-
             setUser(userRes.data.data);
-            setEvents(eventsRes.data.data);
-            setShowForm(false);
         } catch (err) {
             console.error(err);
+        }
+
+        try{
+            const eventsRes = await axios.get(`/users/${userId}/events`);
+            setEvents(eventsRes.data.data);
+        } catch (err) {
+            if(err.response.status === 404){
+                setEvents([]);
+            }else{
+                throw(err);
+            }
         }
     };
 
