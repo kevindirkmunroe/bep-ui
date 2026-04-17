@@ -1,3 +1,5 @@
+import {EventDetail} from "./events/eventDetailTypes.interface";
+
 export interface EventProps {
     event_id: string;
     title: string;
@@ -7,6 +9,7 @@ export interface EventProps {
 
 export interface CreateEventFormProps {
     userId: string; // we'll handle null before rendering
+    event?: EventDetail;  // Edit mode
     onSuccess: () => void;
     onCancel: () => void;
 }

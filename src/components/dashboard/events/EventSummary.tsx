@@ -2,7 +2,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {useState} from "react";
 
-import {EventSummaryProps} from "./eventDetailTypes.interface";
+import {EventDetail, EventSummaryProps} from "./eventDetailTypes.interface";
+import {getEventStatus} from "./EventStatus";
 
 const overlayStyle = {
     position: "fixed" as const,
@@ -24,7 +25,7 @@ const modalStyle = {
     minWidth: "300px"
 };
 
-export function EventSummary({ event, readOnly = false, reload, showRedo= false }: EventSummaryProps) {
+export function EventSummary({ event, readOnly = false, reload, showRedo= false, onEdit }: EventSummaryProps) {
     const navigate = useNavigate();
 
     const [showConfirm, setShowConfirm] = useState(false);
@@ -38,13 +39,26 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false 
         await reload?.();
     };
 
+    const status = getEventStatus(event);
+    const canEdit = status === "not_started" || status === "in_progress";
+
     return (
-        <div style={{ marginBottom: 20 }}>
-            <h2>{event.title}</h2>
+        <div style={{ marginBottom: 10, borderRadius: '10px', border: '2px solid lightGray'}}>
+            <h4>{event.title}</h4>
             <p>{event.location_name}</p>
             <p>{new Date(event.start_datetime).toLocaleString()}</p>
             {!readOnly && (
                 <button onClick={handleClick}>📢 Promote</button>
+            )}
+            {canEdit && onEdit &&(
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onEdit(event);
+                    }}
+                >
+                    📑 Edit
+                </button>
             )}
             {readOnly && showRedo && (
                 <button onClick={handleClick}>↪️ Redo Submit</button>
@@ -81,6 +95,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false 
                     </div>
                 </div>
             )}
+
         </div>
     );
 }

@@ -1,4 +1,5 @@
 import {PlatformData} from "./platforms/platformTypes.interface";
+import React from "react";
 
 export interface EventDetail {
     name: string;
@@ -8,6 +9,7 @@ export interface EventDetail {
     description?: string;
     location_name: string;
     start_datetime: string;
+    address?: string;
     price?: string;
     platforms: PlatformData[];
 }
@@ -17,4 +19,5 @@ export type EventSummaryProps = {
     readOnly?: boolean;
     showRedo?: boolean;
     reload?: () => Promise<void>;
+    onEdit?: React.Dispatch<React.SetStateAction<EventDetail | null>>;
 };

@@ -43,6 +43,7 @@ export default function PromoteDashboard() {
 
     if (!event || !event.platforms) return <div>Loading...</div>;
     const { userId } = useUser();
+    console.log(`[PromoteDashboard] userUser()=${userId}`);
     return (
         <div style={{ padding: 40 }}>
             <div style={{marginBottom: 20}}>

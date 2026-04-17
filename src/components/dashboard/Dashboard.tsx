@@ -4,6 +4,8 @@ import {Link, Outlet, useParams} from "react-router-dom";
 import UserInfo from "../UserInfo";
 import EventsList from "./EventsList";
 import CreateEventForm from "./CreateEventForm";
+import {getEventStatus} from "./events/EventStatus";
+import {EventDetail} from "./events/eventDetailTypes.interface";
 
 export default function Dashboard() {
     const { userId } = useParams();
@@ -11,22 +13,33 @@ export default function Dashboard() {
     const [user, setUser] = useState(null);
     const [events, setEvents] = useState([]);
     const [showForm, setShowForm] = useState(false);
+    const [editingEvent, setEditingEvent] = useState<EventDetail | null>(null);
+
+    function getActiveEventCount(){
+        const activeEvents = (events || []).filter(e => {
+            return getEventStatus(e) !== "submitted";
+        });
+        return activeEvents.length;
+    }
+
+    function getSubmittedEventCount(){
+        const submittedEvents = (events || []).filter(e => {
+            return getEventStatus(e) === "submitted";
+        });
+        return submittedEvents.length;
+    }
 
     const loadEvents = async () => {
         setShowForm(false);
         try {
-            console.log("[Dashboard]: loading user...");
             const userRes = await axios.get(`/users/${userId}`);
-            console.log("[Dashboard]: user loaded.");
             setUser(userRes.data.data);
         } catch (err) {
             console.error(err);
         }
 
         try{
-            console.log("[Dashboard]: loading events...");
             const eventsRes = await axios.get(`/users/${userId}/events`);
-            console.log("[Dashboard]: events loaded.");
             setEvents(eventsRes.data.data);
         } catch (err: Error | any) {
             if(err.response.status === 404){
@@ -49,19 +62,28 @@ export default function Dashboard() {
             <button onClick={() => setShowForm(true)}>
                 + Create Event
             </button>
-            {showForm && userId && (
+            {(showForm || editingEvent) && userId && (
                 <CreateEventForm
+                    key={editingEvent?.event_id || "new"}   // 👈 Force react to recreate component
                     userId={userId}
-                    onSuccess={loadEvents}
-                    onCancel={() => setShowForm(false)}
+                    event={editingEvent || undefined}
+                    onSuccess={() => {
+                        setShowForm(false);
+                        setEditingEvent(null);
+                        loadEvents();
+                    }}
+                    onCancel={() => {
+                        setShowForm(false);
+                        setEditingEvent(null);
+                    }}
                 />
             )}
             <nav>
-                <Link style={{margin: 5}} to={"events"}>Active</Link>
-                <Link style={{margin: 5}} to={"submitted"}>Submitted</Link>
+                <Link style={{margin: 5}} to={"events"}>Active({getActiveEventCount()})</Link>
+                <Link style={{margin: 5}} to={"submitted"}>Submitted({getSubmittedEventCount()})</Link>
             </nav>
             {/* ROUTED CONTENT */}
-            <Outlet context={{ events, reload: loadEvents }} />
+            <Outlet context={{ events, setEditingEvent, reload: loadEvents }} />
         </div>
     );
 }

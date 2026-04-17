@@ -30,7 +30,7 @@ function buildPayload(event: EventDetail, platform: string) {
 }
 
 export function PlatformRow({ event, platformData, updatePlatformStatus, reload } : PlatformRowProps) {
-    const { platform, status } = platformData;
+    const { platform, status, date_published } = platformData;
 
     const handleOpen = async () => {
         // 1. OPEN IMMEDIATELY (must be sync)
@@ -103,6 +103,10 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
         }}>
             <h4>{platform}</h4>
             <p>Status: {status} {getStatusEmoji(status)}</p>
+
+            {date_published && (
+                <p>Last Published: {date_published}</p>
+            )}
 
             {status === "not_started" && (
                 <button onClick={handleOpen}>

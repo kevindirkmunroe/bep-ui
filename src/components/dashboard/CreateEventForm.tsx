@@ -1,20 +1,39 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {CreateEventFormProps} from "./eventTypes.interface";
+import {EventDetail} from "./events/eventDetailTypes.interface";
+
+const formatDateTimeLocal = (iso?: string) => {
+    if (!iso) return "";
+    const d = new Date(iso);
+    const pad = (n: number) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+};
 
 export default function CreateEventForm({
                                             userId,
+                                            event,
                                             onSuccess,
                                             onCancel,
                                         }: CreateEventFormProps) {
-    const [form, setForm] = useState({
-        name: "",
-        email: "",
-        title: "",
-        location_name: "",
-        start_datetime: "",
-        description: ""
+
+    const buildForm = (event?: EventDetail) => ({
+        name: event?.name || "",
+        email: event?.email || "",
+        title: event?.title || "",
+        description: event?.description || "",
+        start_datetime: formatDateTimeLocal(event?.start_datetime) || "",
+        location_name: event?.location_name || "",
+        address: event?.address || "",
+        price: event?.price || ""
     });
+
+    const [form, setForm] = useState(buildForm(event));
+    const isEdit = !!event;
+
+    useEffect(() => {
+        setForm(buildForm(event));
+    }, [event]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({
@@ -25,7 +44,11 @@ export default function CreateEventForm({
 
     const handleSubmit = async () => {
         try {
-            await axios.post(`/users/${userId}/event`, form);
+            if (isEdit) {
+                await axios.put(`/events/${event.event_id}`, form);
+            } else {
+                await axios.post(`/users/${userId}/events`, form);
+            }
             onSuccess(); // reload events
         } catch (err) {
             console.error(err);
@@ -35,43 +58,65 @@ export default function CreateEventForm({
 
     return (
         <div style={{ marginBottom: 20 }}>
-            <h3>Create Event</h3>
-
+            <h2>{isEdit ? "Edit Event" : "Create Event"}</h2>
+            {isEdit && (
+                <p>Warning: Changes will not affect already submitted platforms.</p>
+            )}
             <input
                 name="name"
                 placeholder="Name"
                 onChange={handleChange}
+                value={form.name}
             />
             <input
                 name="email"
                 placeholder="Email"
                 onChange={handleChange}
+                value={form.email}
             />
             <input
                 name="title"
                 placeholder="Event Title"
                 onChange={handleChange}
+                value={form.title}
             />
 
             <input
                 name="location_name"
                 placeholder="Location"
                 onChange={handleChange}
+                value={form.location_name}
             />
 
             <input
                 name="start_datetime"
                 type="datetime-local"
                 onChange={handleChange}
+                value={form.start_datetime}
             />
 
             <input
                 name="description"
                 placeholder="Description"
                 onChange={handleChange}
+                value={form.description}
             />
 
-            &nbsp;<button onClick={handleSubmit}>Save</button>&nbsp;
+            <input
+                name="address"
+                placeholder="Address"
+                onChange={handleChange}
+                value={form.address}
+            />
+
+            <input
+                name="price"
+                placeholder="Price"
+                onChange={handleChange}
+                value={form.price}
+            />
+
+            &nbsp;<button onClick={handleSubmit}>{isEdit ? "Save Changes" : "Create Event"}</button>&nbsp;
             <button onClick={() => onCancel()}>Cancel</button>
         </div>
     );
