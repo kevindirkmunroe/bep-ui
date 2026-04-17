@@ -14,3 +14,9 @@ export function getEventStatus(event: EventDetail) {
 
     return "not_started";
 }
+
+export const getIsExpired = (event: EventDetail) => {
+    if (!event.start_datetime) return false;
+
+    return new Date(event.start_datetime) < new Date();
+};

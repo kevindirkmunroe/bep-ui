@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {useState} from "react";
 
 import {EventDetail, EventSummaryProps} from "./eventDetailTypes.interface";
-import {getEventStatus} from "./EventStatus";
+import {getEventStatus, getIsExpired} from "./EventStatus";
 
 const overlayStyle = {
     position: "fixed" as const,
@@ -41,14 +41,15 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
 
     const status = getEventStatus(event);
     const canEdit = status === "not_started" || status === "in_progress";
+    const isExpired = getIsExpired(event);
 
     return (
         <div style={{ marginBottom: 10, borderRadius: '10px', border: '2px solid lightGray'}}>
-            <h4>{event.title}</h4>
+            <h4>{event.title} {isExpired? <i style={{color: "red"}}>(Expired)</i>: ""}</h4>
             <p>{event.location_name}</p>
-            <p>{new Date(event.start_datetime).toLocaleString()}</p>
+            <p>{isExpired? <i>{new Date(event.start_datetime).toLocaleString()}</i> : new Date(event.start_datetime).toLocaleString()}</p>
             {!readOnly && (
-                <button onClick={handleClick}>📢 Promote</button>
+                <button disabled={isExpired} onClick={handleClick}>📢 Promote</button>
             )}
             {canEdit && onEdit &&(
                 <button
