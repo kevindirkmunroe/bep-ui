@@ -1,8 +1,9 @@
 import axios from "axios";
-import {Event, PlatformRowProps} from "./platformTypes.interface"
+import {PlatformRowProps} from "./platformTypes.interface"
 import {getPlatformUrl} from "./platformData";
+import {EventDetail} from "../eventDetailTypes.interface";
 
-function buildPayload(event: Event, platform: string) {
+function buildPayload(event: EventDetail, platform: string) {
     if (platform === "funcheapsf") {
         return {
             title: event.price === "Free"
@@ -32,7 +33,10 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
     const { platform, status } = platformData;
 
     const handleOpen = async () => {
-        // 1. mark as in_progress
+        // 1. OPEN IMMEDIATELY (must be sync)
+        window.open(getPlatformUrl(platform), "_blank");
+
+        // 2. Update database
         await axios.patch(
             `/events/${event.event_id}/platforms/${platform}`,
             {
@@ -41,7 +45,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
             }
         );
 
-        // 2. post event for extension
+        // 3. post event for extension
         window.postMessage(
             {
                 type: "SET_EVENT",
@@ -53,10 +57,15 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
             "*"
         );
 
-        // 3. open submission page
-        window.open(getPlatformUrl(platform), "_blank");
-
         await reload();
+    };
+
+    const handleReopen = () => {
+        // optional: reset status
+        updatePlatformStatus(platform, "in_progress");
+
+        // reopen autofill
+        handleOpen();
     };
 
     const handleSubmit = async () => {
@@ -76,6 +85,16 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
         }
     };
 
+    const getStatusEmoji = (status: string) => {
+        if(status === 'not_started'){
+            return("🔴")
+        }else if(status === 'in_progress'){
+            return("🟠")
+        }else{
+            return("✅")
+        }
+    }
+
     return (
         <div style={{
             border: "1px solid #ccc",
@@ -83,16 +102,29 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
             marginBottom: 10
         }}>
             <h4>{platform}</h4>
-            <p>Status: {status}</p>
+            <p>Status: {status} {getStatusEmoji(status)}</p>
 
-            <button onClick={handleOpen}>
-                Open & Autofill
-            </button>
-
+            {status === "not_started" && (
+                <button onClick={handleOpen}>
+                    Open & Autofill
+                </button>
+            )}
+            {status === "in_progress" && (
+                <button onClick={handleOpen}>
+                    Continue Autofill
+                </button>
+            )}
             {status !== "submitted" && (
                 <button onClick={handleSubmit}>
                     Mark as Submitted
                 </button>
+            )}
+            {status === "submitted" && (
+                <div>
+                    <button onClick={handleReopen}>
+                        Edit / Resubmit
+                    </button>
+                </div>
             )}
         </div>
     );

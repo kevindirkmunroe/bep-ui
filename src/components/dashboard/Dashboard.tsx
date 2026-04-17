@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import {Link, Outlet, useParams} from "react-router-dom";
 import UserInfo from "../UserInfo";
 import EventsList from "./EventsList";
 import CreateEventForm from "./CreateEventForm";
@@ -12,25 +12,23 @@ export default function Dashboard() {
     const [events, setEvents] = useState([]);
     const [showForm, setShowForm] = useState(false);
 
-    useEffect( () => {
-        loadData().then(() => {
-            // NOP to avoid "Promise is ignored" error.
-        });
-    }, []);
-
-    const loadData = async () => {
+    const loadEvents = async () => {
         setShowForm(false);
         try {
+            console.log("[Dashboard]: loading user...");
             const userRes = await axios.get(`/users/${userId}`);
+            console.log("[Dashboard]: user loaded.");
             setUser(userRes.data.data);
         } catch (err) {
             console.error(err);
         }
 
         try{
+            console.log("[Dashboard]: loading events...");
             const eventsRes = await axios.get(`/users/${userId}/events`);
+            console.log("[Dashboard]: events loaded.");
             setEvents(eventsRes.data.data);
-        } catch (err) {
+        } catch (err: Error | any) {
             if(err.response.status === 404){
                 setEvents([]);
             }else{
@@ -38,6 +36,10 @@ export default function Dashboard() {
             }
         }
     };
+
+    useEffect( () => {
+        loadEvents();
+    }, [userId]);
 
     if (!user) return <div>Loading...</div>;
 
@@ -50,11 +52,16 @@ export default function Dashboard() {
             {showForm && userId && (
                 <CreateEventForm
                     userId={userId}
-                    onSuccess={loadData}
+                    onSuccess={loadEvents}
                     onCancel={() => setShowForm(false)}
                 />
             )}
-            <EventsList events={events} />
+            <nav>
+                <Link style={{margin: 5}} to={"events"}>Active</Link>
+                <Link style={{margin: 5}} to={"submitted"}>Submitted</Link>
+            </nav>
+            {/* ROUTED CONTENT */}
+            <Outlet context={{ events, reload: loadEvents }} />
         </div>
     );
 }

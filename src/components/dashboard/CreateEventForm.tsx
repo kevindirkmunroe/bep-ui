@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import {CreateEventFormProps} from "./events/platforms/platformTypes.interface";
+import {CreateEventFormProps} from "./eventTypes.interface";
 
 export default function CreateEventForm({
                                             userId,

@@ -1,13 +1,4 @@
-interface User {
-    company: string;
-    first_name: string;
-    last_name: string;
-    email: string;
-}
-
-interface UserInfoProps {
-    user: User[];
-}
+import {User, UserInfoProps} from "./userProps.interface";
 
 export default function UserInfo( {user}  : UserInfoProps) {
     let u: User = {company: "", first_name: "", last_name: "", email:""};
@@ -17,6 +8,7 @@ export default function UserInfo( {user}  : UserInfoProps) {
     return (
         <div style={{ marginBottom: 30 }}>
             <h2>
+                <img style={{verticalAlign: "text-bottom"}} src={"/icons8-user-male-30.png"} alt={'.'} />&nbsp;
                 <b>{u.first_name} {u.last_name}</b>
             </h2>
             <p>{u.company}</p>

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { EventSummary } from "./EventSummary";
 import {ProgressBar} from "./platforms/ProgressBar";
 import {PlatformList} from "./platforms/PlatformList";
-import {Event, PlatformData} from "./platforms/platformTypes.interface";
+import {EventDetail} from "./eventDetailTypes.interface";
 import { useUser } from "../../../UserContext";
 
 
@@ -14,7 +14,7 @@ export default function PromoteDashboard() {
     const navigate = useNavigate();
     const { eventId } = useParams();
 
-    const [event, setEvent] = useState<Event | null>(null);
+    const [event, setEvent] = useState<EventDetail | null>(null);
 
     useEffect(() => {
         loadEvent();
@@ -50,7 +50,7 @@ export default function PromoteDashboard() {
                     &lt; Back To Events
                 </button>
             </div>
-            <EventSummary event={event} />
+            <EventSummary event={event} readOnly={true} showRedo={false} />
             <ProgressBar platforms={event.platforms} />
             <PlatformList event={event} reload={loadEvent} updatePlatformStatus={updatePlatformStatus}/>
         </div>

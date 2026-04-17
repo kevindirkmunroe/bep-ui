@@ -3,9 +3,19 @@ export function ProgressBar( {platforms}  : {platforms :PlatformData[]} ) {
     const total = platforms.length;
     const done = platforms.filter(p => p.status === "submitted").length;
 
+    const getStatusEmoji = (done: number, total:number) => {
+        if(done === 0){
+            return("🔴")
+        }else if(done == total){
+            return("✅")
+        }else{
+            return("🟠")
+        }
+    }
+
     return (
         <div style={{ marginBottom: 20 }}>
-            <p>Progress: {done} / {total}</p>
+            <p>Submission Progress: {done} / {total} {getStatusEmoji(done, total)}</p>
             <div style={{ background: "#eee", height: 10 }}>
                 <div
                     style={{
