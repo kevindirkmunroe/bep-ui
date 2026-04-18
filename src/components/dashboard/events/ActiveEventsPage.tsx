@@ -22,10 +22,11 @@ export function ActiveEventsPage() {
         <div>
             <h2>Active Events</h2>
             {activeEvents.length === 0 && <p>No Active Events Yet</p>}
-
-            {activeEvents.map(e => (
-                <EventSummary key={e.event_id} event={e} reload={reload} onEdit={setEditingEvent}/>
-            ))}
+            <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                {activeEvents.map(e => (
+                    <EventSummary key={e.event_id} event={e} reload={reload} onEdit={setEditingEvent}/>
+                ))}
+            </div>
         </div>
     );
 }

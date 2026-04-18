@@ -25,7 +25,9 @@ export default function CreateEventForm({
         start_datetime: formatDateTimeLocal(event?.start_datetime) || "",
         location_name: event?.location_name || "",
         address: event?.address || "",
-        price: event?.price || ""
+        price: event?.price || "",
+        organization: event?.organization || "",
+        phone: event?.phone || "",
     });
 
     const [form, setForm] = useState(buildForm(event));

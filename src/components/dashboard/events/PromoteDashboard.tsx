@@ -51,7 +51,7 @@ export default function PromoteDashboard() {
                     &lt; Back To Events
                 </button>
             </div>
-            <EventSummary event={event} readOnly={true} showRedo={false} />
+            <EventSummary event={event} readOnly={true} showRedo={false} showAsHeader={true} />
             <ProgressBar platforms={event.platforms} />
             <PlatformList event={event} reload={loadEvent} updatePlatformStatus={updatePlatformStatus}/>
         </div>

@@ -11,12 +11,16 @@ export interface EventDetail {
     start_datetime: string;
     address?: string;
     price?: string;
+    website?: string;
+    organization?: string;
+    phone?: string;
     platforms: PlatformData[];
 }
 
 export type EventSummaryProps = {
     event: EventDetail;
     readOnly?: boolean;
+    showAsHeader?: boolean;
     showRedo?: boolean;
     reload?: () => Promise<void>;
     onEdit?: React.Dispatch<React.SetStateAction<EventDetail | null>>;

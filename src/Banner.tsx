@@ -1,3 +1,5 @@
+import Clock from "./Clock";
+
 export function Banner() {
     return (
         <div style={{
@@ -20,9 +22,8 @@ export function Banner() {
                     }}
                 />                <strong>BAY Event Promoter</strong>
             </div>
-
-            <div>
-                {/* later: user info / logout */}
+            <div style={{display: "flex", alignItems: "right", marginRight: "50px"}}>
+                <Clock />
             </div>
         </div>
     );

@@ -25,7 +25,26 @@ const modalStyle = {
     minWidth: "300px"
 };
 
-export function EventSummary({ event, readOnly = false, reload, showRedo= false, onEdit }: EventSummaryProps) {
+const eventListStyle = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 8,
+    padding: 5,
+    borderRadius: '10px',
+    width: "80%",
+    border: '2px solid #D2492C'
+};
+
+const eventHeaderStyle = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 8,
+}
+
+export function EventSummary({ event, readOnly = false, reload, showRedo= false, showAsHeader=false, onEdit }: EventSummaryProps) {
     const navigate = useNavigate();
 
     const [showConfirm, setShowConfirm] = useState(false);
@@ -44,10 +63,11 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     const isExpired = getIsExpired(event);
 
     return (
-        <div style={{ marginBottom: 10, borderRadius: '10px', border: '2px solid lightGray'}}>
-            <h4>{event.title} {isExpired? <i style={{color: "red"}}>(Expired)</i>: ""}</h4>
+        <div style={ showAsHeader ? eventHeaderStyle : eventListStyle}>
+            <h2>{event.title}</h2><h5> {isExpired? <i style={{color: "red"}}>(Expired)</i>: ""}</h5>
             <p>{event.location_name}</p>
-            <p>{isExpired? <i>{new Date(event.start_datetime).toLocaleString()}</i> : new Date(event.start_datetime).toLocaleString()}</p>
+
+            <p>{new Date(event.start_datetime).toLocaleString()}</p>
             {!readOnly && (
                 <button disabled={isExpired} onClick={handleClick}>📢 Promote</button>
             )}
@@ -96,7 +116,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     </div>
                 </div>
             )}
-
         </div>
     );
 }

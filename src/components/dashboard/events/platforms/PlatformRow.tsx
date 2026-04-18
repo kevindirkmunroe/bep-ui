@@ -11,7 +11,13 @@ function buildPayload(event: EventDetail, platform: string) {
                 : event.title,
             description: event.description,
             date: event.start_datetime,
-            location: event.location_name
+            location: event.location_name,
+            name: event.name,
+            organization: event.organization,
+            email: event.email,
+            phone: event.phone,
+            website: event.website,
+            address: event.address,
         };
     }
 
@@ -97,7 +103,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
 
     return (
         <div style={{
-            border: "1px solid #ccc",
+            border: "2px solid #D2492C",
             padding: 10,
             marginBottom: 10
         }}>
