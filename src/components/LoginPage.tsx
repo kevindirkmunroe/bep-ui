@@ -1,35 +1,43 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {useUser} from "../UserContext";
+import { useUser } from "../UserContext";
 
 export default function LoginPage() {
-    const [email, setEmail] = useState("");
-    const navigate = useNavigate();
+    const [form, setForm] = useState({ username: "", password: "" });
+    const [attempts, setAttempts] = useState(0);
 
     const { setUserId } = useUser();
+    const navigate = useNavigate();
 
     const handleLogin = async () => {
         try {
+            const res = await axios.post("/users/login", form);
 
-            // You can create a /login endpoint later
-            const res = await axios.get(`/users?email=${email}`);
-            const user = res.data;
-            console.log(`LOGIN got user: ${JSON.stringify(user)}`);
-            setUserId(user.user_id);
-            navigate(`/dashboard/${user.user_id}`);
+            setUserId(res.data.userId);
+            navigate(`/dashboard/${res.data.userId}`);
         } catch (err) {
-            alert(`User not found: ${err}`);
+            const newAttempts = attempts + 1;
+            setAttempts(newAttempts);
+
+            if (newAttempts >= 2) {
+                window.location.href = "https://www.google.com";
+            } else {
+                alert("Invalid credentials");
+            }
         }
     };
 
     return (
-        <div style={{ padding: 40 }}>
-            <h2>Login</h2>
+        <div>
             <input
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Username"
+                onChange={(e) => setForm({ ...form, username: e.target.value })}
+            />
+            <input
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
             />
             <button onClick={handleLogin}>Login</button>
         </div>

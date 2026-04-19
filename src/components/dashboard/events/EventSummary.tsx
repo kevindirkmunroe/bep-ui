@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {useState} from "react";
+import {CSSProperties, useState} from "react";
 
 import {EventDetail, EventSummaryProps} from "./eventDetailTypes.interface";
 import {getEventStatus, getIsExpired} from "./EventStatus";
@@ -25,18 +25,18 @@ const modalStyle = {
     minWidth: "300px"
 };
 
-const eventListStyle = {
+const eventListStyle: CSSProperties = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 8,
     padding: 5,
     borderRadius: '10px',
-    width: "80%",
+    width: "64%",
     border: '2px solid #D2492C'
 };
 
-const eventHeaderStyle = {
+const eventHeaderStyle: CSSProperties = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -64,10 +64,11 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
 
     return (
         <div style={ showAsHeader ? eventHeaderStyle : eventListStyle}>
-            <h2>{event.title}</h2><h5> {isExpired? <i style={{color: "red"}}>(Expired)</i>: ""}</h5>
+            <div>
+            <h2>{event.title}</h2>
             <p>{event.location_name}</p>
-
             <p>{new Date(event.start_datetime).toLocaleString()}</p>
+            </div>
             {!readOnly && (
                 <button disabled={isExpired} onClick={handleClick}>📢 Promote</button>
             )}

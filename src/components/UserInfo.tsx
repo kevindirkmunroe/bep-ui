@@ -6,13 +6,12 @@ export default function UserInfo( {user}  : UserInfoProps) {
         u = user[0];
     }
     return (
-        <div style={{ marginBottom: 30 }}>
+        <div style={{ marginBottom: 20 }}>
             <h2>
                 <img style={{verticalAlign: "text-bottom"}} src={"/icons8-user-male-30.png"} alt={'.'} />&nbsp;
                 <b>{u.first_name} {u.last_name}</b>
             </h2>
             <p>{u.company}</p>
-            <p>{u.email}</p>
         </div>
     );
 }

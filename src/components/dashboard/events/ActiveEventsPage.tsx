@@ -1,7 +1,7 @@
 import { useOutletContext } from "react-router-dom";
 import {EventDetail} from "./eventDetailTypes.interface";
 import {EventSummary} from "./EventSummary";
-import {getEventStatus} from "./EventStatus";
+import {getEventStatus, getIsExpired} from "./EventStatus";
 import React from "react";
 
 export function ActiveEventsPage() {
@@ -14,13 +14,12 @@ export function ActiveEventsPage() {
     console.log("EVENTS:", events);
 
     const activeEvents = (events || []).filter(e => {
-        return getEventStatus(e) !== "submitted";
+        return getEventStatus(e) !== "submitted"  && !getIsExpired(e);
     });
 
 
     return (
-        <div>
-            <h2>Active Events</h2>
+        <div style={{marginTop: 30}}>
             {activeEvents.length === 0 && <p>No Active Events Yet</p>}
             <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                 {activeEvents.map(e => (

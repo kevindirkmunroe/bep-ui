@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {Link, Outlet, useParams} from "react-router-dom";
+import {Link, NavLink, Outlet, useParams} from "react-router-dom";
 import UserInfo from "../UserInfo";
 import EventsList from "./EventsList";
 import CreateEventForm from "./CreateEventForm";
-import {getEventStatus} from "./events/EventStatus";
+import {getEventStatus, getIsExpired} from "./events/EventStatus";
 import {EventDetail} from "./events/eventDetailTypes.interface";
 
 export default function Dashboard() {
@@ -17,9 +17,16 @@ export default function Dashboard() {
 
     function getActiveEventCount(){
         const activeEvents = (events || []).filter(e => {
-            return getEventStatus(e) !== "submitted";
+            return getEventStatus(e) !== "submitted" && !getIsExpired(e);
         });
         return activeEvents.length;
+    }
+
+    function getExpiredEventCount(){
+        const expiredEvents = (events || []).filter(e => {
+            return getIsExpired(e);
+        });
+        return expiredEvents.length;
     }
 
     function getSubmittedEventCount(){
@@ -59,9 +66,6 @@ export default function Dashboard() {
     return (
         <div style={{ padding: 40 }}>
             <UserInfo user={user} />
-            <button onClick={() => setShowForm(true)}>
-                + Create Event
-            </button>
             {(showForm || editingEvent) && userId && (
                 <CreateEventForm
                     key={editingEvent?.event_id || "new"}   // 👈 Force react to recreate component
@@ -78,10 +82,41 @@ export default function Dashboard() {
                     }}
                 />
             )}
-            <nav>
-                <Link style={{margin: 5}} to={"events"}>Active({getActiveEventCount()})</Link>
-                <Link style={{margin: 5}} to={"submitted"}>Submitted({getSubmittedEventCount()})</Link>
-            </nav>
+            <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+                <div style={{font: "bold", height: "50px", marginRight: "50px", fontWeight: 800, fontSize: "60px", color: "black", display: "flex", alignContent: "left"}}>Events</div>
+                <div>
+                    <nav style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+                        <NavLink
+                            to="events"
+                            style={({ isActive }) => ({
+                                fontSize: isActive ? "24px" : "18px",
+                                fontWeight: isActive ? "bold" : "normal"
+                            })}>
+                            Active({getActiveEventCount()})
+                        </NavLink>
+                        <NavLink
+                            to="submitted"
+                            style={({ isActive }) => ({
+                                fontSize: isActive ? "24px" : "18px",
+                                fontWeight: isActive ? "bold" : "normal"
+                            })}>
+                            Submitted({getSubmittedEventCount()})
+                        </NavLink>
+                        <NavLink
+                            to="expired"
+                            style={({ isActive }) => ({
+                                fontSize: isActive ? "24px" : "18px",
+                                fontWeight: isActive ? "bold" : "normal"
+                            })}>
+                            Expired({getExpiredEventCount()})
+                        </NavLink>
+                        <button onClick={() => setShowForm(true)}>
+                            + Create Event
+                        </button>
+                    </nav>
+
+                </div>
+            </div>
             {/* ROUTED CONTENT */}
             <Outlet context={{ events, setEditingEvent, reload: loadEvents }} />
         </div>

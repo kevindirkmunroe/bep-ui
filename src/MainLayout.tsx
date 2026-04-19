@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import {Banner} from "./Banner";
+import {Banner} from "./components/Banner";
 
 export function MainLayout({ children }: { children: ReactNode }) {
     return (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useContext, useState} from "react";
 import { UserContext } from "./UserContext";
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
@@ -10,3 +10,5 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         </UserContext.Provider>
     );
 }
+
+export const useUser = () => useContext(UserContext);
