@@ -87,7 +87,7 @@ export default function Dashboard() {
                 <div>
                     <nav style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
                         <NavLink
-                            to="events"
+                            to="events" end
                             style={({ isActive }) => ({
                                 fontSize: isActive ? "24px" : "18px",
                                 fontWeight: isActive ? "bold" : "normal"
@@ -102,14 +102,21 @@ export default function Dashboard() {
                             })}>
                             Submitted({getSubmittedEventCount()})
                         </NavLink>
-                        <NavLink
-                            to="expired"
-                            style={({ isActive }) => ({
-                                fontSize: isActive ? "24px" : "18px",
-                                fontWeight: isActive ? "bold" : "normal"
-                            })}>
-                            Expired({getExpiredEventCount()})
-                        </NavLink>
+                        {getExpiredEventCount() > 0 && (
+                            <NavLink
+                                to={"expired"}
+                                style={({ isActive }) => ({
+                                    fontSize: isActive ? "24px" : "18px",
+                                    fontWeight: isActive ? "bold" : "normal"
+                                })}>
+                                Expired({getExpiredEventCount()})
+                            </NavLink>
+                        )}
+                        {getExpiredEventCount() === 0 && (
+                            <div style={{fontSize: "18px"}}>
+                                Expired(0)
+                            </div>
+                        )}
                         <button onClick={() => setShowForm(true)}>
                             + Create Event
                         </button>

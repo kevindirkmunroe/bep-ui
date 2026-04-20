@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import {Routes, Route, Navigate} from "react-router-dom";
 import Dashboard from "./components/dashboard/Dashboard.js";
 import PromoteDashboard from "./components/dashboard/events/PromoteDashboard.tsx";
 import {MainLayout} from "./MainLayout.js";
@@ -24,8 +24,12 @@ export default function App() {
                      element={<ProtectedRoute>
                                     <Dashboard />
                             </ProtectedRoute>} >
-                  <Route path="expired" element={<ExpiredEventsPage />} />
+                  <Route index element={<Navigate to="events" replace />} />
+                  {/* Default View */}
+                  <Route index element={<ActiveEventsPage />} />
+
                   <Route path="events" element={<ActiveEventsPage />} />
+                  <Route path="expired" element={<ExpiredEventsPage />} />
                   <Route path="submitted" element={<SubmittedEventsPage />} />
               </Route>
               <Route path="/events/:eventId" element={<PromoteDashboard />} />
