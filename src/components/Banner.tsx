@@ -11,7 +11,7 @@ export function Banner() {
         if (!confirmed) return;
 
         setUserId(null);
-        navigate("/login");
+        navigate("/");
     };
 
     return (

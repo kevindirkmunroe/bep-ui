@@ -6,8 +6,8 @@ export function RegisterPage() {
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
-        firstName: "",
-        lastName: "",
+        first_name: "",
+        last_name: "",
         email: "",
         company: "",
         username: "",
@@ -56,7 +56,7 @@ export function RegisterPage() {
             await axios.post("/users", form);
 
             alert("Registration successful. Please login.");
-            navigate("/users/login");
+            navigate("/login");
 
         } catch (err) {
             console.error(err);
@@ -68,8 +68,8 @@ export function RegisterPage() {
         <div style={{ padding: 40, maxWidth: 400 }}>
             <h2>Register</h2>
 
-            <input name="firstName" placeholder="First Name" onChange={handleChange} />
-            <input name="lastName" placeholder="Last Name" onChange={handleChange} />
+            <input name="first_name" placeholder="First Name" onChange={handleChange} />
+            <input name="last_name" placeholder="Last Name" onChange={handleChange} />
             <input name="email" placeholder="Email" onChange={handleChange} />
             <input name="company" placeholder="Company" onChange={handleChange} />
 

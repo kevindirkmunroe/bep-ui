@@ -43,13 +43,18 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
         window.open(getPlatformUrl(platform), "_blank");
 
         // 2. Update database
-        await axios.patch(
-            `/events/${event.event_id}/platforms/${platform}`,
-            {
-                status: "in_progress",
-                payload: buildPayload(event, platform)
-            }
-        );
+        try {
+            await axios.patch(
+                `/events/${event.event_id}/platforms/${platform}`,
+                {
+                    external_url: event.website,
+                    status: "in_progress",
+                    payload: buildPayload(event, platform)
+                }
+            );
+        }catch(err){
+            console.log(`[PlatformRow] error updating platform ${platform}: ${err}`);
+        }
 
         // 3. post event for extension
         window.postMessage(

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {Link, NavLink, Outlet, useParams} from "react-router-dom";
+import {NavLink, Outlet, useParams} from "react-router-dom";
 import UserInfo from "../UserInfo";
 import EventsList from "./EventsList";
 import CreateEventForm from "./CreateEventForm";

@@ -28,6 +28,7 @@ export default function CreateEventForm({
         price: event?.price || "",
         organization: event?.organization || "",
         phone: event?.phone || "",
+        website: event?.website || "",
     });
 
     const [form, setForm] = useState(buildForm(event));
@@ -59,7 +60,7 @@ export default function CreateEventForm({
     };
 
     return (
-        <div style={{ marginBottom: 20 }}>
+        <div style={{marginBottom: 20}}>
             <h2>{isEdit ? "Edit Event" : "Create Event"}</h2>
             {isEdit && (
                 <p>Warning: Changes will not affect already submitted platforms.</p>
@@ -118,7 +119,30 @@ export default function CreateEventForm({
                 value={form.price}
             />
 
-            &nbsp;<button onClick={handleSubmit}>{isEdit ? "Save Changes" : "Create Event"}</button>&nbsp;
+            <input
+                name="phone"
+                placeholder="Phone"
+                onChange={handleChange}
+                value={form.phone}
+            />
+
+            <input
+                name="organization"
+                placeholder="Organization"
+                onChange={handleChange}
+                value={form.organization}
+            />
+
+            <input
+                name="website"
+                placeholder="Website"
+                onChange={handleChange}
+                value={form.website}
+            />
+
+            &nbsp;
+            <button onClick={handleSubmit}>{isEdit ? "Save Changes" : "Create Event"}</button>
+            &nbsp;
             <button onClick={() => onCancel()}>Cancel</button>
         </div>
     );
