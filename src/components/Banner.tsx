@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import CalendarDate from "../utils/CalendarDate";
 
 export function Banner() {
-    const { setUserId } = useUser();
+    const { setUserId, userId } = useUser();
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -33,12 +33,18 @@ export function Banner() {
                         width: "auto",
                         objectFit: "contain"
                     }}
-                />                <strong>BAY Event Promoter</strong>
+                />
+                <strong>BAY Event Promoter</strong>
             </div>
-            <div style={{display: "flex", alignItems: "right", marginRight: "50px"}}>
-                <button onClick={handleLogout}>Logout</button>
-                <CalendarDate />
-            </div>
+            {userId && (
+                <div style={{display: "flex", alignItems: "right", marginRight: "50px"}}>
+                    <button onClick={handleLogout}>
+                        <img style={{width: "18px", height: "18px", verticalAlign: "text-bottom"}} src={"/icons8-user-male-30.png"} alt={'.'} />&nbsp;
+                        Logout
+                    </button>
+                    <CalendarDate />
+                </div>
+            )}
         </div>
     );
 }

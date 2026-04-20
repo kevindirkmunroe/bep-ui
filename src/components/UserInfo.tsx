@@ -8,7 +8,6 @@ export default function UserInfo( {user}  : UserInfoProps) {
     return (
         <div style={{ marginBottom: 20 }}>
             <h2>
-                <img style={{verticalAlign: "text-bottom"}} src={"/icons8-user-male-30.png"} alt={'.'} />&nbsp;
                 <b>{u.first_name} {u.last_name}</b>
             </h2>
             <p>{u.company}</p>
