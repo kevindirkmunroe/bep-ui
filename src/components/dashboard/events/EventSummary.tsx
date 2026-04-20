@@ -2,7 +2,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {CSSProperties, useState} from "react";
 
-import {EventDetail, EventSummaryProps} from "./eventDetailTypes.interface";
+import {EventSummaryProps} from "./eventDetailTypes.interface";
 import {getEventStatus, getIsExpired} from "./EventStatus";
 
 const overlayStyle = {
@@ -59,8 +59,8 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     };
 
     const status = getEventStatus(event);
-    const canEdit = status === "not_started" || status === "in_progress";
     const isExpired = getIsExpired(event);
+    const canEdit = status === "not_started" || status === "in_progress";
 
     return (
         <div style={ showAsHeader ? eventHeaderStyle : eventListStyle}>
@@ -82,7 +82,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     📑 Edit
                 </button>
             )}
-            {readOnly && showRedo && (
+            {readOnly && showRedo && !isExpired && (
                 <button onClick={handleClick}>↪️ Redo Submit</button>
             )}
             {!readOnly && (
