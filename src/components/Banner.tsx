@@ -14,6 +14,14 @@ export function Banner() {
         navigate("/");
     };
 
+    const handleHomeClick = () => {
+        if (userId) {
+            navigate(`/dashboard/${userId}/events`);
+        } else {
+            navigate("/");
+        }
+    };
+
     return (
         <div style={{
             width: "100%",
@@ -24,7 +32,7 @@ export function Banner() {
             alignItems: "center",
             justifyContent: "space-between"
         }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }} onClick={() => navigate("/")}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }} onClick={handleHomeClick}>
                 <img
                     src="/bep-logo-transparent.png"
                     alt="Logo"
