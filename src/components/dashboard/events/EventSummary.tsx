@@ -64,16 +64,16 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
 
     return (
         <div style={ showAsHeader ? eventHeaderStyle : eventListStyle}>
-            <div>
-            <h2>{event.title}</h2>
-            <p>{event.location_name}</p>
-            <p>{new Date(event.start_datetime).toLocaleString()}</p>
+            <div style={{marginRight: "20px"}}>
+                <h2>{event.title}</h2>
+                <p>{event.location_name}</p>
+                <p>{new Date(event.start_datetime).toLocaleString()}</p>
             </div>
             {!readOnly && (
-                <button disabled={isExpired} onClick={handleClick}>📢 Promote</button>
+                <button className="btn btn-primary" disabled={isExpired} onClick={handleClick}>📢 Promote</button>
             )}
             {canEdit && onEdit &&(
-                <button
+                <button className="btn btn-primary"
                     onClick={(e) => {
                         e.stopPropagation();
                         onEdit(event);
@@ -83,15 +83,14 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                 </button>
             )}
             {readOnly && showRedo && !isExpired && (
-                <button onClick={handleClick}>↪️ Redo Submit</button>
+                <button className="btn btn-primary" onClick={handleClick}>↪️ Redo Submit</button>
             )}
             {!readOnly && (
-                <button
+                <button className="btn btn-danger"
                     onClick={(e) => {
                         e.stopPropagation();
                         setShowConfirm(true);
                     }}
-                    style={{ color: "red" }}
                 >
                     🗑️ Delete
                 </button>
@@ -103,14 +102,11 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                         <p>This action cannot be undone.</p>
 
                         <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
-                            <button onClick={() => setShowConfirm(false)}>
+                            <button className="btn btn-secondary" onClick={() => setShowConfirm(false)}>
                                 Cancel
                             </button>
 
-                            <button
-                                style={{ color: "white", background: "red" }}
-                                onClick={handleDelete}
-                            >
+                            <button className="btn btn-danger" onClick={handleDelete}>
                                 Delete
                             </button>
                         </div>

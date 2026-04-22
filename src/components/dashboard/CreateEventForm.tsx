@@ -141,9 +141,9 @@ export default function CreateEventForm({
             />
 
             &nbsp;
-            <button onClick={handleSubmit}>{isEdit ? "Save Changes" : "Create Event"}</button>
+            <button className="btn btn-primary" onClick={handleSubmit}>{isEdit ? "Save Changes" : "Create Event"}</button>
             &nbsp;
-            <button onClick={() => onCancel()}>Cancel</button>
+            <button className="btn btn-secondary" onClick={() => onCancel()}>Cancel</button>
         </div>
     );
 }

@@ -39,7 +39,7 @@ export default function LoginPage() {
                 placeholder="Password"
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
             />
-            <button onClick={handleLogin}>Login</button>
+            <button className="btn btn-primary" onClick={handleLogin}>Login</button>
         </div>
     );
 }

@@ -133,23 +133,23 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
             )}
 
             {status === "not_started" && (
-                <button onClick={handleOpen}>
+                <button className="btn btn-primary" onClick={handleOpen}>
                     Open & Autofill
                 </button>
             )}
             {status === "in_progress" && (
-                <button onClick={handleOpen}>
+                <button className="btn btn-primary" onClick={handleOpen}>
                     Continue Autofill
                 </button>
             )}
             {status !== "submitted" && (
-                <button onClick={handleSubmit}>
+                <button className="btn btn-primary" onClick={handleSubmit}>
                     Mark as Submitted
                 </button>
             )}
             {status === "submitted" && (
                 <div>
-                    <button onClick={handleReopen}>
+                    <button className="btn btn-primary" onClick={handleReopen}>
                         Edit / Resubmit
                     </button>
                 </div>

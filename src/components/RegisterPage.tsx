@@ -91,7 +91,7 @@ export function RegisterPage() {
 
             {error && <div style={{ color: "red" }}>{error}</div>}
 
-            <button onClick={handleRegister}>Register</button>
+            <button className="btn btn-primary" onClick={handleRegister}>Register</button>
         </div>
     );
 }

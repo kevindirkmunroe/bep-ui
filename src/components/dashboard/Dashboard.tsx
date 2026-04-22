@@ -117,7 +117,7 @@ export default function Dashboard() {
                                 Expired(0)
                             </div>
                         )}
-                        <button onClick={() => setShowForm(true)}>
+                        <button className="btn btn-primary" onClick={() => setShowForm(true)}>
                             + Create Event
                         </button>
                     </nav>

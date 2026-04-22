@@ -14,6 +14,7 @@ export function Banner() {
         navigate("/");
     };
 
+    // If user is already logged in, show the dashboard, otherwise back to Welcome page...
     const handleHomeClick = () => {
         if (userId) {
             navigate(`/dashboard/${userId}/events`);
@@ -42,11 +43,11 @@ export function Banner() {
                         objectFit: "contain"
                     }}
                 />
-                <strong>BAY Event Promoter</strong>
+                <strong>BayArea Event Promoter</strong>
             </div>
             {userId && (
                 <div style={{display: "flex", alignItems: "right", marginRight: "50px"}}>
-                    <button onClick={handleLogout}>
+                    <button className="btn btn-secondary" onClick={handleLogout}>
                         <img style={{width: "18px", height: "18px", verticalAlign: "text-bottom"}} src={"/icons8-user-male-30.png"} alt={'.'} />&nbsp;
                         Logout
                     </button>

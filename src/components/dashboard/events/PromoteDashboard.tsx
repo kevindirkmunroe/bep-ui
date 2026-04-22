@@ -47,7 +47,7 @@ export default function PromoteDashboard() {
     return (
         <div style={{ padding: 40 }}>
             <div style={{marginBottom: 20}}>
-                <button onClick={() => navigate(`/dashboard/${userId}`)}>
+                <button className="btn btn-secondary" onClick={() => navigate(`/dashboard/${userId}`)}>
                     &lt; Back To Events
                 </button>
             </div>
