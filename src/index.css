@@ -174,4 +174,30 @@ code {
   cursor: not-allowed;
 }
 
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+
+  /* spacing */
+  margin-bottom: 12px;
+
+  /* smooth feel */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.input:focus {
+  outline: none;
+  border-color: #D2492C;
+  box-shadow: 0 0 0 2px rgba(210, 73, 44, 0.2);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 

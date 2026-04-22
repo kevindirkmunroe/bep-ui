@@ -6,6 +6,7 @@ import EventsList from "./EventsList";
 import CreateEventForm from "./CreateEventForm";
 import {getEventStatus, getIsExpired} from "./events/EventStatus";
 import {EventDetail} from "./events/eventDetailTypes.interface";
+import Modal from "../Modal";
 
 export default function Dashboard() {
     const { userId } = useParams();
@@ -67,20 +68,22 @@ export default function Dashboard() {
         <div style={{ padding: 40 }}>
             <UserInfo user={user} />
             {(showForm || editingEvent) && userId && (
-                <CreateEventForm
-                    key={editingEvent?.event_id || "new"}   // 👈 Force react to recreate component
-                    userId={userId}
-                    event={editingEvent || undefined}
-                    onSuccess={() => {
-                        setShowForm(false);
-                        setEditingEvent(null);
-                        loadEvents();
-                    }}
-                    onCancel={() => {
-                        setShowForm(false);
-                        setEditingEvent(null);
-                    }}
-                />
+                <Modal onClose={() => setShowForm(false)}>
+                    <CreateEventForm
+                        key={editingEvent?.event_id || "new"}   // 👈 Force react to recreate component
+                        userId={userId}
+                        event={editingEvent || undefined}
+                        onSuccess={() => {
+                            setShowForm(false);
+                            setEditingEvent(null);
+                            loadEvents();
+                        }}
+                        onCancel={() => {
+                            setShowForm(false);
+                            setEditingEvent(null);
+                        }}
+                    />
+                </Modal>
             )}
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
                 <div style={{font: "bold", height: "50px", marginRight: "50px", fontWeight: 800, fontSize: "60px", color: "black", display: "flex", alignContent: "left"}}>Events</div>
