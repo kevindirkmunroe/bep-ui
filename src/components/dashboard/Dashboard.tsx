@@ -64,6 +64,10 @@ export default function Dashboard() {
 
     if (!user) return <div>Loading...</div>;
 
+    const activeEventCount = getActiveEventCount();
+    const submittedEventCount = getSubmittedEventCount();
+    const expiredEventCount = getExpiredEventCount();
+
     return (
         <div style={{ padding: 40 }}>
             <UserInfo user={user} />
@@ -89,33 +93,44 @@ export default function Dashboard() {
                 <div style={{font: "bold", height: "50px", marginRight: "50px", fontWeight: 800, fontSize: "60px", color: "black", display: "flex", alignContent: "left"}}>Events</div>
                 <div>
                     <nav style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
-                        <NavLink
-                            to="events" end
-                            style={({ isActive }) => ({
-                                fontSize: isActive ? "24px" : "18px",
-                                fontWeight: isActive ? "bold" : "normal"
-                            })}>
-                            Active({getActiveEventCount()})
-                        </NavLink>
-                        <NavLink
-                            to="submitted"
-                            style={({ isActive }) => ({
-                                fontSize: isActive ? "24px" : "18px",
-                                fontWeight: isActive ? "bold" : "normal"
-                            })}>
-                            Submitted({getSubmittedEventCount()})
-                        </NavLink>
-                        {getExpiredEventCount() > 0 && (
+                        {activeEventCount > 0 ? (
+                            <NavLink
+                                to="events" end
+                                style={({ isActive }) => ({
+                                    fontSize: isActive ? "24px" : "18px",
+                                    fontWeight: isActive ? "bold" : "normal"
+                                })}>
+                                Active({activeEventCount})
+                            </NavLink>
+                        ) : (
+                            <div style={{fontSize: "18px"}}>
+                                Active(0)
+                            </div>
+                        )}
+                        {submittedEventCount > 0 ? (
+                                <NavLink
+                                    to="submitted"
+                                    style={({ isActive }) => ({
+                                        fontSize: isActive ? "24px" : "18px",
+                                        fontWeight: isActive ? "bold" : "normal"
+                                    })}>
+                                    Submitted({submittedEventCount})
+                                </NavLink>
+                            ) : (
+                            <div style={{fontSize: "18px"}}>
+                                Submitted(0)
+                            </div>
+                        )}
+                        {expiredEventCount > 0 ? (
                             <NavLink
                                 to={"expired"}
                                 style={({ isActive }) => ({
                                     fontSize: isActive ? "24px" : "18px",
                                     fontWeight: isActive ? "bold" : "normal"
                                 })}>
-                                Expired({getExpiredEventCount()})
+                                Expired({expiredEventCount})
                             </NavLink>
-                        )}
-                        {getExpiredEventCount() === 0 && (
+                        ) : (
                             <div style={{fontSize: "18px"}}>
                                 Expired(0)
                             </div>

@@ -29,17 +29,22 @@ export default function LoginPage() {
     };
 
     return (
-        <div>
-            <input
-                placeholder="Username"
-                onChange={(e) => setForm({ ...form, username: e.target.value })}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
-            />
-            <button className="btn btn-primary" onClick={handleLogin}>Login</button>
+        <div style={{marginTop: "50px", width: "100%", flexDirection: "row", justifyItems: "center"}}>
+            <div style={{width: "40%", display: "flex", flexDirection: "column", alignItems: "center"}}>
+                <input
+                    className="input"
+                    placeholder="Username"
+                    onChange={(e) => setForm({ ...form, username: e.target.value })}
+                />
+                <input
+                    className="input"
+                    type="password"
+                    placeholder="Password"
+                    onChange={(e) => setForm({ ...form, password: e.target.value })}
+                />
+                <button className="btn btn-primary" style={{width: "100px", justifyContent: "center"}} onClick={handleLogin}>Login</button>
+            </div>
         </div>
+
     );
 }

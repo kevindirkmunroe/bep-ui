@@ -65,33 +65,37 @@ export function RegisterPage() {
     };
 
     return (
-        <div style={{ padding: 40, maxWidth: 400 }}>
-            <h2>Register</h2>
+        <div style={{marginTop: "50px", width: "100%", flexDirection: "row", justifyItems: "center"}}>
+            <div style={{ padding: 40, maxWidth: 400 }}>
+                <h2>Welcome To The Party Pal!</h2>
+                <br/>
+                <input className="input" name="first_name" placeholder="First Name" onChange={handleChange} />
+                <input className="input" name="last_name" placeholder="Last Name" onChange={handleChange} />
+                <input className="input" name="email" placeholder="Email" onChange={handleChange} />
+                <input className="input" name="company" placeholder="Company" onChange={handleChange} />
 
-            <input name="first_name" placeholder="First Name" onChange={handleChange} />
-            <input name="last_name" placeholder="Last Name" onChange={handleChange} />
-            <input name="email" placeholder="Email" onChange={handleChange} />
-            <input name="company" placeholder="Company" onChange={handleChange} />
+                <input className="input" name="username" placeholder="Username" onChange={handleChange} />
 
-            <input name="username" placeholder="Username" onChange={handleChange} />
+                <input
+                    className="input"
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    onChange={handleChange}
+                />
 
-            <input
-                name="password"
-                type="password"
-                placeholder="Password"
-                onChange={handleChange}
-            />
+                <input
+                    className="input"
+                    name="confirmPassword"
+                    type="password"
+                    placeholder="Confirm Password"
+                    onChange={handleChange}
+                />
 
-            <input
-                name="confirmPassword"
-                type="password"
-                placeholder="Confirm Password"
-                onChange={handleChange}
-            />
+                {error && <div style={{ color: "red" }}>{error}</div>}
 
-            {error && <div style={{ color: "red" }}>{error}</div>}
-
-            <button className="btn btn-primary" onClick={handleRegister}>Register</button>
+                <button className="btn btn-primary" onClick={handleRegister}>Register</button>
+            </div>
         </div>
     );
 }

@@ -51,7 +51,9 @@ export function Banner() {
                         <img style={{width: "18px", height: "18px", verticalAlign: "text-bottom"}} src={"/icons8-user-male-30.png"} alt={'.'} />&nbsp;
                         Logout
                     </button>
-                    <CalendarDate />
+                    <div style={{marginTop: "6px"}}>
+                        <CalendarDate />
+                    </div>
                 </div>
             )}
         </div>
