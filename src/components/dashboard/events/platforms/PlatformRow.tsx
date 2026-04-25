@@ -119,6 +119,13 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
         }
     }
 
+    const PrintableStatus = {
+        "not_started" : "Submission Not Started",
+        "in_progress" : "Submission In Progress",
+        "submitted" : "Submission Complete",
+        "published" : "Submission Published",
+    }
+
     return (
         <div style={{
             border: "2px solid #D2492C",
@@ -126,12 +133,12 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
             marginBottom: 10
         }}>
             <h4>{platform}</h4>
-            <p>Status: {status} {getStatusEmoji(status)}</p>
+            <p><b>Status:</b> {PrintableStatus[status]} {getStatusEmoji(status)}</p>
 
             {date_published && (
-                <p>Last Published: {formatDateTime(date_published)}</p>
+                <p><b>Last Published:</b> {formatDateTime(date_published)}</p>
             )}
-
+            <div style={{padding: "8px"}}/>
             {status === "not_started" && (
                 <button className="btn btn-primary" onClick={handleOpen}>
                     Open & Autofill
@@ -142,8 +149,8 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
                     Continue Autofill
                 </button>
             )}
-            {status !== "submitted" && (
-                <button className="btn btn-primary" onClick={handleSubmit}>
+            {status !== "submitted" && status && (
+                <button disabled={status === 'not_started'} className="btn btn-primary" onClick={handleSubmit}>
                     Mark as Submitted
                 </button>
             )}

@@ -15,7 +15,7 @@ export function ProgressBar( {platforms}  : {platforms :PlatformData[]} ) {
 
     return (
         <div style={{ marginBottom: 20 }}>
-            <p>Submission Progress: {done} / {total} {getStatusEmoji(done, total)}</p>
+            <p><b>Submission Progress:</b> {done} / {total} {getStatusEmoji(done, total)}</p>
             <div style={{ background: "#eee", height: 10 }}>
                 <div
                     style={{

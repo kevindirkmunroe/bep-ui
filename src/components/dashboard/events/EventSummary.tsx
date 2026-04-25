@@ -32,7 +32,7 @@ const eventListStyle: CSSProperties = {
     marginBottom: 8,
     padding: 5,
     borderRadius: '10px',
-    width: "64%",
+    width: "80%",
     border: '2px solid #D2492C'
 };
 
@@ -64,55 +64,58 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
 
     return (
         <div style={ showAsHeader ? eventHeaderStyle : eventListStyle}>
-            <div style={{marginRight: "20px"}}>
+            <div style={{marginRight: "20px", width: "50%"}}>
                 <h2>{event.title}</h2>
                 <p>{event.location_name}</p>
                 <p>{new Date(event.start_datetime).toLocaleString()}</p>
             </div>
-            {!readOnly && (
-                <button className="btn btn-primary" disabled={isExpired} onClick={handleClick}>📢 Promote</button>
-            )}
-            {canEdit && onEdit &&(
-                <button className="btn btn-primary"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        onEdit(event);
-                    }}
-                >
-                    📑 Edit
-                </button>
-            )}
-            {readOnly && showRedo && !isExpired && (
-                <button className="btn btn-primary" onClick={handleClick}>↪️ Redo Submit</button>
-            )}
-            {!readOnly && (
-                <button className="btn btn-danger"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        setShowConfirm(true);
-                    }}
-                >
-                    🗑️ Delete
-                </button>
-            )}
-            {showConfirm && (
-                <div style={overlayStyle}>
-                    <div style={modalStyle}>
-                        <h3>Delete Event?</h3>
-                        <p>This action cannot be undone.</p>
+            <div style={{width: "60%", display: "flex", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
+                {!readOnly && (
+                    <button className="btn btn-primary" disabled={isExpired} onClick={handleClick}>📢 Promote</button>
+                )}
+                {canEdit && onEdit &&(
+                    <button className="btn btn-primary"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onEdit(event);
+                            }}
+                    >
+                        📑 Edit
+                    </button>
+                )}
+                {readOnly && showRedo && !isExpired && (
+                    <button className="btn btn-primary" onClick={handleClick}>↪️ Redo Submit</button>
+                )}
+                {!readOnly && (
+                    <button className="btn btn-danger"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setShowConfirm(true);
+                            }}
+                    >
+                        🗑️ Delete
+                    </button>
+                )}
+                {showConfirm && (
+                    <div style={overlayStyle}>
+                        <div style={modalStyle}>
+                            <h3>Delete Event?</h3>
+                            <p>This action cannot be undone.</p>
 
-                        <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
-                            <button className="btn btn-secondary" onClick={() => setShowConfirm(false)}>
-                                Cancel
-                            </button>
+                            <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+                                <button className="btn btn-secondary" onClick={() => setShowConfirm(false)}>
+                                    Cancel
+                                </button>
 
-                            <button className="btn btn-danger" onClick={handleDelete}>
-                                Delete
-                            </button>
+                                <button className="btn btn-danger" onClick={handleDelete}>
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
+
         </div>
     );
 }

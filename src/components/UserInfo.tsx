@@ -7,10 +7,12 @@ export default function UserInfo( {user}  : UserInfoProps) {
     }
     return (
         <div style={{ marginBottom: 20 }}>
-            <h2>
-                <b>{u.first_name} {u.last_name}</b>
-            </h2>
-            <p>{u.company}</p>
+            <div style={{display: "flex", flexDirection: "row"}}>
+                <h2>
+                    <b>{u.first_name} {u.last_name}</b>
+                </h2>
+                <p style={{fontSize: "30px"}}>&nbsp;/&nbsp;{u.company}</p>
+            </div>
         </div>
     );
 }

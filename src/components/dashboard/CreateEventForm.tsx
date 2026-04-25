@@ -123,8 +123,9 @@ export default function CreateEventForm({
                     value={form.start_datetime}
                 />
 
-                <input
+                <textarea
                     name="description"
+                    rows="5"
                     className="input"
                     placeholder="Description"
                     onChange={handleChange}

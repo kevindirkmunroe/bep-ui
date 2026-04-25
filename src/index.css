@@ -200,4 +200,10 @@ code {
   gap: 4px;
 }
 
+.banner-div {
+  background-image: url('/nightlife-banner.jpg');
+  background-size: cover;
+  background-position: center; /* Keeps the center of the image visible */
+  background-repeat: no-repeat;
+}
 
