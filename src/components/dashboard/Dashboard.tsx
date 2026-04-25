@@ -69,7 +69,7 @@ export default function Dashboard() {
     const expiredEventCount = getExpiredEventCount();
 
     return (
-        <div style={{ display: "flex", gap: "24px" }}>
+        <div style={{ display: "flex", gap: "2px" }}>
             {/* LEFT: Carousel */}
             <div style={{ flex: "0 0 300px" }}>
                 <ImageCarousel />
@@ -99,19 +99,18 @@ export default function Dashboard() {
                     )}
                     <div className="banner-div" style={
                         {
-                            backgroundColor: "yellow",
                             font: "bold",
                             height: "100px",
                             marginRight: "50px",
                             marginBottom: "20px",
                             fontWeight: 800,
-                            fontSize: "60px",
+                            fontSize: "40px",
                             color: "white",
                             display: "flex",
                             alignContent: "left",
                             alignItems: "center"
                         }
-                    }>&nbsp;Events
+                    }>&nbsp;My Events
                     </div>
                     <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
                         <div>
