@@ -21,15 +21,15 @@ const imageStyle: React.CSSProperties = {
     width: "100%",
     height: "100%",
     objectFit: "cover",
-    transition: "opacity 1.2s ease-in-out" // 👈 smooth dissolve
+    transition: "opacity 1.5s ease-in-out" // 👈 smooth dissolve
 };
 
 const slides = [
-    { src: "/carousel/comedy-alternate.jpg", label: "Comedy Nights" },
-    { src: "/carousel/cats-corner.jpg", label: "Dance Parties" },
-    { src: "/carousel/food-alternative.jpg", label: "Food & Wine" },
-    { src: "/carousel/wine.jpg", label: "Wine Bars" },
     { src: "/carousel/cocktails.png", label: "Cocktails" },
+    { src: "/carousel/cats-corner.jpg", label: "Dance Parties" },
+    { src: "/carousel/food.jpg", label: "Food & Wine" },
+    { src: "/carousel/wine.jpg", label: "Wine Bars" },
+    { src: "/carousel/cosmo-alleycats.jpg", label: "Jazz" },
     { src: "/carousel/popup.jpg", label: "Pop-up Events" }
 ];
 
@@ -41,7 +41,7 @@ export default function ImageCarousel() {
             setIndex((prev) => {
                 return (prev + 1) % slides.length;
             });
-        }, 10000);
+        }, 30000);
 
         return () => clearInterval(interval);
     }, []);

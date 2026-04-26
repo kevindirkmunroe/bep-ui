@@ -105,6 +105,7 @@ export default function Dashboard() {
                             marginBottom: "20px",
                             fontWeight: 800,
                             fontSize: "40px",
+                            borderRadius: "4px",
                             color: "white",
                             display: "flex",
                             alignContent: "left",
