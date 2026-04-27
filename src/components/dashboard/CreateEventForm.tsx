@@ -26,6 +26,7 @@ export default function CreateEventForm({
         start_datetime: formatDateTimeLocal(event?.start_datetime) || "",
         location_name: event?.location_name || "",
         address: event?.address || "",
+        zip: event?.zip || "94101",
         price: event?.price || "",
         organization: event?.organization || "",
         phone: event?.phone || "",
@@ -88,14 +89,14 @@ export default function CreateEventForm({
                 <input
                     name="name"
                     className="input"
-                    placeholder="Name"
+                    placeholder="Your Name"
                     onChange={handleChange}
                     value={form.name}
                 />
                 <input
                     name="email"
                     className="input"
-                    placeholder="Email"
+                    placeholder="Your Email (For Publish Updates)"
                     onChange={handleChange}
                     value={form.email}
                 />
@@ -110,7 +111,7 @@ export default function CreateEventForm({
                 <input
                     name="location_name"
                     className="input"
-                    placeholder="Location"
+                    placeholder="Location (General, like San Francisco, San Jose)"
                     onChange={handleChange}
                     value={form.location_name}
                 />
@@ -141,9 +142,17 @@ export default function CreateEventForm({
                 />
 
                 <input
+                    name="zip"
+                    className="input"
+                    placeholder="Zip Code (You want this)"
+                    onChange={handleChange}
+                    value={form.zip}
+                />
+
+                <input
                     name="price"
                     className="input"
-                    placeholder="Price"
+                    placeholder="Price (Leave blank if FREE)"
                     onChange={handleChange}
                     value={form.price}
                 />

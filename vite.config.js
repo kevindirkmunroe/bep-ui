@@ -10,6 +10,7 @@ export default defineConfig({
     proxy: {
       "/users": "http://localhost:4000",
       "/events": "http://localhost:4000",
+      "/mapRegion": "http://localhost:4000",
     },
   },
   define: {

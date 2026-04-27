@@ -3,7 +3,18 @@ import {PlatformRowProps} from "./platformTypes.interface"
 import {getPlatformUrl} from "./platformData";
 import {EventDetail} from "../eventDetailTypes.interface";
 
-function buildPayload(event: EventDetail, platform: string) {
+async function buildPayload(event: EventDetail, platform: string) {
+
+    console.log(`[PlatformRow] calling /mapRegion with zip= ${event.zip} platform=${platform}`);
+    const res = await axios.get("/mapRegion", {
+        params: {
+            zip: event.zip,
+            platform
+        }
+    });
+    const region = res.data.region;
+    console.log(`[PlatformRow] Region = ${region}`);
+
     if (platform === "funcheapsf") {
         return {
             title: event.price === "Free"
@@ -18,6 +29,7 @@ function buildPayload(event: EventDetail, platform: string) {
             phone: event.phone,
             website: event.website,
             address: event.address,
+            region: region
         };
     }
 
@@ -28,7 +40,8 @@ function buildPayload(event: EventDetail, platform: string) {
             title: event.title,
             description: event.description,
             date: event.start_datetime,
-            location: event.location_name
+            location: event.location_name,
+            region: region
         };
     }
 
@@ -42,6 +55,14 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
         // 1. OPEN IMMEDIATELY (must be sync)
         window.open(getPlatformUrl(platform), "_blank");
 
+        // 2. Create payload with platform and region
+        let pl = null;
+        try {
+            pl = await buildPayload(event, platform)
+        }catch(err){
+            console.log(`[PlatformRow] error creating payload for ${platform}: ${err}`);
+        }
+
         // 2. Update database
         try {
             await axios.patch(
@@ -49,7 +70,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
                 {
                     external_url: event.website,
                     status: "in_progress",
-                    payload: buildPayload(event, platform)
+                    payload: pl,
                 }
             );
         }catch(err){
@@ -57,6 +78,8 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
         }
 
         // 3. post event for extension
+        event.region = pl.region;
+        console.log(`PlatformRow] payload for chrome extension: ${JSON.stringify(event)}`);
         window.postMessage(
             {
                 type: "SET_EVENT",

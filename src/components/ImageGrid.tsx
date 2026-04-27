@@ -1,5 +1,23 @@
+import {useEffect, useState} from "react";
+
+
+const gridStyle: React.CSSProperties = {
+    display: "grid",
+    gridTemplateColumns: "repeat(4, 1fr)", // 👈 4 columns
+    gap: "12px",
+    padding: "16px"
+};
+
+const imageStyle: React.CSSProperties = {
+    width: "100%",
+    height: "140px",
+    objectFit: "cover",
+    borderRadius: "10px",
+    transition: "opacity 1.5s ease-in-out"
+};
+
 export default function ImageGrid() {
-    const images = [
+    const initialImages = [
         "/carousel/cats-corner.jpg",
         "/carousel/cside-funny.jpg",
         "/carousel/comedy.jpg",
@@ -10,20 +28,20 @@ export default function ImageGrid() {
         "/carousel/kareoke.jpg"
     ];
 
-    const gridStyle: React.CSSProperties = {
-        display: "grid",
-        gridTemplateColumns: "repeat(4, 1fr)", // 👈 4 columns
-        gap: "12px",
-        padding: "16px"
+    const [images, setImages] = useState(initialImages);
+
+    const shuffle = (arr: string[]) => {
+        return [...arr].sort(() => Math.random() - 0.5);
     };
 
-    const imageStyle: React.CSSProperties = {
-        width: "100%",
-        height: "140px",
-        objectFit: "cover", // 👈 fills cell, crops nicely
-        borderRadius: "10px",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.15)"
-    };
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setImages((prev) => shuffle(prev));
+        }, 2000);
+
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <div style={gridStyle}>

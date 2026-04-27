@@ -10,11 +10,13 @@ export interface EventDetail {
     location_name: string;
     start_datetime: string;
     address?: string;
+    zip?: string;
     price?: string;
     website?: string;
     organization?: string;
     phone?: string;
     platforms: PlatformData[];
+    region?: string;
 }
 
 export type EventSummaryProps = {
