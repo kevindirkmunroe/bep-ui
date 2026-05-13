@@ -4,11 +4,10 @@ export type Platform = "funcheapsf" | "visitoakland";
 
 export interface PlatformData {
     platform: Platform;
-    status: "not_started" | "in_progress" | "submitted";
+    status: "not_started" | "in_progress" | "submitted" | "published";
     external_url?: string;
     date_published?: string;
 }
-// todo I think snapshot is missing (snapshot= event processed for target platform)
 
 export interface PlatformRowProps {
     event: EventDetail;

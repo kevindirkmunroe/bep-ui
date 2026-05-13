@@ -3,7 +3,7 @@ import axios from "axios";
 import {NavLink, Outlet, useParams} from "react-router-dom";
 import UserInfo from "../UserInfo";
 import CreateEventForm from "./CreateEventForm";
-import {getEventStatus, getIsExpired} from "./events/EventStatus";
+import {getEventStatus} from "./events/EventStatus";
 import {EventDetail} from "./events/eventDetailTypes.interface";
 import Modal from "../Modal";
 import ImageCarousel from "../ImageCarousel";
@@ -18,21 +18,21 @@ export default function Dashboard() {
 
     function getActiveEventCount(){
         const activeEvents = (events || []).filter(e => {
-            return getEventStatus(e) !== "submitted" && !getIsExpired(e);
+            return getEventStatus(e) !== "submitted";
         });
         return activeEvents.length;
-    }
-
-    function getExpiredEventCount(){
-        const expiredEvents = (events || []).filter(e => {
-            return getIsExpired(e);
-        });
-        return expiredEvents.length;
     }
 
     function getSubmittedEventCount(){
         const submittedEvents = (events || []).filter(e => {
             return getEventStatus(e) === "submitted";
+        });
+        return submittedEvents.length;
+    }
+
+    function getPublishedEventCount(){
+        const submittedEvents = (events || []).filter(e => {
+            return getEventStatus(e) === "published";
         });
         return submittedEvents.length;
     }
@@ -66,7 +66,7 @@ export default function Dashboard() {
 
     const activeEventCount = getActiveEventCount();
     const submittedEventCount = getSubmittedEventCount();
-    const expiredEventCount = getExpiredEventCount();
+    const publishedEventCount = getPublishedEventCount();
 
     return (
         <div style={{ display: "flex", gap: "2px" }}>
@@ -144,18 +144,18 @@ export default function Dashboard() {
                                         Submitted(0)
                                     </div>
                                 )}
-                                {expiredEventCount > 0 ? (
+                                {publishedEventCount > 0 ? (
                                     <NavLink
                                         to={"expired"}
                                         style={({ isActive }) => ({
                                             fontSize: isActive ? "24px" : "18px",
                                             fontWeight: isActive ? "bold" : "normal"
                                         })}>
-                                        Expired({expiredEventCount})
+                                        Published({publishedEventCount})
                                     </NavLink>
                                 ) : (
                                     <div style={{fontSize: "18px"}}>
-                                        Expired(0)
+                                        Published(0)
                                     </div>
                                 )}
                                 <button className="btn btn-primary" onClick={() => setShowForm(true)}>

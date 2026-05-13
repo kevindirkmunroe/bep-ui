@@ -33,9 +33,9 @@ export function Banner() {
             alignItems: "center",
             justifyContent: "space-between"
         }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }} onClick={handleHomeClick}>
+            <div style={{ display: "flex", alignItems: "center", gap: "2px" }} onClick={handleHomeClick}>
                 <img
-                    src="/bep-logo-transparent.png"
+                    src="/localbuzz2.png"
                     alt="Logo"
                     style={{
                         height: "54px",
@@ -43,7 +43,7 @@ export function Banner() {
                         objectFit: "contain"
                     }}
                 />
-                <strong>BayArea Event Promoter</strong>
+                <strong style={{fontSize: "30px"}}>LocalBuzz</strong>
             </div>
             {userId && (
                 <div style={{display: "flex", alignItems: "right", marginRight: "50px"}}>

@@ -84,7 +84,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     </button>
                 )}
                 {readOnly && showRedo && !isExpired && (
-                    <button className="btn btn-primary" onClick={handleClick}>↪️ Redo Submit</button>
+                    <button className="btn btn-primary" onClick={handleClick}>↪️ Submit Again</button>
                 )}
                 {!readOnly && (
                     <button className="btn btn-danger"

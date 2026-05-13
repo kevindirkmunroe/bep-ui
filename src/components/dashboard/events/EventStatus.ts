@@ -12,6 +12,10 @@ export function getEventStatus(event: EventDetail) {
         return "in_progress";
     }
 
+    if (statuses.some(s => s === "published")) {
+        return "published";
+    }
+
     return "not_started";
 }
 

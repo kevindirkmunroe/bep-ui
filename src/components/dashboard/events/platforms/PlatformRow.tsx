@@ -177,7 +177,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
                     Mark as Submitted
                 </button>
             )}
-            {status === "submitted" && (
+            {status === "published" && (
                 <div>
                     <button className="btn btn-primary" onClick={handleReopen}>
                         Edit / Resubmit
