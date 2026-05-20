@@ -14,7 +14,7 @@ export function ActiveEventsPage() {
     console.log("EVENTS:", events);
 
     const activeEvents = (events || []).filter(e => {
-        return getEventStatus(e) !== "submitted"  && !getIsExpired(e);
+        return getEventStatus(e) !== "submitted";
     });
 
 

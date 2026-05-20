@@ -4,27 +4,29 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../UserContext";
 import ImageGrid from "./ImageGrid";
 
-export default function LoginPage() {
-    const [form, setForm] = useState({ username: "", password: "" });
+export default function InvitePage() {
+    const [form, setForm] = useState({ username: "", inviteCode: "" });
     const [attempts, setAttempts] = useState(0);
 
     const { setUserId } = useUser();
     const navigate = useNavigate();
 
-    const handleLogin = async () => {
+    const handleInvite = async () => {
         try {
-            const res = await axios.post("/users/login", form);
-
+            const res = await axios.get(`/users/invite?username=${form.username}&inviteCode=${form.inviteCode}`);
+            console.log(`setting userId: ${res.data.userId}`);
             setUserId(res.data.userId);
+            console.log(`navigating to : /dashboard/${res.data.userId}`);
             navigate(`/dashboard/${res.data.userId}`);
         } catch (err) {
+            console.log(`error on invite: ${err}`);
             const newAttempts = attempts + 1;
             setAttempts(newAttempts);
 
             if (newAttempts === 5) {
                 window.location.href = "https://www.google.com";
             } else {
-                alert("Invalid credentials");
+                alert("Invalid Invite Code");
             }
         }
     };
@@ -37,7 +39,7 @@ export default function LoginPage() {
                 <ImageGrid />
             </div>
 
-            {/* RIGHT: Login form */}
+            {/* RIGHT: Invite form */}
             <div style={{ width: "350px", marginRight:"24px" }}>
                 <div style={{marginTop: "50px", width: "100%", flexDirection: "row", justifyItems: "center"}}>
                     <div style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center"}}>
@@ -48,11 +50,10 @@ export default function LoginPage() {
                         />
                         <input
                             className="input"
-                            type="password"
-                            placeholder="Password"
-                            onChange={(e) => setForm({ ...form, password: e.target.value })}
+                            placeholder="Invite Code"
+                            onChange={(e) => setForm({ ...form, inviteCode: e.target.value })}
                         />
-                        <button className="btn btn-primary" style={{width: "100px", justifyContent: "center"}} onClick={handleLogin}>Login</button>
+                        <button className="btn btn-primary" style={{width: "100px", justifyContent: "center"}} onClick={handleInvite}>Use Invite Code</button>
                     </div>
                 </div>
             </div>

@@ -15,6 +15,8 @@ export default function Dashboard() {
     const [events, setEvents] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [editingEvent, setEditingEvent] = useState<EventDetail | null>(null);
+    const [isRegistered, setIsRegistered] = useState(false);
+    const [isAccessRequested, setIsAccessRequested] = useState(false);
 
     function getActiveEventCount(){
         const activeEvents = (events || []).filter(e => {
@@ -42,7 +44,15 @@ export default function Dashboard() {
         try {
             const userRes = await axios.get(`/users/${userId}`);
             setUser(userRes.data.data);
-        } catch (err) {
+            setIsAccessRequested(true);
+            setIsRegistered(true);
+        } catch (err: Error | any) {
+            if(err.response.status === 403){
+                setIsAccessRequested(true);
+                setIsRegistered(false);
+            } else if(err.response.status === 401){
+                setIsAccessRequested(false);
+            }
             console.error(err);
         }
 
@@ -62,6 +72,11 @@ export default function Dashboard() {
         loadEvents();
     }, [userId]);
 
+    if (!isAccessRequested) return <div>Welcome! You need an Invite Link to proceed. Please email bayareaeventpromoter@gmail.com for Invite Link.</div>;
+    if (!isRegistered) return (<div>
+                                <p>Almost there! Check your email inbox for Invite Link.</p>
+                                <div><a href={'/invite'}>Use Invite Code</a> </div>
+                              </div>);
     if (!user) return <div>Loading...</div>;
 
     const activeEventCount = getActiveEventCount();
