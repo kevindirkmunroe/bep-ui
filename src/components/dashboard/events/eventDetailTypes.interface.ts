@@ -24,6 +24,6 @@ export type EventSummaryProps = {
     readOnly?: boolean;
     showAsHeader?: boolean;
     showRedo?: boolean;
-    reload?: () => Promise<void>;
+    reload?: () => void;
     onEdit?: React.Dispatch<React.SetStateAction<EventDetail | null>>;
 };

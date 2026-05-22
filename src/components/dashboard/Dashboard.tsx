@@ -181,7 +181,14 @@ export default function Dashboard() {
                         </div>
                     </div>
                     {/* ROUTED CONTENT */}
-                    <Outlet context={{ events, setEditingEvent, reload: loadEvents }} />
+                    <div style={{height: '500px', // Fixed height
+                        marginTop: '10px',
+                        overflowY: 'auto', // Enable vertical scrolling
+                        border: '1px solid #ccc',
+                        borderRadius: 2
+                        }}>
+                        <Outlet context={{ events, setEditingEvent, reload: loadEvents }} />
+                    </div>
                 </div>
 
             </div>

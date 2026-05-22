@@ -48,9 +48,13 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     const navigate = useNavigate();
 
     const [showConfirm, setShowConfirm] = useState(false);
-
     const handleClick = () => {
         navigate(`/events/${event.event_id}`);
+    };
+
+    const handleResubmit = async () => {
+        await axios.patch(`/events/${event.event_id}`, {status: "not_started"});
+        await reload?.();
     };
 
     const handleDelete = async () => {
@@ -84,7 +88,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     </button>
                 )}
                 {readOnly && showRedo && !isExpired && (
-                    <button className="btn btn-primary" onClick={handleClick}>↪️ Submit Again</button>
+                    <button className="btn btn-primary" onClick={handleResubmit}>↪️ Submit Again</button>
                 )}
                 {!readOnly && (
                     <button className="btn btn-danger"
@@ -115,7 +119,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     </div>
                 )}
             </div>
-
         </div>
     );
 }
