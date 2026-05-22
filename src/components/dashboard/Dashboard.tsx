@@ -135,7 +135,7 @@ export default function Dashboard() {
                                     <NavLink
                                         to="events" end
                                         style={({ isActive }) => ({
-                                            fontSize: isActive ? "24px" : "18px",
+                                            fontSize: isActive ? "20px" : "15px",
                                             fontWeight: isActive ? "bold" : "normal"
                                         })}>
                                         Active({activeEventCount})
@@ -149,13 +149,13 @@ export default function Dashboard() {
                                     <NavLink
                                         to="submitted"
                                         style={({ isActive }) => ({
-                                            fontSize: isActive ? "24px" : "18px",
+                                            fontSize: isActive ? "20px" : "15px",
                                             fontWeight: isActive ? "bold" : "normal"
                                         })}>
                                         Submitted({submittedEventCount})
                                     </NavLink>
                                 ) : (
-                                    <div style={{fontSize: "18px"}}>
+                                    <div style={{fontSize: "15px"}}>
                                         Submitted(0)
                                     </div>
                                 )}
@@ -163,13 +163,13 @@ export default function Dashboard() {
                                     <NavLink
                                         to={"expired"}
                                         style={({ isActive }) => ({
-                                            fontSize: isActive ? "24px" : "18px",
+                                            fontSize: isActive ? "20px" : "15px",
                                             fontWeight: isActive ? "bold" : "normal"
                                         })}>
                                         Published({publishedEventCount})
                                     </NavLink>
                                 ) : (
-                                    <div style={{fontSize: "18px"}}>
+                                    <div style={{fontSize: "15px"}}>
                                         Published(0)
                                     </div>
                                 )}

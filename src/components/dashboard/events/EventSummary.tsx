@@ -32,8 +32,8 @@ const eventListStyle: CSSProperties = {
     marginBottom: 8,
     padding: 5,
     borderRadius: '10px',
-    width: "80%",
-    border: '2px solid #D2492C'
+    width: "95%",
+    border: '1px solid #D2492C'
 };
 
 const eventHeaderStyle: CSSProperties = {
@@ -69,9 +69,9 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     return (
         <div style={ showAsHeader ? eventHeaderStyle : eventListStyle}>
             <div style={{marginRight: "20px", width: "50%"}}>
-                <h2>{event.title}</h2>
-                <p>{event.location_name}</p>
-                <p>{new Date(event.start_datetime).toLocaleString()}</p>
+                <div style={{fontSize: "16px", fontWeight:"bold"}}>{event.title}</div>
+                <div style={{fontSize: "14px"}}>{event.location_name}</div>
+                <div><p style={{fontSize: "14px"}}>{new Date(event.start_datetime).toLocaleString()}</p></div>
             </div>
             <div style={{width: "60%", display: "flex", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
                 {!readOnly && (
