@@ -93,7 +93,6 @@ export default function Dashboard() {
             {/* RIGHT: Existing content */}
             <div style={{ flex: 1 }}>
                 <div style={{ paddingLeft: 40 }}>
-                    <UserInfo user={user} />
                     {(showForm || editingEvent) && userId && (
                         <Modal onClose={() => setShowForm(false)}>
                             <CreateEventForm
@@ -116,7 +115,6 @@ export default function Dashboard() {
                         {
                             font: "bold",
                             height: "100px",
-                            marginRight: "50px",
                             marginBottom: "20px",
                             fontWeight: 800,
                             fontSize: "40px",

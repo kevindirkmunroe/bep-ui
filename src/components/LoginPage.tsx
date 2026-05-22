@@ -8,16 +8,22 @@ export default function LoginPage() {
     const [form, setForm] = useState({ username: "", password: "" });
     const [attempts, setAttempts] = useState(0);
 
-    const { setUserId } = useUser();
+    const { setUser } = useUser();
     const navigate = useNavigate();
 
     const handleLogin = async () => {
         try {
             const res = await axios.post("/users/login", form);
 
-            setUserId(res.data.userId);
+            setUser({
+                userId: res.data.userId,
+                username: res.data.username,
+                firstName: res.data.firstName,
+                company: res.data.company
+            });
+            console.log(`set user: ${JSON.stringify(res.data)}`)
             navigate(`/dashboard/${res.data.userId}`);
-        } catch (err) {
+        } catch (err: Error | any) {
             const newAttempts = attempts + 1;
             setAttempts(newAttempts);
 
