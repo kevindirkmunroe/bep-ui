@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import {PlatformRowProps} from "./platformTypes.interface"
 import {getPlatformUrl} from "./platformData";
 import {EventDetail} from "../eventDetailTypes.interface";
@@ -53,7 +54,11 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
 
     const handleOpen = async () => {
         // 1. OPEN IMMEDIATELY (must be sync)
-        window.open(getPlatformUrl(platform), "_blank");
+        if(import.meta.env.VITE_PROMOTE_MODE === 'DEV'){
+            console.log(`DEV mode NOT opening URL for platform ${platform}`);
+        }else{
+            window.open(getPlatformUrl(platform), "_blank");
+        }
 
         // 2. Create payload with platform and region
         let pl = null;
@@ -79,7 +84,6 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
 
         // 3. post event for extension
         event.region = pl.region;
-        console.log(`PlatformRow] payload for chrome extension: ${JSON.stringify(event)}`);
         window.postMessage(
             {
                 type: "SET_EVENT",
@@ -103,7 +107,6 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
     };
 
     const handleSubmit = async () => {
-        console.log(`[PlatformRow] updating platform ${platform} to 'submitted'`);
         updatePlatformStatus(platform, 'submitted');
 
         try{

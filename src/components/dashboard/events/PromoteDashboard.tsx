@@ -42,12 +42,12 @@ export default function PromoteDashboard() {
     };
 
     if (!event || !event.platforms) return <div>Loading...</div>;
-    const { userId } = useUser();
-    console.log(`[PromoteDashboard] userUser()=${userId}`);
+    const { user } = useUser();
+    console.log(`[PromoteDashboard] userUser()=${user?.userId}`);
     return (
         <div style={{ padding: 40 }}>
             <div style={{marginBottom: 20}}>
-                <button className="btn btn-secondary" onClick={() => navigate(`/dashboard/${userId}`)}>
+                <button className="btn btn-secondary" onClick={() => navigate(`/dashboard/${user?.userId}`)}>
                     &lt; Back To Events
                 </button>
             </div>

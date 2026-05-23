@@ -52,10 +52,10 @@ export function Banner() {
                         objectFit: "contain"
                     }}
                 />
-                <strong style={{fontSize: "30px"}}>LocalBuzz</strong>
+                <strong style={{fontSize: "24px"}}>LocalBuzz</strong>
             </div>
             {user && (
-                <div style={{display: "flex", alignItems: "right", marginRight: "50px"}}>
+                <div style={{display: "flex", alignItems: "right", marginRight: "50px", marginTop: "16px"}}>
                     <img style={{width: "22px", height: "22px", verticalAlign: "text-bottom"}} src={"/icons8-user-male-30.png"} alt={'.'} />&nbsp;
                     {user?.firstName && (
                         <div style={userInfoStyle}>
