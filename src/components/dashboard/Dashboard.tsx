@@ -32,12 +32,12 @@ export default function Dashboard() {
         return submittedEvents.length;
     }
 
-    function getPublishedEventCount(){
-        const submittedEvents = (events || []).filter(e => {
-            return getEventStatus(e) === "published";
-        });
-        return submittedEvents.length;
-    }
+    // function getPublishedEventCount(){
+    //     const submittedEvents = (events || []).filter(e => {
+    //         return getEventStatus(e) === "published";
+    //     });
+    //     return submittedEvents.length;
+    // }
 
     const loadEvents = async () => {
         setShowForm(false);
@@ -81,7 +81,7 @@ export default function Dashboard() {
 
     const activeEventCount = getActiveEventCount();
     const submittedEventCount = getSubmittedEventCount();
-    const publishedEventCount = getPublishedEventCount();
+    // const publishedEventCount = getPublishedEventCount();
 
     return (
         <div style={{ display: "flex", gap: "2px" }}>
@@ -128,7 +128,10 @@ export default function Dashboard() {
                     </div>
                     <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
                         <div>
-                            <nav style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+                            <button className="btn btn-primary" style={{fontSize: "18px"}} onClick={() => setShowForm(true)}>
+                                + Create Event
+                            </button>
+                            <nav style={{ display: "flex", justifyContent: "center", gap: "20px", marginTop: "14px" }}>
                                 {activeEventCount > 0 ? (
                                     <NavLink
                                         to="events" end
@@ -157,23 +160,21 @@ export default function Dashboard() {
                                         Submitted(0)
                                     </div>
                                 )}
-                                {publishedEventCount > 0 ? (
-                                    <NavLink
-                                        to={"expired"}
-                                        style={({ isActive }) => ({
-                                            fontSize: isActive ? "20px" : "15px",
-                                            fontWeight: isActive ? "bold" : "normal"
-                                        })}>
-                                        Published({publishedEventCount})
-                                    </NavLink>
-                                ) : (
-                                    <div style={{fontSize: "15px"}}>
-                                        Published(0)
-                                    </div>
-                                )}
-                                <button className="btn btn-primary" onClick={() => setShowForm(true)}>
-                                    + Create Event
-                                </button>
+                                {/* For V1 skip published, user can check their inboxes */}
+                                {/*{publishedEventCount > 0 ? (*/}
+                                {/*    <NavLink*/}
+                                {/*        to={"expired"}*/}
+                                {/*        style={({ isActive }) => ({*/}
+                                {/*            fontSize: isActive ? "20px" : "15px",*/}
+                                {/*            fontWeight: isActive ? "bold" : "normal"*/}
+                                {/*        })}>*/}
+                                {/*        Published({publishedEventCount})*/}
+                                {/*    </NavLink>*/}
+                                {/*) : (*/}
+                                {/*    <div style={{fontSize: "15px"}}>*/}
+                                {/*        Published(0)*/}
+                                {/*    </div>*/}
+                                {/*)}*/}
                             </nav>
 
                         </div>

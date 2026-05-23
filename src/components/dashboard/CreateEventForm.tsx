@@ -81,7 +81,7 @@ export default function CreateEventForm({
 
     return (
         <div style={{marginBottom: 20, display: "flex", flexDirection: "column"}}>
-            <h2>{isEdit ? "Edit Event" : "Create Event"}</h2>
+            <h2>{isEdit ? "Edit Event" : "New Event"}</h2>
             {isEdit && (
                 <p>Warning: Changes will not affect already submitted platforms.</p>
             )}
@@ -185,7 +185,7 @@ export default function CreateEventForm({
                 */}
             </div>
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-                <button className="btn btn-primary" onClick={handleSubmit}>{isEdit ? "Save Changes" : "Create"}</button>
+                <button className="btn btn-primary" onClick={handleSubmit}>{isEdit ? "Save Changes" : "Create Event"}</button>
                 &nbsp;
                 <button className="btn btn-secondary" onClick={() => onCancel()}>Cancel</button>
             </div>
