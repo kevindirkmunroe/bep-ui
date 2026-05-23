@@ -72,12 +72,12 @@ export default function Dashboard() {
         loadEvents();
     }, [userId]);
 
-    if (!isAccessRequested) return <div>Welcome! You need an Invite Link to proceed. Please email bayareaeventpromoter@gmail.com for Invite Link.</div>;
-    if (!isRegistered) return (<div>
+    if (!isAccessRequested) return <div style={{marginTop: "50px"}}>Welcome! You need an Invite Link to proceed. Please email bayareaeventpromoter@gmail.com for Invite Link.</div>;
+    if (!isRegistered) return (<div style={{marginTop: "50px"}}>
                                 <p>Almost there! Check your email inbox for Invite Link.</p>
                                 <div><a href={'/invite'}>Use Invite Code</a> </div>
                               </div>);
-    if (!user) return <div>Loading...</div>;
+    if (!user) return <div style={{marginTop: "50px"}}>Loading...</div>;
 
     const activeEventCount = getActiveEventCount();
     const submittedEventCount = getSubmittedEventCount();

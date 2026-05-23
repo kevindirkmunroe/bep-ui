@@ -23,7 +23,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     // Restore user on app startup (page refresh)
     useEffect(() => {
         axios
-            .get("/api/me", { withCredentials: true })
+            .get("/users/me", { withCredentials: true })
             .then(res => {
                 setUser(res.data);
             })

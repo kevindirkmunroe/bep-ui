@@ -41,7 +41,7 @@ export default function ImageCarousel() {
             setIndex((prev) => {
                 return (prev + 1) % slides.length;
             });
-        }, 30000);
+        }, 15000);
 
         return () => clearInterval(interval);
     }, []);

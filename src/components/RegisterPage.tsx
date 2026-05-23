@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ImageCarousel from "./ImageCarousel";
 
 export function RegisterPage() {
     const navigate = useNavigate();
@@ -65,36 +66,43 @@ export function RegisterPage() {
     };
 
     return (
-        <div style={{marginTop: "50px", width: "100%", flexDirection: "row", justifyItems: "center"}}>
-            <div style={{ padding: 40, maxWidth: 400 }}>
-                <h2>Welcome To The Party Pal!</h2>
-                <br/>
-                <input className="input" name="first_name" placeholder="First Name" onChange={handleChange} />
-                <input className="input" name="last_name" placeholder="Last Name" onChange={handleChange} />
-                <input className="input" name="email" placeholder="Email" onChange={handleChange} />
-                <input className="input" name="company" placeholder="Company" onChange={handleChange} />
+        <div style={{ display: "flex", gap: "2px" }}>
+            {/* LEFT: Carousel */}
+            <div style={{ flex: "0 0 300px" }}>
+                <ImageCarousel />
+            </div>
+            {/* RIGHT: Existing content */}
+            <div style={{marginTop: "50px", width: "100%", flexDirection: "row", justifyItems: "center"}}>
+                <div style={{ padding: 40, maxWidth: 400 }}>
+                    <h2>Welcome To The Party Pal!</h2>
+                    <br/>
+                    <input className="input" name="first_name" placeholder="First Name" onChange={handleChange} />
+                    <input className="input" name="last_name" placeholder="Last Name" onChange={handleChange} />
+                    <input className="input" name="email" placeholder="Email" onChange={handleChange} />
+                    <input className="input" name="company" placeholder="Company" onChange={handleChange} />
 
-                <input className="input" name="username" placeholder="Username" onChange={handleChange} />
+                    <input className="input" name="username" placeholder="Username" onChange={handleChange} />
 
-                <input
-                    className="input"
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    onChange={handleChange}
-                />
+                    <input
+                        className="input"
+                        name="password"
+                        type="password"
+                        placeholder="Password"
+                        onChange={handleChange}
+                    />
 
-                <input
-                    className="input"
-                    name="confirmPassword"
-                    type="password"
-                    placeholder="Confirm Password"
-                    onChange={handleChange}
-                />
+                    <input
+                        className="input"
+                        name="confirmPassword"
+                        type="password"
+                        placeholder="Confirm Password"
+                        onChange={handleChange}
+                    />
 
-                {error && <div style={{ color: "red" }}>{error}</div>}
+                    {error && <div style={{ color: "red" }}>{error}</div>}
 
-                <button className="btn btn-primary" onClick={handleRegister}>Register</button>
+                    <button className="btn btn-primary" onClick={handleRegister}>Register</button>
+                </div>
             </div>
         </div>
     );
