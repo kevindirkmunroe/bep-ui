@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../UserContext";
 import ImageGrid from "./ImageGrid";
 
+// Tell axios to send cookies for all requests
+axios.defaults.withCredentials = true;
+
 export default function LoginPage() {
     const [form, setForm] = useState({ username: "", password: "" });
     const [attempts, setAttempts] = useState(0);

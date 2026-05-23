@@ -50,6 +50,16 @@
   }
 }
 
+a {
+  text-decoration: none;
+  display: inline-block; /* Required for transform effects */
+  transition: transform 0.3s ease;
+}
+
+a:hover {
+  transform: scale(1.2); /* Increases size by 20% */
+}
+
 body {
   margin: 0;
 }

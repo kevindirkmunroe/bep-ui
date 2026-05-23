@@ -21,7 +21,7 @@ export function WelcomePage() {
                                 </NavLink>
                                 <NavLink style={{ fontSize: "24px" }}
                                          to="/register">
-                                    Register
+                                    Sign Up
                                 </NavLink>
                             </nav>
                         </div>

@@ -1,4 +1,5 @@
-import {createContext, ReactNode, useContext, useState} from "react";
+import {createContext, ReactNode, useContext, useEffect, useState} from "react";
+import axios from "axios";
 
 export interface UserData {
     userId: string;
@@ -10,15 +11,32 @@ export interface UserData {
 interface UserContextType {
     user: UserData | null;
     setUser: (user: UserData | null) => void;
+    loading: boolean;
 }
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<UserData | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    // Restore user on app startup (page refresh)
+    useEffect(() => {
+        axios
+            .get("/api/me", { withCredentials: true })
+            .then(res => {
+                setUser(res.data);
+            })
+            .catch(() => {
+                setUser(null);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, []);
 
     return (
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, setUser, loading }}>
             {children}
         </UserContext.Provider>
     );
