@@ -74,8 +74,8 @@ export default function Dashboard() {
 
     if (!isAccessRequested) return <div style={{marginTop: "50px"}}>Welcome! You need an Invite Link to proceed. Please email bayareaeventpromoter@gmail.com for Invite Link.</div>;
     if (!isRegistered) return (<div style={{marginTop: "50px"}}>
-                                <p>Almost there! Check your email inbox for Invite Link.</p>
-                                <div><a href={'/invite'}>Use Invite Code</a> </div>
+                                <p>Almost there! Check your email inbox for the Invite.</p>
+                                <div style={{fontSize:"20px", marginTop: "30px"}}><a href={'/invite'}>Use Invite Code</a> </div>
                               </div>);
     if (!user) return <div style={{marginTop: "50px"}}>Loading...</div>;
 

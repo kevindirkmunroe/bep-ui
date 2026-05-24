@@ -1,0 +1,84 @@
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import ImageGrid from "./ImageGrid";
+
+// Tell axios to send cookies for all requests
+axios.defaults.withCredentials = true;
+
+export default function ResetPasswordPage() {
+    const [form, setForm] = useState({ password: "", passwordRepeat:"" });
+    const [passwordReset, setPasswordReset] = useState(false);
+    const navigate = useNavigate();
+
+    const handleReset = async () => {
+        if(!form.password || !form.passwordRepeat){
+            alert('Must submit a new password');
+            return;
+        }
+
+        if(form.password !== form.passwordRepeat){
+            alert('Passwords must match');
+            return;
+        }
+
+        try {
+            console.log(`pwd1 ${form.password} pwd2 ${form.password}`);
+            await axios.post('/users/resetpassword', {
+                userIdentifier: form.password,
+            });
+            setPasswordReset(true);
+        } catch (err: Error | any) {
+            if (err.response) {
+                // Access the status code directly
+                const statusCode = err.response.status;
+                console.log(`HTTP Error: ${statusCode}`);
+            }
+        }
+    };
+
+    return (
+
+        <div style={{ display: "flex", gap: "24px" }}>
+            {/* LEFT: Image grid */}
+            <div style={{ flex: 1 }}>
+                <ImageGrid />
+            </div>
+
+            {/* RIGHT: Login form */}
+            <div style={{ width: "350px", marginRight:"24px" }}>
+                <div style={{marginTop: "50px", width: "100%", flexDirection: "row", justifyItems: "center"}}>
+                    <div style={{marginBottom:"20px"}}>To reset your password, submit your username or email</div>
+                    <div style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center"}}>
+                        <input
+                            className="input"
+                            type="password"
+                            placeholder="password"
+                            onChange={(e) => {
+                                    setForm({ ...form, password: e.target.value });
+                                }
+                            }
+                        />
+                        <p>Repeat password:</p>
+                        <input
+                            className="input"
+                            type="password"
+                            placeholder="repeat password"
+                            onChange={(e) => {
+                                    setForm({ ...form, passwordRepeat: e.target.value });
+                                }
+                            }
+                        />
+                        <button className="btn btn-primary" style={{width: "180px", marginTop: "20px", justifyContent: "center"}} onClick={handleReset}>Request Password Reset</button>
+                    </div>
+                </div>
+                { passwordReset && (
+                    <div>
+                        <div style={{marginTop: "16px"}}>Your password was reset. Check your email for a temporary password.</div>
+                        <a style={{marginTop: "20px"}} href="/login">Login</a>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+}

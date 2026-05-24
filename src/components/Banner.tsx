@@ -1,18 +1,31 @@
+import {Tooltip} from "react-tooltip";
+import axios from "axios";
+
 import { useUser } from "../UserContext";
 import { useNavigate } from "react-router-dom";
 import CalendarDate from "../utils/CalendarDate";
+import {useState} from "react";
+import CreateEventForm from "./dashboard/CreateEventForm";
+import Modal from "./Modal";
+import ChangePasswordForm from "./ChangePasswordForm";
+
 
 export function Banner() {
     const { setUser, user } = useUser();
     const navigate = useNavigate();
+    const [showForm, setShowForm] = useState(false);
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
         const confirmed = window.confirm("Are you sure you want to logout?");
         if (!confirmed) return;
-
+        await axios.post('/users/logout');
         setUser(null);
         navigate("/");
     };
+
+    const handleChangePassword = async () => {
+        setShowForm(true);
+    }
 
     // If user is already logged in, show the dashboard, otherwise back to Welcome page...
     const handleHomeClick = () => {
@@ -42,6 +55,7 @@ export function Banner() {
             alignItems: "center",
             justifyContent: "space-between"
         }}>
+            <Tooltip id="my-tooltip" />
             <div style={{ display: "flex", alignItems: "center", gap: "2px" }} onClick={handleHomeClick}>
                 <img
                     src="/localbuzz2.png"
@@ -56,7 +70,12 @@ export function Banner() {
             </div>
             {user && (
                 <div style={{display: "flex", alignItems: "right", marginRight: "50px", marginTop: "16px"}}>
-                    <img style={{width: "22px", height: "22px", verticalAlign: "text-bottom"}} src={"/icons8-user-male-30.png"} alt={'.'} />&nbsp;
+                    <img
+                        data-tooltip-id="my-tooltip"
+                        data-tooltip-content="Change Password"
+                        onClick={handleChangePassword}
+                        style={{width: "22px", height: "22px", verticalAlign: "text-bottom"}} src={"/icons8-user-male-30.png"} alt={'.'}
+                    />&nbsp;
                     {user?.firstName && (
                         <div style={userInfoStyle}>
                             {user.firstName}
@@ -64,13 +83,20 @@ export function Banner() {
                         </div>
                     )}
                     <div style={{marginLeft: '10px'}}>
-                        <button className="btn btn-secondary" onClick={handleLogout}>
+                        <button className="btn btn-secon dary" onClick={handleLogout}>
                             Logout
                         </button>
                     </div>
                     <div>
                         <CalendarDate />
                     </div>
+                    {showForm && (
+                        <div>
+                            <Modal onClose={() => setShowForm(false)}>
+                                <ChangePasswordForm />
+                            </Modal>
+                        </div>
+                    )}
                 </div>
             )}
         </div>

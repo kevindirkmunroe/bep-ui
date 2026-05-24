@@ -126,7 +126,7 @@ export default function CreateEventForm({
 
                 <textarea
                     name="description"
-                    rows="5"
+                    rows={5}
                     className="input"
                     placeholder="Description"
                     onChange={handleChange}

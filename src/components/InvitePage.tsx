@@ -8,14 +8,14 @@ export default function InvitePage() {
     const [form, setForm] = useState({ username: "", inviteCode: "" });
     const [attempts, setAttempts] = useState(0);
 
-    const { setUserId } = useUser();
+    const { setUser } = useUser();
     const navigate = useNavigate();
 
     const handleInvite = async () => {
         try {
             const res = await axios.get(`/users/invite?username=${form.username}&inviteCode=${form.inviteCode}`);
             console.log(`setting userId: ${res.data.userId}`);
-            setUserId(res.data.userId);
+            setUser(res.data.user);
             console.log(`navigating to : /dashboard/${res.data.userId}`);
             navigate(`/dashboard/${res.data.userId}`);
         } catch (err) {
@@ -53,7 +53,7 @@ export default function InvitePage() {
                             placeholder="Invite Code"
                             onChange={(e) => setForm({ ...form, inviteCode: e.target.value })}
                         />
-                        <button className="btn btn-primary" style={{width: "100px", justifyContent: "center"}} onClick={handleInvite}>Use Invite Code</button>
+                        <button className="btn btn-primary" style={{width: "150px", justifyContent: "center", marginTop: "20px"}} onClick={handleInvite}>Use Invite Code</button>
                     </div>
                 </div>
             </div>

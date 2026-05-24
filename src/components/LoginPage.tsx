@@ -25,6 +25,7 @@ export default function LoginPage() {
                 company: res.data.company
             });
             console.log(`set user: ${JSON.stringify(res.data)}`)
+            // If password is not bcrypt hashed, it is temporary. Redirect user to password reset.
             navigate(`/dashboard/${res.data.userId}`);
         } catch (err: Error | any) {
             const newAttempts = attempts + 1;
@@ -62,6 +63,12 @@ export default function LoginPage() {
                             onChange={(e) => setForm({ ...form, password: e.target.value })}
                         />
                         <button className="btn btn-primary" style={{width: "100px", justifyContent: "center"}} onClick={handleLogin}>Login</button>
+                    </div>
+                    <div style={{marginTop: "30px"}}>
+                        <a href="/invite">Use Invite Code</a>
+                    </div>
+                    <div style={{marginTop: "20px"}}>
+                        <a href="/forgotpassword">Forgot Password</a>
                     </div>
                 </div>
             </div>

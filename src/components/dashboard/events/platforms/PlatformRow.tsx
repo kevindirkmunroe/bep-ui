@@ -83,7 +83,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
         }
 
         // 3. post event for extension
-        event.region = pl.region;
+        event.region = pl?.region;
         window.postMessage(
             {
                 type: "SET_EVENT",
