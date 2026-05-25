@@ -43,8 +43,6 @@ export function Banner() {
         fontWeight: 500
     };
 
-    console.log(`user: ${JSON.stringify(user)}`);
-
     return (
         <div style={{
             width: "100%",
@@ -93,7 +91,7 @@ export function Banner() {
                     {showForm && (
                         <div>
                             <Modal onClose={() => setShowForm(false)}>
-                                <ChangePasswordForm />
+                                <ChangePasswordForm user={user} />
                             </Modal>
                         </div>
                     )}

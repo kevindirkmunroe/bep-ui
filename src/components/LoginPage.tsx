@@ -10,9 +10,40 @@ axios.defaults.withCredentials = true;
 export default function LoginPage() {
     const [form, setForm] = useState({ username: "", password: "" });
     const [attempts, setAttempts] = useState(0);
+    const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     const { setUser } = useUser();
     const navigate = useNavigate();
+
+    const passwordInputStyle = {
+        flex: 1,
+        border: "none",
+        outline: "none",
+        padding: "12px",
+        fontSize: "16px"
+    };
+
+    const passwordWrapper = {
+        display: "flex",
+        alignItems: "center",
+        width: "100%",
+        maxWidth: "400px",
+        border: "1px solid #ccc",
+        borderRadius: "6px",
+        backgroundColor: "white",
+        overflow: "hidden"
+    };
+
+    const toggleButtonStyle = {
+        border: "none",
+        background: "white",
+        color: "#D2492C",
+        fontWeight: "bold",
+        cursor: "pointer",
+        padding: "0 12px",
+        whiteSpace: "nowrap" as const
+    };
 
     const handleLogin = async () => {
         try {
@@ -56,13 +87,24 @@ export default function LoginPage() {
                             placeholder="Username"
                             onChange={(e) => setForm({ ...form, username: e.target.value })}
                         />
-                        <input
-                            className="input"
-                            type="password"
-                            placeholder="Password"
-                            onChange={(e) => setForm({ ...form, password: e.target.value })}
-                        />
-                        <button className="btn btn-primary" style={{width: "100px", justifyContent: "center"}} onClick={handleLogin}>Login</button>
+                        <div style={passwordWrapper}>
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Password"
+                                style={passwordInputStyle}
+                            />
+
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                style={toggleButtonStyle}
+                            >
+                                {showPassword ? "Hide" : "Show"}
+                            </button>
+                        </div>
+                        <button className="btn btn-primary" style={{width: "100px", justifyContent: "center", marginTop: "20px"}} onClick={handleLogin}>Login</button>
                     </div>
                     <div style={{marginTop: "30px"}}>
                         <a href="/invite">Use Invite Code</a>

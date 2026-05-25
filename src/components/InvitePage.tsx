@@ -11,6 +11,10 @@ export default function InvitePage() {
     const { setUser } = useUser();
     const navigate = useNavigate();
 
+    const handleCancel = () => {
+        navigate('/login');
+    }
+
     const handleInvite = async () => {
         try {
             const res = await axios.get(`/users/invite?username=${form.username}&inviteCode=${form.inviteCode}`);
@@ -53,11 +57,13 @@ export default function InvitePage() {
                             placeholder="Invite Code"
                             onChange={(e) => setForm({ ...form, inviteCode: e.target.value })}
                         />
-                        <button className="btn btn-primary" style={{width: "150px", justifyContent: "center", marginTop: "20px"}} onClick={handleInvite}>Use Invite Code</button>
+                        <div style={{display: "flex", flexDirection: "row"}}>
+                            <button className="btn btn-primary" style={{width: "150px", justifyContent: "center", marginTop: "20px"}} onClick={handleInvite}>Use Invite Code</button>
+                            <button className="btn btn-primary" style={{width: "180px", marginTop: "20px", justifyContent: "center"}} onClick={handleCancel}>Cancel</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     );
 }

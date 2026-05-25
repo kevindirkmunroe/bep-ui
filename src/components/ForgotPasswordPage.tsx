@@ -13,6 +13,10 @@ export default function ForgotPasswordPage() {
     const [invalidUser, setInvalidUser] = useState(false);
     const navigate = useNavigate();
 
+    const handleCancel = () => {
+        navigate('/login');
+    }
+
     const handleReset = async () => {
         if(!form.userIdentifier){
             alert('Must submit a username or email');
@@ -50,14 +54,17 @@ export default function ForgotPasswordPage() {
                     <div style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center"}}>
                         <input
                             className="input"
-                            placeholder="User"
+                            placeholder="username"
                             onChange={(e) => {
                                     setForm({ ...form, userIdentifier: e.target.value });
                                     setInvalidUser(false);
                                 }
                             }
                         />
-                        <button className="btn btn-primary" style={{width: "180px", marginTop: "20px", justifyContent: "center"}} onClick={handleReset}>Request Password Reset</button>
+                        <div style={{display: "flex", flexDirection: "row"}}>
+                            <button className="btn btn-primary" style={{width: "180px", marginTop: "20px", justifyContent: "center"}} onClick={handleReset}>Request Password Reset</button>
+                            <button className="btn btn-primary" style={{width: "180px", marginTop: "20px", justifyContent: "center"}} onClick={handleCancel}>Cancel</button>
+                        </div>
                     </div>
                 </div>
                 { passwordReset && (

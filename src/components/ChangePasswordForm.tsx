@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useUser } from "../UserContext";
+import {UserData} from "../UserContext";
 import axios from "axios";
 
-export default function ChangePasswordForm() {
+export default function ChangePasswordForm({ user }: { user: UserData }) {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
@@ -38,8 +38,6 @@ export default function ChangePasswordForm() {
         setError("");
         setSuccess("");
 
-        const { user } = useUser();
-
         const validationError = validatePassword(password);
 
         if (validationError) {
@@ -53,8 +51,8 @@ export default function ChangePasswordForm() {
         }
 
         try {
-            await axios.post("/users/changePassword", {
-                user: user?.userId, password
+            await axios.post("/users/changepassword", {
+                userId: user?.userId, password
             });
 
             setSuccess("Password updated successfully.");
@@ -80,10 +78,9 @@ export default function ChangePasswordForm() {
 
     return (
         <form onSubmit={handleSubmit} style={formStyle}>
-            <h2>Change Password</h2>
+            <h2>New Password</h2>
 
             <input
-                type="password"
                 placeholder="New password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -91,7 +88,6 @@ export default function ChangePasswordForm() {
             />
 
             <input
-                type="password"
                 placeholder="Confirm password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -125,6 +121,7 @@ export default function ChangePasswordForm() {
             )}
 
             <button
+                className="btn btn-primary"
                 type="submit"
                 disabled={!canSubmit}
                 style={buttonStyle}
@@ -156,7 +153,7 @@ const buttonStyle = {
     color: "white",
     border: "none",
     borderRadius: "6px",
-    cursor: "pointer"
+    cursor: "pointer",
 };
 
 const errorStyle = {
