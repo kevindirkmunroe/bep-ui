@@ -154,15 +154,22 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
 
     return (
         <div style={{
-            border: "2px solid #D2492C",
+            border: "1px solid #D2492C",
+            borderRadius: "4px",
             padding: 10,
             marginBottom: 10
         }}>
-            <h4>{platform}</h4>
-            <p><b>Status:</b> {PrintableStatus[status]} {getStatusEmoji(status)}</p>
+            <div style={{fontSize: "18px", fontWeight:"bold"}}>
+                {platform}
+            </div>
+            <div style={{fontSize: "14px"}}>
+                <b>Status:</b> {PrintableStatus[status]} &nbsp;{getStatusEmoji(status)}
+            </div>
 
             {date_published && (
-                <p><b>Last Published:</b> {formatDateTime(date_published)}</p>
+                <div style={{fontSize: "14px"}}>
+                    <b>Last Published:</b> {formatDateTime(date_published)}
+                </div>
             )}
             <div style={{padding: "8px"}}/>
             {status === "not_started" && (

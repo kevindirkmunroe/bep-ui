@@ -22,7 +22,6 @@ export default function PromoteDashboard() {
 
     const loadEvent = async () => {
         const res = await axios.get(`/events/${eventId}`);
-        console.log("[PromoteDashboard] RELOAD RESPONSE:", res.data);
         setEvent(res.data);
     };
 
@@ -45,13 +44,33 @@ export default function PromoteDashboard() {
     const { user } = useUser();
     console.log(`[PromoteDashboard] userUser()=${user?.userId}`);
     return (
-        <div style={{ padding: 40 }}>
-            <div style={{marginBottom: 20}}>
-                <button className="btn btn-secondary" onClick={() => navigate(`/dashboard/${user?.userId}`)}>
-                    &lt; Back To Events
-                </button>
+        <div style={{ padding: 40}}>
+            <div style={{ width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "20px" }}>
+                <div className="banner-div" style={{
+                    width:"240px",
+                    height: "100px",
+                    objectFit: "cover",
+                    objectPosition: "top",
+                    fontWeight: 800,
+                    fontSize: "30px",
+                    borderRadius: "4px",
+                    font: "bold",
+                    color: "white",
+                    display: "flex",
+                    alignContent: "left",
+                    alignItems: "center"
+                }}>
+                    &nbsp;Promote
+                </div>
+                <div style={{flex: 2, alignContent: "center", justifyContent: "center"}}>
+                    <EventSummary event={event} readOnly={true} showRedo={false} showAsHeader={true} />
+                </div>
+                <div style={{flex: 1, marginBottom: 20, alignContent: "center", justifyContent: "center"}}>
+                    <button className="btn btn-secondary" onClick={() => navigate(`/dashboard/${user?.userId}`)}>
+                        Back To Events
+                    </button>
+                </div>
             </div>
-            <EventSummary event={event} readOnly={true} showRedo={false} showAsHeader={true} />
             <ProgressBar platforms={event.platforms} />
             <PlatformList event={event} reload={loadEvent} updatePlatformStatus={updatePlatformStatus}/>
         </div>
