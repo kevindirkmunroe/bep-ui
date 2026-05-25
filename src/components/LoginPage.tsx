@@ -109,7 +109,7 @@ export default function LoginPage() {
                         <a href="/invite">Use Invite Code</a>
                     </div>
                     <div style={{marginTop: "20px"}}>
-                        <a href="/forgotpassword">Forgot Password</a>
+                        <a href="/forgotpassword">Forgot Password?</a>
                     </div>
                 </div>
             </div>

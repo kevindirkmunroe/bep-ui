@@ -15,12 +15,12 @@ function CalendarDate() {
 
     return (
         <div style={{display: "flex"}}>
-            <div style={{justifyContent: "center", marginLeft: "20px", marginRight: "2px", marginTop: "4px"}}>
-                <img style={{width: "24px", height: "24px", verticalAlign: "text-bottom"}} src={"/icons8-calendar-24.png"} alt={'.'} />
+            <div style={{justifyContent: "center", marginLeft: "6px", marginRight: "2px", marginTop: "4px"}}>
+                <img style={{width: "20px", height: "20px", verticalAlign: "text-bottom"}} src={"/icons8-calendar-24.png"} alt={'.'} />
             </div>
             <div style={{
                     margin: "3px"}}>
-                    <p style={{fontSize: '16px'}}>{time.toLocaleDateString()}</p>
+                    <p style={{fontSize: '14px'}}>{time.toLocaleDateString()}</p>
             </div>
         </div>
     );

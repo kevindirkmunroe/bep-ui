@@ -80,8 +80,11 @@ export function Banner() {
                             {user.company && ` | ${user.company}`}
                         </div>
                     )}
-                    <div style={{marginLeft: '10px'}}>
-                        <button className="btn btn-secon dary" onClick={handleLogout}>
+                    <div style={{marginLeft: '28px', fontSize: "14px"}}>
+                        <p>About</p>
+                    </div>
+                    <div style={{marginLeft: '6px'}}>
+                        <button className="btn btn-secondary" onClick={handleLogout}>
                             Logout
                         </button>
                     </div>
