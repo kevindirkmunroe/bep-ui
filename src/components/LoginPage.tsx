@@ -10,7 +10,6 @@ axios.defaults.withCredentials = true;
 export default function LoginPage() {
     const [form, setForm] = useState({ username: "", password: "" });
     const [attempts, setAttempts] = useState(0);
-    const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
     const { setUser } = useUser();
@@ -90,8 +89,8 @@ export default function LoginPage() {
                         <div style={passwordWrapper}>
                             <input
                                 type={showPassword ? "text" : "password"}
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                value={form.password}
+                                onChange={(e) => setForm({ ...form, password: e.target.value })}
                                 placeholder="Password"
                                 style={passwordInputStyle}
                             />
