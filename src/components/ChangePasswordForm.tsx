@@ -78,7 +78,7 @@ export default function ChangePasswordForm({ user }: { user: UserData }) {
 
     return (
         <form onSubmit={handleSubmit} style={formStyle}>
-            <h2>New Password</h2>
+            <h2>Change Password</h2>
 
             <input
                 placeholder="New password"

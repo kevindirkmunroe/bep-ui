@@ -11,8 +11,8 @@ export function WelcomePage() {
                 </div>
                 {/* RIGHT: Existing content */}
                 <div style={{ flex: 1 }}>
-                    <div style={{ paddingLeft: 40 }}>
-                        <h3>Your Friendly Local Event Promoter</h3>
+                    <div style={{ paddingLeft: 40, marginTop: "10%" }}>
+                        <h3>Your Friendly Local Events Promoter</h3>
                         <div style={{marginTop: 50}}>
                             <nav style={{ display: "flex", justifyContent: "center", gap: "20px"}}>
                                 <NavLink style={{ fontSize: "24px" }}

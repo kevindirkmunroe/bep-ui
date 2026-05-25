@@ -48,6 +48,8 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     const navigate = useNavigate();
 
     const [showConfirm, setShowConfirm] = useState(false);
+    const [imgSrc, setImgSrc] = useState("/icons8-delete-30.png");
+
     const handleClick = () => {
         navigate(`/events/${event.event_id}`);
     };
@@ -75,7 +77,10 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
             </div>
             <div style={{width: "60%", display: "flex", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
                 {!readOnly && (
-                    <button className="btn btn-primary" disabled={isExpired} onClick={handleClick}>📢 Promote</button>
+                    <button className="btn btn-primary" disabled={isExpired} onClick={handleClick}>
+                        <img src={"/icons8-commercial-24.png"} />
+                        Promote
+                    </button>
                 )}
                 {canEdit && onEdit &&(
                     <button className="btn btn-primary"
@@ -84,11 +89,14 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                                 onEdit(event);
                             }}
                     >
-                        📑 Edit
+                        <img src={"/icons8-edit-64.png"} style={{width:"24px", height:"24px"}} />
+                        Edit
                     </button>
                 )}
                 {readOnly && showRedo && !isExpired && (
-                    <button className="btn btn-primary" onClick={handleResubmit}>↪️ Submit Again</button>
+                    <button className="btn btn-primary" onClick={handleResubmit}>
+                        <img src={"/icons8-redo-48.png"} style={{width:"24px", height:"24px"}} />Submit Again
+                    </button>
                 )}
                 {!readOnly && (
                     <button className="btn btn-danger"
@@ -97,7 +105,10 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                                 setShowConfirm(true);
                             }}
                     >
-                        🗑️ Delete
+                        <img src={imgSrc} alt={"delete"}
+                             onMouseOver={() => setImgSrc('/icons8-delete-white.png')}
+                             onMouseOut={() => setImgSrc('/icons8-delete-30.png')}
+                             style={{width:"24px", height:"24px"}} />Delete
                     </button>
                 )}
                 {showConfirm && (
