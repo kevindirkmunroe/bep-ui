@@ -12,7 +12,7 @@ export function WelcomePage() {
                 {/* RIGHT: Existing content */}
                 <div style={{ flex: 1 }}>
                     <div style={{ paddingLeft: 40 }}>
-                        <h3>Your AI-Powered Event Promoter</h3>
+                        <h3>Your Friendly Local Event Promoter</h3>
                         <div style={{marginTop: 50}}>
                             <nav style={{ display: "flex", justifyContent: "center", gap: "20px"}}>
                                 <NavLink style={{ fontSize: "24px" }}
