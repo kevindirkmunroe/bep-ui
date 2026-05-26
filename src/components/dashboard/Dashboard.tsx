@@ -59,10 +59,10 @@ export default function Dashboard() {
     };
 
     useEffect( () => {
-        if(!userId) return;
+        if(!user) return;
 
         loadEvents();
-    }, [userId]);
+    }, [user]);
 
     if (!user) return <div style={{marginTop: "50px"}}>Loading...</div>;
 
