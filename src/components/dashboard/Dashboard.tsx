@@ -6,12 +6,15 @@ import {EventDetail} from "./events/eventDetailTypes.interface";
 import Modal from "../Modal";
 import ImageCarousel from "../ImageCarousel";
 import {api} from "../../utils/api";
+import {useUser} from "../../UserContext";
 
 export default function Dashboard() {
     const { userId } = useParams();
     const [events, setEvents] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [editingEvent, setEditingEvent] = useState<EventDetail | null>(null);
+
+    const { loading } = useUser();
 
     function getActiveEventCount(){
         const activeEvents = (events || []).filter(e => {
@@ -56,6 +59,11 @@ export default function Dashboard() {
     }, [userId]);
 
     if (!userId) return <div style={{marginTop: "50px"}}>Loading...</div>;
+
+    // Don't need user but need to load after it for session
+    if (!loading) {
+        return <div>Loading...</div>;
+    }
 
     const activeEventCount = getActiveEventCount();
     const submittedEventCount = getSubmittedEventCount();
