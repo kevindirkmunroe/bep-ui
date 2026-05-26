@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {NavLink, Outlet, useParams} from "react-router-dom";
-import UserInfo from "../UserInfo";
 import CreateEventForm from "./CreateEventForm";
 import {getEventStatus} from "./events/EventStatus";
 import {EventDetail} from "./events/eventDetailTypes.interface";
@@ -15,8 +14,6 @@ export default function Dashboard() {
     const [events, setEvents] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [editingEvent, setEditingEvent] = useState<EventDetail | null>(null);
-    const [isRegistered, setIsRegistered] = useState(false);
-    const [isAccessRequested, setIsAccessRequested] = useState(false);
 
     function getActiveEventCount(){
         const activeEvents = (events || []).filter(e => {
@@ -44,15 +41,8 @@ export default function Dashboard() {
         try {
             const userRes = await axios.get(`/users/${userId}`);
             setUser(userRes.data.data);
-            setIsAccessRequested(true);
-            setIsRegistered(true);
         } catch (err: Error | any) {
-            if(err.response.status === 403){
-                setIsAccessRequested(true);
-                setIsRegistered(false);
-            } else if(err.response.status === 401){
-                setIsAccessRequested(false);
-            }
+            alert(`An error occured: ${err}`);
             console.error(err);
         }
 
@@ -72,11 +62,6 @@ export default function Dashboard() {
         loadEvents();
     }, [userId]);
 
-    if (!isAccessRequested) return <div style={{marginTop: "50px"}}>Welcome! You need an Invite Link to proceed. Please email bayareaeventpromoter@gmail.com for Invite Link.</div>;
-    if (!isRegistered) return (<div style={{marginTop: "50px"}}>
-                                <p>Almost there! Check your email inbox for the Invite.</p>
-                                <div style={{fontSize:"20px", marginTop: "30px"}}><a href={'/invite'}>Use Invite Code</a> </div>
-                              </div>);
     if (!user) return <div style={{marginTop: "50px"}}>Loading...</div>;
 
     const activeEventCount = getActiveEventCount();
