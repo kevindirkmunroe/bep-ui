@@ -14,8 +14,6 @@ export default function Dashboard() {
     const [showForm, setShowForm] = useState(false);
     const [editingEvent, setEditingEvent] = useState<EventDetail | null>(null);
 
-    const { loading } = useUser();
-
     function getActiveEventCount(){
         const activeEvents = (events || []).filter(e => {
             return getEventStatus(e) !== "submitted";
@@ -39,31 +37,35 @@ export default function Dashboard() {
 
     const loadEvents = async () => {
         setShowForm(false);
-        const { loading } = useUser();
         try{
             const eventsRes = await api.get(`/users/${userId}/events`);
             setEvents(eventsRes.data.data);
         } catch (err: Error | any) {
-            if(err.response.status === 404){
+            const status = err.response?.status;
+
+            if (status === 404) {
                 setEvents([]);
-            }else{
-                throw(err);
+                return;
             }
+
+            if (status === 401) {
+                console.log("Auth not ready yet, retrying...");
+                return;
+            }
+
+            console.error("loadEvents failed", err);
         }
     };
 
-    useEffect( () => {
-        if(!userId) return;
+    const { loading } = useUser();
+    useEffect(() => {
+        if (loading) return;
+        if (!userId) return;
 
         loadEvents();
-    }, [userId]);
+    }, [loading, userId]);
 
     if (!userId) return <div style={{marginTop: "50px"}}>Loading...</div>;
-
-    // Don't need user but need to load after it for session
-    if (!loading) {
-        return <div>Loading...</div>;
-    }
 
     const activeEventCount = getActiveEventCount();
     const submittedEventCount = getSubmittedEventCount();
