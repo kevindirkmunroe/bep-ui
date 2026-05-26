@@ -27,7 +27,11 @@ export function UserProvider({ children }: { children: ReactNode }) {
             .then(res => {
                 setUser(res.data);
             })
-            .catch(() => {
+            .catch((err) => {
+                if (err.response?.status === 401) {
+                    setUser(null);
+                    return;
+                }
                 setUser(null);
             })
             .finally(() => {
