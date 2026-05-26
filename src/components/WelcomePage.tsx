@@ -12,14 +12,14 @@ export function WelcomePage() {
                 {/* RIGHT: Existing content */}
                 <div style={{ flex: 1 }}>
                     <div style={{ paddingLeft: 40, marginTop: "10%" }}>
-                        <h3>Your Friendly Local Events Promoter</h3>
+                        <strong style={{fontSize: "24px", color: "#D2492C"}}>Your <b style={{fontSize:"28px"}}>Local</b> Events Promoter</strong>
                         <div style={{marginTop: 50}}>
                             <nav style={{ display: "flex", justifyContent: "center", gap: "20px"}}>
                                 <NavLink style={{ fontSize: "24px" }}
                                          to="/login">
                                     Login
                                 </NavLink>
-                                <NavLink style={{ fontSize: "24px" }}
+                                <NavLink style={{ marginLeft: "10px", fontSize: "24px" }}
                                          to="/register">
                                     Sign Up
                                 </NavLink>
