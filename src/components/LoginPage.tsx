@@ -17,7 +17,7 @@ export default function LoginPage() {
         border: "none",
         outline: "none",
         padding: "12px",
-        fontSize: "16px"
+        fontSize: "14px"
     };
 
     const passwordWrapper = {
