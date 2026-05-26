@@ -15,7 +15,7 @@ function CalendarDate() {
 
     return (
         <div style={{display: "flex"}}>
-            <div style={{justifyContent: "center", marginLeft: "6px", marginRight: "2px", marginTop: "4px"}}>
+            <div style={{justifyContent: "center", marginLeft: "6px", marginRight: "2px", marginTop: "2px"}}>
                 <img style={{width: "20px", height: "20px", verticalAlign: "text-bottom"}} src={"/icons8-calendar-24.png"} alt={'.'} />
             </div>
             <div style={{

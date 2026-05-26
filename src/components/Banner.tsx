@@ -4,7 +4,6 @@ import { useUser } from "../UserContext";
 import { useNavigate } from "react-router-dom";
 import CalendarDate from "../utils/CalendarDate";
 import {useState} from "react";
-import CreateEventForm from "./dashboard/CreateEventForm";
 import Modal from "./Modal";
 import ChangePasswordForm from "./ChangePasswordForm";
 import {api} from "../utils/api";
@@ -22,6 +21,10 @@ export function Banner() {
         setUser(null);
         navigate("/");
     };
+
+    const handleAbout = () => {
+        navigate("/about");
+    }
 
     const handleChangePassword = async () => {
         setShowForm(true);
@@ -54,7 +57,7 @@ export function Banner() {
             justifyContent: "space-between"
         }}>
             <Tooltip id="my-tooltip" />
-            <div style={{ display: "flex", alignItems: "center", gap: "2px" }} onClick={handleHomeClick}>
+            <div style={{ display: "flex", alignItems: "center", gap: "2px", cursor: "pointer" }} onClick={handleHomeClick}>
                 <img
                     src="/localbuzz2.png"
                     alt="Logo"
@@ -72,7 +75,7 @@ export function Banner() {
                         data-tooltip-id="my-tooltip"
                         data-tooltip-content="Change Password"
                         onClick={handleChangePassword}
-                        style={{width: "22px", height: "22px", verticalAlign: "text-bottom"}} src={"/icons8-user-male-30.png"} alt={'.'}
+                        style={{width: "22px", height: "22px", verticalAlign: "text-bottom", cursor: "pointer"}} src={"/icons8-user-male-30.png"} alt={'.'}
                     />&nbsp;
                     {user?.firstName && (
                         <div style={userInfoStyle}>
@@ -80,13 +83,11 @@ export function Banner() {
                             {user.company && ` | ${user.company}`}
                         </div>
                     )}
-                    <div style={{marginLeft: '28px', fontSize: "14px"}}>
-                        <p>About</p>
+                    <div style={{marginLeft: '28px', marginTop: "1px", fontSize: "14px" , cursor: "pointer"}}>
+                        <p onClick={handleAbout}>About</p>
                     </div>
-                    <div style={{marginLeft: '6px'}}>
-                        <button className="btn btn-secondary" onClick={handleLogout}>
-                            Logout
-                        </button>
+                    <div style={{marginLeft: '16px', marginRight: '32px', marginTop: "1px", fontSize: "14px", cursor: "pointer"}}>
+                        <p onClick={handleLogout}>Logout</p>
                     </div>
                     <div>
                         <CalendarDate />

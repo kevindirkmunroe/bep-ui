@@ -220,3 +220,9 @@ code {
   background-repeat: no-repeat;
 }
 
+.about-div {
+  background-image: url('/san-francisco-1600x800.jpeg');
+  background-size: cover;
+  background-position: center; /* Keeps the center of the image visible */
+  background-repeat: no-repeat;
+}

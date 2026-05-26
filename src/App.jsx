@@ -13,6 +13,7 @@ import InvitePage from "./components/InvitePage.js";
 import ForgotPasswordPage from "./components/ForgotPasswordPage.js";
 import ResetPasswordPage from "./components/ResetPasswordPage.js";
 import RequestInvitePage from "./components/RequestInvitePage.js";
+import {AboutPage} from "./components/AboutPage.js";
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
               <Route path="/resetpassword" element={<ResetPasswordPage />} />
               <Route path="/invite" element={<RequestInvitePage />} />
               <Route path="/register" element={<RegisterPage />} />
+              <Route path="/about" element={<AboutPage />} />
 
               {/* Protected */}
               <Route path="/dashboard/:userId"
