@@ -6,7 +6,6 @@ import {EventDetail} from "./events/eventDetailTypes.interface";
 import Modal from "../Modal";
 import ImageCarousel from "../ImageCarousel";
 import {api} from "../../utils/api";
-import {useUser} from "../../UserContext";
 
 export default function Dashboard() {
     const { userId } = useParams();
@@ -59,13 +58,11 @@ export default function Dashboard() {
         }
     };
 
-    const { loading } = useUser();
     useEffect(() => {
-        if (loading) return;
         if (!userId) return;
 
         loadEvents();
-    }, [loading, userId]);
+    }, [userId]);
 
     if (!userId) return <div style={{marginTop: "50px"}}>Loading...</div>;
 
