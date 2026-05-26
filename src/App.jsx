@@ -12,6 +12,7 @@ import {PublishedEventsPage} from "./components/dashboard/events/PublishedEvents
 import InvitePage from "./components/InvitePage.js";
 import ForgotPasswordPage from "./components/ForgotPasswordPage.js";
 import ResetPasswordPage from "./components/ResetPasswordPage.js";
+import RequestInvitePage from "./components/RequestInvitePage.js";
 
 export default function App() {
   return (
@@ -22,7 +23,7 @@ export default function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
               <Route path="/resetpassword" element={<ResetPasswordPage />} />
-              <Route path="/invite" element={<InvitePage />} />
+              <Route path="/invite" element={<RequestInvitePage />} />
               <Route path="/register" element={<RegisterPage />} />
 
               {/* Protected */}

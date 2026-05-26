@@ -104,6 +104,9 @@ export function RegisterPage() {
                     {error && <div style={{ color: "red" }}>{error}</div>}
 
                     <button className="btn btn-primary" style={{marginTop: "8px"}} onClick={handleRegister}>Register</button>
+                    <div style={{marginTop: "10px"}}>
+                        <a href={"/invite"}>Need an Invite?</a>
+                    </div>
                 </div>
             </div>
         </div>
