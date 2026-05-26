@@ -7,8 +7,6 @@ export default function ProtectedRoute({ children }) {
         return <div>Loading...</div>;
     }
 
-    console.log(`[ProtectedRoute] user= ${JSON.stringify(user)}`);
-
     if (!user?.userId) {
         return <Navigate to="/login" />;
     }

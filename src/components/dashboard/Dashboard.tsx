@@ -59,6 +59,8 @@ export default function Dashboard() {
     };
 
     useEffect( () => {
+        if(!userId) return;
+
         loadEvents();
     }, [userId]);
 
