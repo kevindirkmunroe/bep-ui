@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { useUser } from "../UserContext";
 import ImageGrid from "./ImageGrid";
 import {api} from "../utils/api";
@@ -103,7 +103,7 @@ export default function LoginPage() {
                         <button className="btn btn-primary" style={{width: "100px", justifyContent: "center", marginTop: "20px"}} onClick={handleLogin}>Login</button>
                     </div>
                     <div style={{marginTop: "20px"}}>
-                        <a href="/forgotpassword">Forgot Password?</a>
+                        <Link to="/forgotpassword">Forgot Password?</Link>
                     </div>
                 </div>
             </div>

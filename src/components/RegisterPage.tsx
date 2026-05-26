@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import ImageCarousel from "./ImageCarousel";
 import {api} from "../utils/api";
 
@@ -105,7 +105,7 @@ export function RegisterPage() {
 
                     <button className="btn btn-primary" style={{marginTop: "8px"}} onClick={handleRegister}>Register</button>
                     <div style={{marginTop: "10px"}}>
-                        <a href={"/invite"}>Need an Invite?</a>
+                        <Link to="/invite">Request Invite</Link>
                     </div>
                 </div>
             </div>

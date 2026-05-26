@@ -9,7 +9,6 @@ import LoginPage from "./components/LoginPage.js";
 import {RegisterPage} from "./components/RegisterPage.js";
 import ProtectedRoute from "./ProtectedRoute.js";
 import {PublishedEventsPage} from "./components/dashboard/events/PublishedEventsPage.js";
-import InvitePage from "./components/InvitePage.js";
 import ForgotPasswordPage from "./components/ForgotPasswordPage.js";
 import ResetPasswordPage from "./components/ResetPasswordPage.js";
 import RequestInvitePage from "./components/RequestInvitePage.js";
