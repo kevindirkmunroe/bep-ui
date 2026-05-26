@@ -9,8 +9,6 @@ import {api} from "../../utils/api";
 
 export default function Dashboard() {
     const { userId } = useParams();
-
-    const [user, setUser] = useState(null);
     const [events, setEvents] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [editingEvent, setEditingEvent] = useState<EventDetail | null>(null);
@@ -38,13 +36,6 @@ export default function Dashboard() {
 
     const loadEvents = async () => {
         setShowForm(false);
-        try {
-            const userRes = await api.get(`/users/${userId}`);
-            setUser(userRes.data.data);
-        } catch (err: Error | any) {
-            alert(`An error occured: ${err}`);
-            console.error(err);
-        }
 
         try{
             const eventsRes = await api.get(`/users/${userId}/events`);
@@ -59,12 +50,12 @@ export default function Dashboard() {
     };
 
     useEffect( () => {
-        if(!user) return;
+        if(!userId) return;
 
         loadEvents();
-    }, [user]);
+    }, [userId]);
 
-    if (!user) return <div style={{marginTop: "50px"}}>Loading...</div>;
+    if (!userId) return <div style={{marginTop: "50px"}}>Loading...</div>;
 
     const activeEventCount = getActiveEventCount();
     const submittedEventCount = getSubmittedEventCount();
