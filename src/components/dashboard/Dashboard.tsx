@@ -39,7 +39,7 @@ export default function Dashboard() {
 
     const loadEvents = async () => {
         setShowForm(false);
-
+        const { loading } = useUser();
         try{
             const eventsRes = await api.get(`/users/${userId}/events`);
             setEvents(eventsRes.data.data);
