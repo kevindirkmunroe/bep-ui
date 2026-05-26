@@ -1,5 +1,5 @@
 import {createContext, ReactNode, useContext, useEffect, useState} from "react";
-import axios from "axios";
+import {api} from "./utils/api";
 
 export interface UserData {
     userId: string;
@@ -22,7 +22,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
     // Restore user on app startup (page refresh)
     useEffect(() => {
-        axios
+        api
             .get("/users/me", { withCredentials: true })
             .then(res => {
                 setUser(res.data);

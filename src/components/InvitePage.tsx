@@ -1,8 +1,8 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../UserContext";
 import ImageGrid from "./ImageGrid";
+import {api} from "../utils/api";
 
 export default function InvitePage() {
     const [form, setForm] = useState({ username: "", inviteCode: "" });
@@ -17,7 +17,7 @@ export default function InvitePage() {
 
     const handleInvite = async () => {
         try {
-            const res = await axios.get(`/users/invite?username=${form.username}&inviteCode=${form.inviteCode}`);
+            const res = await api.get(`/users/invite?username=${form.username}&inviteCode=${form.inviteCode}`);
             console.log(`setting userId: ${res.data.userId}`);
             setUser(res.data.user);
             console.log(`navigating to : /dashboard/${res.data.userId}`);

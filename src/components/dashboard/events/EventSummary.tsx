@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {CSSProperties, useState} from "react";
 
 import {EventSummaryProps} from "./eventDetailTypes.interface";
 import {getEventStatus, getIsExpired} from "./EventStatus";
+import {api} from "../../../utils/api";
 
 const overlayStyle = {
     position: "fixed" as const,
@@ -55,12 +55,12 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     };
 
     const handleResubmit = async () => {
-        await axios.patch(`/events/${event.event_id}`, {status: "not_started"});
+        await api.patch(`/events/${event.event_id}`, {status: "not_started"});
         await reload?.();
     };
 
     const handleDelete = async () => {
-        await axios.delete(`/events/${event.event_id}`);
+        await api.delete(`/events/${event.event_id}`);
         await reload?.();
     };
 

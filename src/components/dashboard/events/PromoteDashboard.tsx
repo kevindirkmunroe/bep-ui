@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +7,7 @@ import {ProgressBar} from "./platforms/ProgressBar";
 import {PlatformList} from "./platforms/PlatformList";
 import {EventDetail} from "./eventDetailTypes.interface";
 import { useUser } from "../../../UserContext";
+import {api} from "../../../utils/api";
 
 
 export default function PromoteDashboard() {
@@ -21,7 +21,7 @@ export default function PromoteDashboard() {
     }, [eventId]);
 
     const loadEvent = async () => {
-        const res = await axios.get(`/events/${eventId}`);
+        const res = await api.get(`/events/${eventId}`);
         setEvent(res.data);
     };
 

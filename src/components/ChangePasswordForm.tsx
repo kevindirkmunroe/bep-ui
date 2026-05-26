@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {UserData} from "../UserContext";
-import axios from "axios";
+import {api} from "../utils/api";
 
 export default function ChangePasswordForm({ user }: { user: UserData }) {
     const [password, setPassword] = useState("");
@@ -51,7 +51,7 @@ export default function ChangePasswordForm({ user }: { user: UserData }) {
         }
 
         try {
-            await axios.post("/users/changepassword", {
+            await api.post("/users/changepassword", {
                 userId: user?.userId, password
             });
 

@@ -1,5 +1,4 @@
 import {Tooltip} from "react-tooltip";
-import axios from "axios";
 
 import { useUser } from "../UserContext";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +7,7 @@ import {useState} from "react";
 import CreateEventForm from "./dashboard/CreateEventForm";
 import Modal from "./Modal";
 import ChangePasswordForm from "./ChangePasswordForm";
+import {api} from "../utils/api";
 
 
 export function Banner() {
@@ -18,7 +18,7 @@ export function Banner() {
     const handleLogout = async () => {
         const confirmed = window.confirm("Are you sure you want to logout?");
         if (!confirmed) return;
-        await axios.post('/users/logout');
+        await api.post('/users/logout');
         setUser(null);
         navigate("/");
     };

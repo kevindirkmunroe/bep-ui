@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import {api} from "../utils/api";
 
 export default function RequestInvitePage() {
     const [name, setName] = useState("");
@@ -26,7 +26,7 @@ export default function RequestInvitePage() {
         try {
             setLoading(true);
 
-            await axios.post(
+            await api.post(
                 "/users/invite",
                 {
                     name,

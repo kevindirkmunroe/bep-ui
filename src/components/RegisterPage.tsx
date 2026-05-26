@@ -1,7 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ImageCarousel from "./ImageCarousel";
+import {api} from "../utils/api";
 
 export function RegisterPage() {
     const navigate = useNavigate();
@@ -37,7 +37,7 @@ export function RegisterPage() {
 
         try {
             // 🔹 Step 1: validate
-            const validateRes = await axios.get("/users/validate", {
+            const validateRes = await api.get("/users/validate", {
                 params: form
             });
 
@@ -55,7 +55,7 @@ export function RegisterPage() {
             }
 
             // 🔹 Step 2: create user
-            await axios.post("/users", form);
+            await api.post("/users", form);
 
             alert("Registration successful. Please login.");
             navigate("/login");

@@ -1,10 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ImageGrid from "./ImageGrid";
-
-// Tell axios to send cookies for all requests
-axios.defaults.withCredentials = true;
+import {api} from "../utils/api";
 
 export default function ResetPasswordPage() {
     const [form, setForm] = useState({ password: "", passwordRepeat:"" });
@@ -24,7 +21,7 @@ export default function ResetPasswordPage() {
 
         try {
             console.log(`pwd1 ${form.password} pwd2 ${form.password}`);
-            await axios.post('/users/resetpassword', {
+            await api.post('/users/resetpassword', {
                 userIdentifier: form.password,
             });
             setPasswordReset(true);

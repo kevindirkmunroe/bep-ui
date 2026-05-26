@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import {NavLink, Outlet, useParams} from "react-router-dom";
 import CreateEventForm from "./CreateEventForm";
 import {getEventStatus} from "./events/EventStatus";
 import {EventDetail} from "./events/eventDetailTypes.interface";
 import Modal from "../Modal";
 import ImageCarousel from "../ImageCarousel";
+import {api} from "../../utils/api";
 
 export default function Dashboard() {
     const { userId } = useParams();
@@ -39,7 +39,7 @@ export default function Dashboard() {
     const loadEvents = async () => {
         setShowForm(false);
         try {
-            const userRes = await axios.get(`/users/${userId}`);
+            const userRes = await api.get(`/users/${userId}`);
             setUser(userRes.data.data);
         } catch (err: Error | any) {
             alert(`An error occured: ${err}`);
@@ -47,7 +47,7 @@ export default function Dashboard() {
         }
 
         try{
-            const eventsRes = await axios.get(`/users/${userId}/events`);
+            const eventsRes = await api.get(`/users/${userId}/events`);
             setEvents(eventsRes.data.data);
         } catch (err: Error | any) {
             if(err.response.status === 404){

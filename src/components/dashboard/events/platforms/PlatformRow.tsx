@@ -1,13 +1,12 @@
-import axios from "axios";
-
 import {PlatformRowProps} from "./platformTypes.interface"
 import {getPlatformUrl} from "./platformData";
 import {EventDetail} from "../eventDetailTypes.interface";
+import {api} from "../../../../utils/api";
 
 async function buildPayload(event: EventDetail, platform: string) {
 
     console.log(`[PlatformRow] calling /mapRegion with zip= ${event.zip} platform=${platform}`);
-    const res = await axios.get("/mapRegion", {
+    const res = await api.get("/mapRegion", {
         params: {
             zip: event.zip,
             platform
@@ -70,7 +69,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
 
         // 2. Update database
         try {
-            await axios.patch(
+            await api.patch(
                 `/events/${event.event_id}/platforms/${platform}`,
                 {
                     external_url: event.website,
@@ -110,7 +109,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
         updatePlatformStatus(platform, 'submitted');
 
         try{
-            await axios.patch(
+            await api.patch(
                 `/events/${event.event_id}/platforms/${platform}`,
                 { status: "submitted" }
             );

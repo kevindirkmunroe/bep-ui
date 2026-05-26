@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
 import {CreateEventFormProps} from "./eventTypes.interface";
 import {EventDetail} from "./events/eventDetailTypes.interface";
 import {fileToBase64} from "../../utils/FileUtils";
+import {api} from "../../utils/api";
 
 const formatDateTimeLocal = (iso?: string) => {
     if (!iso) return "";
@@ -68,9 +68,9 @@ export default function CreateEventForm({
     const handleSubmit = async () => {
         try {
             if (isEdit) {
-                await axios.put(`/events/${event.event_id}`, form);
+                await api.put(`/events/${event.event_id}`, form);
             } else {
-                await axios.post(`/users/${userId}/events`, form);
+                await api.post(`/users/${userId}/events`, form);
             }
             onSuccess(); // reload events
         } catch (err) {

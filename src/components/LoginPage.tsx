@@ -1,11 +1,8 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../UserContext";
 import ImageGrid from "./ImageGrid";
-
-// Tell axios to send cookies for all requests
-axios.defaults.withCredentials = true;
+import {api} from "../utils/api";
 
 export default function LoginPage() {
     const [form, setForm] = useState({ username: "", password: "" });
@@ -46,7 +43,7 @@ export default function LoginPage() {
 
     const handleLogin = async () => {
         try {
-            const res = await axios.post("/users/login", form);
+            const res = await api.post("/users/login", form);
 
             setUser({
                 userId: res.data.userId,
