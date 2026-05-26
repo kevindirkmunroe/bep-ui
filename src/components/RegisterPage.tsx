@@ -13,7 +13,8 @@ export function RegisterPage() {
         company: "",
         username: "",
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
+        invite_code: ""
     });
 
     const [error, setError] = useState("");
@@ -47,7 +48,7 @@ export function RegisterPage() {
                     validateRes.data.reason === "email_exists" ||
                     validateRes.data.reason === "username_exists"
                 ) {
-                    setTimeout(() => navigate("/users/login"), 1500);
+                    setTimeout(() => navigate("/login"), 4000);
                 }
 
                 return;
@@ -72,7 +73,7 @@ export function RegisterPage() {
                 <ImageCarousel />
             </div>
             {/* RIGHT: Existing content */}
-            <div style={{marginTop: "50px", width: "100%", flexDirection: "row", justifyItems: "center"}}>
+            <div style={{marginTop: "10px", width: "100%", flexDirection: "row", justifyItems: "center"}}>
                 <div style={{ padding: 40, maxWidth: 400 }}>
                     <h2>Welcome To The Party Pal!</h2>
                     <br/>
@@ -98,10 +99,11 @@ export function RegisterPage() {
                         placeholder="Confirm Password"
                         onChange={handleChange}
                     />
+                    <input className="input" name="invite_code" placeholder="Invite code" onChange={handleChange} />
 
                     {error && <div style={{ color: "red" }}>{error}</div>}
 
-                    <button className="btn btn-primary" onClick={handleRegister}>Register</button>
+                    <button className="btn btn-primary" style={{marginTop: "8px"}} onClick={handleRegister}>Register</button>
                 </div>
             </div>
         </div>

@@ -105,9 +105,6 @@ export default function LoginPage() {
                         </div>
                         <button className="btn btn-primary" style={{width: "100px", justifyContent: "center", marginTop: "20px"}} onClick={handleLogin}>Login</button>
                     </div>
-                    <div style={{marginTop: "30px"}}>
-                        <a href="/invite">Use Invite Code</a>
-                    </div>
                     <div style={{marginTop: "20px"}}>
                         <a href="/forgotpassword">Forgot Password?</a>
                     </div>
