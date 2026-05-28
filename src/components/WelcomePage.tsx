@@ -35,7 +35,7 @@ export function WelcomePage() {
                             </nav>
                         </div>
                     </div>
-                    <div style={{marginTop: "auto", display: "flex", marginBottom: "80px", flexDirection: "column", alignItems: "center", gap: "10px"}}>
+                    <div style={{marginTop: "auto", display: "flex", marginBottom: "120px", flexDirection: "column", alignItems: "center", gap: "10px"}}>
                         <img style={{transform: "scale(0.75)"}} src={"/funcheapsf.jpg"} />
                         <img src={"/indybay.jpg"} />
                         <img style={{transform: "scale(0.8)"}} src={"/visit_oakland.jpg"} />
