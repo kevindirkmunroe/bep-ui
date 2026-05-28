@@ -4,6 +4,7 @@ import {CSSProperties, useState} from "react";
 import {EventSummaryProps} from "./eventDetailTypes.interface";
 import {getEventStatus, getIsExpired} from "./EventStatus";
 import {api} from "../../../utils/api";
+import {PlatformData} from "./platforms/platformTypes.interface";
 
 const overlayStyle = {
     position: "fixed" as const,
@@ -50,6 +51,21 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     const [showConfirm, setShowConfirm] = useState(false);
     const [imgSrc, setImgSrc] = useState("/icons8-delete-30.png");
 
+    const getNewestPublishDate = (platforms: PlatformData[]): Date | undefined => {
+        const dates = platforms
+            .map(p => p.date_published)
+            .filter((d): d is string => !!d)
+            .map(d => new Date(d));
+
+        if (dates.length === 0) {
+            return undefined;
+        }
+
+        return new Date(
+            Math.max(...dates.map(d => d.getTime()))
+        );
+    };
+
     const handlePromote = () => {
         navigate(`/events/${event.event_id}`);
     };
@@ -57,11 +73,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     const handleClone = async () => {
         console.log(`cloning event: ${event.event_id}`);
         await api.post(`/events/${event.event_id}/clone`);
-        await reload?.();
-    };
-
-    const handleResubmit = async () => {
-        await api.patch(`/events/${event.event_id}`, {status: "not_started"});
         await reload?.();
     };
 
@@ -76,7 +87,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
 
     return (
         <div style={ showAsHeader ? eventHeaderStyle : eventListStyle}>
-            <div style={{marginRight: "20px", width: "50%"}}>
+            <div style={{marginRight: "20px", width: "50%", backgroundColor: status === 'submitted' ? "#e0e0e0": 'white'}}>
                 <div style={{fontSize: "16px", fontWeight:"bold"}}>{event.title}</div>
                 <div style={{fontSize: "14px"}}>{event.location_name}</div>
                 <div><p style={{fontSize: "14px"}}>{new Date(event.start_datetime).toLocaleString()}</p></div>
@@ -105,9 +116,12 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                 </button>
                 )}
                 {readOnly && showRedo && !isExpired && (
-                    <button className="btn btn-primary" onClick={handleResubmit}>
-                        <img src={"/icons8-redo-48.png"} style={{width:"24px", height:"24px"}} />Submit Again
-                    </button>
+                    <>
+                        <p style={{fontSize: "14px", marginTop: "10px", marginRight: "8px"}}>{getNewestPublishDate(event.platforms)?.toLocaleString()}</p>
+                        <button className="btn btn-primary" onClick={handleClone}>
+                            <img src={"/icons8-redo-48.png"} style={{width:"24px", height:"24px"}} />Submit Again
+                        </button>
+                    </>
                 )}
                 {!readOnly && (
                     <button className="btn btn-danger"

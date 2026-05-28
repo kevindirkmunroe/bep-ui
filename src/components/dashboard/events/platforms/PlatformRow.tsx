@@ -4,8 +4,6 @@ import {EventDetail} from "../eventDetailTypes.interface";
 import {api} from "../../../../utils/api";
 
 async function buildPayload(event: EventDetail, platform: string) {
-
-    console.log(`[PlatformRow] calling /mapRegion with zip= ${event.zip} platform=${platform}`);
     const res = await api.get("/mapRegion", {
         params: {
             zip: event.zip,
@@ -88,8 +86,6 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
         let pl = null;
         try {
             pl = await buildPayload(event, platform)
-            console.log(`[PlatformRow] payload for ${platform}: ${JSON.stringify(pl)}`);
-
         }catch(err){
             console.log(`[PlatformRow] error creating payload for ${platform}: ${err}`);
         }
@@ -121,8 +117,6 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
             "*"
         );
 
-        console.log(`window.postMessage called!`);
-
         await reload();
     };
 
@@ -142,7 +136,6 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
                 `/events/${event.event_id}/platforms/${platform}`,
                 { status: "submitted" }
             );
-            console.log("[PlatformRow] reload fn:", reload);
             await reload();
         }catch(err){
             // rollback if needed
