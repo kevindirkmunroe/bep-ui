@@ -41,6 +41,8 @@ export function WelcomePage() {
                         <img style={{transform: "scale(0.8)"}} src={"/visit_oakland.jpg"} />
                         <img style={{transform: "scale(0.8)"}} src={"/sfstation.jpg"} />
                     </div>
+                    <div style={{marginBottom: "30px",padding: "20px", fontSize: "14px"}}>All trademarks and logos are the property of their respective owners.
+                        LocalBuzz is not affiliated with or endorsed by these platforms.</div>
                 </div>
             </div>
         </div>
