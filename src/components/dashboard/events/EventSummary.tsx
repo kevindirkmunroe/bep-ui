@@ -50,7 +50,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     const [showConfirm, setShowConfirm] = useState(false);
     const [imgSrc, setImgSrc] = useState("/icons8-delete-30.png");
 
-    const handleClick = () => {
+    const handlePromote = () => {
         navigate(`/events/${event.event_id}`);
     };
 
@@ -77,7 +77,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
             </div>
             <div style={{width: "60%", display: "flex", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
                 {!readOnly && (
-                    <button className="btn btn-primary" disabled={isExpired} onClick={handleClick}>
+                    <button className="btn btn-primary" disabled={isExpired} onClick={handlePromote}>
                         <img src={"/icons8-commercial-24.png"} />
                         Promote
                     </button>

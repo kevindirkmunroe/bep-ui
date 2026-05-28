@@ -45,6 +45,31 @@ async function buildPayload(event: EventDetail, platform: string) {
         };
     }
 
+    if (platform === "sfstation") {
+        return {
+            title: event.title,
+            description: event.description,
+            date: event.start_datetime,
+            location: event.location_name,
+            ticket_link : event.website
+        };
+    }
+
+    if (platform === "indybay") {
+        return {
+            name: event.name,
+            email: event.email,
+            title: event.title,
+            phone: event.phone,
+            topic: 'Arts + Action',
+            event_type: 'other',
+            description: event.description,
+            date: event.start_datetime,
+            location: event.location_name,
+            region: region
+        };
+    }
+
     return {};
 }
 
@@ -63,6 +88,8 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
         let pl = null;
         try {
             pl = await buildPayload(event, platform)
+            console.log(`[PlatformRow] payload for ${platform}: ${JSON.stringify(pl)}`);
+
         }catch(err){
             console.log(`[PlatformRow] error creating payload for ${platform}: ${err}`);
         }
@@ -93,6 +120,8 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
             },
             "*"
         );
+
+        console.log(`window.postMessage called!`);
 
         await reload();
     };

@@ -16,7 +16,7 @@ export function AboutPage(){
             justifyContent: "top"
         }}>
             <div style={{marginLeft: "4px", marginTop: "16px"}}>
-                &nbsp; About Us
+                &nbsp; About Us...
             </div>
         </div>
     )

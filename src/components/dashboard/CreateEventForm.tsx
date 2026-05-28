@@ -47,23 +47,24 @@ export default function CreateEventForm({
         });
     };
 
-    const handleFileChange = async (
-        e: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-
-        const base64 = await fileToBase64(file);
-
-        window.postMessage({
-            type: "BEP_IMAGE_UPLOAD",
-            payload: {
-                base64,
-                filename: file.name,
-                mimeType: file.type
-            }
-        }, "*");
-    };
+    // TODO: handle image upload
+    // const handleFileChange = async (
+    //     e: React.ChangeEvent<HTMLInputElement>
+    // ) => {
+    //     const file = e.target.files?.[0];
+    //     if (!file) return;
+    //
+    //     const base64 = await fileToBase64(file);
+    //
+    //     window.postMessage({
+    //         type: "BEP_IMAGE_UPLOAD",
+    //         payload: {
+    //             base64,
+    //             filename: file.name,
+    //             mimeType: file.type
+    //         }
+    //     }, "*");
+    // };
 
     const handleSubmit = async () => {
         try {

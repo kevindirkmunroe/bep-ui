@@ -1,7 +1,16 @@
-import {NavLink} from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
 import ImageCarousel from "./ImageCarousel";
+import {useUser} from "../UserContext";
 
 export function WelcomePage() {
+    const { user, loading } = useUser();
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (user?.userId) {
+        return <Navigate to={`/dashboard/${user.userId}`} replace />;
+    }
     return (
         <div>
             <div style={{ display: "flex", gap: "2px" }}>

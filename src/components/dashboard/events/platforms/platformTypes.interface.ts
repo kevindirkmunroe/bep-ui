@@ -1,6 +1,6 @@
 import {EventDetail} from "../eventDetailTypes.interface";
 
-export type Platform = "funcheapsf" | "visitoakland";
+export type Platform = "funcheapsf" | "visitoakland" | "sfstation" | "indybay";
 
 export interface PlatformData {
     platform: Platform;

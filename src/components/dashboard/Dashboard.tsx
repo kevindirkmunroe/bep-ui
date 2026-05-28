@@ -33,8 +33,6 @@ export default function Dashboard() {
     //     });
     //     return submittedEvents.length;
     // }
-    console.log("Dashboard mounted");
-    console.log("Dashboard params:",  userId );
 
     const loadEvents = async () => {
         setShowForm(false);
