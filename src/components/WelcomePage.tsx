@@ -19,7 +19,7 @@ export function WelcomePage() {
                     <ImageCarousel />
                 </div>
                 {/* RIGHT: Existing content */}
-                <div style={{ flex: 1 }}>
+                <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", minWidth: "100vh"}}>
                     <div style={{ paddingLeft: 40, marginTop: "10%" }}>
                         <strong style={{fontSize: "24px", color: "#D2492C"}}>Your <b style={{fontSize:"28px"}}>Local</b> Events Promoter</strong>
                         <div style={{marginTop: 50}}>
@@ -34,6 +34,12 @@ export function WelcomePage() {
                                 </NavLink>
                             </nav>
                         </div>
+                    </div>
+                    <div style={{marginTop: "auto", display: "flex", marginBottom: "80px", flexDirection: "column", alignItems: "center", gap: "10px"}}>
+                        <img style={{transform: "scale(0.75)"}} src={"/funcheapsf.jpg"} />
+                        <img src={"/indybay.jpg"} />
+                        <img style={{transform: "scale(0.8)"}} src={"/visit_oakland.jpg"} />
+                        <img style={{transform: "scale(0.8)"}} src={"/sfstation.jpg"} />
                     </div>
                 </div>
             </div>
