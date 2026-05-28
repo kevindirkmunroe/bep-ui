@@ -17,6 +17,7 @@ export interface EventDetail {
     phone?: string;
     platforms: PlatformData[];
     region?: string;
+    category?: string;
 }
 
 export type EventSummaryProps = {

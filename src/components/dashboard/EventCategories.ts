@@ -1,0 +1,22 @@
+export const categories = [
+    "Comedy",
+    "Dance",
+    "Dating",
+    "Conference / Convention",
+    "Fashion",
+    "Film / Movie / Television",
+    "Food & Wine",
+    "Health & Wellness",
+    "LGBTQ",
+    "Fundraiser / Activism",
+    "Outdoors / Nature",
+    "Religion / Spirituality",
+    "Sports / Fitness",
+    "Theatre / Performance Arts",
+    "Parade / March",
+    "Pop-up",
+    "Music",
+    "Community",
+    "Arts",
+    "Nightlife"
+];

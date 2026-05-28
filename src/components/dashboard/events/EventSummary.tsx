@@ -54,6 +54,12 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
         navigate(`/events/${event.event_id}`);
     };
 
+    const handleClone = async () => {
+        console.log(`cloning event: ${event.event_id}`);
+        await api.post(`/events/${event.event_id}/clone`);
+        await reload?.();
+    };
+
     const handleResubmit = async () => {
         await api.patch(`/events/${event.event_id}`, {status: "not_started"});
         await reload?.();
@@ -92,6 +98,11 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                         <img src={"/icons8-edit-64.png"} style={{width:"24px", height:"24px"}} />
                         Edit
                     </button>
+                )}
+                {!readOnly && (
+                    <button className="btn btn-primary" onClick={handleClone}>
+                    <img src={"/icons8-clone-24.png"} style={{width:"24px", height:"24px"}} />Clone
+                </button>
                 )}
                 {readOnly && showRedo && !isExpired && (
                     <button className="btn btn-primary" onClick={handleResubmit}>

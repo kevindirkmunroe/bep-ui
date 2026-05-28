@@ -4,7 +4,7 @@ export function getEventStatus(event: EventDetail) {
     const platforms = event.platforms || [];  // 👈 fix
     const statuses = platforms.map(p => p.status);
 
-    if (statuses.every(s => s === "submitted")) {
+    if (statuses.length > 0 && statuses.every(s => s === "submitted")) {
         return "submitted";
     }
 

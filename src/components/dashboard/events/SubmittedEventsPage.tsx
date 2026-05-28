@@ -16,7 +16,7 @@ export function SubmittedEventsPage() {
     });
 
     return (
-        <div style={{marginTop: 30}}>
+        <div style={{marginTop: 10}}>
             {submittedEvents.length === 0 && <p>No Submitted Events Yet</p>}
             <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                 {submittedEvents.map(e => (

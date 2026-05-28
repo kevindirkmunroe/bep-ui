@@ -3,6 +3,7 @@ import {CreateEventFormProps} from "./eventTypes.interface";
 import {EventDetail} from "./events/eventDetailTypes.interface";
 import {fileToBase64} from "../../utils/FileUtils";
 import {api} from "../../utils/api";
+import {categories} from "./EventCategories";
 
 const formatDateTimeLocal = (iso?: string) => {
     if (!iso) return "";
@@ -31,8 +32,10 @@ export default function CreateEventForm({
         organization: event?.organization || "",
         phone: event?.phone || "",
         website: event?.website || "",
+        category: event?.category || "",
     });
 
+    const [category, setCategory] = useState("");
     const [form, setForm] = useState(buildForm(event));
     const isEdit = !!event;
 
@@ -78,6 +81,13 @@ export default function CreateEventForm({
             console.error(err);
             alert("Failed to create event");
         }
+    };
+    const inputStyle: React.CSSProperties = {
+        width: "100%",
+        padding: "10px",
+        borderRadius: "6px",
+        border: "1px solid #ccc",
+        fontSize: "14px"
     };
 
     return (
@@ -133,6 +143,20 @@ export default function CreateEventForm({
                     onChange={handleChange}
                     value={form.description}
                 />
+
+                <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    style={inputStyle}
+                >
+                    <option value="">Select a category</option>
+
+                    {categories.map((cat) => (
+                        <option key={cat} value={cat}>
+                            {cat}
+                        </option>
+                    ))}
+                </select>
 
                 <input
                     name="address"
