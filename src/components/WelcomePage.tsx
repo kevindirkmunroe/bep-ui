@@ -35,11 +35,11 @@ export function WelcomePage() {
                             </nav>
                         </div>
                     </div>
-                    <div style={{marginTop: "auto", display: "flex", marginBottom: "4px", flexDirection: "column", alignItems: "center", gap: "10px"}}>
-                        <img style={{transform: "scale(0.75)"}} src={"/funcheapsf.jpg"} />
-                        <img src={"/indybay.jpg"} />
-                        <img style={{transform: "scale(0.8)"}} src={"/visit_oakland.jpg"} />
-                        <img style={{transform: "scale(0.8)"}} src={"/sfstation.jpg"} />
+                    <div style={{marginTop: "auto", display: "flex", marginBottom: "4px", flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+                        <img style={{transform: "scale(0.6)"}} src={"/funcheapsf.jpg"} />
+                        <img style={{transform: "scale(0.6)"}} src={"/indybay.jpg"} />
+                        <img style={{transform: "scale(0.6)"}} src={"/visit_oakland.jpg"} />
+                        <img style={{transform: "scale(0.6)"}} src={"/sfstation.jpg"} />
                     </div>
                     <div style={{marginBottom: "30px",padding: "20px", fontSize: "14px"}}>All trademarks and logos are the property of their respective owners.
                         LocalBuzz is not affiliated with or endorsed by these platforms.</div>
