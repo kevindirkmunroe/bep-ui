@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import {CSSProperties, useState} from "react";
+import React, {CSSProperties, useState} from "react";
 
 import {EventSummaryProps} from "./eventDetailTypes.interface";
 import {getEventStatus, getIsExpired} from "./EventStatus";
 import {api} from "../../../utils/api";
 import {PlatformData} from "./platforms/platformTypes.interface";
+import RestoreEventModal from "./RestoreEventModal";
 
 const overlayStyle = {
     position: "fixed" as const,
@@ -49,6 +50,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     const navigate = useNavigate();
 
     const [showConfirm, setShowConfirm] = useState(false);
+    const [showRestoreModal, setShowRestoreModal] = useState(false);
     const [imgSrc, setImgSrc] = useState("/icons8-delete-30.png");
 
     const getNewestPublishDate = (platforms: PlatformData[]): Date | undefined => {
@@ -70,6 +72,10 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
         navigate(`/events/${event.event_id}`);
     };
 
+    const handleRevive = () => {
+        // TODO- set the start date, updated at
+    }
+
     const handleClone = async () => {
         console.log(`cloning event: ${event.event_id}`);
         await api.post(`/events/${event.event_id}/clone`);
@@ -87,19 +93,19 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
 
     return (
         <div style={ showAsHeader ? eventHeaderStyle : eventListStyle}>
-            <div style={{marginRight: "20px", width: "50%", backgroundColor: status === 'submitted' ? "#e0e0e0": 'white'}}>
+            <div style={{marginRight: "20px", width: "50%", backgroundColor: status === 'submitted' || isExpired ? "#f5f5f5" : 'white'}}>
                 <div style={{fontSize: "16px", fontWeight:"bold"}}>{event.title}</div>
                 <div style={{fontSize: "14px"}}>{event.location_name}</div>
                 <div><p style={{fontSize: "14px"}}>{new Date(event.start_datetime).toLocaleString()}</p></div>
             </div>
             <div style={{width: "60%", display: "flex", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
-                {!readOnly && (
+                {!readOnly && !isExpired && (
                     <button className="btn btn-primary" disabled={isExpired} onClick={handlePromote}>
                         <img src={"/icons8-commercial-24.png"} />
                         Promote
                     </button>
                 )}
-                {canEdit && onEdit &&(
+                {canEdit && onEdit && !isExpired &&(
                     <button className="btn btn-primary"
                             onClick={(e) => {
                                 e.stopPropagation();
@@ -110,16 +116,23 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                         Edit
                     </button>
                 )}
-                {!readOnly && (
+                {!readOnly && !isExpired && (
                     <button className="btn btn-primary" onClick={handleClone}>
                     <img src={"/icons8-clone-24.png"} style={{width:"24px", height:"24px"}} />Clone
                 </button>
                 )}
                 {readOnly && showRedo && !isExpired && (
                     <>
-                        <p style={{fontSize: "14px", marginTop: "10px", marginRight: "8px"}}>{getNewestPublishDate(event.platforms)?.toLocaleString()}</p>
+                        <p style={{fontSize: "14px", marginTop: "10px", marginRight: "20px"}}>{getNewestPublishDate(event.platforms)?.toLocaleString()}</p>
                         <button className="btn btn-primary" onClick={handleClone}>
                             <img src={"/icons8-redo-48.png"} style={{width:"24px", height:"24px"}} />Submit Again
+                        </button>
+                    </>
+                )}
+                {isExpired && (
+                    <>
+                        <button className="btn btn-primary" onClick={() => setShowRestoreModal(true)}>
+                            <img src={"/icons8-recycle-32.png"} style={{width:"24px", height:"24px"}} />Restore
                         </button>
                     </>
                 )}
@@ -140,9 +153,9 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     <div style={overlayStyle}>
                         <div style={modalStyle}>
                             <h3>Delete Event?</h3>
-                            <p>This action cannot be undone.</p>
+                            <>This action cannot be undone.</>
 
-                            <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+                            <div style={{ display: "flex", alignContent: "center", justifyContent: "center", gap: "10px", marginTop: "10px" }}>
                                 <button className="btn btn-secondary" onClick={() => setShowConfirm(false)}>
                                     Cancel
                                 </button>
@@ -153,6 +166,19 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                             </div>
                         </div>
                     </div>
+                )}
+                {showRestoreModal && (
+                    <RestoreEventModal
+                        onCancel={() => setShowRestoreModal(false)}
+                        onRestore={async (newDate) => {
+                            await api.patch(`/events/${event.event_id}/restore`, {
+                                start_date: newDate
+                            });
+
+                            setShowRestoreModal(false);
+                            await reload?.();
+                        }}
+                    />
                 )}
             </div>
         </div>

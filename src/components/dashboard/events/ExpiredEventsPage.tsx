@@ -5,14 +5,15 @@ import {getEventStatus, getIsExpired} from "./EventStatus";
 import React from "react";
 import {isOlderThanToday} from "../../../utils/Time";
 
-export function ActiveEventsPage() {
+export function ExpiredEventsPage() {
     const { events, reload } = useOutletContext<{
         events: EventDetail[];
         reload: () => Promise<void>;
     }>();
     const { setEditingEvent } = useOutletContext<{ setEditingEvent:  React.Dispatch<React.SetStateAction<EventDetail | null>> }>();
+
     const activeEvents = (events || []).filter(e => {
-        return getEventStatus(e) !== "submitted" && !isOlderThanToday(e.start_datetime);
+        return getEventStatus(e) !== "submitted" && isOlderThanToday(e.start_datetime);
     });
 
 

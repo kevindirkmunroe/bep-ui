@@ -13,9 +13,13 @@ export default function Dashboard() {
     const [showForm, setShowForm] = useState(false);
     const [editingEvent, setEditingEvent] = useState<EventDetail | null>(null);
 
+    function isOlderThanToday(date: string) {
+        return new Date(date) < new Date();
+    }
+
     function getActiveEventCount(){
         const activeEvents = (events || []).filter(e => {
-            return getEventStatus(e) !== "submitted";
+            return getEventStatus(e) !== "submitted" && !isOlderThanToday(e.start_datetime);;
         });
         return activeEvents.length;
     }
@@ -23,6 +27,13 @@ export default function Dashboard() {
     function getSubmittedEventCount(){
         const submittedEvents = (events || []).filter(e => {
             return getEventStatus(e) === "submitted";
+        });
+        return submittedEvents.length;
+    }
+
+    function getExpiredEventCount(){
+        const submittedEvents = (events || []).filter(e => {
+            return getEventStatus(e) !== "submitted" && isOlderThanToday(e.start_datetime);;
         });
         return submittedEvents.length;
     }
@@ -66,6 +77,7 @@ export default function Dashboard() {
 
     const activeEventCount = getActiveEventCount();
     const submittedEventCount = getSubmittedEventCount();
+    const expiredEventCount = getExpiredEventCount();
     // const publishedEventCount = getPublishedEventCount();
 
     return (
@@ -143,6 +155,20 @@ export default function Dashboard() {
                                 ) : (
                                     <div style={{fontSize: "15px"}}>
                                         Submitted(0)
+                                    </div>
+                                )}
+                                {expiredEventCount > 0 ? (
+                                    <NavLink
+                                        to="expired"
+                                        style={({ isActive }) => ({
+                                            fontSize: isActive ? "20px" : "15px",
+                                            fontWeight: isActive ? "bold" : "normal"
+                                        })}>
+                                        Expired({expiredEventCount})
+                                    </NavLink>
+                                ) : (
+                                    <div style={{fontSize: "15px"}}>
+                                        Expired(0)
                                     </div>
                                 )}
                                 {/* For V1 skip published, user can check their inboxes */}

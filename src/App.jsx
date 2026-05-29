@@ -13,6 +13,7 @@ import ForgotPasswordPage from "./components/ForgotPasswordPage.js";
 import ResetPasswordPage from "./components/ResetPasswordPage.js";
 import RequestInvitePage from "./components/RequestInvitePage.js";
 import {AboutPage} from "./components/AboutPage.js";
+import {ExpiredEventsPage} from "./components/dashboard/events/ExpiredEventsPage.js";
 
 export default function App() {
   return (
@@ -38,6 +39,7 @@ export default function App() {
 
                   <Route path="events" element={<ActiveEventsPage />} />
                   <Route path="submitted" element={<SubmittedEventsPage />} />
+                  <Route path="expired" element={<ExpiredEventsPage />} />
                   <Route path="published" element={<PublishedEventsPage />} />
               </Route>
               <Route path="/events/:eventId" element={<PromoteDashboard />} />
