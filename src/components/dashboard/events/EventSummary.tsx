@@ -35,7 +35,7 @@ const eventListStyle: CSSProperties = {
     padding: 5,
     borderRadius: '10px',
     width: "95%",
-    border: '1px solid #D2492C'
+    border: '1px solid #d3d3d3'
 };
 
 const eventHeaderStyle: CSSProperties = {
