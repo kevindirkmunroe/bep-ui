@@ -157,7 +157,7 @@ export default function Dashboard() {
                                         Submitted(0)
                                     </div>
                                 )}
-                                {expiredEventCount > 0 ? (
+                                {expiredEventCount > 0 && (
                                     <NavLink
                                         to="expired"
                                         style={({ isActive }) => ({
@@ -166,10 +166,6 @@ export default function Dashboard() {
                                         })}>
                                         Expired({expiredEventCount})
                                     </NavLink>
-                                ) : (
-                                    <div style={{fontSize: "15px"}}>
-                                        Expired(0)
-                                    </div>
                                 )}
                                 {/* For V1 skip published, user can check their inboxes */}
                                 {/*{publishedEventCount > 0 ? (*/}
