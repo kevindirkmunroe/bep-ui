@@ -35,7 +35,6 @@ export default function CreateEventForm({
         category: event?.category || "",
     });
 
-    const [category, setCategory] = useState("");
     const [form, setForm] = useState(buildForm(event));
     const isEdit = !!event;
 
@@ -70,6 +69,7 @@ export default function CreateEventForm({
     // };
 
     const handleSubmit = async () => {
+        console.log(`[CreateEventForm] submit form ${JSON.stringify(form)}`);
         try {
             if (isEdit) {
                 await api.put(`/events/${event.event_id}`, form);
@@ -145,12 +145,16 @@ export default function CreateEventForm({
                 />
 
                 <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
+                    value={form.category || ""}
+                    onChange={(e) =>
+                        setForm({
+                            ...form,
+                            category: e.target.value
+                        })
+                    }
                     style={inputStyle}
                 >
                     <option value="">Select a category</option>
-
                     {categories.map((cat) => (
                         <option key={cat} value={cat}>
                             {cat}

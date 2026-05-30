@@ -11,8 +11,6 @@ async function buildPayload(event: EventDetail, platform: string) {
         }
     });
     const region = res.data.region;
-    console.log(`[PlatformRow] Region = ${region}`);
-
     if (platform === "funcheapsf") {
         return {
             title: event.price === "Free"
@@ -27,7 +25,8 @@ async function buildPayload(event: EventDetail, platform: string) {
             phone: event.phone,
             website: event.website,
             address: event.address,
-            region: region
+            region: region,
+            category: event.category,
         };
     }
 
@@ -39,7 +38,8 @@ async function buildPayload(event: EventDetail, platform: string) {
             description: event.description,
             date: event.start_datetime,
             location: event.location_name,
-            region: region
+            region: region,
+            category: event.category,
         };
     }
 
@@ -49,7 +49,8 @@ async function buildPayload(event: EventDetail, platform: string) {
             description: event.description,
             date: event.start_datetime,
             location: event.location_name,
-            ticket_link : event.website
+            ticket_link : event.website,
+            category: event.category,
         };
     }
 
@@ -64,7 +65,7 @@ async function buildPayload(event: EventDetail, platform: string) {
             description: event.description,
             date: event.start_datetime,
             location: event.location_name,
-            region: region
+            region: region,
         };
     }
 
@@ -86,6 +87,8 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
         let pl = null;
         try {
             pl = await buildPayload(event, platform)
+            console.log(`[PlatformRow] payload for ${platform}: ${JSON.stringify(pl)}`);
+
         }catch(err){
             console.log(`[PlatformRow] error creating payload for ${platform}: ${err}`);
         }
@@ -104,14 +107,15 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
             console.log(`[PlatformRow] error updating platform ${platform}: ${err}`);
         }
 
-        // 3. post event for extension
+        // // 3. post event for extension
         event.region = pl?.region;
+
         window.postMessage(
             {
-                type: "SET_EVENT",
+                type: `LOCALBUZZ_AUTOFILL_${platform}`,
+                platform,
                 payload: {
                     ...event,
-                    platform
                 }
             },
             "*"
