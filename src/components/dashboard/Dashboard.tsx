@@ -112,7 +112,7 @@ export default function Dashboard() {
                         {
                             font: "bold",
                             height: "100px",
-                            marginBottom: "20px",
+                            marginBottom: "6px",
                             fontWeight: 800,
                             fontSize: "40px",
                             borderRadius: "4px",
@@ -123,12 +123,9 @@ export default function Dashboard() {
                         }
                     }>&nbsp;My Events
                     </div>
-                    <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-                        <div>
-                            <button className="btn btn-primary" style={{fontSize: "18px"}} onClick={() => setShowForm(true)}>
-                                + Create Event
-                            </button>
-                            <nav style={{ display: "flex", justifyContent: "center", gap: "20px", marginTop: "14px" }}>
+                    <div style={{display: "flex", flexDirection: "row"}}>
+                        <div style={{display: "flex", width: "100%", flexDirection: "row", marginBottom: "2px", justifyContent: "space-between"}}>
+                            <nav style={{ display: "flex", justifyContent: "center", gap: "20px", marginTop: "14px", marginLeft: "12px" }}>
                                 {activeEventCount > 0 ? (
                                     <NavLink
                                         to="events" end
@@ -183,7 +180,11 @@ export default function Dashboard() {
                                 {/*    </div>*/}
                                 {/*)}*/}
                             </nav>
-
+                            <div>
+                                <button className="btn btn-primary" style={{marginTop: '10px', marginLeft: "4px", fontSize: "14px"}} onClick={() => setShowForm(true)}>
+                                    + Create Event
+                                </button>
+                            </div>
                         </div>
                     </div>
                     {/* ROUTED CONTENT */}
