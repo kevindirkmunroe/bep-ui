@@ -185,7 +185,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
 
     return (
         <div style={{
-            border: "1px solid #D2492C",
+            border: "1px solid #d5d5d5",
             borderRadius: "4px",
             padding: 10,
             marginBottom: 10
