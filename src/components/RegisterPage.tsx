@@ -55,7 +55,7 @@ export function RegisterPage() {
             }
 
             // 🔹 Step 2: create user
-            await api.post("/users", form);
+            await api.post("/users/register", form);
 
             alert("Registration successful. Please login.");
             navigate("/login");
