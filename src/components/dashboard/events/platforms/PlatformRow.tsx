@@ -2,16 +2,20 @@ import {PlatformRowProps} from "./platformTypes.interface"
 import {getPlatformUrl} from "./platformData";
 import {EventDetail} from "../eventDetailTypes.interface";
 import {api} from "../../../../utils/api";
+import {zipToVisitOaklandDistrict} from "./regionMappings";
 
 async function buildPayload(event: EventDetail, platform: string) {
-    const res = await api.get("/mapRegion", {
-        params: {
-            zip: event.zip,
-            platform
-        }
-    });
-    const region = res.data.region;
+    let region = "";
     if (platform === "funcheapsf") {
+        region = "San Francisco"; // default to SF
+        try{
+            const res = await api.post(`/mapRegion`,
+                {zip: event.zip?.toString(), platform: platform});
+            region = res.data.region;
+        }catch(err){
+            console.log(`Error fetching City: ${err}`);
+        }
+
         return {
             title: event.price === "Free"
                 ? `Free: ${event.title}`
@@ -31,6 +35,8 @@ async function buildPayload(event: EventDetail, platform: string) {
     }
 
     if (platform === "visitoakland") {
+        const zip: string = event.zip || '';
+        region = zipToVisitOaklandDistrict(event.location_name, zip);
         return {
             name: event.name,
             email: event.email,
