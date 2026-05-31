@@ -130,7 +130,8 @@ export default function Dashboard() {
                                     <NavLink
                                         to="events" end
                                         style={({ isActive }) => ({
-                                            fontSize: isActive ? "20px" : "15px",
+                                            fontSize: isActive ? "18px" : "15px",
+                                            textDecoration: isActive ? "underline": "none",
                                             fontWeight: isActive ? "bold" : "normal"
                                         })}>
                                         Active({activeEventCount})
@@ -144,7 +145,8 @@ export default function Dashboard() {
                                     <NavLink
                                         to="submitted"
                                         style={({ isActive }) => ({
-                                            fontSize: isActive ? "20px" : "15px",
+                                            fontSize: isActive ? "18px" : "15px",
+                                            textDecoration: isActive ? "underline": "none",
                                             fontWeight: isActive ? "bold" : "normal"
                                         })}>
                                         Submitted({submittedEventCount})
@@ -158,7 +160,8 @@ export default function Dashboard() {
                                     <NavLink
                                         to="expired"
                                         style={({ isActive }) => ({
-                                            fontSize: isActive ? "20px" : "15px",
+                                            fontSize: isActive ? "18px" : "15px",
+                                            textDecoration: isActive ? "underline": "none",
                                             fontWeight: isActive ? "bold" : "normal"
                                         })}>
                                         Expired({expiredEventCount})
