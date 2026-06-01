@@ -30,7 +30,8 @@ const slides = [
     { src: "/carousel/food.jpg", label: "Food & Wine" },
     { src: "/carousel/wine.jpg", label: "Wine Bars" },
     { src: "/carousel/cosmo-alleycats.jpg", label: "Jazz" },
-    { src: "/carousel/popup.jpg", label: "Pop-up Events" }
+    { src: "/carousel/popup.jpg", label: "Pop-up Events" },
+    { src: "/carousel/uptown-sips.jpg", label: "Wine & Charcuterie" }
 ];
 
 export default function ImageCarousel() {

@@ -19,6 +19,7 @@ function CalendarDate() {
                 <img style={{width: "20px", height: "20px", verticalAlign: "text-bottom"}} src={"/icons8-calendar-24.png"} alt={'.'} />
             </div>
             <div style={{
+                    color: "black",
                     margin: "3px"}}>
                     <p style={{fontSize: '14px'}}>{time.toLocaleDateString()}</p>
             </div>
