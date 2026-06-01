@@ -17,7 +17,7 @@ export function Banner() {
     const handleLogout = async () => {
         const confirmed = window.confirm("Are you sure you want to logout?");
         if (!confirmed) return;
-        await api.post('/api/users/logout');
+        await api.post('/users/logout');
         setUser(null);
         navigate("/");
     };

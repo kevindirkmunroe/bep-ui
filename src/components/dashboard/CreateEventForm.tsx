@@ -72,9 +72,9 @@ export default function CreateEventForm({
         console.log(`[CreateEventForm] submit form ${JSON.stringify(form)}`);
         try {
             if (isEdit) {
-                await api.put(`/api/events/${event.event_id}`, form);
+                await api.put(`/events/${event.event_id}`, form);
             } else {
-                await api.post(`/api/users/${userId}/events`, form);
+                await api.post(`/users/${userId}/events`, form);
             }
             onSuccess(); // reload events
         } catch (err) {
@@ -122,7 +122,7 @@ export default function CreateEventForm({
                 <input
                     name="location_name"
                     className="input"
-                    placeholder="Venue / Location (use exact venue name, e.g. &quot;Mac's Bar&quot;)"
+                    placeholder="Location (General, like San Francisco, San Jose)"
                     onChange={handleChange}
                     value={form.location_name}
                 />

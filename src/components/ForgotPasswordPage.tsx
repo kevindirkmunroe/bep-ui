@@ -21,7 +21,7 @@ export default function ForgotPasswordPage() {
 
         try {
             console.log(`userIdentifier ${form.userIdentifier}`);
-            await api.post('/api/users/forgotpassword', {
+            await api.post('/users/forgotpassword', {
                 userIdentifier: form.userIdentifier,
             });
             setPasswordReset(true);

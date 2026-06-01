@@ -27,7 +27,7 @@ export default function RequestInvitePage() {
             setLoading(true);
 
             await api.post(
-                "/api/users/invite",
+                "/users/invite",
                 {
                     name,
                     email,

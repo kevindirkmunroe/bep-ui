@@ -78,12 +78,12 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
 
     const handleClone = async () => {
         console.log(`cloning event: ${event.event_id}`);
-        await api.post(`/api/events/${event.event_id}/clone`);
+        await api.post(`/events/${event.event_id}/clone`);
         await reload?.();
     };
 
     const handleDelete = async () => {
-        await api.delete(`/api/events/${event.event_id}`);
+        await api.delete(`/events/${event.event_id}`);
         await reload?.();
     };
 
@@ -171,7 +171,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     <RestoreEventModal
                         onCancel={() => setShowRestoreModal(false)}
                         onRestore={async (newDate) => {
-                            await api.patch(`/api/events/${event.event_id}/restore`, {
+                            await api.patch(`/events/${event.event_id}/restore`, {
                                 start_date: newDate
                             });
 

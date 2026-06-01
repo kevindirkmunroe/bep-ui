@@ -43,7 +43,7 @@ export default function LoginPage() {
 
     const handleLogin = async () => {
         try {
-            const res = await api.post("/api/users/login", form);
+            const res = await api.post("/users/login", form);
 
             setUser({
                 userId: res.data.userId,

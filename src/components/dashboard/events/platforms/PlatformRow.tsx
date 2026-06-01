@@ -9,7 +9,7 @@ async function buildPayload(event: EventDetail, platform: string) {
     if (platform === "funcheapsf") {
         region = "San Francisco"; // default to SF
         try{
-            const res = await api.post(`/api/mapRegion`,
+            const res = await api.post(`/mapRegion`,
                 {zip: event.zip?.toString(), platform: platform});
             region = res.data.region;
         }catch(err){
@@ -102,7 +102,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
         // 2. Update database
         try {
             await api.patch(
-                `/api/events/${event.event_id}/platforms/${platform}`,
+                `/events/${event.event_id}/platforms/${platform}`,
                 {
                     external_url: event.website,
                     status: "in_progress",
@@ -143,7 +143,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
 
         try{
             await api.patch(
-                `/api/events/${event.event_id}/platforms/${platform}`,
+                `/events/${event.event_id}/platforms/${platform}`,
                 { status: "submitted" }
             );
             await reload();

@@ -21,7 +21,7 @@ export default function PromoteDashboard() {
     }, [eventId]);
 
     const loadEvent = async () => {
-        const res = await api.get(`/api/events/${eventId}`);
+        const res = await api.get(`/events/${eventId}`);
         setEvent(res.data);
     };
 

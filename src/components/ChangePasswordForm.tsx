@@ -51,7 +51,7 @@ export default function ChangePasswordForm({ user }: { user: UserData }) {
         }
 
         try {
-            await api.post("/api/users/changepassword", {
+            await api.post("/users/changepassword", {
                 userId: user?.userId, password
             });
 
