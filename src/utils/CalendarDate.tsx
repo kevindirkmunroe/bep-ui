@@ -20,7 +20,7 @@ function CalendarDate() {
             </div>
             <div style={{
                     margin: "3px"}}>
-                    <p style={{fontSize: '14px'}}>{time.toLocaleDateString()}</p>
+                    <p style={{fontSize: '14px', color: "black"}}>{time.toLocaleDateString()}</p>
             </div>
         </div>
     );

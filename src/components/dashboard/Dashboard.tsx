@@ -48,7 +48,7 @@ export default function Dashboard() {
     const loadEvents = async () => {
         setShowForm(false);
         try{
-            const eventsRes = await api.get(`/users/${userId}/events`);
+            const eventsRes = await api.get(`/api/users/${userId}/events`);
             setEvents(eventsRes.data.data);
         } catch (err: Error | any) {
             const status = err.response?.status;
@@ -184,7 +184,7 @@ export default function Dashboard() {
                                 {/*)}*/}
                             </nav>
                             <div>
-                                <button className="btn btn-primary" style={{marginTop: '10px', marginLeft: "4px", fontSize: "14px"}} onClick={() => setShowForm(true)}>
+                                <button className="btn btn-primary" style={{marginTop: '10px', marginLeft: "4px", fontSize: "14px", marginRight: "14px"}} onClick={() => setShowForm(true)}>
                                     + Create Event
                                 </button>
                             </div>

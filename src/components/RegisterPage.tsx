@@ -37,7 +37,7 @@ export function RegisterPage() {
 
         try {
             // 🔹 Step 1: validate
-            const validateRes = await api.get("/users/validate", {
+            const validateRes = await api.get("/api/users/validate", {
                 params: form
             });
 
@@ -55,7 +55,7 @@ export function RegisterPage() {
             }
 
             // 🔹 Step 2: create user
-            await api.post("/users/register", form);
+            await api.post("/api/users/register", form);
 
             alert("Registration successful. Please login.");
             navigate("/login");
