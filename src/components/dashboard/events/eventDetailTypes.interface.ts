@@ -18,6 +18,7 @@ export interface EventDetail {
     platforms: PlatformData[];
     region?: string;
     category?: string;
+    city?: string;
 }
 
 export type EventSummaryProps = {
