@@ -21,7 +21,7 @@ export function WelcomePage() {
                 {/* RIGHT: Existing content */}
                 <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", minWidth: "100vh"}}>
                     <div style={{ paddingLeft: 40, marginTop: "10%" }}>
-                        <strong style={{fontSize: "24px", color: "#D2492C"}}>Your <b style={{fontSize:"28px"}}>Local</b> Events Promoter</strong>
+                        <strong style={{fontSize: "24px", color: "#D2492C"}}>Promote Your <b style={{fontSize:"28px"}}>Local</b> Events</strong>
                         <div style={{marginTop: 50}}>
                             <nav style={{ display: "flex", justifyContent: "center", gap: "20px"}}>
                                 <NavLink style={{ fontSize: "24px" }}
