@@ -16,9 +16,6 @@ const VISITOAKLAND_ZIP_TO_DISTRICT: Record<string, string> = {
     "94621": "Airport District"
 };
 
-export function zipToVisitOaklandDistrict(city: string, zip: string) {
-    if (city !== "Oakland") {
-        return "Outside of Oakland";
-    }
-    return VISITOAKLAND_ZIP_TO_DISTRICT[zip] || "Downtown";
+export function zipToVisitOaklandDistrict(zip: string) {
+    return VISITOAKLAND_ZIP_TO_DISTRICT[zip] || "Outside of Oakland";
 }

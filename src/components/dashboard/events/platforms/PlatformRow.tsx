@@ -68,7 +68,7 @@ async function buildPayload(event: EventDetail, platform: string) {
 
     if (platform === "visitoakland") {
         const zip: string = event.zip || '';
-        region = zipToVisitOaklandDistrict(event.location_name, zip);
+        region = zipToVisitOaklandDistrict(zip);
         let city = null;
         try{console.log(`calling mapCity with zip ${event.zip}`);
             const res = await api.get(`/mapCity`,
