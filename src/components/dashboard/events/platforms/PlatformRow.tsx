@@ -260,8 +260,8 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
             padding: 10,
             marginBottom: 10
         }}>
-            <div style={{fontSize: "18px", fontWeight:"bold"}}>
-                {platform}
+            <div style={{fontSize: "18px", fontWeight:"bold" }}>
+                {platform}{platform === "sfstation" ? "  🔐" : ""}
             </div>
             <div style={{fontSize: "14px"}}>
                 <b>Status:</b> {PrintableStatus[status]} &nbsp;{getStatusEmoji(status)}

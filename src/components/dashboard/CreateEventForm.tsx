@@ -122,7 +122,7 @@ export default function CreateEventForm({
                 <input
                     name="location_name"
                     className="input"
-                    placeholder="Location (General, like San Francisco, San Jose)"
+                    placeholder="Location / Venue (e.g. 'Club Deluxe', 'San Jose Improv')"
                     onChange={handleChange}
                     value={form.location_name}
                 />
