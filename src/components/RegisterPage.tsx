@@ -105,7 +105,7 @@ export function RegisterPage() {
 
                     <button className="btn btn-primary" style={{marginTop: "8px"}} onClick={handleRegister}>Register</button>
                     <div style={{marginTop: "10px"}}>
-                        <Link to="/invite">Request Invite</Link>
+                        No Invite Code? &nbsp;&nbsp; <Link to="/invite">Request Invite</Link>
                     </div>
                 </div>
             </div>
