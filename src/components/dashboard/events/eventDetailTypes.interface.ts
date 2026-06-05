@@ -19,6 +19,19 @@ export interface EventDetail {
     region?: string;
     category?: string;
     city?: string;
+    date_fields: DateFields;
+}
+
+export interface DateFields {
+    start_datetime_local: string,        // "2026-06-11 21:00:00"
+    event_date: string,                    // "2026-06-11"
+    event_year: string,
+    event_month: string,
+    event_day: string,
+    event_time_24h: string,   // "21:00"
+    event_hour_12: string,                   // "9"
+    event_minute: string,                    // "00"
+    event_ampm: string
 }
 
 export type EventSummaryProps = {

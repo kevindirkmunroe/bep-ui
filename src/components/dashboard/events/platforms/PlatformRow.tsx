@@ -1,8 +1,36 @@
 import {PlatformRowProps} from "./platformTypes.interface"
 import {getPlatformUrl} from "./platformData";
-import {EventDetail} from "../eventDetailTypes.interface";
+import {DateFields, EventDetail} from "../eventDetailTypes.interface";
 import {api} from "../../../../utils/api";
 import {zipToVisitOaklandDistrict} from "./regionMappings";
+
+function buildDateFields(startDatetime: string) : DateFields {
+    const normalized = startDatetime.replace("T", " ").slice(0, 19);
+    const [datePart, timePart] = normalized.split(" ");
+    const [year, month, day] = datePart.split("-");
+    const [hour24, minute] = timePart.split(":");
+
+    const hourNum = Number(hour24);
+    const ampm = hourNum >= 12 ? "PM" : "AM";
+    const hour12 = String(hourNum % 12 || 12);
+
+    return {
+        start_datetime_local: normalized,        // "2026-06-11 21:00:00"
+        event_date: datePart,                    // "2026-06-11"
+        event_year: year,
+        event_month: month,
+        event_day: day,
+        event_time_24h: `${hour24}:${minute}`,   // "21:00"
+        event_hour_12: hour12,                   // "9"
+        event_minute: minute,                    // "00"
+        event_ampm: ampm                         // "PM"
+    };
+}
+
+function toLocalDateTimeString(value: string): string {
+    // Handles "2026-06-11 21:00:00" or "2026-06-11T21:00:00"
+    return value.replace("T", " ").slice(0, 19);
+}
 
 async function buildPayload(event: EventDetail, platform: string) {
     let region = "";
@@ -86,6 +114,18 @@ async function buildPayload(event: EventDetail, platform: string) {
     }
 
     if (platform === "indybay") {
+        region = "California"; // default to California
+        try{
+            const res = await api.get(`/mapRegion`,
+                {
+                    params: {
+                        zip: event.zip?.toString(), platform: platform
+                    }
+                });
+            region = res.data.region;
+        }catch(err){
+            console.log(`Error fetching City: ${err}`);
+        }
         return {
             name: event.name,
             email: event.email,
@@ -118,6 +158,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
         let pl = null;
         try {
             pl = await buildPayload(event, platform)
+            console.log(`[PlatformRow] payload for DB, ${platform}: ${JSON.stringify(event)}`);
         }catch(err){
             console.log(`[PlatformRow] error creating payload for ${platform}: ${err}`);
         }
@@ -136,10 +177,14 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
             console.log(`[PlatformRow] error updating platform ${platform}: ${err}`);
         }
 
-        // // 3. post event for extension
+        // 3. post event for extension
         event.region = pl?.region;
         event.city = pl?.city;
-        console.log(`[PlatformRow] event payload for ${platform}: ${JSON.stringify(pl)}`);
+        // Break start time into wall-clock event time.
+        const localDT = toLocalDateTimeString(event.start_datetime);
+        event.date_fields = buildDateFields(localDT);
+
+        console.log(`[PlatformRow] payload for Extension, ${platform}: ${JSON.stringify(event)}`);
 
         window.postMessage(
             {

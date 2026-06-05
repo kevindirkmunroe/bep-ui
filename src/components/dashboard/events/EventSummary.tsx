@@ -72,10 +72,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
         navigate(`/events/${event.event_id}`);
     };
 
-    const handleRevive = () => {
-        // TODO- set the start date, updated at
-    }
-
     const handleClone = async () => {
         console.log(`cloning event: ${event.event_id}`);
         await api.post(`/events/${event.event_id}/clone`);
