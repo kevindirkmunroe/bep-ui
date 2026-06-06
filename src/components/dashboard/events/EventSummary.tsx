@@ -87,8 +87,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     const isExpired = getIsExpired(event);
     const canEdit = status === "not_started" || status === "in_progress";
 
-    console.log(`[EventSummary] start_datetime= ${event.start_datetime}`);
-
     return (
         <div style={ showAsHeader ? eventHeaderStyle : eventListStyle}>
             <div style={{marginRight: "20px", width: "50%", backgroundColor: status === 'submitted' || isExpired ? "#f5f5f5" : 'white'}}>

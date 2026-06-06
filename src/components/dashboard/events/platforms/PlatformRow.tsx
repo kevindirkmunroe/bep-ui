@@ -261,7 +261,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
             marginBottom: 10
         }}>
             <div style={{fontSize: "18px", fontWeight:"bold" }}>
-                {platform}{platform === "sfstation" ? "  🔐" : ""}
+                {platform}{platform === "sfstation" ? <div style={{fontSize: "12px"}}>🔐 Requires Login</div> : ""}
             </div>
             <div style={{fontSize: "14px"}}>
                 <b>Status:</b> {PrintableStatus[status]} &nbsp;{getStatusEmoji(status)}

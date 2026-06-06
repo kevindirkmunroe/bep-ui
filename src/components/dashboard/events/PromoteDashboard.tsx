@@ -25,6 +25,30 @@ export default function PromoteDashboard() {
         setEvent(res.data);
     };
 
+    const [extensionInstalled, setExtensionInstalled] = useState(false);
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setExtensionInstalled(false);
+        }, 1000);
+
+        const handler = (event: MessageEvent) => {
+            if (event.data?.type === "LOCALBUZZ_PONG") {
+                clearTimeout(timeout);
+                setExtensionInstalled(true);
+            }
+        };
+        window.addEventListener("message", handler);
+        window.postMessage(
+            {
+                type: "LOCALBUZZ_PING"
+            },
+            "*"
+        );
+        return () => {
+            window.removeEventListener("message", handler);
+        };
+    }, []);
+
     const updatePlatformStatus = (platform: string, status: string) => {
         setEvent(prev => {
             if (!prev) return prev;
@@ -41,9 +65,34 @@ export default function PromoteDashboard() {
     };
 
     if (!event || !event.platforms) return <div>Loading...</div>;
+
+    window.postMessage(
+        {
+            type: "LOCALBUZZ_PING"
+        },
+        "*"
+    );
+
     const { user } = useUser();
+    const extensionUrl = import.meta.env.VITE_CHROME_WEB_STORE_EXTENSION_URL;
+    console.log(`extensionUrl=${extensionUrl}`);
+    const promoteMode = import.meta.env.VITE_PROMOTE_MODE;
+    console.log(`promoteMode=${promoteMode}`);
+
     return (
         <div style={{ padding: 40}}>
+            <div style={{fontSize: "12px", width: "100%", textAlign: "right"}}>
+                {extensionInstalled ? "🟢 Extension OK" :
+                    <>
+                        <div>⚠️ Extension Not Installed</div>
+                        <div><a href={extensionUrl} target="_blank">Install Extension</a>&nbsp;then
+                            <button className="btn btn-secondary" onClick={() => window.location.reload()}>
+                                Refresh to Connect Extension
+                            </button>
+                        </div>
+                    </>
+                }
+            </div>
             <div style={{ width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "20px" }}>
                 <div className="banner-div" style={{
                     width:"240px",
