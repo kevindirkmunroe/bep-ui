@@ -253,6 +253,8 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
         "published" : "Submission Published",
     }
 
+    const loginInfo = "This platform \"sfstation\" requires a login to post events. Open sfstation.com in a new tab, login then return to this tab."
+
     return (
         <div style={{
             border: "1px solid #d5d5d5",
@@ -261,7 +263,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
             marginBottom: 10
         }}>
             <div style={{fontSize: "18px", fontWeight:"bold" }}>
-                {platform}{platform === "sfstation" ? <div style={{fontSize: "12px"}}>🔐 Requires Login</div> : ""}
+                {platform}{platform === "sfstation" ? <div style={{fontSize: "12px"}} onClick={() => alert(loginInfo)}>🔐 Requires Login</div> : ""}
             </div>
             <div style={{fontSize: "14px"}}>
                 <b>Status:</b> {PrintableStatus[status]} &nbsp;{getStatusEmoji(status)}

@@ -26,6 +26,8 @@ export default function PromoteDashboard() {
     };
 
     const [extensionInstalled, setExtensionInstalled] = useState(false);
+    const [extensionVersion, setExtensionVersion] = useState("Unknown");
+
     useEffect(() => {
         const timeout = setTimeout(() => {
             setExtensionInstalled(false);
@@ -35,6 +37,7 @@ export default function PromoteDashboard() {
             if (event.data?.type === "LOCALBUZZ_PONG") {
                 clearTimeout(timeout);
                 setExtensionInstalled(true);
+                setExtensionVersion(event.data.version);
             }
         };
         window.addEventListener("message", handler);
@@ -82,7 +85,7 @@ export default function PromoteDashboard() {
     return (
         <div style={{ padding: 40}}>
             <div style={{fontSize: "12px", width: "100%", textAlign: "right"}}>
-                {extensionInstalled ? "🟢 Extension OK" :
+                {extensionInstalled ? "🟢 Extension OK | " + extensionVersion :
                     <>
                         <div>⚠️ Extension Not Installed</div>
                         <div><a href={extensionUrl} target="_blank">Install Extension</a>&nbsp;then
@@ -95,7 +98,7 @@ export default function PromoteDashboard() {
             </div>
             <div style={{ width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "20px" }}>
                 <div className="banner-div" style={{
-                    width:"240px",
+                    width:"280px",
                     height: "100px",
                     objectFit: "cover",
                     objectPosition: "top",
