@@ -120,7 +120,7 @@ export default function PromoteDashboard() {
                                     {extensionInstalled ? "🟢 Extension OK | " + extensionVersion  :
                                         <div>
                                             <div>⚠️ Extension Not Installed</div>
-                                            <div><a href={extensionUrl} target="_blank">Install Extension</a>&nbsp;then
+                                            <div><a href={extensionUrl} target="_blank">Install Extension</a><br/>
                                                 <button className="btn btn-secondary" onClick={() => window.location.reload()}>
                                                     Refresh to Connect Extension
                                                 </button>
