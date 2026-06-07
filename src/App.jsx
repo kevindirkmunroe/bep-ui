@@ -42,7 +42,7 @@ export default function App() {
                   <Route path="expired" element={<ExpiredEventsPage />} />
                   <Route path="published" element={<PublishedEventsPage />} />
               </Route>
-              <Route path="/events/:eventId" element={<PromoteDashboard />} />
+              <Route path="/ui/events/:eventId" element={<PromoteDashboard />} />
           </Routes>
       </MainLayout>
   );

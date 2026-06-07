@@ -69,7 +69,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     };
 
     const handlePromote = () => {
-        navigate(`/events/${event.event_id}`);
+        navigate(`/ui/events/${event.event_id}`);
     };
 
     const handleClone = async () => {
