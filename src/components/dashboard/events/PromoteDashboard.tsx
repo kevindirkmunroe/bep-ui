@@ -107,27 +107,27 @@ export default function PromoteDashboard() {
                             &nbsp;Promote Event
                         </div>
                     </div>
-                    <div style={{fontSize: "12px", width: "100%", textAlign: "right"}}>
-                        {extensionInstalled ? "🟢 Extension OK | " + extensionVersion  :
-                            <div>
-                                <div>⚠️ Extension Not Installed</div>
-                                <div><a href={extensionUrl} target="_blank">Install Extension</a>&nbsp;then
-                                    <button className="btn btn-secondary" onClick={() => window.location.reload()}>
-                                        Refresh to Connect Extension
-                                    </button>
-                                </div>
-                            </div>
-                        }
-                    </div>
                     <div>
                         <div style={{display: "flex", flexDirection: "row"}}>
-                            <div style={{flex: 2, alignItems: "left", justifyItems: "left", textAlign: "left"}}>
+                            <div style={{flex: 2, border: "2px solid #ccc", borderRadius: "14px", boxShadow: "0 4px 14px rgba(0, 0, 0, 0.07)", marginRight:"30px", marginBottom: "26px" }}>
                                 <EventSummary event={event} readOnly={true} showRedo={false} showAsHeader={true} />
                             </div>
                             <div style={{marginTop: "6px", marginRight: "5px"}}>
                                 <button className="btn btn-secondary" onClick={() => navigate(`/dashboard/${user?.userId}`)}>
                                     Back To Events
                                 </button>
+                                <div style={{fontSize: "11px", width: "100%", textAlign: "right", marginTop: "32px"}}>
+                                    {extensionInstalled ? "🟢 Extension OK | " + extensionVersion  :
+                                        <div>
+                                            <div>⚠️ Extension Not Installed</div>
+                                            <div><a href={extensionUrl} target="_blank">Install Extension</a>&nbsp;then
+                                                <button className="btn btn-secondary" onClick={() => window.location.reload()}>
+                                                    Refresh to Connect Extension
+                                                </button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
