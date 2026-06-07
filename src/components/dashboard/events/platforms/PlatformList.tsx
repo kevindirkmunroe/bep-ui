@@ -11,6 +11,7 @@ export function PlatformList(
     return (
         <div style={{height: '450px', // Fixed height
             marginTop: '10px',
+            padding: "10px",
             overflowY: 'auto', // Enable vertical scrolling
             border: '1px solid #ccc',
             borderRadius: 2}}>
