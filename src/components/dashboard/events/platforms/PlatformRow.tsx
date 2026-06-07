@@ -247,11 +247,18 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
         }
     }
 
-    const PrintableStatus = {
+    const PRINTABLE_STATUS = {
         "not_started" : "Submission Not Started",
         "in_progress" : "Submission In Progress",
         "submitted" : "Submission Complete",
         "published" : "Submission Published",
+    }
+
+    const PLATFORM_ICONS = {
+        "funcheapsf": "/funcheapsf.jpg",
+        "visitoakland": "/visit_oakland.jpg",
+        "sfstation": "/sfstation.jpg",
+        "indybay":"/indybay.jpg"
     }
 
     const loginInfo = "This platform \"sfstation\" requires a login to post events. Open sfstation.com in a new tab, login then return to this tab."
@@ -264,12 +271,16 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
             marginBottom: 10
         }}>
             <div style={{display: "flex", flexDirection: "row"}}>
+                <div style={{display: "flex", width: "100px", height: "60px" }}>
+                    <img style={{transform: "scale(0.4)", filter: "grayscale(100%)"}} src={PLATFORM_ICONS[platform]} />
+                </div>
+                <div style={{padding: "40px"}}/>
                 <div>
-                    <div style={{fontSize: "18px", fontWeight:"bold", marginLeft: "40px" }}>
+                    <div style={{fontSize: "18px", fontWeight:"bold"}}>
                         {platform}{platform === "sfstation" ? <div style={{fontSize: "12px"}} onClick={() => alert(loginInfo)}>🔐 Requires Login</div> : ""}
                     </div>
-                    <div style={{fontSize: "14px", marginLeft: "40px"}}>
-                        {PrintableStatus[status]} &nbsp;{getStatusEmoji(status)}
+                    <div style={{fontSize: "14px", marginLeft: "10px"}}>
+                        {PRINTABLE_STATUS[status]} &nbsp;{getStatusEmoji(status)}
                     </div>
                 </div>
                 <div style={{marginLeft: "auto"}}>
