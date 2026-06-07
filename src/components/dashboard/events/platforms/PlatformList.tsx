@@ -9,7 +9,11 @@ export function PlatformList(
          updatePlatformStatus: (platform: string, status: string) => void}
     ) {
     return (
-        <div>
+        <div style={{height: '450px', // Fixed height
+            marginTop: '10px',
+            overflowY: 'auto', // Enable vertical scrolling
+            border: '1px solid #ccc',
+            borderRadius: 2}}>
             {event.platforms.map((p: PlatformData) => (
                 <PlatformRow
                     key={p.platform}

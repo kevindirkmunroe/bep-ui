@@ -102,7 +102,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     </button>
                 )}
                 {canEdit && onEdit && !isExpired &&(
-                    <button className="btn btn-primary"
+                    <button className="btn btn-secondary"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 onEdit(event);
@@ -113,21 +113,21 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     </button>
                 )}
                 {!readOnly && !isExpired && (
-                    <button className="btn btn-primary" onClick={handleClone}>
+                    <button className="btn btn-secondary" onClick={handleClone}>
                     <img src={"/icons8-clone-24.png"} style={{width:"24px", height:"24px"}} />Clone
                 </button>
                 )}
                 {readOnly && showRedo && !isExpired && (
                     <>
                         <p style={{fontSize: "14px", marginTop: "10px", marginRight: "20px"}}>{getNewestPublishDate(event.platforms)?.toLocaleString()}</p>
-                        <button className="btn btn-primary" onClick={handleClone}>
+                        <button className="btn btn-secondary" onClick={handleClone}>
                             <img src={"/icons8-recycle-32.png"} style={{width:"24px", height:"24px"}} />Reuse Event
                         </button>
                     </>
                 )}
                 {isExpired && (
                     <>
-                        <button className="btn btn-primary" onClick={() => setShowRestoreModal(true)}>
+                        <button className="btn btn-secondary" onClick={() => setShowRestoreModal(true)}>
                             <img src={"/icons8-redo-48.png"} style={{width:"24px", height:"24px"}} />Restore
                         </button>
                     </>

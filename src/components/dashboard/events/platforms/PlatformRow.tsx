@@ -3,6 +3,7 @@ import {getPlatformUrl} from "./platformData";
 import {DateFields, EventDetail} from "../eventDetailTypes.interface";
 import {api} from "../../../../utils/api";
 import {zipToVisitOaklandDistrict} from "./regionMappings";
+import React from "react";
 
 function buildDateFields(startDatetime: string) : DateFields {
     const normalized = startDatetime.replace("T", " ").slice(0, 19);
@@ -262,41 +263,41 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
             padding: 10,
             marginBottom: 10
         }}>
-            <div style={{fontSize: "18px", fontWeight:"bold" }}>
-                {platform}{platform === "sfstation" ? <div style={{fontSize: "12px"}} onClick={() => alert(loginInfo)}>🔐 Requires Login</div> : ""}
-            </div>
-            <div style={{fontSize: "14px"}}>
-                {PrintableStatus[status]} &nbsp;{getStatusEmoji(status)}
-            </div>
-
-            {date_published && (
-                <div style={{fontSize: "14px"}}>
-                    <b>Last Published:</b> {formatDateTime(date_published)}
-                </div>
-            )}
-            <div style={{padding: "8px"}}/>
-            {status === "not_started" && (
-                <button className="btn btn-primary" onClick={handleOpen}>
-                    Open & Autofill
-                </button>
-            )}
-            {status === "in_progress" && (
-                <button className="btn btn-primary" onClick={handleOpen}>
-                    Continue Autofill
-                </button>
-            )}
-            {status !== "submitted" && status && (
-                <button disabled={status === 'not_started'} className="btn btn-primary" onClick={handleSubmit}>
-                    Mark as Submitted
-                </button>
-            )}
-            {status === "published" && (
+            <div style={{display: "flex", flexDirection: "row"}}>
                 <div>
-                    <button className="btn btn-primary" onClick={handleReopen}>
-                        Edit / Resubmit
-                    </button>
+                    <div style={{fontSize: "18px", fontWeight:"bold", marginLeft: "40px" }}>
+                        {platform}{platform === "sfstation" ? <div style={{fontSize: "12px"}} onClick={() => alert(loginInfo)}>🔐 Requires Login</div> : ""}
+                    </div>
+                    <div style={{fontSize: "14px", marginLeft: "40px"}}>
+                        {PrintableStatus[status]} &nbsp;{getStatusEmoji(status)}
+                    </div>
                 </div>
-            )}
+                <div style={{marginLeft: "auto"}}>
+                    <div style={{padding: "4px"}}/>
+                    {status === "not_started" && (
+                        <button className="btn btn-primary" onClick={handleOpen}>
+                            <img src={"/icons8-form-24.png"} style={{width:"24px", height:"24px"}} />Open & Autofill
+                        </button>
+                    )}
+                    {status === "in_progress" && (
+                        <button className="btn btn-primary" onClick={handleOpen}>
+                            <img src={"/icons8-form-24.png"} style={{width:"24px", height:"24px"}} />Continue Autofill
+                        </button>
+                    )}
+                    {status !== "submitted" && status && (
+                        <button disabled={status === 'not_started'} className="btn btn-primary-greater" onClick={handleSubmit}>
+                            <img src={"/icons8-checklist-48.png"} style={{width:"24px", height:"24px"}} />Mark Submitted
+                        </button>
+                    )}
+                    {status === "published" && (
+                        <div>
+                            <button className="btn btn-primary" onClick={handleReopen}>
+                                Edit / Resubmit
+                            </button>
+                        </div>
+                    )}
+                </div>
+            </div>
         </div>
     );
 }

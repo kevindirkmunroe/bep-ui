@@ -214,7 +214,7 @@ export default function CreateEventForm({
                 */}
             </div>
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-                <button className="btn btn-primary" onClick={handleSubmit}>{isEdit ? "Save Changes" : "Create Event"}</button>
+                <button className="btn btn-primary-greater" onClick={handleSubmit}>{isEdit ? "Save Changes" : "Create Event"}</button>
                 &nbsp;
                 <button className="btn btn-secondary" onClick={() => onCancel()}>Cancel</button>
             </div>

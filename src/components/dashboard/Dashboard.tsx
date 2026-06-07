@@ -191,7 +191,7 @@ export default function Dashboard() {
                         </div>
                     </div>
                     {/* ROUTED CONTENT */}
-                    <div style={{height: '500px', // Fixed height
+                    <div style={{height: '600px', // Fixed height
                         marginTop: '10px',
                         overflowY: 'auto', // Enable vertical scrolling
                         border: '1px solid #ccc',
