@@ -8,6 +8,7 @@ import {PlatformList} from "./platforms/PlatformList";
 import {EventDetail} from "./eventDetailTypes.interface";
 import { useUser } from "../../../UserContext";
 import {api} from "../../../utils/api";
+import ImageCarousel from "../../ImageCarousel";
 
 
 export default function PromoteDashboard() {
@@ -78,52 +79,62 @@ export default function PromoteDashboard() {
 
     const { user } = useUser();
     const extensionUrl = import.meta.env.VITE_CHROME_WEB_STORE_EXTENSION_URL;
-    console.log(`extensionUrl=${extensionUrl}`);
-    const promoteMode = import.meta.env.VITE_PROMOTE_MODE;
-    console.log(`promoteMode=${promoteMode}`);
 
     return (
-        <div style={{ padding: 40}}>
-            <div style={{fontSize: "12px", width: "100%", textAlign: "right"}}>
-                {extensionInstalled ? "🟢 Extension OK | " + extensionVersion :
-                    <>
-                        <div>⚠️ Extension Not Installed</div>
-                        <div><a href={extensionUrl} target="_blank">Install Extension</a>&nbsp;then
-                            <button className="btn btn-secondary" onClick={() => window.location.reload()}>
-                                Refresh to Connect Extension
-                            </button>
+        <div style={{ display: "flex", gap: "2px" }}>
+            {/* LEFT: Carousel */}
+            <div style={{ flex: "0 0 300px" }}>
+                <ImageCarousel />
+            </div>
+            {/* RIGHT: Existing content */}
+            <div style={{ flex: 1 }}>
+                <div style={{ paddingLeft: 40}}>
+                    <div style={{ width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "20px" }}>
+                        <div className="banner-div" style={{
+                            width:"100%",
+                            height: "100px",
+                            objectFit: "cover",
+                            objectPosition: "top",
+                            fontWeight: 800,
+                            fontSize: "40px",
+                            borderRadius: "4px",
+                            font: "bold",
+                            color: "white",
+                            display: "flex",
+                            alignContent: "left",
+                            alignItems: "center"
+                        }}>
+                            &nbsp;Promote Event
                         </div>
-                    </>
-                }
+                    </div>
+                    <div style={{fontSize: "12px", width: "100%", textAlign: "right"}}>
+                        {extensionInstalled ? "🟢 Extension OK | " + extensionVersion  :
+                            <div>
+                                <div>⚠️ Extension Not Installed</div>
+                                <div><a href={extensionUrl} target="_blank">Install Extension</a>&nbsp;then
+                                    <button className="btn btn-secondary" onClick={() => window.location.reload()}>
+                                        Refresh to Connect Extension
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div>
+                        <div style={{display: "flex", flexDirection: "row"}}>
+                            <div style={{flex: 2, alignItems: "left", justifyItems: "left", textAlign: "left"}}>
+                                <EventSummary event={event} readOnly={true} showRedo={false} showAsHeader={true} />
+                            </div>
+                            <div style={{marginTop: "6px", marginRight: "5px"}}>
+                                <button className="btn btn-secondary" onClick={() => navigate(`/dashboard/${user?.userId}`)}>
+                                    Back To Events
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <ProgressBar platforms={event.platforms} />
+                    <PlatformList event={event} reload={loadEvent} updatePlatformStatus={updatePlatformStatus}/>
+                </div>
             </div>
-            <div style={{ width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "20px" }}>
-                <div className="banner-div" style={{
-                    width:"280px",
-                    height: "100px",
-                    objectFit: "cover",
-                    objectPosition: "top",
-                    fontWeight: 800,
-                    fontSize: "30px",
-                    borderRadius: "4px",
-                    font: "bold",
-                    color: "white",
-                    display: "flex",
-                    alignContent: "left",
-                    alignItems: "center"
-                }}>
-                    &nbsp;Promote
-                </div>
-                <div style={{flex: 2, alignContent: "center", justifyContent: "center"}}>
-                    <EventSummary event={event} readOnly={true} showRedo={false} showAsHeader={true} />
-                </div>
-                <div style={{flex: 1, marginBottom: 20, alignContent: "center", justifyContent: "center"}}>
-                    <button className="btn btn-secondary" onClick={() => navigate(`/dashboard/${user?.userId}`)}>
-                        Back To Events
-                    </button>
-                </div>
-            </div>
-            <ProgressBar platforms={event.platforms} />
-            <PlatformList event={event} reload={loadEvent} updatePlatformStatus={updatePlatformStatus}/>
         </div>
     );
 }
