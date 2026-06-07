@@ -221,8 +221,15 @@ code {
 }
 
 .about-div {
-  background-image: url('/san-francisco-1600x800.jpeg');
+  background-image: url('/thepeopletheparish.jpg');
   background-size: cover;
   background-position: center; /* Keeps the center of the image visible */
   background-repeat: no-repeat;
+}
+
+.text-highlight {
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
