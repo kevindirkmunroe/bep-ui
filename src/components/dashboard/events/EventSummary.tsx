@@ -117,7 +117,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     <img src={"/icons8-clone-24.png"} style={{width:"24px", height:"24px"}} />Clone
                 </button>
                 )}
-                {readOnly && showRedo && !isExpired && (
+                {readOnly && showRedo && (
                     <>
                         <p style={{fontSize: "14px", marginTop: "10px", marginRight: "20px"}}>{getNewestPublishDate(event.platforms)?.toLocaleString()}</p>
                         <button className="btn btn-primary" onClick={handleClone}>
@@ -125,7 +125,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                         </button>
                     </>
                 )}
-                {isExpired && (
+                {isExpired && !readOnly && (
                     <>
                         <button className="btn btn-primary" onClick={() => setShowRestoreModal(true)}>
                             <img src={"/icons8-redo-48.png"} style={{width:"24px", height:"24px"}} />Restore
