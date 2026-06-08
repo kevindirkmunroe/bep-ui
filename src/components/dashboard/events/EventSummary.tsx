@@ -119,9 +119,9 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                 )}
                 {readOnly && showRedo && (
                     <>
-                        <p style={{fontSize: "14px", marginTop: "10px", marginRight: "20px"}}>{getNewestPublishDate(event.platforms)?.toLocaleString()}</p>
+                        <p style={{fontSize: "14px", marginTop: "10px", marginRight: "20px"}}>Completed {getNewestPublishDate(event.platforms)?.toLocaleString()}</p>
                         <button className="btn btn-primary" onClick={handleClone}>
-                            <img src={"/icons8-recycle-32.png"} style={{width:"24px", height:"24px"}} />Reuse Event
+                            <img src={"/icons8-recycle-32.png"} style={{width:"24px", height:"24px"}} />Recycle
                         </button>
                     </>
                 )}

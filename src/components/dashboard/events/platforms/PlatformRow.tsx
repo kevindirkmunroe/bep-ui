@@ -270,7 +270,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
             padding: 10,
             marginBottom: 10
         }}>
-            <div style={{display: "flex", flexDirection: "row"}}>
+            <div style={{display: "flex", flexDirection: "row", backgroundColor: status === 'submitted' ? "#f5f5f5" : 'white'}}>
                 <div style={{display: "flex", width: "100px", height: "60px" }}>
                     <img style={{transform: "scale(0.4)", filter: "grayscale(100%)"}} src={PLATFORM_ICONS[platform]} />
                 </div>
