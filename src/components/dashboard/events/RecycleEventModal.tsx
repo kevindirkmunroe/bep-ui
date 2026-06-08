@@ -40,8 +40,9 @@ export default function RecycleEventModal({
                 <h2>Recycle Event</h2>
                 <h4>{name}</h4>
                 <p>
-                    Choose a new event date. The event will move back to Active.
+                    Copy this event with a new start date. Copied event will be Active.
                 </p>
+                <br/>
 
                 <input
                     type="date"

@@ -40,8 +40,9 @@ export default function RestoreEventModal({
                 <h2>Restore Event</h2>
                 <h4>{name}</h4>
                 <p>
-                    Choose a new event date. The event will move back to Active.
+                    Select a new start date for this event. Event will move from Expired to Active.
                 </p>
+                <br/>
 
                 <input
                     type="date"
