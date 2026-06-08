@@ -248,10 +248,10 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
     }
 
     const PRINTABLE_STATUS = {
-        "not_started" : "Submission Not Started",
-        "in_progress" : "Submission In Progress",
-        "submitted" : "Submission Complete",
-        "published" : "Submission Published",
+        "not_started" : "Not Started",
+        "in_progress" : "Incomplete",
+        "submitted" : "Submitted",
+        "published" : "Published",
     }
 
     const PLATFORM_ICONS = {
@@ -274,7 +274,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
                 <div style={{display: "flex", width: "100px", height: "60px" }}>
                     <img style={{transform: "scale(0.4)", filter: "grayscale(100%)"}} src={PLATFORM_ICONS[platform]} />
                 </div>
-                <div style={{padding: "40px"}}/>
+                <div style={{padding: "54px"}}/>
                 <div>
                     <div style={{fontSize: "18px", fontWeight:"bold"}}>
                         {platform}{platform === "sfstation" ? <div style={{fontSize: "12px"}} onClick={() => alert(loginInfo)}>🔐 Requires Login</div> : ""}
@@ -287,12 +287,12 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
                     <div style={{padding: "4px"}}/>
                     {status === "not_started" && (
                         <button className="btn btn-primary" onClick={handleOpen}>
-                            <img src={"/icons8-form-24.png"} style={{width:"24px", height:"24px"}} />Open & Autofill
+                            <img src={"/icons8-form-24.png"} style={{width:"24px", height:"24px"}} />Autofill
                         </button>
                     )}
                     {status === "in_progress" && (
                         <button className="btn btn-primary" onClick={handleOpen}>
-                            <img src={"/icons8-form-24.png"} style={{width:"24px", height:"24px"}} />Continue Autofill
+                            <img src={"/icons8-form-24.png"} style={{width:"24px", height:"24px"}} />Autofill
                         </button>
                     )}
                     {status !== "submitted" && status && (
