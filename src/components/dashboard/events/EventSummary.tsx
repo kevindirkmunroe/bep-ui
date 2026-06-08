@@ -6,6 +6,7 @@ import {getEventStatus, getIsExpired} from "./EventStatus";
 import {api} from "../../../utils/api";
 import {PlatformData} from "./platforms/platformTypes.interface";
 import RestoreEventModal from "./RestoreEventModal";
+import RecycleEventModal from "./RecycleEventModal";
 
 const overlayStyle = {
     position: "fixed" as const,
@@ -51,6 +52,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
 
     const [showConfirm, setShowConfirm] = useState(false);
     const [showRestoreModal, setShowRestoreModal] = useState(false);
+    const [showRecycleModal, setShowRecycleModal] = useState(false);
     const [imgSrc, setImgSrc] = useState("/icons8-delete-30.png");
 
     const getNewestPublishDate = (platforms: PlatformData[]): Date | undefined => {
@@ -120,7 +122,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                 {readOnly && showRedo && (
                     <>
                         <p style={{fontSize: "14px", marginTop: "10px", marginRight: "20px"}}>Completed {getNewestPublishDate(event.platforms)?.toLocaleString()}</p>
-                        <button className="btn btn-primary" onClick={handleClone}>
+                        <button className="btn btn-primary" onClick={() => setShowRecycleModal(true)}>
                             <img src={"/icons8-recycle-32.png"} style={{width:"24px", height:"24px"}} />Recycle
                         </button>
                     </>
@@ -149,6 +151,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     <div style={overlayStyle}>
                         <div style={modalStyle}>
                             <h3>Delete Event?</h3>
+                            <h4>{event.title}</h4>
                             <>This action cannot be undone.</>
 
                             <div style={{ display: "flex", alignContent: "center", justifyContent: "center", gap: "10px", marginTop: "10px" }}>
@@ -165,6 +168,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                 )}
                 {showRestoreModal && (
                     <RestoreEventModal
+                        name={event.title}
                         onCancel={() => setShowRestoreModal(false)}
                         onRestore={async (newDate) => {
                             await api.patch(`/events/${event.event_id}/restore`, {
@@ -172,6 +176,21 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                             });
 
                             setShowRestoreModal(false);
+                            await reload?.();
+                        }}
+                    />
+                )}
+                {showRecycleModal && (
+                    <RecycleEventModal
+                        name={event.title}
+                        onCancel={() => setShowRecycleModal(false)}
+                        onRecycle={async (newDate) => {
+                            await api.post(`/events/${event.event_id}/clone`, {
+                                start_date: newDate
+                            });
+
+                            setShowRecycleModal(false);
+                            window.location.reload();
                             await reload?.();
                         }}
                     />

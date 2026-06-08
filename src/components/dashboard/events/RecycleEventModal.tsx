@@ -1,25 +1,25 @@
 import { useState } from "react";
 
-interface RestoreEventModalProps {
+interface RecycleEventModalProps {
     name: string;
     onCancel: () => void;
-    onRestore: (newDate: string) => Promise<void>;
+    onRecycle: (newDate: string) => Promise<void>;
 }
 
 function getTodayDateString() {
     return new Date().toISOString().split("T")[0];
 }
 
-export default function RestoreEventModal({
+export default function RecycleEventModal({
                                               name,
                                               onCancel,
-                                              onRestore
-                                          }: RestoreEventModalProps) {
+                                              onRecycle,
+                                          }: RecycleEventModalProps) {
     const today = getTodayDateString();
     const [newDate, setNewDate] = useState(today);
     const [loading, setLoading] = useState(false);
 
-    const handleRestore = async () => {
+    const handleRecycle = async () => {
         if (newDate < today) {
             alert("Please choose today or a future date.");
             return;
@@ -28,7 +28,7 @@ export default function RestoreEventModal({
         setLoading(true);
 
         try {
-            await onRestore(newDate);
+            await onRecycle(newDate);
         } finally {
             setLoading(false);
         }
@@ -37,7 +37,7 @@ export default function RestoreEventModal({
     return (
         <div style={overlayStyle}>
             <div style={modalStyle}>
-                <h2>Restore Event</h2>
+                <h2>Recycle Event</h2>
                 <h4>{name}</h4>
                 <p>
                     Choose a new event date. The event will move back to Active.
@@ -62,10 +62,10 @@ export default function RestoreEventModal({
 
                     <button
                         className="btn btn-primary"
-                        onClick={handleRestore}
+                        onClick={handleRecycle}
                         disabled={loading}
                     >
-                        {loading ? "Restoring..." : "Restore"}
+                        {loading ? "Recycling..." : "Recycle"}
                     </button>
                 </div>
             </div>
