@@ -14,4 +14,5 @@ export interface PlatformRowProps {
     platformData: PlatformData;
     updatePlatformStatus: (platform: string, status: string) => void;
     reload: () => void;
+    extensionInstalled: boolean;
 }

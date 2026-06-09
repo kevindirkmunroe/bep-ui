@@ -132,7 +132,11 @@ export default function PromoteDashboard() {
                         </div>
                     </div>
                     <ProgressBar platforms={event.platforms} />
-                    <PlatformList event={event} reload={loadEvent} updatePlatformStatus={updatePlatformStatus}/>
+                    <PlatformList
+                        extensionInstalled={extensionInstalled}
+                        event={event}
+                        reload={loadEvent}
+                        updatePlatformStatus={updatePlatformStatus}/>
                 </div>
             </div>
         </div>

@@ -144,7 +144,7 @@ async function buildPayload(event: EventDetail, platform: string) {
     return {};
 }
 
-export function PlatformRow({ event, platformData, updatePlatformStatus, reload } : PlatformRowProps) {
+export function PlatformRow({ event, platformData, updatePlatformStatus, reload, extensionInstalled } : PlatformRowProps) {
     const { platform, status, date_published } = platformData;
 
     const handleOpen = async () => {
@@ -286,17 +286,17 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload 
                 <div style={{marginLeft: "auto"}}>
                     <div style={{padding: "4px"}}/>
                     {status === "not_started" && (
-                        <button className="btn btn-primary" onClick={handleOpen}>
+                        <button disabled={!extensionInstalled} className="btn btn-primary" onClick={handleOpen}>
                             <img src={"/icons8-form-24.png"} style={{width:"24px", height:"24px"}} />Autofill
                         </button>
                     )}
                     {status === "in_progress" && (
-                        <button className="btn btn-primary" onClick={handleOpen}>
+                        <button disabled={!extensionInstalled} className="btn btn-primary" onClick={handleOpen}>
                             <img src={"/icons8-form-24.png"} style={{width:"24px", height:"24px"}} />Autofill
                         </button>
                     )}
                     {status !== "submitted" && status && (
-                        <button disabled={status === 'not_started'} className="btn btn-primary-greater" onClick={handleSubmit}>
+                        <button disabled={status === 'not_started' || !extensionInstalled} className="btn btn-primary-greater" onClick={handleSubmit}>
                             <img src={"/icons8-checklist-48.png"} style={{width:"24px", height:"24px"}} />Mark Submitted
                         </button>
                     )}

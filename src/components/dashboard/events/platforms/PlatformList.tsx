@@ -3,8 +3,9 @@ import {PlatformData} from "./platformTypes.interface";
 import {EventDetail} from "../eventDetailTypes.interface";
 
 export function PlatformList(
-    {event, reload, updatePlatformStatus}:
-        {event: EventDetail;
+    {extensionInstalled, event, reload, updatePlatformStatus}:
+        {extensionInstalled: boolean;
+         event: EventDetail;
          reload: () => Promise<void>;
          updatePlatformStatus: (platform: string, status: string) => void}
     ) {
@@ -22,6 +23,7 @@ export function PlatformList(
                     platformData={p}
                     updatePlatformStatus={updatePlatformStatus}
                     reload={reload}
+                    extensionInstalled={extensionInstalled}
                 />
             ))}
         </div>
