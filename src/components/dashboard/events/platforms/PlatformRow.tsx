@@ -291,12 +291,24 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                         </button>
                     )}
                     {status === "in_progress" && (
-                        <button disabled={!extensionInstalled} className="btn btn-primary" onClick={handleOpen}>
+                        <button disabled={!extensionInstalled}
+                                title={
+                                    extensionInstalled
+                                        ? "Open partner website and Autofill event"
+                                        : "Install the LocalBuzz Chrome extension to enable Autofill"
+                                }
+                                className="btn btn-primary"
+                                onClick={handleOpen}>
                             <img src={"/icons8-form-24.png"} style={{width:"24px", height:"24px"}} />Autofill
                         </button>
                     )}
                     {status !== "submitted" && status && (
-                        <button disabled={status === 'not_started' || !extensionInstalled} className="btn btn-primary-greater" onClick={handleSubmit}>
+                        <button disabled={status === 'not_started' || !extensionInstalled}
+                                title={extensionInstalled
+                                    ? "Mark this event as submitted after completing submission on the partner website"
+                                    : "Install the LocalBuzz Chrome extension to enable Mark Submitted"}
+                                className="btn btn-primary-greater"
+                                onClick={handleSubmit}>
                             <img src={"/icons8-checklist-48.png"} style={{width:"24px", height:"24px"}} />Mark Submitted
                         </button>
                     )}
