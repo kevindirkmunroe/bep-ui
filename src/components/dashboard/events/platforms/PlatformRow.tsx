@@ -152,7 +152,14 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
         if(import.meta.env.VITE_PROMOTE_MODE === 'DEV'){
             console.log(`DEV mode NOT opening URL for platform ${platform}`);
         }else{
-            window.open(getPlatformUrl(platform), "_blank");
+            const partnerWindow = window.open(
+                "",
+                "LocalBuzzPromotionWindow",
+                "width=1400,height=1000"
+            );
+            partnerWindow.location.href = getPlatformUrl(platform);
+
+            // window.open(getPlatformUrl(platform), "_blank");
         }
 
         // 2. Create payload with platform and region
