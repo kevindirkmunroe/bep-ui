@@ -6,11 +6,13 @@ import {EventDetail} from "./events/eventDetailTypes.interface";
 import Modal from "../Modal";
 import ImageCarousel from "../ImageCarousel";
 import {api} from "../../utils/api";
+import ImportFacebookEventForm from "./ImportFacebookEventForm";
 
 export default function Dashboard() {
     const { userId } = useParams();
     const [events, setEvents] = useState([]);
-    const [showForm, setShowForm] = useState(false);
+    const [showImportFacebookForm, setShowImportFacebookForm] = useState(false);
+    const [showCreateEventForm, setShowCreateEventForm] = useState(false);
     const [editingEvent, setEditingEvent] = useState<EventDetail | null>(null);
 
     function isOlderThanToday(date: string) {
@@ -38,15 +40,8 @@ export default function Dashboard() {
         return submittedEvents.length;
     }
 
-    // function getPublishedEventCount(){
-    //     const submittedEvents = (events || []).filter(e => {
-    //         return getEventStatus(e) === "published";
-    //     });
-    //     return submittedEvents.length;
-    // }
-
     const loadEvents = async () => {
-        setShowForm(false);
+        setShowCreateEventForm(false);
         try{
             const eventsRes = await api.get(`/users/${userId}/events`);
             setEvents(eventsRes.data.data);
@@ -80,6 +75,36 @@ export default function Dashboard() {
     const expiredEventCount = getExpiredEventCount();
     // const publishedEventCount = getPublishedEventCount();
 
+    const DownloadIcon = () => (
+        <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+        >
+            <path
+                d="M12 3v12"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+            />
+            <path
+                d="M7 10l5 5 5-5"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+            <path
+                d="M5 20h14"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+            />
+        </svg>
+    );
+
     return (
         <div style={{ display: "flex", gap: "2px" }}>
             {/* LEFT: Carousel */}
@@ -90,19 +115,19 @@ export default function Dashboard() {
             {/* RIGHT: Existing content */}
             <div style={{ flex: 1 }}>
                 <div style={{ paddingLeft: 40 }}>
-                    {(showForm || editingEvent) && userId && (
-                        <Modal onClose={() => setShowForm(false)}>
+                    {(showCreateEventForm || editingEvent) && userId && (
+                        <Modal onClose={() => setShowCreateEventForm(false)}>
                             <CreateEventForm
                                 key={editingEvent?.event_id || "new"}   // 👈 Force react to recreate component
                                 userId={userId}
                                 event={editingEvent || undefined}
                                 onSuccess={() => {
-                                    setShowForm(false);
+                                    setShowCreateEventForm(false);
                                     setEditingEvent(null);
                                     loadEvents();
                                 }}
                                 onCancel={() => {
-                                    setShowForm(false);
+                                    setShowCreateEventForm(false);
                                     setEditingEvent(null);
                                 }}
                             />
@@ -184,8 +209,14 @@ export default function Dashboard() {
                                 {/*)}*/}
                             </nav>
                             <div>
-                                <button className="btn btn-primary" style={{marginTop: '10px', marginLeft: "4px", fontSize: "14px"}} onClick={() => setShowForm(true)}>
-                                    + Create Event
+                                <button className="btn btn-primary" style={{marginTop: '10px', marginLeft: "4px", fontSize: "14px"}} onClick={() => setShowCreateEventForm(true)}>
+                                    + Create
+                                </button>
+                                <button className="btn btn-primary" style={{marginTop: '10px', marginLeft: "4px", fontSize: "14px", backgroundColor: "#1877F2"}} onClick={() => setShowCreateEventForm(true)}>
+                                    &nbsp;
+                                    <svg xmlns="http://w3.org" viewBox="0 0 320 512" width="16" height="16">
+                                            <path fill="currentColor" d="M80 299.3V256H12V171.3H80V114.4C80 47.3 120.7 10 181 10c28.8 0 53.6 2.1 60.8 3v70.5h-41.7c-32.6 0-38.9 15.5-38.9 38.2V171.2h78.2L229.3 256H161.2V512H80V299.3z"/>
+                                        </svg> Import Event
                                 </button>
                             </div>
                         </div>
