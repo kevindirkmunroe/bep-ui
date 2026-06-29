@@ -41,12 +41,8 @@ export default function ImportFacebookEventForm({
 
                 <p style={{marginBottom: "16px"}}>
                     Paste the URL of your Facebook Event and LocalBuzz will import the
-                    available event details.
+                    available event details
                 </p>
-
-                <label htmlFor="facebook-url">
-                    Facebook Event URL
-                </label>
 
                 <input
                     id="facebook-url"
@@ -64,12 +60,12 @@ export default function ImportFacebookEventForm({
                         gap: "12px",
                     }}
                 >
-                    <button onClick={onClose}>
+                    <button className="btn btn-secondary" onClick={onClose}>
                         Cancel
                     </button>
 
-                    <button
-                        onClick={handleImport}
+                    <button className="btn btn-primary-greater"
+                            onClick={handleImport}
                         disabled={loading || !facebookEventUrl.trim()}
                     >
                         {loading ? "Importing..." : "Import"}

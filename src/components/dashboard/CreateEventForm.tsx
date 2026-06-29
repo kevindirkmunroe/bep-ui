@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {CreateEventFormProps} from "./eventTypes.interface";
 import {EventDetail} from "./events/eventDetailTypes.interface";
-import {fileToBase64} from "../../utils/FileUtils";
 import {api} from "../../utils/api";
 import {categories} from "./EventCategories";
 

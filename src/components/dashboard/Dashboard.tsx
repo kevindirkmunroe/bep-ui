@@ -40,7 +40,7 @@ export default function Dashboard() {
         //     }
         // }
 
-        const DEV_EVENT_RESPONSE_JSON = `
+        const DEV_EVENT_RESPONSE_JSON =
         {
             "data": {
                 "title": "Pride Prom 2026!  Cosmo Alleycats, Quinn Amann Krunch, After-Hours Jam at the Woodchopper's Ball",
@@ -93,7 +93,25 @@ export default function Dashboard() {
                 "input_url": "https://www.facebook.com/events/1628799931534768",
                 "scraped_at": "2026-06-29T02:39:01.456751+00:00"
             }
-        }`
+        };
+
+        const raw = DEV_EVENT_RESPONSE_JSON.raw;
+        const fbCreatingEvent = {
+            name: raw.name,
+            email: 'bayareaeventpromoter@gmail.com',
+            title: raw.name,
+            description: raw.description,
+            location_name: raw.location_name,
+            start_datetime: raw.start_date,
+            address: raw.location_address,
+            website: raw.input_url,
+            organization: raw.hosts.map(item => item.name).join(", "),
+            region: raw.location_city,
+            category: raw.categories[0],
+            city: raw.location_city,
+        }
+
+        setEditingEvent(fbCreatingEvent);
 
         setShowCreateEventForm(true);
     }
@@ -155,35 +173,6 @@ export default function Dashboard() {
     const expiredEventCount = getExpiredEventCount();
     // const publishedEventCount = getPublishedEventCount();
 
-    const DownloadIcon = () => (
-        <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            aria-hidden="true"
-        >
-            <path
-                d="M12 3v12"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-            />
-            <path
-                d="M7 10l5 5 5-5"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-            <path
-                d="M5 20h14"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-            />
-        </svg>
-    );
 
     return (
         <div style={{ display: "flex", gap: "2px" }}>
@@ -302,9 +291,36 @@ export default function Dashboard() {
                                 </button>
                                 <button className="btn btn-primary" style={{marginTop: '10px', marginLeft: "4px", fontSize: "14px", backgroundColor: "#1877F2"}} onClick={() => setShowImportFacebookForm(true)}>
                                     &nbsp;
-                                    <svg xmlns="http://w3.org" viewBox="0 0 320 512" width="16" height="16">
+                                    <svg
+                                        width="18"
+                                        height="18"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M12 3v12"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                        />
+                                        <path
+                                            d="M7 10l5 5 5-5"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                        <path
+                                            d="M5 20h14"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                        />
+                                    </svg>
+                                    <svg xmlns="http://w3.org" viewBox="0 0 320 512" width="14" height="14">
                                             <path fill="currentColor" d="M80 299.3V256H12V171.3H80V114.4C80 47.3 120.7 10 181 10c28.8 0 53.6 2.1 60.8 3v70.5h-41.7c-32.6 0-38.9 15.5-38.9 38.2V171.2h78.2L229.3 256H161.2V512H80V299.3z"/>
-                                        </svg> + Import Event
+                                    </svg>Import Event
                                 </button>
                             </div>
                         </div>
