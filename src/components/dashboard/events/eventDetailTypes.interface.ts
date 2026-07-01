@@ -22,6 +22,10 @@ export interface EventDetail {
     date_fields: DateFields;
 }
 
+export interface FacebookEventDetail extends Omit<EventDetail, 'event_id' | 'platforms' | 'date_fields'> {
+    facebookEventURL: string;
+}
+
 export interface DateFields {
     start_datetime_local: string,        // "2026-06-11 21:00:00"
     event_date: string,                    // "2026-06-11"

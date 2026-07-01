@@ -11,7 +11,7 @@ const formatDateTimeLocal = (iso?: string) => {
     return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 };
 
-export default function CreateEventForm({
+export default function CreateEditEventForm({
                                             userId,
                                             event,
                                             onSuccess,
