@@ -270,7 +270,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                 <div style={{display: "flex", width: "100px", height: "60px" }}>
                     <img style={{transform: "scale(0.4)", filter: "grayscale(100%)"}} src={PLATFORM_ICONS[platform]} />
                 </div>
-                <div style={{padding: "54px"}}/>
+                <div style={{paddingLeft: "54px", paddingRight: "54px", paddingBottom: "10px"}}/>
                 <div>
                     <div style={{fontSize: "18px", fontWeight:"bold"}}>
                         {platform}{platform === "sfstation" ? <div style={{fontSize: "12px"}} onClick={() => alert(loginInfo)}>🔐 Requires Login</div> : ""}
