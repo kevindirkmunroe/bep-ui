@@ -250,3 +250,7 @@ code {
   padding: 4px 8px;
   border-radius: 4px;
 }
+
+.platform-checkbox {
+  accent-color: #D2492C;
+}

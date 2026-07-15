@@ -1,6 +1,6 @@
 import {PlatformData} from "./platformTypes.interface"
 export function ProgressBar( {platforms}  : {platforms :PlatformData[]} ) {
-    const total = platforms.length;
+    const total = platforms.filter(p => p.status !== "skipped").length;
     const done = platforms.filter(p => p.status === "submitted").length;
 
     const getStatusEmoji = (done: number, total:number) => {

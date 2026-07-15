@@ -4,6 +4,7 @@ import {DateFields, EventDetail} from "../eventDetailTypes.interface";
 import {api} from "../../../../utils/api";
 import {zipToVisitOaklandDistrict} from "./regionMappings";
 import React from "react";
+import {SkipPromoteCheckbox} from "./SkipPromoteCheckbox";
 
 function buildDateFields(startDatetime: string) : DateFields {
     const normalized = startDatetime.replace("T", " ").slice(0, 19);
@@ -158,8 +159,6 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                 "width=1400,height=1000"
             );
             partnerWindow.location.href = getPlatformUrl(platform);
-
-            // window.open(getPlatformUrl(platform), "_blank");
         }
 
         // 2. Create payload with platform and region
@@ -191,8 +190,6 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
         // Break start time into wall-clock event time.
         const localDT = toLocalDateTimeString(event.start_datetime);
         event.date_fields = buildDateFields(localDT);
-
-        console.log(`[PlatformRow] payload for Extension, ${platform}: ${JSON.stringify(event)}`);
 
         window.postMessage(
             {
@@ -231,24 +228,13 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
         }
     };
 
-    const formatDateTime = (isoString: string) => {
-        const date = new Date(isoString);
-
-        return date.toLocaleString("en-US", {
-            month: "2-digit",
-            day: "2-digit",
-            year: "numeric",
-            hour: "numeric",
-            minute: "2-digit",
-            hour12: true
-        });
-    };
-
     const getStatusEmoji = (status: string) => {
         if(status === 'not_started'){
             return("🔴")
         }else if(status === 'in_progress'){
             return("🟠")
+        }else if(status === 'skipped'){
+            return("⚫️")
         }else{
             return("✅")
         }
@@ -259,6 +245,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
         "in_progress" : "Incomplete",
         "submitted" : "Submitted",
         "published" : "Published",
+        "skipped" : "Skipped"
     }
 
     const PLATFORM_ICONS = {
@@ -269,6 +256,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
     }
 
     const loginInfo = "This platform \"sfstation\" requires a login to post events. Open sfstation.com in a new tab, login then return to this tab."
+    // const skipId = `skip_${platform}`;
 
     return (
         <div style={{
@@ -278,6 +266,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
             marginBottom: 10
         }}>
             <div style={{display: "flex", flexDirection: "row", backgroundColor: status === 'submitted' ? "#f5f5f5" : 'white'}}>
+                <SkipPromoteCheckbox disabled={status === 'submitted'} platform={platform} handleUpdateStatus={updatePlatformStatus} />
                 <div style={{display: "flex", width: "100px", height: "60px" }}>
                     <img style={{transform: "scale(0.4)", filter: "grayscale(100%)"}} src={PLATFORM_ICONS[platform]} />
                 </div>
@@ -287,7 +276,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                         {platform}{platform === "sfstation" ? <div style={{fontSize: "12px"}} onClick={() => alert(loginInfo)}>🔐 Requires Login</div> : ""}
                     </div>
                     <div style={{fontSize: "14px", marginLeft: "10px"}}>
-                        {PRINTABLE_STATUS[status]} &nbsp;{getStatusEmoji(status)}
+                        {PRINTABLE_STATUS[status]} &nbsp;{getStatusEmoji(status)}&nbsp;&nbsp;&nbsp;
                     </div>
                 </div>
                 <div style={{marginLeft: "auto"}}>
@@ -310,7 +299,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                         </button>
                     )}
                     {status !== "submitted" && status && (
-                        <button disabled={status === 'not_started' || !extensionInstalled}
+                        <button disabled={status === 'not_started' || !extensionInstalled || status === 'skipped'}
                                 title={extensionInstalled
                                     ? "Mark this event as submitted after completing submission on the partner website"
                                     : "Install the LocalBuzz Chrome extension to enable Mark Submitted"}

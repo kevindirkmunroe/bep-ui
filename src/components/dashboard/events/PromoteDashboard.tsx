@@ -131,7 +131,7 @@ export default function PromoteDashboard() {
                             </div>
                         </div>
                     </div>
-                    <ProgressBar platforms={event.platforms} />
+                    <ProgressBar platforms={event.platforms}/>
                     <PlatformList
                         extensionInstalled={extensionInstalled}
                         event={event}
