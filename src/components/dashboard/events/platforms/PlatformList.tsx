@@ -1,5 +1,5 @@
 import {PlatformRow} from "./PlatformRow";
-import {PlatformData} from "./platformTypes.interface";
+import {PlatformData, PlatformStatus} from "./platformTypes.interface";
 import {EventDetail} from "../eventDetailTypes.interface";
 
 export function PlatformList(
@@ -7,7 +7,7 @@ export function PlatformList(
         {extensionInstalled: boolean;
          event: EventDetail;
          reload: () => Promise<void>;
-         updatePlatformStatus: (platform: string, status: string) => void}
+         updatePlatformStatus: (platform: string, status: PlatformStatus) => void}
     ) {
     return (
         <div style={{height: '450px', // Fixed height

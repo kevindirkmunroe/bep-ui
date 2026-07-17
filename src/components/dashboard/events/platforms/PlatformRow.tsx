@@ -146,7 +146,7 @@ async function buildPayload(event: EventDetail, platform: string) {
 }
 
 export function PlatformRow({ event, platformData, updatePlatformStatus, reload, extensionInstalled } : PlatformRowProps) {
-    const { platform, status, date_published } = platformData;
+    const { platform, status } = platformData;
 
     const handleOpen = async () => {
         // 1. OPEN IMMEDIATELY (must be sync)
@@ -158,7 +158,12 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                 "LocalBuzzPromotionWindow",
                 "width=1400,height=1000"
             );
-            partnerWindow.location.href = getPlatformUrl(platform);
+            const platformUrl = getPlatformUrl(platform);
+            if(partnerWindow){
+                partnerWindow.location.href = platformUrl;
+            }else{
+                alert(`${platformUrl} failed to open. Please try again.`);
+            }
         }
 
         // 2. Create payload with platform and region
@@ -205,12 +210,12 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
         await reload();
     };
 
-    const handleReopen = () => {
+    const handleReopen = async () => {
         // optional: reset status
         updatePlatformStatus(platform, "in_progress");
 
         // reopen autofill
-        handleOpen();
+        await handleOpen();
     };
 
     const handleSubmit = async () => {
@@ -268,7 +273,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
             <div style={{display: "flex", flexDirection: "row", backgroundColor: status === 'submitted' ? "#f5f5f5" : 'white'}}>
                 <SkipPromoteCheckbox disabled={status === 'submitted'} platform={platform} handleUpdateStatus={updatePlatformStatus} />
                 <div style={{display: "flex", width: "100px", height: "60px" }}>
-                    <img style={{transform: "scale(0.4)", filter: "grayscale(100%)"}} src={PLATFORM_ICONS[platform]} />
+                    <img alt={"platform icon"} style={{transform: "scale(0.4)", filter: "grayscale(100%)"}} src={PLATFORM_ICONS[platform]} />
                 </div>
                 <div style={{paddingLeft: "54px", paddingRight: "54px", paddingBottom: "10px"}}/>
                 <div>
@@ -283,7 +288,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                     <div style={{padding: "4px"}}/>
                     {status === "not_started" && (
                         <button disabled={!extensionInstalled} className="btn btn-primary" onClick={handleOpen}>
-                            <img src={"/icons8-form-24.png"} style={{width:"24px", height:"24px"}} />Autofill
+                            <img alt={"Autofill"} src={"/icons8-form-24.png"} style={{width:"24px", height:"24px"}} />Autofill
                         </button>
                     )}
                     {status === "in_progress" && (
@@ -295,7 +300,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                                 }
                                 className="btn btn-primary"
                                 onClick={handleOpen}>
-                            <img src={"/icons8-form-24.png"} style={{width:"24px", height:"24px"}} />Autofill
+                            <img alt={"Autofill"} src={"/icons8-form-24.png"} style={{width:"24px", height:"24px"}} />Autofill
                         </button>
                     )}
                     {status !== "submitted" && status && (
@@ -305,7 +310,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                                     : "Install the LocalBuzz Chrome extension to enable Mark Submitted"}
                                 className="btn btn-primary-greater"
                                 onClick={handleSubmit}>
-                            <img src={"/icons8-checklist-48.png"} style={{width:"24px", height:"24px"}} />Mark Submitted
+                            <img alt={"Mark Submitted"} src={"/icons8-checklist-48.png"} style={{width:"24px", height:"24px"}} />Mark Submitted
                         </button>
                     )}
                     {status === "published" && (

@@ -2,9 +2,16 @@ import {EventDetail} from "../eventDetailTypes.interface";
 
 export type Platform = "funcheapsf" | "visitoakland" | "sfstation" | "indybay";
 
+export type PlatformStatus =
+    | "not_started"
+    | "in_progress"
+    | "submitted"
+    | "skipped"
+    | "published";
+
 export interface PlatformData {
     platform: Platform;
-    status: "not_started" | "in_progress" | "submitted" | "skipped" | "published";
+    status: PlatformStatus;
     external_url?: string;
     date_published?: string;
 }
@@ -12,7 +19,7 @@ export interface PlatformData {
 export interface PlatformRowProps {
     event: EventDetail;
     platformData: PlatformData;
-    updatePlatformStatus: (platform: string, status: string) => void;
+    updatePlatformStatus: (platform: string, status: PlatformStatus) => void;
     reload: () => void;
     extensionInstalled: boolean;
 }

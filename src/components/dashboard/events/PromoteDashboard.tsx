@@ -9,6 +9,7 @@ import {EventDetail} from "./eventDetailTypes.interface";
 import { useUser } from "../../../UserContext";
 import {api} from "../../../utils/api";
 import ImageCarousel from "../../ImageCarousel";
+import {PlatformStatus} from "./platforms/platformTypes.interface";
 
 
 export default function PromoteDashboard() {
@@ -53,7 +54,7 @@ export default function PromoteDashboard() {
         };
     }, []);
 
-    const updatePlatformStatus = (platform: string, status: string) => {
+    const updatePlatformStatus = (platform: string, status: PlatformStatus) => {
         setEvent(prev => {
             if (!prev) return prev;
 

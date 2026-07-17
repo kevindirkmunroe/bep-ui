@@ -1,12 +1,21 @@
 import { useState } from 'react';
+import {Platform} from "./platformTypes.interface";
 
-export function SkipPromoteCheckbox({disabled, platform, handleUpdateStatus}) {
+interface SkipPromoteCheckboxProps {
+    disabled: boolean;
+    platform: Platform;
+    handleUpdateStatus: (platform: Platform) => void;
+}
+
+export function SkipPromoteCheckbox({disabled, platform, handleUpdateStatus}: SkipPromoteCheckboxProps) {
     const [isChecked, setIsChecked] = useState(false);
 
     // The event handler extracts e.target.checked
-    const handleCheckboxChange = (event) => {
-        setIsChecked(event.target.checked);
-        handleUpdateStatus(platform, event.target.checked? 'skipped' : 'not_started');
+    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if(event){
+            setIsChecked(event?.target?.checked);
+            handleUpdateStatus(platform, event?.target?.checked? 'skipped' : 'not_started');
+        }
     };
 
     return (
