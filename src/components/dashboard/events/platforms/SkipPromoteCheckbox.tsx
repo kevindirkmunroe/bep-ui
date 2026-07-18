@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import {Platform} from "./platformTypes.interface";
+import {Platform, PlatformStatus} from "./platformTypes.interface";
 
 interface SkipPromoteCheckboxProps {
     disabled: boolean;
     platform: Platform;
-    handleUpdateStatus: (platform: Platform) => void;
+    handleUpdateStatus: (platform: Platform, status: PlatformStatus) => void;
 }
 
 export function SkipPromoteCheckbox({disabled, platform, handleUpdateStatus}: SkipPromoteCheckboxProps) {

@@ -19,7 +19,7 @@ export interface PlatformData {
 export interface PlatformRowProps {
     event: EventDetail;
     platformData: PlatformData;
-    updatePlatformStatus: (platform: string, status: PlatformStatus) => void;
+    updatePlatformStatus: (platform: Platform, status: PlatformStatus) => void;
     reload: () => void;
     extensionInstalled: boolean;
 }
