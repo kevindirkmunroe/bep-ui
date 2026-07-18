@@ -39,7 +39,7 @@ export default function ImportFacebookEventForm({
         setForm(buildForm(event));
     }, [event]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setForm({
             ...form,
             [e.target.name]: e.target.value,

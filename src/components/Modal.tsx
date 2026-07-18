@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import {ReactNode, useEffect} from "react";
 
 const overlayStyle: React.CSSProperties = {
     position: "fixed",
@@ -22,8 +22,12 @@ const modalStyle: React.CSSProperties = {
     overflowY: "auto",
     boxShadow: "0 10px 30px rgba(0,0,0,0.2)"
 };
+interface ModalProps {
+    children: ReactNode;
+    onClose: () => void;
+}
 
-export default function Modal({ children, onClose }) {
+export default function Modal({ children, onClose } : ModalProps) {
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
             if (e.key === "Escape") onClose();

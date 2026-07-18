@@ -8,17 +8,16 @@ import ImageCarousel from "../ImageCarousel";
 import {api} from "../../utils/api";
 import FacebookURLInputForm from "./FacebookURLInputForm";
 import ImportFacebookEventForm from "./ImportFacebookEventForm";
+import {FacebookEventResponseType} from "./ImportFacebookEventResponseType";
 
 export default function Dashboard() {
     const { userId } = useParams();
-    const [events, setEvents] = useState([]);
+    const [events, setEvents] = useState<EventDetail[] | null>([]);
     const [showImportFacebookURLForm, setShowImportFacebookURLForm] = useState(false);
     const [showImportFacebookEventForm, setShowImportFacebookEventForm] = useState(false);
     const [showCreateEventForm, setShowCreateEventForm] = useState(false);
     const [editingEvent, setEditingEvent] = useState<EventDetail | null>(null);
     const [facebookImportEvent, setFacebookImportEvent] = useState<FacebookEventDetail | null>(null);
-
-
 
     function isOlderThanToday(date: string) {
         return new Date(date) < new Date();
@@ -31,13 +30,13 @@ export default function Dashboard() {
             // TODO: since Apify and Render costs per call, develop this input feature with a static event.
             //  Will turn on once we have a budget. But- this next block of code WORKS, already tested it, DO NOT DELETE.
             //
-            let result = {}
+            let result = null;
             try{
-                 result = await api.post("/events/import/facebook", {
+                 result = await api.post<FacebookEventResponseType>("/events/import/facebook", {
                     facebookEventUrl
                 });
                 // alert(`Imported Facebook event: ${JSON.stringify(result.data)}`);
-            }catch(err){
+            }catch(err: Error | any){
                 if(err.status === 404){
                     alert(`Facebook event not found: ${facebookEventUrl}. The event may be private, restricted, or unsupported.`);
                 }else{
@@ -45,6 +44,15 @@ export default function Dashboard() {
                 }
             }
 
+            const raw = result?.data.raw;
+            if(!raw){
+                alert(`Facebook import ${facebookEventUrl} failed.`);
+                return;
+            }
+
+            //
+            // BEGIN MOCK Facebook response
+            //
             // const DEV_EVENT_RESPONSE_JSON =
             //     {
             //         "data": {
@@ -102,11 +110,19 @@ export default function Dashboard() {
             //
             // const raw = DEV_EVENT_RESPONSE_JSON.raw;
 
-            const raw = result.data.raw;
+            //
+            // END MOCK Facebook response
+            //
 
             // raw data includes \n \t, replace them
             const cleanDescription = raw.description?.replace(/\\n/g, "\n")
                 .replace(/\\t/g, "\t");
+
+            interface Host  {
+                name: string;
+                url: string;
+                type: string;
+            }
 
             const fbImportEvent: FacebookEventDetail = {
                 facebookEventURL: facebookEventUrl,
@@ -118,7 +134,7 @@ export default function Dashboard() {
                 start_datetime: raw.start_date,
                 address: raw.location_address,
                 website: raw.input_url,
-                organization: raw.hosts.map(item => item.name).join(", "),
+                organization: raw.hosts.map((item: Host) => item.name).join(", "),
                 region: raw.location_city,
                 category: raw.categories[0],
                 city: raw.location_city,
