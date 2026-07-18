@@ -56,20 +56,16 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
 
     const handleOpen = async () => {
         // 1. OPEN IMMEDIATELY (must be sync)
-        if(import.meta.env.VITE_PROMOTE_MODE === 'DEV'){
-            console.log(`DEV mode NOT opening URL for platform ${platform}`);
+        const partnerWindow = window.open(
+            "",
+            "LocalBuzzPromotionWindow",
+            "width=1400,height=1000"
+        );
+        const platformUrl = getPlatformUrl(platform);
+        if(partnerWindow){
+            partnerWindow.location.href = platformUrl;
         }else{
-            const partnerWindow = window.open(
-                "",
-                "LocalBuzzPromotionWindow",
-                "width=1400,height=1000"
-            );
-            const platformUrl = getPlatformUrl(platform);
-            if(partnerWindow){
-                partnerWindow.location.href = platformUrl;
-            }else{
-                alert(`${platformUrl} failed to open. Please try again.`);
-            }
+            alert(`${platformUrl} failed to open. Please try again.`);
         }
 
         // 2. Create payload with platform and region
