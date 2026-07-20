@@ -5,11 +5,18 @@ import {api} from "../../../../utils/api";
 import {zipToVisitOaklandDistrict} from "./regionMappings";
 import React from "react";
 import {SkipPromoteCheckbox} from "./SkipPromoteCheckbox";
-import {FunCheapPayload, IndyBayPayload, SFStationPayload, VisitOaklandPayload} from "./payloadTypes.interface";
+import {
+    DoTheBayPayload,
+    FunCheapPayload,
+    IndyBayPayload,
+    SFStationPayload,
+    VisitOaklandPayload
+} from "./payloadTypes.interface";
 import {PAYLOAD_TRANSFORMATIONS} from "./payloadTransfomations";
 
 type PlatformPayload =
     | FunCheapPayload
+    | DoTheBayPayload
     | VisitOaklandPayload
     | SFStationPayload
     | IndyBayPayload;
@@ -159,7 +166,8 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
         "funcheapsf": "/funcheapsf.jpg",
         "visitoakland": "/visit_oakland.jpg",
         "sfstation": "/sfstation.jpg",
-        "indybay":"/indybay.jpg"
+        "indybay":"/indybay.jpg",
+        "dothebay": "/do_the_bay.jpg"
     }
 
     const loginInfo = "This platform \"sfstation\" requires a login to post events. Open sfstation.com in a new tab, login then return to this tab."
@@ -174,13 +182,17 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
         }}>
             <div style={{display: "flex", flexDirection: "row", backgroundColor: status === 'submitted' ? "#f5f5f5" : 'white'}}>
                 <SkipPromoteCheckbox disabled={status === 'submitted'} platform={platform} handleUpdateStatus={updatePlatformStatus} />
-                <div style={{display: "flex", width: "100px", height: "60px" }}>
-                    <img alt={"platform icon"} style={{transform: "scale(0.4)", filter: "grayscale(100%)"}} src={PLATFORM_ICONS[platform]} />
+                <div className="platform-icon" style={{display: "flex", width: "100px", height: "60px", marginLeft: "10px"}}>
+                    <img alt={"platform icon"} style={{transform: "scale(0.85)", filter: "grayscale(100%)", width: "100px", height: "60px"}} src={PLATFORM_ICONS[platform]} />
                 </div>
-                <div style={{paddingLeft: "54px", paddingRight: "54px", paddingBottom: "10px"}}/>
-                <div>
-                    <div style={{fontSize: "18px", fontWeight:"bold"}}>
-                        {platform}{platform === "sfstation" ? <div style={{fontSize: "12px"}} onClick={() => alert(loginInfo)}>🔐 Requires Login</div> : ""}
+                <div style={{paddingLeft: "54px", paddingRight: "4px", paddingBottom: "10px"}}/>
+                <div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start"
+                }}>
+                    <div style={{fontSize: "18px", fontWeight:"bold", justifyContent: "left"}}>
+                        {platform}{platform === "sfstation" ? <div style={{fontSize: "12px"}} onClick={() => alert(loginInfo)}>🔐 Restricted</div> : ""}
                     </div>
                     <div style={{fontSize: "14px", marginLeft: "10px"}}>
                         {PRINTABLE_STATUS[status]} &nbsp;{getStatusEmoji(status)}&nbsp;&nbsp;&nbsp;

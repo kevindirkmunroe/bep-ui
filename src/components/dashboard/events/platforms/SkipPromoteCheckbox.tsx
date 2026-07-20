@@ -19,7 +19,7 @@ export function SkipPromoteCheckbox({disabled, platform, handleUpdateStatus}: Sk
     };
 
     return (
-        <div style={{fontSize: '16px', marginTop: '18px'}}>
+        <div style={{fontSize: '14px', marginTop: '18px'}}>
             <label>
                 <input
                     disabled={disabled}

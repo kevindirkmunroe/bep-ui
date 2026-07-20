@@ -1,6 +1,6 @@
 import {EventDetail} from "../eventDetailTypes.interface";
 
-export type Platform = "funcheapsf" | "visitoakland" | "sfstation" | "indybay";
+export type Platform = "funcheapsf" | "visitoakland" | "sfstation" | "indybay" | "dothebay";
 
 export type PlatformStatus =
     | "not_started"

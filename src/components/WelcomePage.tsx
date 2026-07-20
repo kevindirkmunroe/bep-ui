@@ -21,7 +21,7 @@ export function WelcomePage() {
                 {/* RIGHT: Existing content */}
                 <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", minWidth: "100vh"}}>
                     <div style={{ paddingLeft: 40, marginTop: "10%" }}>
-                        <strong style={{fontSize: "24px", color: "#D2492C"}}>Promote Your <b style={{fontSize:"28px"}}>Local</b> Events</strong>
+                        <strong style={{fontSize: "24px", color: "#D2492C"}}>Promote Your <b style={{fontSize:"28px"}}>Local Bay Area</b> Events</strong>
                         <div style={{marginTop: 50}}>
                             <nav style={{ display: "flex", justifyContent: "center", gap: "20px"}}>
                                 <NavLink style={{ fontSize: "24px" }}
@@ -37,9 +37,12 @@ export function WelcomePage() {
                     </div>
                     <div style={{marginTop: "auto", display: "flex", marginBottom: "4px", flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
                         <img style={{transform: "scale(0.6)"}} src={"/funcheapsf.jpg"} />
+                        <img style={{transform: "scale(0.6)"}} src={"/do_the_bay.jpg"} />
                         <img style={{transform: "scale(0.6)"}} src={"/indybay.jpg"} />
-                        <img style={{transform: "scale(0.6)"}} src={"/visit_oakland.jpg"} />
+                    </div>
+                    <div style={{marginTop: "4px", display: "flex", marginBottom: "4px", flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
                         <img style={{transform: "scale(0.6)"}} src={"/sfstation.jpg"} />
+                        <img style={{transform: "scale(0.6)"}} src={"/visit_oakland.jpg"} />
                     </div>
                     <div style={{marginBottom: "30px",padding: "20px", fontSize: "14px"}}>All trademarks and logos are the property of their respective owners.
                         LocalBuzz is not affiliated with or endorsed by these platforms.</div>

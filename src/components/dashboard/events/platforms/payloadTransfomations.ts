@@ -1,4 +1,5 @@
 import {
+    DoTheBayPayload,
     FunCheapPayload,
     IndyBayPayload,
     PayloadTransformation,
@@ -82,6 +83,19 @@ const sfstationTransformation: PayloadTransformation = async (event, platform) :
     };
 }
 
+const dothebayTransformation: PayloadTransformation = async (event, platform) : Promise<DoTheBayPayload> => {
+    return {
+        name: event.name,
+        email: event.email,
+        title: event.title,
+        description: event.description,
+        date: event.start_datetime,
+        venue: event.location_name,
+        ticket_url : event.website,
+        category: event.category,
+    };
+}
+
 const visitOaklandTransformation: PayloadTransformation = async (event, platform) : Promise<VisitOaklandPayload> => {
     const zip: string = event.zip || '';
     let region = zipToVisitOaklandDistrict(zip);
@@ -116,7 +130,6 @@ const visitOaklandTransformation: PayloadTransformation = async (event, platform
         category: event.category,
         city: city
     };
-
 }
 
 export const PAYLOAD_TRANSFORMATIONS : PayloadTransformationMap = {
@@ -124,4 +137,5 @@ export const PAYLOAD_TRANSFORMATIONS : PayloadTransformationMap = {
     funcheapsf: funcheapsfTransformation,
     sfstation: sfstationTransformation,
     visitoakland: visitOaklandTransformation,
+    dothebay: dothebayTransformation,
 }

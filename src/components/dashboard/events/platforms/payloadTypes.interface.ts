@@ -25,6 +25,14 @@ export interface FunCheapPayload extends BaseEventPayload, ContactPayload {
     category?: string;
 }
 
+export interface DoTheBayPayload extends BaseEventPayload, ContactPayload {
+    presenterInfo?: string;
+    venue: string;
+    bands?: string;
+    ticket_url?: string;
+    category?: string;
+}
+
 export interface VisitOaklandPayload extends BaseEventPayload, ContactPayload {
     address?: string;
     price?: string;

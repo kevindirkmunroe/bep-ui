@@ -5,7 +5,8 @@ export function getPlatformUrl(platform: Platform){
         funcheapsf: "https://sf.funcheap.com/submit-form",
         visitoakland: "https://www.visitoakland.com/events/submit-an-event/",
         sfstation: "https://www.sfstation.com/event/add",
-        indybay: "https://www.indybay.org/calendar/event_add.php"
+        indybay: "https://www.indybay.org/calendar/event_add.php",
+        dothebay: "https://dothebay.com/events/new"
     };
 
     return urls[platform];
