@@ -194,8 +194,8 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                     <div style={{fontSize: "18px", fontWeight:"bold", justifyContent: "left"}}>
                         {platform}{platform === "sfstation" ? <div style={{fontSize: "12px"}} onClick={() => alert(loginInfo)}>🔐 Restricted</div> : ""}
                     </div>
-                    <div style={{fontSize: "14px", marginLeft: "10px"}}>
-                        {PRINTABLE_STATUS[status]} &nbsp;{getStatusEmoji(status)}&nbsp;&nbsp;&nbsp;
+                    <div style={{fontSize: "14px"}}>
+                        {getStatusEmoji(status)}&nbsp;&nbsp;&nbsp;{PRINTABLE_STATUS[status]} &nbsp;
                     </div>
                 </div>
                 <div style={{marginLeft: "auto"}}>

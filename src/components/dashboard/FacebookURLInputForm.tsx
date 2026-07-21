@@ -40,7 +40,7 @@ export default function FacebookURLInputForm({
                 <h2>Import Facebook Event</h2>
 
                 <p style={{marginBottom: "16px"}}>
-                    Paste the URL of your Facebook Event and LocalBuzz will import the
+                    Copy the URL of your Facebook Event and LocalBuzz will import the
                     available event details
                 </p>
 
