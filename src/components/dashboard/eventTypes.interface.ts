@@ -3,6 +3,7 @@ import {EventDetail, FacebookEventDetail} from "./events/eventDetailTypes.interf
 export interface CreateEventFormProps {
     userId: string; // we'll handle null before rendering
     event?: EventDetail;  // Edit mode
+    initialDate: Date | null;
     onSuccess: () => void;
     onCancel: () => void;
 }

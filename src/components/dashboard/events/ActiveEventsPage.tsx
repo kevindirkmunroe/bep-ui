@@ -1,9 +1,9 @@
-import { useOutletContext } from "react-router-dom";
+import {useOutletContext} from "react-router-dom";
 import {EventDetail} from "./eventDetailTypes.interface";
 import {EventSummary} from "./EventSummary";
-import {getEventStatus, getIsExpired} from "./EventStatus";
-import React from "react";
+import {getEventStatus} from "./EventStatus";
 import {isOlderThanToday} from "../../../utils/Time";
+
 
 export function ActiveEventsPage() {
     const { events, reload } = useOutletContext<{
@@ -14,7 +14,6 @@ export function ActiveEventsPage() {
     const activeEvents = (events || []).filter(e => {
         return getEventStatus(e) !== "submitted" && !isOlderThanToday(e.start_datetime);
     });
-
 
     return (
         <div style={{marginTop: 10}}>

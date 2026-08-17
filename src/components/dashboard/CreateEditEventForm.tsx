@@ -14,6 +14,7 @@ const formatDateTimeLocal = (iso?: string) => {
 export default function CreateEditEventForm({
                                             userId,
                                             event,
+                                            initialDate,
                                             onSuccess,
                                             onCancel,
                                         }: CreateEventFormProps) {
@@ -34,7 +35,20 @@ export default function CreateEditEventForm({
         category: event?.category || "",
     });
 
+    const toDatetimeLocal = (date: Date) => {
+        const pad = (n: number) => String(n).padStart(2, "0");
+
+        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T00:00`;
+    };
+
     const [form, setForm] = useState(buildForm(event));
+    const [startDatetime, setStartDatetime] = useState(
+        event?.start_datetime
+            ? event.start_datetime.slice(0, 16)
+            : initialDate
+                ? toDatetimeLocal(initialDate)
+                : ""
+    );
     const isEdit = !!event;
 
     useEffect(() => {
@@ -129,9 +143,10 @@ export default function CreateEditEventForm({
                 <input
                     name="start_datetime"
                     className="input"
+                    value={startDatetime}
                     type="datetime-local"
                     onChange={handleChange}
-                    value={form.start_datetime}
+                    value={startDatetime}
                 />
 
                 <textarea

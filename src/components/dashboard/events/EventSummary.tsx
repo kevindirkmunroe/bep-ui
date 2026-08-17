@@ -54,7 +54,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     const [showRestoreModal, setShowRestoreModal] = useState(false);
     const [showRecycleModal, setShowRecycleModal] = useState(false);
     const [imgSrc, setImgSrc] = useState("/icons8-delete-30.png");
-
     const getNewestPublishDate = (platforms: PlatformData[]): Date | undefined => {
         const dates = platforms
             .map(p => p.date_published)

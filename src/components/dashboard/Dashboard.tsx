@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {NavLink, Outlet, useParams} from "react-router-dom";
 import CreateEditEventForm from "./CreateEditEventForm";
 import {getEventStatus} from "./events/EventStatus";
@@ -9,6 +9,7 @@ import {api} from "../../utils/api";
 import FacebookURLInputForm from "./FacebookURLInputForm";
 import ImportFacebookEventForm from "./ImportFacebookEventForm";
 import {FacebookEventRaw, FacebookEventResponseType} from "./ImportFacebookEventResponseType";
+import ViewToggle from "./events/ViewToggle";
 
 export default function Dashboard() {
     const { userId } = useParams();
@@ -18,7 +19,7 @@ export default function Dashboard() {
     const [showCreateEventForm, setShowCreateEventForm] = useState(false);
     const [editingEvent, setEditingEvent] = useState<EventDetail | null>(null);
     const [facebookImportEvent, setFacebookImportEvent] = useState<FacebookEventDetail | null>(null);
-
+    const [createEventDate, setCreateEventDate] = useState<Date | null>(null);
     function isOlderThanToday(date: string) {
         return new Date(date) < new Date();
     }
@@ -216,13 +217,14 @@ export default function Dashboard() {
 
             {/* RIGHT: Existing content */}
             <div style={{ flex: 1 }}>
-                <div style={{ paddingLeft: 40 }}>
+                <div style={{paddingLeft: 40}}>
                     {(showCreateEventForm || editingEvent) && userId && (
                         <Modal onClose={() => setShowCreateEventForm(false)}>
                             <CreateEditEventForm
                                 key={editingEvent?.event_id || "new"}   // 👈 Force react to recreate component
                                 userId={userId}
                                 event={editingEvent || undefined}
+                                initialDate={createEventDate}
                                 onSuccess={() => {
                                     setShowCreateEventForm(false);
                                     setEditingEvent(null);
@@ -244,21 +246,21 @@ export default function Dashboard() {
                         </Modal>
                     )}
                     {showImportFacebookEventForm && userId && (
-                    <Modal onClose={() => setShowImportFacebookEventForm(false)}>
-                        <ImportFacebookEventForm
-                            userId={userId}
-                            event={facebookImportEvent || undefined}
-                            onSuccess={() => {
-                                setShowCreateEventForm(false);
-                                setFacebookImportEvent(null);
-                                loadEvents();
-                            }}
-                            onCancel={() => {
-                                setShowImportFacebookEventForm(false);
-                                setFacebookImportEvent(null);
-                            }}
-                        />
-                    </Modal>
+                        <Modal onClose={() => setShowImportFacebookEventForm(false)}>
+                            <ImportFacebookEventForm
+                                userId={userId}
+                                event={facebookImportEvent || undefined}
+                                onSuccess={() => {
+                                    setShowCreateEventForm(false);
+                                    setFacebookImportEvent(null);
+                                    loadEvents();
+                                }}
+                                onCancel={() => {
+                                    setShowImportFacebookEventForm(false);
+                                    setFacebookImportEvent(null);
+                                }}
+                            />
+                        </Modal>
                     )}
                     <div className="banner-div" style={
                         {
@@ -276,14 +278,26 @@ export default function Dashboard() {
                     }>&nbsp;My Events
                     </div>
                     <div style={{display: "flex", flexDirection: "row"}}>
-                        <div style={{display: "flex", width: "100%", flexDirection: "row", marginBottom: "2px", justifyContent: "space-between"}}>
-                            <nav style={{ display: "flex", justifyContent: "center", gap: "20px", marginTop: "14px", marginLeft: "12px" }}>
+                        <div style={{
+                            display: "flex",
+                            width: "100%",
+                            flexDirection: "row",
+                            marginBottom: "2px",
+                            justifyContent: "space-between"
+                        }}>
+                            <nav style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                gap: "20px",
+                                marginTop: "14px",
+                                marginLeft: "12px"
+                            }}>
                                 {activeEventCount > 0 ? (
                                     <NavLink
                                         to="events" end
-                                        style={({ isActive }) => ({
+                                        style={({isActive}) => ({
                                             fontSize: isActive ? "18px" : "15px",
-                                            textDecoration: isActive ? "underline": "none",
+                                            textDecoration: isActive ? "underline" : "none",
                                             fontWeight: isActive ? "bold" : "normal"
                                         })}>
                                         Active({activeEventCount})
@@ -296,9 +310,9 @@ export default function Dashboard() {
                                 {submittedEventCount > 0 ? (
                                     <NavLink
                                         to="submitted"
-                                        style={({ isActive }) => ({
+                                        style={({isActive}) => ({
                                             fontSize: isActive ? "18px" : "15px",
-                                            textDecoration: isActive ? "underline": "none",
+                                            textDecoration: isActive ? "underline" : "none",
                                             fontWeight: isActive ? "bold" : "normal"
                                         })}>
                                         Submitted({submittedEventCount})
@@ -311,9 +325,9 @@ export default function Dashboard() {
                                 {expiredEventCount > 0 && (
                                     <NavLink
                                         to="expired"
-                                        style={({ isActive }) => ({
+                                        style={({isActive}) => ({
                                             fontSize: isActive ? "18px" : "15px",
-                                            textDecoration: isActive ? "underline": "none",
+                                            textDecoration: isActive ? "underline" : "none",
                                             fontWeight: isActive ? "bold" : "normal"
                                         })}>
                                         Expired({expiredEventCount})
@@ -336,10 +350,17 @@ export default function Dashboard() {
                                 {/*)}*/}
                             </nav>
                             <div>
-                                <button className="btn btn-primary" style={{marginTop: '10px', marginLeft: "4px", fontSize: "14px"}} onClick={() => setShowCreateEventForm(true)}>
+                                <button className="btn btn-primary"
+                                        style={{marginTop: '10px', marginLeft: "4px", fontSize: "14px"}}
+                                        onClick={() => setShowCreateEventForm(true)}>
                                     + Create
                                 </button>
-                                <button className="btn btn-primary" style={{marginTop: '10px', marginLeft: "4px", fontSize: "14px", backgroundColor: "#1877F2"}} onClick={() => setShowImportFacebookURLForm(true)}>
+                                <button className="btn btn-primary" style={{
+                                    marginTop: '10px',
+                                    marginLeft: "4px",
+                                    fontSize: "14px",
+                                    backgroundColor: "#1877F2"
+                                }} onClick={() => setShowImportFacebookURLForm(true)}>
                                     &nbsp;
                                     <svg
                                         width="18"
@@ -369,23 +390,27 @@ export default function Dashboard() {
                                         />
                                     </svg>
                                     <svg xmlns="http://w3.org" viewBox="0 0 320 512" width="14" height="14">
-                                            <path fill="currentColor" d="M80 299.3V256H12V171.3H80V114.4C80 47.3 120.7 10 181 10c28.8 0 53.6 2.1 60.8 3v70.5h-41.7c-32.6 0-38.9 15.5-38.9 38.2V171.2h78.2L229.3 256H161.2V512H80V299.3z"/>
-                                    </svg>Import Event
+                                        <path fill="currentColor"
+                                              d="M80 299.3V256H12V171.3H80V114.4C80 47.3 120.7 10 181 10c28.8 0 53.6 2.1 60.8 3v70.5h-41.7c-32.6 0-38.9 15.5-38.9 38.2V171.2h78.2L229.3 256H161.2V512H80V299.3z"/>
+                                    </svg>
+                                    Import Event
                                 </button>
                             </div>
                         </div>
                     </div>
                     {/* ROUTED CONTENT */}
-                    <div style={{height: '600px', // Fixed height
-                        marginTop: '10px',
-                        overflowY: 'auto', // Enable vertical scrolling
-                        border: '1px solid #ccc',
-                        borderRadius: 2
-                        }}>
-                        <Outlet context={{ events, setEditingEvent, reload: loadEvents }} />
-                    </div>
-                </div>
+                    <ViewToggle />
 
+                    <Outlet
+                        context={{
+                            events,
+                            setEditingEvent,
+                            setCreateEventDate,
+                            setShowCreateEventForm,
+                            reload: loadEvents
+                        }}
+                    />
+                </div>
             </div>
         </div>
     );
