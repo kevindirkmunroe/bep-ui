@@ -6,6 +6,9 @@ import {useOutletContext} from "react-router-dom";
 import {getEventStatus} from "./events/EventStatus";
 import {isOlderThanToday} from "../../utils/Time";
 import { useParams } from "react-router-dom";
+import RecycleEventModal from "./events/RecycleEventModal";
+import RestoreEventModal from "./events/RestoreEventModal";
+import {api} from "../../utils/api";
 
 interface Event {
     event_id: number;
@@ -20,7 +23,7 @@ type OutletContext = {
         React.SetStateAction<Event | null>
     >;
     setShowCreateEventForm: React.Dispatch<
-        React.SetStateAction<boolean | null>
+        React.SetStateAction<boolean>
     >;
     setCreateEventDate: React.Dispatch<
         React.SetStateAction<Date | null>
@@ -43,7 +46,14 @@ export default function CalendarView() {
 
     const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+    const [recycleEvent, setRecycleEvent] = useState<Event | null>(null);
+    const [restoreEvent, setRestoreEvent] = useState<Event | null>(null);
+    const [showRecycleModal, setShowRecycleModal] = useState<boolean>(false);
+    const [showRestoreModal, setShowRestoreModal] = useState<boolean>(false);
 
+    function isOlderThanToday(date: string) {
+        return new Date(date) < new Date();
+    }
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
 
@@ -102,8 +112,19 @@ export default function CalendarView() {
     };
 
     const editEvent = (event: EventDetail) => {
-        setEditingEvent(event);
-        setSelectedEvent(event);
+
+        if (state === "active" || state === "events") {
+            setEditingEvent(event);
+            setSelectedEvent(true);
+        }
+
+        if (state === "submitted") {
+            setRecycleEvent(event);
+        }
+
+        if (state === "expired") {
+            setRestoreEvent(event);
+        }
     };
 
     const cells = [];
@@ -119,11 +140,15 @@ export default function CalendarView() {
                 key={day}
                 className={`calendar-day ${state === "events" ? "clickable" : ""}`}
                 onClick={() => {
-                    if (state !== "events") return;
-
-                    setEditingEvent(null);
-                    setCreateEventDate(new Date(year, month, day));
-                    setShowCreateEventForm(true);
+                    if (state === "events") {
+                        setEditingEvent(null);
+                        setCreateEventDate(new Date(year, month, day));
+                        setShowCreateEventForm(true);
+                    }else if (state === "submitted") {
+                        setShowRecycleModal(true);
+                    }else if (state === "expired") {
+                        setShowRestoreModal(true);
+                    }
                 }}
             >
                 <div className="calendar-date">{day}</div>
@@ -183,6 +208,37 @@ export default function CalendarView() {
                     onSave={() => {
                         reload();
                         setSelectedEvent(null);
+                    }}
+                />
+            )}
+
+            {recycleEvent && (
+                <RecycleEventModal
+                    event={recycleEvent}
+                    onClose={() => setRecycleEvent(null)}
+                    onRecycle={async (newDate) => {
+                        await api.post(`/events/${event.event_id}/clone`, {
+                            start_date: newDate
+                        });
+
+                        setShowRecycleModal(false);
+                        window.location.reload();
+                        await reload?.();
+                    }}
+                />
+            )}
+
+            {restoreEvent && (
+                <RestoreEventModal
+                    event={restoreEvent}
+                    onClose={() => setRestoreEvent(null)}
+                    onRestore={async (newDate) => {
+                        await api.patch(`/events/${event.event_id}/restore`, {
+                            start_date: newDate
+                        });
+
+                        setShowRestoreModal(false);
+                        await reload?.();
                     }}
                 />
             )}
