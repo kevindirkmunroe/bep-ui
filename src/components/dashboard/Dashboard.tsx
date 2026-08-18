@@ -277,7 +277,7 @@ export default function Dashboard() {
                         }
                     }>&nbsp;My Events
                     </div>
-                    <div style={{display: "flex", flexDirection: "row"}}>
+                    <div style={{display: "flex", flexDirection: "column"}}>
                         <div style={{
                             display: "flex",
                             width: "100%",
@@ -336,16 +336,20 @@ export default function Dashboard() {
                             </nav>
                             <div>
                                 <button className="btn btn-primary"
+                                        title="Create New Event"
                                         style={{marginTop: '10px', marginLeft: "4px", fontSize: "14px"}}
                                         onClick={() => setShowCreateEventForm(true)}>
                                     + Create
                                 </button>
-                                <button className="btn btn-primary" style={{
-                                    marginTop: '10px',
-                                    marginLeft: "4px",
-                                    fontSize: "14px",
-                                    backgroundColor: "#1877F2"
-                                }} onClick={() => setShowImportFacebookURLForm(true)}>
+                                &nbsp;|&nbsp;&nbsp;
+                                <button className="btn btn-primary"
+                                        title="Import Eventbrite Event"
+                                        style={{
+                                            marginTop: '10px',
+                                            marginLeft: "4px",
+                                            fontSize: "14px",
+                                            backgroundColor: "#F8485E"
+                                        }} onClick={() => alert('TODO: EventBrite')}>
                                     &nbsp;
                                     <svg
                                         width="18"
@@ -374,17 +378,64 @@ export default function Dashboard() {
                                             strokeLinecap="round"
                                         />
                                     </svg>
-                                    <svg xmlns="http://w3.org" viewBox="0 0 320 512" width="14" height="14">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         viewBox="0 0 999.9999389648438 1213.9000244140625" height="14">
+                                        <g>
+                                            <path
+                                                d="M917 814.9L515.3 501.7c-6.7-5.1.2-15.4 7.5-11.3l156.9 87.9c71.1 39.9 161 16.8 204.1-52.4 45.4-73 21.4-169.1-53.2-212.2L600.4 180.6c-7.3-4.3-1.9-15.3 6-12.2l105.8 42.3c.2.1 2.7 1 3.7 1.3 11.2 3.9 23.3 6.1 35.9 6.1 57.4 0 104.5-45.4 108.6-99.4C865.5 48.9 812 0 748.2 0h-489c-62.8 0-115.5 51.3-114.7 113.9.4 33.3 15.3 63 38.7 83.4 17.6 15.3 76.9 62.8 105.1 85.3 5 4 2.2 12.1-4.3 12.1h-97.9C83.2 295.3 0 378.9 0 482c0 52.1 21.3 99.2 55.6 133.1l566.6 538.5c40.1 37.4 93.9 60.3 153.1 60.3 124.1 0 224.7-100.6 224.7-224.7 0-70.3-32.4-133.1-83-174.3z"
+                                                fill="#fff"></path>
+                                        </g>
+                                    </svg>
+                                </button>
+                                <button className="btn btn-primary"
+                                        title="Import Facebook Event"
+                                        style={{
+                                            marginTop: '10px',
+                                            marginLeft: "4px",
+                                            fontSize: "14px",
+                                            backgroundColor: "#1877F2"
+                                        }}
+                                        onClick={() => setShowImportFacebookURLForm(true)}>
+                                    &nbsp;
+                                    <svg
+                                        width="18"
+                                        height="18"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            d="M12 3v12"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                        />
+                                        <path
+                                            d="M7 10l5 5 5-5"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        />
+                                        <path
+                                            d="M5 20h14"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                        />
+                                    </svg>
+                                    <svg xmlns="http://w3.org" viewBox="0 0 320 512" width="14" height="14"
+                                         style={{color: "white"}}>
                                         <path fill="currentColor"
                                               d="M80 299.3V256H12V171.3H80V114.4C80 47.3 120.7 10 181 10c28.8 0 53.6 2.1 60.8 3v70.5h-41.7c-32.6 0-38.9 15.5-38.9 38.2V171.2h78.2L229.3 256H161.2V512H80V299.3z"/>
                                     </svg>
-                                    Import Event
                                 </button>
                             </div>
                         </div>
                     </div>
                     {/* ROUTED CONTENT */}
-                    <ViewToggle />
+                    <ViewToggle/>
 
                     <Outlet
                         context={{

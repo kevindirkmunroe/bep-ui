@@ -14,14 +14,14 @@ export default function ViewToggle() {
         : `${location.pathname}/calendar`;
 
     return (
-        <div className="view-toggle">
+        <div className="view-toggle" style={{display: "flex", justifyContent: "flex-start", marginLeft: "20px"}}>
             {isCalendar ? (
                 <Link to={listPath}>List</Link>
             ) : (
                 <span>List</span>
             )}
 
-            <span> | </span>
+            <span> &nbsp;|&nbsp; </span>
 
             {isCalendar ? (
                 <span>Calendar</span>
