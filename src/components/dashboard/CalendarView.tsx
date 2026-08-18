@@ -142,15 +142,9 @@ export default function CalendarView() {
                 onClick={() => {
                     if (state !== "active" && state !== "events") return;
 
-                    if (state === "events") {
-                        setEditingEvent(null);
-                        setCreateEventDate(new Date(year, month, day));
-                        setShowCreateEventForm(true);
-                    }else if (state === "submitted") {
-                        setShowRecycleModal(true);
-                    }else if (state === "expired") {
-                        setShowRestoreModal(true);
-                    }
+                    setEditingEvent(null);
+                    setCreateEventDate(new Date(year, month, day));
+                    setShowCreateEventForm(true);
                 }}
             >
                 <div className="calendar-date">{day}</div>

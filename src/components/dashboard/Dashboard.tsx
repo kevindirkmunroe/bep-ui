@@ -294,7 +294,7 @@ export default function Dashboard() {
                             }}>
                                 {activeEventCount > 0 ? (
                                     <NavLink
-                                        to="events" end
+                                        to="events"
                                         style={({isActive}) => ({
                                             fontSize: isActive ? "18px" : "15px",
                                             textDecoration: isActive ? "underline" : "none",
@@ -333,21 +333,6 @@ export default function Dashboard() {
                                         Expired({expiredEventCount})
                                     </NavLink>
                                 )}
-                                {/* For V1 skip published, user can check their inboxes */}
-                                {/*{publishedEventCount > 0 ? (*/}
-                                {/*    <NavLink*/}
-                                {/*        to={"expired"}*/}
-                                {/*        style={({ isActive }) => ({*/}
-                                {/*            fontSize: isActive ? "20px" : "15px",*/}
-                                {/*            fontWeight: isActive ? "bold" : "normal"*/}
-                                {/*        })}>*/}
-                                {/*        Published({publishedEventCount})*/}
-                                {/*    </NavLink>*/}
-                                {/*) : (*/}
-                                {/*    <div style={{fontSize: "15px"}}>*/}
-                                {/*        Published(0)*/}
-                                {/*    </div>*/}
-                                {/*)}*/}
                             </nav>
                             <div>
                                 <button className="btn btn-primary"
