@@ -170,6 +170,8 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                         name={event.title}
                         onCancel={() => setShowRestoreModal(false)}
                         onRestore={async (newDate) => {
+                            console.log(`[EventSummary] restore event=${JSON.stringify(event)}`);
+
                             await api.patch(`/events/${event.event_id}/restore`, {
                                 start_date: newDate
                             });

@@ -45,9 +45,9 @@ export default function CalendarView() {
     const { state } = useParams<{ state: string }>();
 
     const [currentDate, setCurrentDate] = useState(new Date());
-    const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
-    const [recycleEvent, setRecycleEvent] = useState<Event | null>(null);
-    const [restoreEvent, setRestoreEvent] = useState<Event | null>(null);
+    const [selectedEvent, setSelectedEvent] = useState<EventDetail | null>(null);
+    const [restoreEvent, setRestoreEvent] = useState<EventDetail | null>(null);
+    const [recycleEvent, setRecycleEvent] = useState<EventDetail | null>(null);
     const [showRecycleModal, setShowRecycleModal] = useState<boolean>(false);
     const [showRestoreModal, setShowRestoreModal] = useState<boolean>(false);
 
@@ -112,7 +112,6 @@ export default function CalendarView() {
     };
 
     const editEvent = (event: EventDetail) => {
-
         if (state === "active" || state === "events") {
             setEditingEvent(event);
             setSelectedEvent(true);
@@ -120,10 +119,12 @@ export default function CalendarView() {
 
         if (state === "submitted") {
             setRecycleEvent(event);
+            setShowRecycleModal(true);
         }
 
         if (state === "expired") {
             setRestoreEvent(event);
+            setShowRestoreModal(true);
         }
     };
 
@@ -133,13 +134,14 @@ export default function CalendarView() {
         cells.push(<div key={`blank-${i}`} className="calendar-day empty" />);
     }
 
-    console.log(`[CalendarView] state=${state}`)
     for (let day = 1; day <= daysInMonth; day++) {
         cells.push(
             <div
                 key={day}
                 className={`calendar-day ${state === "events" ? "clickable" : ""}`}
                 onClick={() => {
+                    if (state !== "active" && state !== "events") return;
+
                     if (state === "events") {
                         setEditingEvent(null);
                         setCreateEventDate(new Date(year, month, day));
@@ -201,7 +203,7 @@ export default function CalendarView() {
             {selectedEvent && (
                 <CreateEditEventForm
                     event={selectedEvent}
-                    onClose={() => {
+                    onCancel={() => {
                         setSelectedEvent(null);
                         setEditingEvent(null);
                     }}
@@ -212,12 +214,18 @@ export default function CalendarView() {
                 />
             )}
 
-            {recycleEvent && (
+            {showRecycleModal && (
                 <RecycleEventModal
-                    event={recycleEvent}
-                    onClose={() => setRecycleEvent(null)}
+                    name={recycleEvent?.title}
+                    onCancel={() => {
+                        console.log("closing recycle modal");
+
+                        setSelectedEvent(null);
+                        setShowRecycleModal(false)
+                    }}
                     onRecycle={async (newDate) => {
-                        await api.post(`/events/${event.event_id}/clone`, {
+                        console.log(`[CalendarView] recycle selectedEvent=${JSON.stringify(selectedEvent)}`);
+                        await api.post(`/events/${recycleEvent?.event_id}/clone`, {
                             start_date: newDate
                         });
 
@@ -228,12 +236,13 @@ export default function CalendarView() {
                 />
             )}
 
-            {restoreEvent && (
+            {showRestoreModal && (
                 <RestoreEventModal
-                    event={restoreEvent}
-                    onClose={() => setRestoreEvent(null)}
+                    name={restoreEvent?.title}
+                    onCancel={() => setShowRestoreModal(false)}
                     onRestore={async (newDate) => {
-                        await api.patch(`/events/${event.event_id}/restore`, {
+                        console.log(`[CalendarView] restore selectedEvent=${JSON.stringify(selectedEvent)}`);
+                        await api.patch(`/events/${restoreEvent?.event_id}/restore`, {
                             start_date: newDate
                         });
 
