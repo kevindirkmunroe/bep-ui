@@ -60,6 +60,10 @@ export default function CreateEditEventForm({
             ...form,
             [e.target.name]: e.target.value,
         });
+        // special case- date display uses derived var startDateTime
+        if(e.target.name === 'start_datetime'){
+            setStartDatetime(e.target.value);
+        }
     };
 
     // TODO: handle image upload
@@ -143,7 +147,6 @@ export default function CreateEditEventForm({
                 <input
                     name="start_datetime"
                     className="input"
-                    value={startDatetime}
                     type="datetime-local"
                     onChange={handleChange}
                     value={startDatetime}
