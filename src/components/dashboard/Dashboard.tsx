@@ -14,6 +14,7 @@ import ViewToggle from "./events/ViewToggle";
 import EventbriteURLInputForm from "./EventbriteURLInputForm";
 import {MOCK_FACEBOOK} from "./MOCK_IMPORT_DATA";
 import {eventbriteJsonLdToEventDetail, getEventbriteJsonLd} from "./EventbriteIngestor";
+import './dashboard.css';
 
 export default function Dashboard() {
     const { userId } = useParams();
@@ -330,13 +331,12 @@ export default function Dashboard() {
                                 </button>
                                 &nbsp;|&nbsp;&nbsp;
                                 <span style={{fontSize: '15px'}}>Import</span>&nbsp;
-                                <button className="btn btn-primary"
+                                <button className="btn btn-primary eventbrite-button"
                                         title="Import Eventbrite Event"
                                         style={{
                                             marginTop: '10px',
                                             marginLeft: "4px",
                                             fontSize: "14px",
-                                            backgroundColor: "#F8485E"
                                         }}
                                         onClick={() => setShowImportEventbriteURLForm(true)}>
                                     &nbsp;
@@ -377,13 +377,12 @@ export default function Dashboard() {
                                         </g>
                                     </svg>
                                 </button>
-                                <button className="btn btn-primary"
+                                <button className="btn btn-primary facebook-button"
                                         title="Import Facebook Event"
                                         style={{
                                             marginTop: '10px',
                                             marginLeft: "4px",
                                             fontSize: "14px",
-                                            backgroundColor: "#1877F2"
                                         }}
                                         onClick={() => setShowImportFacebookURLForm(true)}>
                                     &nbsp;

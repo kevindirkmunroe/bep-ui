@@ -97,7 +97,9 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
             </div>
             <div style={{width: "60%", display: "flex", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
                 {!readOnly && !isExpired && (
-                    <button className="btn btn-primary-greater" disabled={isExpired} onClick={handlePromote}>
+                    <button
+                        title="Promote Event to all Platforms"
+                        className="btn btn-primary-greater" disabled={isExpired} onClick={handlePromote}>
                         <img src={"/icons8-commercial-24.png"} />
                         Promote
                     </button>
@@ -114,7 +116,9 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     </button>
                 )}
                 {!readOnly && !isExpired && (
-                    <button className="btn btn-secondary" onClick={handleClone}>
+                    <button
+                        title="Make duplicate of this Event"
+                        className="btn btn-secondary" onClick={handleClone}>
                     <img src={"/icons8-clone-24.png"} style={{width:"24px", height:"24px"}} />Clone
                 </button>
                 )}
