@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 interface RestoreEventModalProps {
     name: string;
@@ -37,7 +37,11 @@ export default function RestoreEventModal({
     return (
         <div style={overlayStyle}>
             <div style={modalStyle}>
-                <h2>Restore Event</h2>
+                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', /* Centers items horizontally */
+                    alignItems: 'center' }}>
+                    <img src={"/icons8-undo-52.png"} style={{width: "24px", height: "24px", marginBottom: "6px", marginRight: "12px"}}/>
+                    <h2>Restore Event</h2>
+                </div>
                 <h4>{name}</h4>
                 <p>
                     Select a new start date for this event. Event will move from Expired to Active.

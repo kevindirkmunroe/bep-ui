@@ -42,7 +42,7 @@ export default function ImageCarousel() {
             setIndex((prev) => {
                 return (prev + 1) % slides.length;
             });
-        }, 15000);
+        }, 30000);
 
         return () => clearInterval(interval);
     }, []);

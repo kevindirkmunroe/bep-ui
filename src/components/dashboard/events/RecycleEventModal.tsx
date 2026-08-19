@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 interface RecycleEventModalProps {
     name: string;
@@ -37,7 +37,13 @@ export default function RecycleEventModal({
     return (
         <div style={overlayStyle}>
             <div style={modalStyle}>
-                <h2>Recycle Event</h2>
+                <div style={{
+                    display: 'flex', flexDirection: 'row', justifyContent: 'center', /* Centers items horizontally */
+                    alignItems: 'center'
+                }}>
+                    <img src={"/icons8-recycle-32-black.png"} style={{width: "24px", height: "24px", marginBottom: "6px", marginRight: "8px"}}/>
+                    <h2>Recycle Event</h2>
+                </div>
                 <h4>{name}</h4>
                 <p>
                     Copy this event with a new start date. Copied event will be Active.
