@@ -3,7 +3,7 @@ export function AboutPage(){
     return (
         <div className="about-div" style={{
             objectFit: "cover",
-            height: "100vh",
+            height: "140vh",
             objectPosition: "top",
             fontWeight: 800,
             fontSize: "30px",
@@ -14,7 +14,8 @@ export function AboutPage(){
             alignContent: "left",
             alignItems: "left",
             justifyContent: "top",
-            marginBottom: "10px"
+            marginBottom: "10px",
+            overflow: "scroll"
         }}>
             <div className="text-highlight" style={{marginLeft: "4px", marginTop: "16px", fontFamily: "Inter, sans-serif", color: "white"}}>
                 <div style={{fontSize: "50px", padding: "20px", color: "#D2492C"}}>About LocalBuzz</div>
