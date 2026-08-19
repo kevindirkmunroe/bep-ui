@@ -158,9 +158,7 @@ export default function CalendarView() {
                             editEvent(event);
                         }}
                     >
-                        {event.title.length <= 12
-                            ? event.title
-                            : event.title.slice(0, 12) + "..."}
+                        {event.title}
                     </button>
                 ))}
             </div>

@@ -36,6 +36,10 @@
 }
 
 .calendar-event {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    max-width: 100%;
     display: block;
     width: 100%;
     border: 0;
@@ -48,5 +52,4 @@
     color: white;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
 }
