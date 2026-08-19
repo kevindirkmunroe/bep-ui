@@ -192,20 +192,6 @@ export default function CalendarView() {
                 </div>
             </div>
 
-            {selectedEvent && (
-                <CreateEditEventForm
-                    event={selectedEvent}
-                    onCancel={() => {
-                        setSelectedEvent(null);
-                        setEditingEvent(null);
-                    }}
-                    onSave={() => {
-                        reload();
-                        setSelectedEvent(null);
-                    }}
-                />
-            )}
-
             {showRecycleModal && (
                 <RecycleEventModal
                     name={recycleEvent?.title}
