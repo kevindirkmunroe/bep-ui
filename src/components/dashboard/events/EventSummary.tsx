@@ -9,6 +9,8 @@ import RestoreEventModal from "./RestoreEventModal";
 import RecycleEventModal from "./RecycleEventModal";
 import {FaCircleExclamation, FaCircleQuestion} from "react-icons/fa6";
 
+import './eventSummary.css';
+
 const overlayStyle = {
     position: "fixed" as const,
     top: 0,
@@ -55,6 +57,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     const [showRestoreModal, setShowRestoreModal] = useState(false);
     const [showRecycleModal, setShowRecycleModal] = useState(false);
     const [imgSrc, setImgSrc] = useState("/icons8-delete-30.png");
+    const [showMoreActions, setShowMoreActions] = useState(false);
     const getNewestPublishDate = (platforms: PlatformData[]): Date | undefined => {
         const dates = platforms
             .map(p => p.date_published)
@@ -116,6 +119,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                         Edit
                     </button>
                 )}
+                {/*}
                 {!readOnly && !isExpired && (
                     <button
                         title="Make duplicate of this Event"
@@ -123,6 +127,98 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     <img src={"/icons8-clone-24.png"} style={{width:"24px", height:"24px"}} />Clone
                 </button>
                 )}
+                {!readOnly && (
+                    <button className="btn btn-danger"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setShowConfirm(true);
+                            }}
+                    >
+                        <img src={imgSrc} alt={"delete"}
+                             onMouseOver={() => setImgSrc('/icons8-delete-white.png')}
+                             onMouseOut={() => setImgSrc('/icons8-delete-30.png')}
+                             style={{width:"24px", height:"24px"}} />Delete
+                    </button>
+                )}
+                */}
+                {/* Begin Extras Menu */}
+                {!readOnly && !isExpired && (
+                    <div className="more-actions">
+                        <button
+                            type="button"
+                            className="btn btn-secondary"
+                            style={{height: "42px"}}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setShowMoreActions(prev => !prev);
+                            }}
+                        >
+                            <img
+                                src="/icons8-more-50.png"
+                                style={{
+                                    width: "16px",
+                                    height: "16px"
+                                }}
+                            />
+                        </button>
+
+                        {showMoreActions && (
+                            <div
+                                className="more-actions-menu"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                {!readOnly && !isExpired && (
+                                    <button
+                                        title="Make duplicate of this Event"
+                                        className="btn btn-secondary"
+                                        onClick={() => {
+                                            setShowMoreActions(false);
+                                            handleClone();
+                                        }}
+                                    >
+                                        <img
+                                            src="/icons8-clone-24.png"
+                                            style={{
+                                                width: "24px",
+                                                height: "24px"
+                                            }}
+                                        />
+                                        Clone
+                                    </button>
+                                )}
+
+                                {!readOnly && (
+                                    <button
+                                        className="btn btn-danger"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setShowMoreActions(false);
+                                            setShowConfirm(true);
+                                        }}
+                                    >
+                                        <img
+                                            src={imgSrc}
+                                            alt="delete"
+                                            onMouseOver={() =>
+                                                setImgSrc("/icons8-delete-white.png")
+                                            }
+                                            onMouseOut={() =>
+                                                setImgSrc("/icons8-delete-30.png")
+                                            }
+                                            style={{
+                                                width: "24px",
+                                                height: "24px"
+                                            }}
+                                        />
+                                        Delete
+                                    </button>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {/* End Extras Menu */}
                 {readOnly && showRedo && (
                     <>
                         <p style={{fontSize: "14px", marginTop: "10px", marginRight: "20px"}}>Completed {getNewestPublishDate(event.platforms)?.toLocaleString()}</p>
@@ -137,19 +233,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                             <img src={"/icons8-redo-48.png"} style={{width:"24px", height:"24px"}} />Restore
                         </button>
                     </>
-                )}
-                {!readOnly && (
-                    <button className="btn btn-danger"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setShowConfirm(true);
-                            }}
-                    >
-                        <img src={imgSrc} alt={"delete"}
-                             onMouseOver={() => setImgSrc('/icons8-delete-white.png')}
-                             onMouseOut={() => setImgSrc('/icons8-delete-30.png')}
-                             style={{width:"24px", height:"24px"}} />Delete
-                    </button>
                 )}
                 {showConfirm && (
                     <div style={overlayStyle}>

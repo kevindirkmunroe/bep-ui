@@ -1,0 +1,39 @@
+.more-actions {
+    position: relative;
+    display: inline-block;
+}
+
+.more-actions-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    min-width: 130px;
+    padding: 8px;
+
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+
+    z-index: 1000;
+}
+
+.more-actions-menu .btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+}
+
+.event-summary-actions .btn {
+    height: 38px;
+    padding: 0 12px;
+    line-height: 1;
+}
