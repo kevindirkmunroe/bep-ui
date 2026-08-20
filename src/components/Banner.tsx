@@ -3,23 +3,31 @@ import {Tooltip} from "react-tooltip";
 import { useUser } from "../UserContext";
 import { useNavigate } from "react-router-dom";
 import CalendarDate from "../utils/CalendarDate";
-import {useState} from "react";
+import React, {useState} from "react";
 import Modal from "./Modal";
 import ChangePasswordForm from "./ChangePasswordForm";
 import {api} from "../utils/api";
+import BaseDialog, {DialogState} from "./BaseDialog";
 
 
 export function Banner() {
     const { setUser, user } = useUser();
     const navigate = useNavigate();
     const [showForm, setShowForm] = useState(false);
+    const [dialog, setDialog] = useState<DialogState>(null);
 
-    const handleLogout = async () => {
-        const confirmed = window.confirm("Are you sure you want to logout?");
-        if (!confirmed) return;
-        await api.post('/users/logout');
-        setUser(null);
-        navigate("/");
+    const handleLogout = () => {
+        setDialog({
+            type: "confirm",
+            title: "Logout",
+            message: "Are you sure you want to logout?",
+            confirmLabel: "Logout",
+            onConfirm: async () => {
+                await api.post('/users/logout');
+                setUser(null);
+                navigate("/");
+            }
+        });
     };
 
     const handleAbout = () => {
@@ -69,6 +77,16 @@ export function Banner() {
                 />
                 <strong style={{fontSize: "24px"}}>LocalBuzz</strong>
             </div>
+            {dialog && (
+                <BaseDialog
+                    type={dialog.type}
+                    title={dialog.title}
+                    message={dialog.message}
+                    confirmLabel={dialog.confirmLabel}
+                    onConfirm={dialog.onConfirm}
+                    onClose={() => setDialog(null)}
+                />
+            )}
             {user && (
                 <div style={{display: "flex", alignItems: "right", marginRight: "50px", marginTop: "16px"}}>
                     <img

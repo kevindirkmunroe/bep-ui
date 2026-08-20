@@ -3,6 +3,7 @@ import {CreateEventFormProps} from "./eventTypes.interface";
 import {EventDetail} from "./events/eventDetailTypes.interface";
 import {api} from "../../utils/api";
 import {categories} from "./EventCategories";
+import BaseDialog, {DialogState} from "../BaseDialog";
 
 const formatDateTimeLocal = (iso?: string) => {
     if (!iso) return "";
@@ -49,6 +50,7 @@ export default function CreateEditEventForm({
                 ? toDatetimeLocal(initialDate)
                 : ""
     );
+    const [dialog, setDialog] = useState<DialogState>(null);
     const isEdit = !!event;
 
     useEffect(() => {
@@ -96,7 +98,11 @@ export default function CreateEditEventForm({
             onSuccess(); // reload events
         } catch (err) {
             console.error(err);
-            alert("Failed to create event");
+            setDialog({
+                type: "error",
+                title: "Create Event",
+                message: "Failed to create event"
+            });
         }
     };
     const inputStyle: React.CSSProperties = {
@@ -109,6 +115,16 @@ export default function CreateEditEventForm({
 
     return (
         <div style={{marginBottom: 20, display: "flex", flexDirection: "column"}}>
+            {dialog && (
+                <BaseDialog
+                    type={dialog.type}
+                    title={dialog.title}
+                    message={dialog.message}
+                    confirmLabel={dialog.confirmLabel}
+                    onConfirm={dialog.onConfirm}
+                    onClose={() => setDialog(null)}
+                />
+            )}
             <h2>{isEdit ? "Edit Event" : "New Event"}</h2>
             {isEdit && (
                 <p>Warning: Changes will not affect already submitted platforms.</p>

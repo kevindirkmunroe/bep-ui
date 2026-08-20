@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import BaseDialog, {DialogState} from "../../BaseDialog";
 
 interface RestoreEventModalProps {
     name: string;
@@ -18,10 +19,15 @@ export default function RestoreEventModal({
     const today = getTodayDateString();
     const [newDate, setNewDate] = useState(today);
     const [loading, setLoading] = useState(false);
+    const [dialog, setDialog] = useState<DialogState>(null);
 
     const handleRestore = async () => {
         if (newDate < today) {
-            alert("Please choose today or a future date.");
+            setDialog({
+                type: "error",
+                title: "Restore Event",
+                message: "Please choose today or a future date."
+            });
             return;
         }
 
@@ -36,6 +42,16 @@ export default function RestoreEventModal({
 
     return (
         <div style={overlayStyle}>
+            {dialog && (
+                <BaseDialog
+                    type={dialog.type}
+                    title={dialog.title}
+                    message={dialog.message}
+                    confirmLabel={dialog.confirmLabel}
+                    onConfirm={dialog.onConfirm}
+                    onClose={() => setDialog(null)}
+                />
+            )}
             <div style={modalStyle}>
                 <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', /* Centers items horizontally */
                     alignItems: 'center' }}>

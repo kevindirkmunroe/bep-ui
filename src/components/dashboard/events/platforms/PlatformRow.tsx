@@ -3,7 +3,7 @@ import {getPlatformUrl} from "./platformData";
 import {DateFields, EventDetail} from "../eventDetailTypes.interface";
 import {api} from "../../../../utils/api";
 import {zipToVisitOaklandDistrict} from "./regionMappings";
-import React from "react";
+import React, {useState} from "react";
 import {SkipPromoteCheckbox} from "./SkipPromoteCheckbox";
 import {
     DoTheBayPayload,
@@ -13,6 +13,7 @@ import {
     VisitOaklandPayload
 } from "./payloadTypes.interface";
 import {PAYLOAD_TRANSFORMATIONS} from "./payloadTransfomations";
+import BaseDialog, {DialogState} from "../../../BaseDialog";
 
 type PlatformPayload =
     | FunCheapPayload
@@ -60,6 +61,7 @@ async function buildPayload(event: EventDetail, platform: Platform) : Promise<Pl
 
 export function PlatformRow({ event, platformData, updatePlatformStatus, reload, extensionInstalled } : PlatformRowProps) {
     const { platform, status } = platformData;
+    const [dialog, setDialog] = useState<DialogState>(null);
 
     const handleOpen = async () => {
         // 1. OPEN IMMEDIATELY (must be sync)
@@ -72,7 +74,11 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
         if(partnerWindow){
             partnerWindow.location.href = platformUrl;
         }else{
-            alert(`${platformUrl} failed to open. Please try again.`);
+            setDialog({
+                type: "error",
+                title: "Open Platform",
+                message: `${platformUrl} failed to open. Please try again.`
+            });
         }
 
         // 2. Create payload with platform and region
@@ -170,9 +176,6 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
         "dothebay": "/do_the_bay.jpg"
     }
 
-    const loginInfo = "This platform \"sfstation\" requires a login to post events. Open sfstation.com in a new tab, login then return to this tab."
-    // const skipId = `skip_${platform}`;
-
     return (
         <div style={{
             border: "1px solid #d5d5d5",
@@ -181,6 +184,17 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
             marginBottom: 10
         }}>
             <div style={{display: "flex", flexDirection: "row", backgroundColor: status === 'submitted' ? "#f5f5f5" : 'white'}}>
+                {dialog && (
+                    <BaseDialog
+                        type={dialog.type}
+                        title={dialog.title}
+                        message={dialog.message}
+                        confirmLabel={dialog.confirmLabel}
+                        onConfirm={dialog.onConfirm}
+                        onClose={() => setDialog(null)}
+                    />
+                )}
+
                 <SkipPromoteCheckbox disabled={status === 'submitted'} platform={platform} handleUpdateStatus={updatePlatformStatus} />
                 <div className="platform-icon" style={{display: "flex", width: "100px", height: "60px", marginLeft: "10px"}}>
                     <img alt={"platform icon"} style={{transform: "scale(0.85)", filter: "grayscale(100%)", width: "100px", height: "60px"}} src={PLATFORM_ICONS[platform]} />
@@ -192,7 +206,12 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                     alignItems: "flex-start"
                 }}>
                     <div style={{fontSize: "18px", fontWeight:"bold", justifyContent: "left"}}>
-                        {platform}{platform === "sfstation" ? <div style={{fontSize: "12px"}} onClick={() => alert(loginInfo)}>🔐 Restricted</div> : ""}
+                        {platform}{platform === "sfstation" ? <div style={{fontSize: "12px"}}
+                                                                   onClick={() =>             setDialog({
+                                                                       type: "confirm",
+                                                                       title: "Platform Login",
+                                                                       message: "This platform \"sfstation\" requires a login to post events. Open sfstation.com in a new tab, login then return to this tab."
+                                                                   })}>🔐 Restricted</div> : ""}
                     </div>
                     <div style={{fontSize: "14px"}}>
                         {getStatusEmoji(status)}&nbsp;&nbsp;&nbsp;{PRINTABLE_STATUS[status]} &nbsp;

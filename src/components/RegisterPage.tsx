@@ -1,7 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
 import ImageCarousel from "./ImageCarousel";
 import {api} from "../utils/api";
+import BaseDialog, {DialogState} from "./BaseDialog";
 
 export function RegisterPage() {
     const navigate = useNavigate();
@@ -18,6 +19,7 @@ export function RegisterPage() {
     });
 
     const [error, setError] = useState("");
+    const [dialog, setDialog] = useState<DialogState>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({
@@ -57,7 +59,12 @@ export function RegisterPage() {
             // 🔹 Step 2: create user
             await api.post("/users/register", form);
 
-            alert("Registration successful. Please login.");
+            "Registration successful. Please login.");
+            setDialog({
+                type: "confirm",
+                title: "Registration",
+                message: "Registration successful. Please login."
+            });
             navigate("/login");
 
         } catch (err) {
@@ -74,6 +81,16 @@ export function RegisterPage() {
             </div>
             {/* RIGHT: Existing content */}
             <div style={{marginTop: "10px", width: "100%", flexDirection: "row", justifyItems: "center"}}>
+                {dialog && (
+                    <BaseDialog
+                        type={dialog.type}
+                        title={dialog.title}
+                        message={dialog.message}
+                        confirmLabel={dialog.confirmLabel}
+                        onConfirm={dialog.onConfirm}
+                        onClose={() => setDialog(null)}
+                    />
+                )}
                 <div style={{ padding: 40, maxWidth: 400 }}>
                     <h2>Welcome To The Party Pal!</h2>
                     <br/>

@@ -3,6 +3,7 @@ import {EventbriteEventDetail, FacebookEventDetail} from "./events/eventDetailTy
 import {api} from "../../utils/api";
 import {categories} from "./EventCategories";
 import {ImportEventbriteEventFormProps} from "./eventTypes.interface";
+import BaseDialog, {DialogState} from "../BaseDialog";
 
 const formatDateTimeLocal = (iso?: string) => {
     if (!iso) return "";
@@ -38,6 +39,7 @@ export default function ImportEventbriteEventForm({
     useEffect(() => {
         setForm(buildForm(event));
     }, [event]);
+    const [dialog, setDialog] = useState<DialogState>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setForm({
@@ -52,7 +54,11 @@ export default function ImportEventbriteEventForm({
             onSuccess(); // reload events
         } catch (err) {
             console.error(err);
-            alert("Failed to create event");
+            setDialog({
+                type: "error",
+                title: "Import Event",
+                message: "Failed to create event"
+            });
         }
     };
     const inputStyle: React.CSSProperties = {
@@ -65,9 +71,19 @@ export default function ImportEventbriteEventForm({
 
     return (
         <div style={{marginBottom: 20, display: "flex", flexDirection: "column"}}>
+            {dialog && (
+                <BaseDialog
+                    type={dialog.type}
+                    title={dialog.title}
+                    message={dialog.message}
+                    confirmLabel={dialog.confirmLabel}
+                    onConfirm={dialog.onConfirm}
+                    onClose={() => setDialog(null)}
+                />
+            )}
             <div style={{flexDirection: 'row'}}>
                 <svg xmlns="http://www.w3.org/2000/svg" id="logo-wordmark-brand_svg__Layer_1" x="0" y="0"
-                     viewBox="0 0 2300 400.8" xml:space="preserve" height="16">
+                     viewBox="0 0 2300 400.8" height="16">
                     <g><g><path className="logo-wordmark-brand_svg__st3" d="M794 99.5l-43.2 123H749l-43.1-123h-75.6l73.8 198h85.8l73.8-198zM1204.1 94.1c-29.8 0-53.4 13.3-64 35.1V99.5h-72v198.1h72v-97.3c0-29.8 9.8-49.3 34.2-49.3 21.8 0 29.4 14.2 29.4 41.3v105.2h72V173.2c0-41.3-17.4-79.1-71.6-79.1zM1753.1 134.6V99.5h-72v198.1h72V207c0-33.3 16.5-47.7 43.1-47.7 13.8 0 28.9 2.7 38.7 8.5v-68c-4.9-4-15.6-7.6-27.6-7.6-26.2 0-47.1 20.2-54.2 42.4zM1846.9 99.5h72v198.1h-72z"></path><circle
                         className="logo-wordmark-brand_svg__st3" cx="1882.9" cy="44.9" r="40.7"></circle><path
                         className="logo-wordmark-brand_svg__st3"

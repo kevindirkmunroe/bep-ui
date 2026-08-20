@@ -1,13 +1,15 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { useUser } from "../UserContext";
 import ImageGrid from "./ImageGrid";
 import {api} from "../utils/api";
+import BaseDialog, {DialogState} from "./BaseDialog";
 
 export default function LoginPage() {
     const [form, setForm] = useState({ username: "", password: "" });
     const [attempts, setAttempts] = useState(0);
     const [showPassword, setShowPassword] = useState(false);
+    const [dialog, setDialog] = useState<DialogState>(null);
 
     const { setUser } = useUser();
     const navigate = useNavigate();
@@ -51,7 +53,6 @@ export default function LoginPage() {
                 firstName: res.data.firstName,
                 company: res.data.company
             });
-            console.log(`set user: ${JSON.stringify(res.data)}`)
             // If password is not bcrypt hashed, it is temporary. Redirect user to password reset.
             navigate(`/dashboard/${res.data.userId}`);
         } catch (err: Error | any) {
@@ -61,7 +62,12 @@ export default function LoginPage() {
             if (newAttempts === 5) {
                 window.location.href = "https://www.google.com";
             } else {
-                alert("Invalid credentials");
+                "Invalid credentials");
+                setDialog({
+                    type: "error",
+                    title: "Login",
+                    message: "Invalid credentials"
+                });
             }
         }
     };
@@ -76,6 +82,16 @@ export default function LoginPage() {
 
             {/* RIGHT: Login form */}
             <div style={{ width: "350px", marginRight:"24px" }}>
+                {dialog && (
+                    <BaseDialog
+                        type={dialog.type}
+                        title={dialog.title}
+                        message={dialog.message}
+                        confirmLabel={dialog.confirmLabel}
+                        onConfirm={dialog.onConfirm}
+                        onClose={() => setDialog(null)}
+                    />
+                )}
                 <div style={{marginTop: "50px", width: "100%", flexDirection: "row", justifyItems: "center"}}>
                     <div style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center"}}>
                         <input

@@ -1,12 +1,14 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ImageGrid from "./ImageGrid";
 import {api} from "../utils/api";
+import BaseDialog, {DialogState} from "./BaseDialog";
 
 export default function ForgotPasswordPage() {
     const [form, setForm] = useState({ userIdentifier: "" });
     const [passwordReset, setPasswordReset] = useState(false);
     const [invalidUser, setInvalidUser] = useState(false);
+    const [dialog, setDialog] = useState<DialogState>(null);
     const navigate = useNavigate();
 
     const handleCancel = () => {
@@ -15,7 +17,11 @@ export default function ForgotPasswordPage() {
 
     const handleReset = async () => {
         if(!form.userIdentifier){
-            alert('Must submit a username or email');
+            setDialog({
+                type: "error",
+                title: "Forgot Password",
+                message: 'Must submit a username or email'
+            });
             return;
         }
 
@@ -45,6 +51,16 @@ export default function ForgotPasswordPage() {
 
             {/* RIGHT: Login form */}
             <div style={{ width: "350px", marginRight:"24px" }}>
+                {dialog && (
+                    <BaseDialog
+                        type={dialog.type}
+                        title={dialog.title}
+                        message={dialog.message}
+                        confirmLabel={dialog.confirmLabel}
+                        onConfirm={dialog.onConfirm}
+                        onClose={() => setDialog(null)}
+                    />
+                )}
                 <div style={{marginTop: "50px", width: "100%", flexDirection: "row", justifyItems: "center"}}>
                     <div style={{marginBottom:"20px"}}>To reset your password, submit your username or email</div>
                     <div style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center"}}>

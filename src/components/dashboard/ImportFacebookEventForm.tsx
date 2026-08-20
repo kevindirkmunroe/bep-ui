@@ -3,6 +3,7 @@ import { FacebookEventDetail} from "./events/eventDetailTypes.interface";
 import {api} from "../../utils/api";
 import {categories} from "./EventCategories";
 import {ImportFacebookEventFormProps} from "./eventTypes.interface";
+import BaseDialog, {DialogState} from "../BaseDialog";
 
 const formatDateTimeLocal = (iso?: string) => {
     if (!iso) return "";
@@ -38,6 +39,7 @@ export default function ImportFacebookEventForm({
     useEffect(() => {
         setForm(buildForm(event));
     }, [event]);
+    const [dialog, setDialog] = useState<DialogState>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setForm({
@@ -47,13 +49,16 @@ export default function ImportFacebookEventForm({
     };
 
     const handleSubmit = async () => {
-        console.log(`[ImportFacebookEventForm] submit form ${JSON.stringify(form)}`);
         try {
             await api.post(`/users/${userId}/events`, form);
             onSuccess(); // reload events
         } catch (err) {
             console.error(err);
-            alert("Failed to create event");
+            setDialog({
+                type: "error",
+                title: "Import Event",
+                message: "Failed to create event"
+            });
         }
     };
     const inputStyle: React.CSSProperties = {
@@ -66,6 +71,17 @@ export default function ImportFacebookEventForm({
 
     return (
         <div style={{marginBottom: 20, display: "flex", flexDirection: "column"}}>
+
+            {dialog && (
+                <BaseDialog
+                    type={dialog.type}
+                    title={dialog.title}
+                    message={dialog.message}
+                    confirmLabel={dialog.confirmLabel}
+                    onConfirm={dialog.onConfirm}
+                    onClose={() => setDialog(null)}
+                />
+            )}
             <div style={{flexDirection: 'row'}}>
                 <svg xmlns="http://w3.org" viewBox="0 0 512 512" width="28px" height="28px">
                     <path

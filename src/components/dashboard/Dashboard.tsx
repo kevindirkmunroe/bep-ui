@@ -15,6 +15,7 @@ import EventbriteURLInputForm from "./EventbriteURLInputForm";
 import {MOCK_FACEBOOK} from "./MOCK_IMPORT_DATA";
 import {eventbriteJsonLdToEventDetail, getEventbriteJsonLd} from "./EventbriteIngestor";
 import './dashboard.css';
+import BaseDialog, {DialogState} from "../BaseDialog";
 
 export default function Dashboard() {
     const { userId } = useParams();
@@ -28,13 +29,18 @@ export default function Dashboard() {
     const [facebookImportEvent, setFacebookImportEvent] = useState<FacebookEventDetail | null>(null);
     const [eventbriteImportEvent, setEventbriteImportEvent] = useState<EventbriteEventDetail | null>(null);
     const [createEventDate, setCreateEventDate] = useState<Date | null>(null);
+    const [dialog, setDialog] = useState<DialogState>(null);
     function isOlderThanToday(date: string) {
         return new Date(date) < new Date();
     }
 
     async function handleImportEventbriteEvent(eventbriteEventUrl: string) {
         if (!eventbriteEventUrl || !eventbriteEventUrl.startsWith('https://www.eventbrite.com/e/')) {
-            alert(`Incorrect Eventbrite URL format: ${eventbriteEventUrl}`);
+            setDialog({
+                type: "error",
+                title: "Unable to import Eventbrite URL",
+                message: `Incorrect Eventbrite URL format: ${eventbriteEventUrl}`
+            });
         }else{
             // get raw data using JSON-LD
             const raw = await getEventbriteJsonLd(eventbriteEventUrl);
@@ -47,7 +53,11 @@ export default function Dashboard() {
 
     async function handleImportFacebookEvent(facebookEventUrl: string) {
         if (!facebookEventUrl || !facebookEventUrl.startsWith('https://www.facebook.com/events')) {
-            alert(`Incorrect Facebook url format: ${facebookEventUrl}`);
+            setDialog({
+                type: "error",
+                title: "Unable to import Facebook URL",
+                message: `Incorrect Facebook URL format: ${facebookEventUrl}`
+            });
         }else{
             //
             // TODO: since Apify and Render costs per call, develop this input feature with a static event.
@@ -63,18 +73,34 @@ export default function Dashboard() {
                     result = await api.post<FacebookEventResponseType>("/events/import/facebook", {
                         facebookEventUrl
                     });
-                    // alert(`Imported Facebook event: ${JSON.stringify(result.data)}`);
+                    setDialog({
+                        type: "confirm",
+                        title: "Import",
+                        message: `Imported Facebook event: ${JSON.stringify(result.data)}`
+                    });
                 }catch(err: Error | any){
                     if(err.status === 404){
-                        alert(`Facebook event not found: ${facebookEventUrl}. The event may be private, restricted, or unsupported.`);
+                        setDialog({
+                            type: "error",
+                            title: "Import",
+                            message: `Facebook event not found: ${facebookEventUrl}. The event may be private, restricted, or unsupported.`
+                        });
                     }else{
-                        alert(`Error importing Facebook event: ${err.message}`);
+                        setDialog({
+                            type: "error",
+                            title: "Import",
+                            message: `Error importing Facebook event: ${err.message}`
+                        });
                     }
                 }
 
                 raw = result?.data.raw;
                 if(!raw){
-                    alert(`Facebook import ${facebookEventUrl} failed.`);
+                    setDialog({
+                        type: "error",
+                        title: "Import",
+                        message: `Facebook import ${facebookEventUrl} failed.`
+                    });
                     return;
                 }
             }
@@ -177,6 +203,16 @@ export default function Dashboard() {
             {/* RIGHT: Existing content */}
             <div style={{ flex: 1 }}>
                 <div style={{paddingLeft: 40}}>
+                    {dialog && (
+                        <BaseDialog
+                            type={dialog.type}
+                            title={dialog.title}
+                            message={dialog.message}
+                            confirmLabel={dialog.confirmLabel}
+                            onConfirm={dialog.onConfirm}
+                            onClose={() => setDialog(null)}
+                        />
+                    )}
                     {(showCreateEventForm || editingEvent) && userId && (
                         <Modal onClose={() => setShowCreateEventForm(false)}>
                             <CreateEditEventForm
