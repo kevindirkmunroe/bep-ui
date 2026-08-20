@@ -58,8 +58,6 @@ export function RegisterPage() {
 
             // 🔹 Step 2: create user
             await api.post("/users/register", form);
-
-            "Registration successful. Please login.");
             setDialog({
                 type: "confirm",
                 title: "Registration",

@@ -62,7 +62,6 @@ export default function LoginPage() {
             if (newAttempts === 5) {
                 window.location.href = "https://www.google.com";
             } else {
-                "Invalid credentials");
                 setDialog({
                     type: "error",
                     title: "Login",
