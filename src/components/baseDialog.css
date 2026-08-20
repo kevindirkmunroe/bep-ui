@@ -3,9 +3,37 @@
     padding: 24px;
 }
 
+.dialog-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+
 .dialog-header h2 {
-    margin: 0 0 12px;
+    margin: 0;
     font-size: 1.25rem;
+}
+
+.dialog-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.dialog-icon-alert {
+    color: #1877f2;
+}
+
+.dialog-icon-confirm {
+    color: #d2492c;
+}
+
+.dialog-icon-error {
+    color: #c62828;
 }
 
 .dialog-body p {
@@ -59,3 +87,4 @@
 .dialog-error .dialog-header h2 {
     color: #c62828;
 }
+

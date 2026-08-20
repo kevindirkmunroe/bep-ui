@@ -7,6 +7,7 @@ import {api} from "../../../utils/api";
 import {PlatformData} from "./platforms/platformTypes.interface";
 import RestoreEventModal from "./RestoreEventModal";
 import RecycleEventModal from "./RecycleEventModal";
+import {FaCircleExclamation, FaCircleQuestion} from "react-icons/fa6";
 
 const overlayStyle = {
     position: "fixed" as const,
@@ -153,7 +154,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                 {showConfirm && (
                     <div style={overlayStyle}>
                         <div style={modalStyle}>
-                            <h3>Delete Event?</h3>
+                            <h3><FaCircleExclamation/>&nbsp;&nbsp;Delete Event?</h3>
                             <h4>{event.title}</h4>
                             <>This action cannot be undone.</>
 
