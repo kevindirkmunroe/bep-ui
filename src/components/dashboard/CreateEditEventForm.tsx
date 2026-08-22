@@ -132,21 +132,29 @@ export default function CreateEditEventForm({
                 <p>Warning: Changes will not affect already submitted platforms.</p>
             )}
             <div className="form-group">
+                <label htmlFor="name">Your Name</label>
                 <input
+                    id="name"
                     name="name"
                     className="input"
                     placeholder="Your Name"
                     onChange={handleChange}
                     value={form.name}
                 />
+
+                <label htmlFor="email">Email</label>
                 <input
+                    id="email"
                     name="email"
                     className="input"
                     placeholder="Your Email (For Publish Updates)"
                     onChange={handleChange}
                     value={form.email}
                 />
+
+                <label htmlFor="title">Event Title</label>
                 <input
+                    id="title"
                     name="title"
                     className="input"
                     placeholder="Event Title"
@@ -154,23 +162,29 @@ export default function CreateEditEventForm({
                     value={form.title}
                 />
 
+                <label htmlFor="location_name">Location / Venue</label>
                 <input
+                    id="location_name"
                     name="location_name"
                     className="input"
-                    placeholder="Location / Venue (e.g. 'Club Deluxe', 'San Jose Improv')"
+                    placeholder="e.g. Club Deluxe, San Jose Improv"
                     onChange={handleChange}
                     value={form.location_name}
                 />
 
+                <label htmlFor="start_datetime">Start Date / Time</label>
                 <input
+                    id="start_datetime"
                     name="start_datetime"
                     className="input"
                     type="datetime-local"
                     onChange={handleChange}
-                    value={startDatetime}
+                    value={form.start_datetime}
                 />
 
+                <label htmlFor="description">Description</label>
                 <textarea
+                    id="description"
                     name="description"
                     rows={5}
                     className="input"
@@ -179,12 +193,9 @@ export default function CreateEditEventForm({
                     value={form.description}
                 />
 
-                {!form.category && (
-                    <div className="field-hint">
-                        Required — Eventbrite did not provide a category.
-                    </div>
-                )}
+                <label htmlFor="category">Category</label>
                 <select
+                    id="category"
                     value={form.category || ""}
                     onChange={(e) =>
                         setForm({
@@ -192,7 +203,7 @@ export default function CreateEditEventForm({
                             category: e.target.value
                         })
                     }
-                    style={inputStyle}
+                    className="input"
                 >
                     <option value="">Select a category</option>
                     {categories.map((cat) => (
@@ -202,7 +213,9 @@ export default function CreateEditEventForm({
                     ))}
                 </select>
 
+                <label htmlFor="address">Address</label>
                 <input
+                    id="address"
                     name="address"
                     className="input"
                     placeholder="Address"
@@ -210,23 +223,29 @@ export default function CreateEditEventForm({
                     value={form.address}
                 />
 
+                <label htmlFor="zip">Zip Code</label>
                 <input
+                    id="zip"
                     name="zip"
                     className="input"
-                    placeholder="Zip Code (You want this)"
+                    placeholder="Zip Code"
                     onChange={handleChange}
                     value={form.zip}
                 />
 
+                <label htmlFor="price">Price</label>
                 <input
+                    id="price"
                     name="price"
                     className="input"
-                    placeholder="Price (Leave blank if FREE)"
+                    placeholder="Leave blank if FREE"
                     onChange={handleChange}
                     value={form.price}
                 />
 
+                <label htmlFor="phone">Phone</label>
                 <input
+                    id="phone"
                     name="phone"
                     className="input"
                     placeholder="Phone"
@@ -234,7 +253,9 @@ export default function CreateEditEventForm({
                     value={form.phone}
                 />
 
+                <label htmlFor="organization">Organization</label>
                 <input
+                    id="organization"
                     name="organization"
                     className="input"
                     placeholder="Organization"
@@ -242,19 +263,19 @@ export default function CreateEditEventForm({
                     value={form.organization}
                 />
 
+                <label htmlFor="website">Website</label>
                 <input
+                    id="website"
                     name="website"
                     className="input"
                     placeholder="Website"
                     onChange={handleChange}
                     value={form.website}
                 />
-                {/*  TODO- enable when extension receiving File step is fixed.
-                      <input type="file" id="eventImage" name="eventImage" accept="image/png, image/jpeg" onChange={handleFileChange}/>
-                */}
             </div>
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-                <button className="btn btn-primary-greater" onClick={handleSubmit}>{isEdit ? "Save Changes" : "Create Event"}</button>
+                <button className="btn btn-primary-greater"
+                        onClick={handleSubmit}>{isEdit ? "Save Changes" : "Create Event"}</button>
                 &nbsp;
                 <button className="btn btn-secondary" onClick={() => onCancel()}>Cancel</button>
             </div>

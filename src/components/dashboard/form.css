@@ -8,3 +8,30 @@
     font-size: 0.85rem;
     color: #a63a24;
 }
+
+.form-group {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 12px 16px;
+    align-items: baseline;
+}
+
+.form-group label {
+    font-weight: 600;
+    text-align: right;
+    line-height: 1;
+}
+
+.form-group .input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-group label[for="description"] {
+    align-self: start;
+    padding-top: 10px;
+}
