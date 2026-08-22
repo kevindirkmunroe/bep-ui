@@ -5,6 +5,8 @@ import {api} from "../../utils/api";
 import {categories} from "./EventCategories";
 import BaseDialog, {DialogState} from "../BaseDialog";
 
+import "./form.css";
+
 const formatDateTimeLocal = (iso?: string) => {
     if (!iso) return "";
     const d = new Date(iso);
@@ -177,6 +179,11 @@ export default function CreateEditEventForm({
                     value={form.description}
                 />
 
+                {!form.category && (
+                    <div className="field-hint">
+                        Required — Eventbrite did not provide a category.
+                    </div>
+                )}
                 <select
                     value={form.category || ""}
                     onChange={(e) =>

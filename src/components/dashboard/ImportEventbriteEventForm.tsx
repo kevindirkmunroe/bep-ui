@@ -5,6 +5,8 @@ import {categories} from "./EventCategories";
 import {ImportEventbriteEventFormProps} from "./eventTypes.interface";
 import BaseDialog, {DialogState} from "../BaseDialog";
 
+import "./form.css";
+
 const formatDateTimeLocal = (iso?: string) => {
     if (!iso) return "";
     const d = new Date(iso);
@@ -49,6 +51,14 @@ export default function ImportEventbriteEventForm({
     };
 
     const handleSubmit = async () => {
+        if(!form.category){
+            setDialog({
+                type: "error",
+                title: "Import Eventbrite",
+                message: "Please select a Category to Continue."
+            });
+            return;
+        }
         try {
             await api.post(`/users/${userId}/events`, form);
             onSuccess(); // reload events
@@ -143,6 +153,11 @@ export default function ImportEventbriteEventForm({
                     value={form.description}
                 />
 
+                {!form.category && (
+                    <div className="field-hint">
+                        Required — Eventbrite did not provide a category.
+                    </div>
+                )}
                 <select
                     value={form.category || ""}
                     onChange={(e) =>
@@ -152,6 +167,7 @@ export default function ImportEventbriteEventForm({
                         })
                     }
                     style={inputStyle}
+                    className={!form.category ? "field-needs-input" : ""}
                 >
                     <option value="">Select a category</option>
                     {categories.map((cat) => (
