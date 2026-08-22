@@ -1,0 +1,10 @@
+.field-needs-input {
+    border: 2px solid #d2492c;
+    background: #fff8f5;
+}
+
+.field-hint {
+    margin-top: 4px;
+    font-size: 0.85rem;
+    color: #a63a24;
+}
