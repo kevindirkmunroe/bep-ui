@@ -323,7 +323,7 @@ export default function Dashboard() {
                             <nav style={{
                                 display: "flex",
                                 justifyContent: "center",
-                                gap: "20px",
+                                gap: "14px",
                                 marginTop: "14px",
                                 marginLeft: "12px"
                             }}>
@@ -331,7 +331,7 @@ export default function Dashboard() {
                                     <NavLink
                                         to="events"
                                         style={({isActive}) => ({
-                                            fontSize: isActive ? "18px" : "15px",
+                                            fontSize: isActive ? "20px" : "15px",
                                             textDecoration: isActive ? "underline" : "none",
                                             fontWeight: isActive ? "bold" : "normal"
                                         })}>
@@ -346,7 +346,7 @@ export default function Dashboard() {
                                     <NavLink
                                         to="submitted"
                                         style={({isActive}) => ({
-                                            fontSize: isActive ? "18px" : "15px",
+                                            fontSize: isActive ? "20px" : "15px",
                                             textDecoration: isActive ? "underline" : "none",
                                             fontWeight: isActive ? "bold" : "normal"
                                         })}>
@@ -361,7 +361,7 @@ export default function Dashboard() {
                                     <NavLink
                                         to="expired"
                                         style={({isActive}) => ({
-                                            fontSize: isActive ? "18px" : "15px",
+                                            fontSize: isActive ? "20px" : "15px",
                                             textDecoration: isActive ? "underline" : "none",
                                             fontWeight: isActive ? "bold" : "normal"
                                         })}>
@@ -370,18 +370,18 @@ export default function Dashboard() {
                                 )}
                             </nav>
                             <div>
-                                <button className="btn btn-primary"
+                                <button className="btn btn-primary-greater"
                                         title="Create New Event"
-                                        style={{marginTop: '10px', marginLeft: "4px", fontSize: "14px"}}
+                                        style={{marginLeft: "4px", fontSize: "14px"}}
                                         onClick={() => setShowCreateEventForm(true)}>
-                                    + Create
+                                    <img alt={"wtf"} style={{width: "30px", height: "28px"}}
+                                         src={"/icons8-create-50.png"}/>
+                                            <b>Create</b>
                                 </button>
-                                &nbsp;|&nbsp;&nbsp;
-                                <span style={{fontSize: '15px'}}>Import</span>&nbsp;
+                                &nbsp;|&nbsp;
                                 <button className="btn btn-primary eventbrite-button"
                                         title="Import Eventbrite Event"
                                         style={{
-                                            marginTop: '10px',
                                             marginLeft: "4px",
                                             fontSize: "14px",
                                         }}
@@ -428,7 +428,7 @@ export default function Dashboard() {
                                         title="Import Facebook Event"
                                         style={{
                                             marginTop: '10px',
-                                            marginLeft: "4px",
+                                            marginLeft: "2px",
                                             fontSize: "14px",
                                         }}
                                         onClick={() => setShowImportFacebookURLForm(true)}>

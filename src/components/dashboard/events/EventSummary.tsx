@@ -229,7 +229,15 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                 {/* End Extras Menu */}
                 {readOnly && showRedo && (
                     <>
-                        <p style={{fontSize: "14px", marginTop: "10px", marginRight: "20px"}}>Completed {getNewestPublishDate(event.platforms)?.toLocaleString()}</p>
+                        <p style={{fontSize: "14px", marginTop: "10px", marginRight: "20px"}}>Completed {getNewestPublishDate(event.platforms)?.toLocaleString("en-US",
+                            {
+                                month: "numeric",
+                                day: "numeric",
+                                year: "numeric",
+                                hour: "numeric",
+                                minute: "2-digit"
+                            }
+                        )}</p>
                         <button className="btn btn-primary" onClick={() => setShowRecycleModal(true)}>
                             <img src={"/icons8-recycle-32.png"} style={{width:"24px", height:"24px"}} />Recycle
                         </button>

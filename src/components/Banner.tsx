@@ -9,7 +9,6 @@ import ChangePasswordForm from "./ChangePasswordForm";
 import {api} from "../utils/api";
 import BaseDialog, {DialogState} from "./BaseDialog";
 
-
 export function Banner() {
     const { setUser, user } = useUser();
     const navigate = useNavigate();
