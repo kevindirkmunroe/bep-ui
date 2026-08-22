@@ -196,15 +196,42 @@ export default function Dashboard() {
 
 
     return (
-        <div style={{ display: "flex", gap: "2px" }}>
+        <div
+            style={{
+                display: "flex",
+                gap: 24,
+                flex: 1,
+                minHeight: 0,
+                overflow: "hidden"
+            }}>
             {/* LEFT: Carousel */}
-            <div style={{ flex: "0 0 300px" }} className="dashboard-carousel">
-                <ImageCarousel />
+            <div
+                style={{
+                    flex: "0 0 300px",
+                    minHeight: 0,
+                    overflow: "hidden"
+                }}
+                className="dashboard-carousel">
+                <ImageCarousel/>
             </div>
 
             {/* RIGHT: Existing content */}
-            <div style={{ flex: 1 }}>
-                <div style={{paddingLeft: 40}}>
+            <div
+                style={{
+                    flex: 1,
+                    minWidth: 0,
+                    minHeight: 0,
+                    display: "flex",
+                    flexDirection: "column",
+                    overflow: "hidden"
+                }}>
+                <div
+                    style={{
+                        paddingLeft: 40,
+                        height: "100%",
+                        minHeight: 0,
+                        overflow: "hidden"
+                    }}>
                     {dialog && (
                         <BaseDialog
                             type={dialog.type}
@@ -238,8 +265,8 @@ export default function Dashboard() {
                     {showImportEventbriteURLForm && userId && (
                         <Modal onClose={() => setShowImportEventbriteURLForm(false)}>
                             <EventbriteURLInputForm onImport={handleImportEventbriteEvent}
-                                                  open={true}
-                                                  onClose={() => setShowImportEventbriteURLForm(false)}
+                                                    open={true}
+                                                    onClose={() => setShowImportEventbriteURLForm(false)}
                             />
                         </Modal>
                     )}
@@ -486,7 +513,7 @@ export default function Dashboard() {
                                                     onClick={() => {
                                                         setShowImportFacebookURLForm(true);
                                                         setShowImportActions(prev => !prev);
-                                                        }
+                                                    }
                                                     }>
                                                 &nbsp;
                                                 <svg
@@ -534,15 +561,22 @@ export default function Dashboard() {
 
                     {/* EVENTS */}
                     <div className="dashboard-events">
-                        <Outlet
-                            context={{
-                                events,
-                                setEditingEvent,
-                                setCreateEventDate,
-                                setShowCreateEventForm,
-                                reload: loadEvents
-                            }}
-                        />
+                        <div
+                            style={{
+                                flex: 1,
+                                minHeight: 0,
+                                overflowY: "auto"
+                            }}>
+                            <Outlet
+                                context={{
+                                    events,
+                                    setEditingEvent,
+                                    setCreateEventDate,
+                                    setShowCreateEventForm,
+                                    reload: loadEvents
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
