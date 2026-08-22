@@ -5,11 +5,20 @@ import "./components/banner.css"
 
 export function MainLayout({ children }: { children: ReactNode }) {
     return (
-        <div>
+        <div className="main-layout">
             <div className="banner-container">
-                <Banner />
+                <Banner/>
             </div>
-            <main>{children}</main>
+
+            <main className="main-content">
+                {children}
+            </main>
+
+            <footer className="footer">
+                <a href="/privacy.html" target="_blank"
+                    style={{fontSize: "12px"}}>Privacy Policy
+                </a>
+            </footer>
         </div>
     );
 }

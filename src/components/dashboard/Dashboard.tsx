@@ -67,7 +67,7 @@ export default function Dashboard() {
             //
 
             let raw: FacebookEventRaw | undefined;
-            if(import.meta.env.VITE_MOCK_FACEBOOK_IMPORT) {
+            if(import.meta.env.VITE_MOCK_FACEBOOK_IMPORT === true) {
                 raw = MOCK_FACEBOOK;
             }else{
                 let result = null;
@@ -433,7 +433,10 @@ export default function Dashboard() {
                                                         marginLeft: "4px",
                                                         fontSize: "14px",
                                                     }}
-                                                    onClick={() => setShowImportEventbriteURLForm(true)}>
+                                                    onClick={() => {
+                                                        setShowImportEventbriteURLForm(true);
+                                                        setShowImportActions(prev => !prev);
+                                                    }}>
                                                 &nbsp;
                                                 <svg
                                                     width="18"
@@ -480,7 +483,11 @@ export default function Dashboard() {
                                                         marginLeft: "2px",
                                                         fontSize: "14px",
                                                     }}
-                                                    onClick={() => setShowImportFacebookURLForm(true)}>
+                                                    onClick={() => {
+                                                        setShowImportFacebookURLForm(true);
+                                                        setShowImportActions(prev => !prev);
+                                                        }
+                                                    }>
                                                 &nbsp;
                                                 <svg
                                                     width="18"
