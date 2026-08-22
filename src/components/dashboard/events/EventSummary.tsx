@@ -123,7 +123,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
 
     return (
         <div style={ showAsHeader ? eventHeaderStyle : eventListStyle}>
-            <div style={{marginRight: "22px", width: "60%", backgroundColor: status === 'submitted' || isExpired ? "#f5f5f5" : 'white'}}>
+            <div style={{marginRight: "22px", width: "60%", backgroundColor: status === 'submitted' || isExpired ? "#f5f5f5" : '#FFF1EC'}}>
                 <div style={{fontSize: "18px", fontWeight:"bold"}}>{event.title}</div>
                 <div style={{fontSize: "16px"}}>{event.location_name}</div>
                 <div><p style={{fontSize: "14px"}}>{formatEventDate(new Date(event.start_datetime).toLocaleString())}</p></div>
