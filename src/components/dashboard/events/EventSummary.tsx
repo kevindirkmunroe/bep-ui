@@ -92,15 +92,41 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     const isExpired = getIsExpired(event);
     const canEdit = status === "not_started" || status === "in_progress";
 
+    function formatEventDate(dateString: string) {
+        const date = new Date(dateString);
+
+        const day = date.getDate();
+
+        const suffix =
+            day % 10 === 1 && day !== 11 ? "st" :
+                day % 10 === 2 && day !== 12 ? "nd" :
+                    day % 10 === 3 && day !== 13 ? "rd" :
+                        "th";
+
+        const datePart = date.toLocaleDateString("en-US", {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+            year: "numeric"
+        });
+
+        const timePart = date.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit"
+        }).toLowerCase();
+
+        return datePart.replace(
+            `${day},`,
+            `${day}${suffix} `
+        ) + `, ${timePart}`;
+    }
+
     return (
         <div style={ showAsHeader ? eventHeaderStyle : eventListStyle}>
-            <div style={{marginRight: "20px", width: "50%", backgroundColor: status === 'submitted' || isExpired ? "#f5f5f5" : 'white'}}>
-                <div style={{fontSize: "16px", fontWeight:"bold"}}>{event.title}</div>
-                <div style={{fontSize: "14px"}}>{event.location_name}</div>
-                <div><p style={{fontSize: "14px"}}>{new Date(event.start_datetime).toLocaleString("en-US", {
-                    hour: "numeric",
-                    minute: "2-digit"
-                })}</p></div>
+            <div style={{marginRight: "22px", width: "60%", backgroundColor: status === 'submitted' || isExpired ? "#f5f5f5" : 'white'}}>
+                <div style={{fontSize: "18px", fontWeight:"bold"}}>{event.title}</div>
+                <div style={{fontSize: "16px"}}>{event.location_name}</div>
+                <div><p style={{fontSize: "14px"}}>{formatEventDate(new Date(event.start_datetime).toLocaleString())}</p></div>
             </div>
             <div style={{width: "60%", display: "flex", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
                 {!readOnly && !isExpired && (
