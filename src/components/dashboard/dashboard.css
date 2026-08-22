@@ -16,3 +16,21 @@
 .eventbrite-button:hover {
     background-color: #B61C2E;
 }
+
+.dashboard-content {
+    display: flex;
+    gap: 24px;
+    align-items: stretch;
+}
+
+.dashboard-carousel {
+    flex: 0 0 300px;
+}
+
+.dashboard-events {
+    flex: 1;
+    min-width: 0;
+
+    max-height: 500px; /* match carousel height */
+    overflow-y: auto;
+}

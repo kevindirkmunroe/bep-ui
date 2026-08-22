@@ -30,6 +30,8 @@ export default function Dashboard() {
     const [eventbriteImportEvent, setEventbriteImportEvent] = useState<EventbriteEventDetail | null>(null);
     const [createEventDate, setCreateEventDate] = useState<Date | null>(null);
     const [dialog, setDialog] = useState<DialogState>(null);
+    const [showImportActions, setShowImportActions] = useState(false);
+
     function isOlderThanToday(date: string) {
         return new Date(date) < new Date();
     }
@@ -196,7 +198,7 @@ export default function Dashboard() {
     return (
         <div style={{ display: "flex", gap: "2px" }}>
             {/* LEFT: Carousel */}
-            <div style={{ flex: "0 0 300px" }}>
+            <div style={{ flex: "0 0 300px" }} className="dashboard-carousel">
                 <ImageCarousel />
             </div>
 
@@ -376,111 +378,165 @@ export default function Dashboard() {
                                         onClick={() => setShowCreateEventForm(true)}>
                                     <img alt={"wtf"} style={{width: "30px", height: "28px"}}
                                          src={"/icons8-create-50.png"}/>
-                                            <b>Create</b>
+                                    <b>Create</b>
                                 </button>
-                                &nbsp;|&nbsp;
-                                <button className="btn btn-primary eventbrite-button"
-                                        title="Import Eventbrite Event"
-                                        style={{
-                                            marginLeft: "4px",
-                                            fontSize: "14px",
+                                <div className="more-actions">
+                                    <button
+                                        type="button"
+                                        className="btn btn-secondary"
+                                        aria-label="Import event"
+                                        aria-expanded={showImportActions}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setShowImportActions(prev => !prev);
                                         }}
-                                        onClick={() => setShowImportEventbriteURLForm(true)}>
-                                    &nbsp;
-                                    <svg
-                                        width="18"
-                                        height="18"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        aria-hidden="true"
+                                        style={{fontSize: "16px"}}
                                     >
-                                        <path
-                                            d="M12 3v12"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                        />
-                                        <path
-                                            d="M7 10l5 5 5-5"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                        <path
-                                            d="M5 20h14"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                        />
-                                    </svg>
-
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         viewBox="0 0 999.9999389648438 1213.9000244140625" height="14">
-                                        <g>
+                                        <svg
+                                            width="18"
+                                            height="30"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            aria-hidden="true"
+                                        >
                                             <path
-                                                d="M917 814.9L515.3 501.7c-6.7-5.1.2-15.4 7.5-11.3l156.9 87.9c71.1 39.9 161 16.8 204.1-52.4 45.4-73 21.4-169.1-53.2-212.2L600.4 180.6c-7.3-4.3-1.9-15.3 6-12.2l105.8 42.3c.2.1 2.7 1 3.7 1.3 11.2 3.9 23.3 6.1 35.9 6.1 57.4 0 104.5-45.4 108.6-99.4C865.5 48.9 812 0 748.2 0h-489c-62.8 0-115.5 51.3-114.7 113.9.4 33.3 15.3 63 38.7 83.4 17.6 15.3 76.9 62.8 105.1 85.3 5 4 2.2 12.1-4.3 12.1h-97.9C83.2 295.3 0 378.9 0 482c0 52.1 21.3 99.2 55.6 133.1l566.6 538.5c40.1 37.4 93.9 60.3 153.1 60.3 124.1 0 224.7-100.6 224.7-224.7 0-70.3-32.4-133.1-83-174.3z"
-                                                fill="#fff"></path>
-                                        </g>
-                                    </svg>
-                                </button>
-                                <button className="btn btn-primary facebook-button"
-                                        title="Import Facebook Event"
-                                        style={{
-                                            marginTop: '10px',
-                                            marginLeft: "2px",
-                                            fontSize: "14px",
-                                        }}
-                                        onClick={() => setShowImportFacebookURLForm(true)}>
-                                    &nbsp;
-                                    <svg
-                                        width="18"
-                                        height="18"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        aria-hidden="true"
-                                    >
-                                        <path
-                                            d="M12 3v12"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                        />
-                                        <path
-                                            d="M7 10l5 5 5-5"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                        <path
-                                            d="M5 20h14"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                        />
-                                    </svg>
-                                    <svg xmlns="http://w3.org" viewBox="0 0 320 512" width="14" height="14"
-                                         style={{color: "white"}}>
-                                        <path fill="currentColor"
-                                              d="M80 299.3V256H12V171.3H80V114.4C80 47.3 120.7 10 181 10c28.8 0 53.6 2.1 60.8 3v70.5h-41.7c-32.6 0-38.9 15.5-38.9 38.2V171.2h78.2L229.3 256H161.2V512H80V299.3z"/>
-                                    </svg>
-                                </button>
+                                                d="M12 3v12"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                            />
+                                            <path
+                                                d="M7 10l5 5 5-5"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
+                                            <path
+                                                d="M5 20h14"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                            />
+                                        </svg>
+                                        Import Event...
+                                    </button>
+
+                                    {showImportActions && (
+                                        <div
+                                            className="more-actions-menu"
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
+                                            <button className="btn btn-primary eventbrite-button"
+                                                    title="Import Eventbrite Event"
+                                                    style={{
+                                                        marginLeft: "4px",
+                                                        fontSize: "14px",
+                                                    }}
+                                                    onClick={() => setShowImportEventbriteURLForm(true)}>
+                                                &nbsp;
+                                                <svg
+                                                    width="18"
+                                                    height="18"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    aria-hidden="true"
+                                                >
+                                                    <path
+                                                        d="M12 3v12"
+                                                        stroke="currentColor"
+                                                        strokeWidth="2"
+                                                        strokeLinecap="round"
+                                                    />
+                                                    <path
+                                                        d="M7 10l5 5 5-5"
+                                                        stroke="currentColor"
+                                                        strokeWidth="2"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                    />
+                                                    <path
+                                                        d="M5 20h14"
+                                                        stroke="currentColor"
+                                                        strokeWidth="2"
+                                                        strokeLinecap="round"
+                                                    />
+                                                </svg>
+
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                     viewBox="0 0 999.9999389648438 1213.9000244140625" height="14">
+                                                    <g>
+                                                        <path
+                                                            d="M917 814.9L515.3 501.7c-6.7-5.1.2-15.4 7.5-11.3l156.9 87.9c71.1 39.9 161 16.8 204.1-52.4 45.4-73 21.4-169.1-53.2-212.2L600.4 180.6c-7.3-4.3-1.9-15.3 6-12.2l105.8 42.3c.2.1 2.7 1 3.7 1.3 11.2 3.9 23.3 6.1 35.9 6.1 57.4 0 104.5-45.4 108.6-99.4C865.5 48.9 812 0 748.2 0h-489c-62.8 0-115.5 51.3-114.7 113.9.4 33.3 15.3 63 38.7 83.4 17.6 15.3 76.9 62.8 105.1 85.3 5 4 2.2 12.1-4.3 12.1h-97.9C83.2 295.3 0 378.9 0 482c0 52.1 21.3 99.2 55.6 133.1l566.6 538.5c40.1 37.4 93.9 60.3 153.1 60.3 124.1 0 224.7-100.6 224.7-224.7 0-70.3-32.4-133.1-83-174.3z"
+                                                            fill="#fff"></path>
+                                                    </g>
+                                                </svg>
+                                                Eventbrite
+                                            </button>
+                                            <button className="btn btn-primary facebook-button"
+                                                    title="Import Facebook Event"
+                                                    style={{
+                                                        marginTop: '10px',
+                                                        marginLeft: "2px",
+                                                        fontSize: "14px",
+                                                    }}
+                                                    onClick={() => setShowImportFacebookURLForm(true)}>
+                                                &nbsp;
+                                                <svg
+                                                    width="18"
+                                                    height="18"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    aria-hidden="true"
+                                                >
+                                                    <path
+                                                        d="M12 3v12"
+                                                        stroke="currentColor"
+                                                        strokeWidth="2"
+                                                        strokeLinecap="round"
+                                                    />
+                                                    <path
+                                                        d="M7 10l5 5 5-5"
+                                                        stroke="currentColor"
+                                                        strokeWidth="2"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                    />
+                                                    <path
+                                                        d="M5 20h14"
+                                                        stroke="currentColor"
+                                                        strokeWidth="2"
+                                                        strokeLinecap="round"
+                                                    />
+                                                </svg>
+                                                <svg xmlns="http://w3.org" viewBox="0 0 320 512" width="14" height="14"
+                                                     style={{color: "white"}}>
+                                                    <path fill="currentColor"
+                                                          d="M80 299.3V256H12V171.3H80V114.4C80 47.3 120.7 10 181 10c28.8 0 53.6 2.1 60.8 3v70.5h-41.7c-32.6 0-38.9 15.5-38.9 38.2V171.2h78.2L229.3 256H161.2V512H80V299.3z"/>
+                                                </svg>
+                                                Facebook
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
                     {/* ROUTED CONTENT */}
                     <ViewToggle/>
 
-                    <Outlet
-                        context={{
-                            events,
-                            setEditingEvent,
-                            setCreateEventDate,
-                            setShowCreateEventForm,
-                            reload: loadEvents
-                        }}
-                    />
+                    {/* EVENTS */}
+                    <div className="dashboard-events">
+                        <Outlet
+                            context={{
+                                events,
+                                setEditingEvent,
+                                setCreateEventDate,
+                                setShowCreateEventForm,
+                                reload: loadEvents
+                            }}
+                        />
+                    </div>
                 </div>
             </div>
         </div>
