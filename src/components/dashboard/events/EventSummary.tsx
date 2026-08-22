@@ -97,7 +97,10 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
             <div style={{marginRight: "20px", width: "50%", backgroundColor: status === 'submitted' || isExpired ? "#f5f5f5" : 'white'}}>
                 <div style={{fontSize: "16px", fontWeight:"bold"}}>{event.title}</div>
                 <div style={{fontSize: "14px"}}>{event.location_name}</div>
-                <div><p style={{fontSize: "14px"}}>{new Date(event.start_datetime).toLocaleString()}</p></div>
+                <div><p style={{fontSize: "14px"}}>{new Date(event.start_datetime).toLocaleString("en-US", {
+                    hour: "numeric",
+                    minute: "2-digit"
+                })}</p></div>
             </div>
             <div style={{width: "60%", display: "flex", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
                 {!readOnly && !isExpired && (
@@ -119,28 +122,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                         Edit
                     </button>
                 )}
-                {/*}
-                {!readOnly && !isExpired && (
-                    <button
-                        title="Make duplicate of this Event"
-                        className="btn btn-secondary" onClick={handleClone}>
-                    <img src={"/icons8-clone-24.png"} style={{width:"24px", height:"24px"}} />Clone
-                </button>
-                )}
-                {!readOnly && (
-                    <button className="btn btn-danger"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setShowConfirm(true);
-                            }}
-                    >
-                        <img src={imgSrc} alt={"delete"}
-                             onMouseOver={() => setImgSrc('/icons8-delete-white.png')}
-                             onMouseOut={() => setImgSrc('/icons8-delete-30.png')}
-                             style={{width:"24px", height:"24px"}} />Delete
-                    </button>
-                )}
-                */}
+
                 {/* Begin Extras Menu */}
                 {!readOnly && !isExpired && (
                     <div className="more-actions">
@@ -230,7 +212,18 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                 {isExpired && !readOnly && (
                     <>
                         <button className="btn btn-primary" onClick={() => setShowRestoreModal(true)}>
-                            <img src={"/icons8-redo-48.png"} style={{width:"24px", height:"24px"}} />Restore
+                            <img src={"/icons8-redo-48.png"} style={{width: "24px", height: "24px"}}/>Restore
+                        </button>
+                        <button className="btn btn-danger"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setShowConfirm(true);
+                                }}
+                        >
+                            <img src={imgSrc} alt={"delete"}
+                                 onMouseOver={() => setImgSrc('/icons8-delete-white.png')}
+                                 onMouseOut={() => setImgSrc('/icons8-delete-30.png')}
+                                 style={{width: "24px", height: "24px"}}/>Delete
                         </button>
                     </>
                 )}
@@ -241,7 +234,13 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                             <h4>{event.title}</h4>
                             <>This action cannot be undone.</>
 
-                            <div style={{ display: "flex", alignContent: "center", justifyContent: "center", gap: "10px", marginTop: "10px" }}>
+                            <div style={{
+                                display: "flex",
+                                alignContent: "center",
+                                justifyContent: "center",
+                                gap: "10px",
+                                marginTop: "10px"
+                            }}>
                                 <button className="btn btn-secondary" onClick={() => setShowConfirm(false)}>
                                     Cancel
                                 </button>

@@ -74,9 +74,9 @@ export default function Dashboard() {
                         facebookEventUrl
                     });
                     setDialog({
-                        type: "confirm",
+                        type: "alert",
                         title: "Import",
-                        message: `Imported Facebook event: ${JSON.stringify(result.data)}`
+                        message: `Imported Facebook event: ${JSON.stringify(result.data.data.title)}`
                     });
                 }catch(err: Error | any){
                     if(err.status === 404){
@@ -257,6 +257,12 @@ export default function Dashboard() {
                                 event={facebookImportEvent || undefined}
                                 onSuccess={() => {
                                     setShowCreateEventForm(false);
+                                    setShowImportFacebookEventForm(false);
+                                    setDialog({
+                                        type: "alert",
+                                        title: "Import",
+                                        message: `Imported Facebook event: ${JSON.stringify(facebookImportEvent?.title)}`
+                                    });
                                     setFacebookImportEvent(null);
                                     loadEvents();
                                 }}
@@ -275,6 +281,11 @@ export default function Dashboard() {
                                 onSuccess={() => {
                                     setShowCreateEventForm(false);
                                     setShowImportEventbriteEventForm(false);
+                                    setDialog({
+                                        type: "alert",
+                                        title: "Import",
+                                        message: `Imported Eventbrite event: ${JSON.stringify(eventbriteImportEvent?.title)}`
+                                    });
                                     setEventbriteImportEvent(null);
                                     loadEvents();
                                 }}
