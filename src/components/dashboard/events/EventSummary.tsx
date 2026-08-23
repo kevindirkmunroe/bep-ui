@@ -153,7 +153,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     src={iconSrc}
                     alt={label}
                     className="imported-from-icon"
-                    style={{marginTop: "4px", width:"20px", height: "20px", marginRight: "4px"}}
+                    style={{marginTop: "4px", width:"16px", height: "16px", marginRight: "4px"}}
                 />
             </a>
         );

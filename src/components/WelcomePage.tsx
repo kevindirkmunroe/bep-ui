@@ -20,7 +20,7 @@ export function WelcomePage() {
                 </div>
                 {/* RIGHT: Existing content */}
                 <div style={{display: "flex", flexDirection: "column", minHeight: "100vh", minWidth: "100vh"}}>
-                    <div style={{paddingLeft: 40, marginTop: "10%"}}>
+                    <div style={{paddingLeft: 40, marginTop: "2%"}}>
                         <strong style={{fontSize: "24px", color: "#D2492C"}}>Promote Your <b style={{fontSize: "28px"}}>Local
                             Bay Area</b> Events</strong>
                         <div style={{marginTop: 50}}>
@@ -37,8 +37,23 @@ export function WelcomePage() {
                         </div>
                     </div>
 
+                    <div
+                        style={{
+                            marginTop: "60px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center"
+                        }}
+                    >
+                        <img
+                            src="/splash-simple.png"
+                            style={{
+                                height: "200px",
+                                width: "auto",
+                            }}
+                        />
+                    </div>
                     <div style={{
-                        marginTop: "auto",
                         display: "flex",
                         marginBottom: "4px",
                         flexDirection: "row",
@@ -57,19 +72,9 @@ export function WelcomePage() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <img style={{transform: "scale(0.8)", width: "200px", height: "60px"}} src={"/eventbrite-logo.png"}/>
-                        <img style={{transform: "scale(0.8)", width: "200px", height: "60px"}} src={"/facebook-logo.png"}/>
-                    </div>
-                    <div style={{
-                        marginTop: "4px",
-                        display: "flex",
-                        marginBottom: "4px",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        alignItems: "center"
-                    }}>
                         <img style={{transform: "scale(0.6)"}} src={"/sfstation.jpg"}/>
                         <img style={{transform: "scale(0.6)"}} src={"/visit_oakland.jpg"}/>
+                        <img style={{transform: "scale(0.8)", width: "64px", height: "64px"}} src={"/sfweekly2.jpg"}/>
                     </div>
                     <div style={{marginBottom: "30px", padding: "20px", fontSize: "14px"}}>All trademarks and logos are
                         the property of their respective owners.
