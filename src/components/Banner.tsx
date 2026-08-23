@@ -74,7 +74,7 @@ export function Banner() {
                         objectFit: "contain"
                     }}
                 />
-                <strong style={{fontSize: "24px"}}>LocalBuzz</strong>
+                <strong style={{fontSize: "24px"}}><b style={{color: "black"}}>Local</b>Buzz</strong>
             </div>
             {dialog && (
                 <BaseDialog
