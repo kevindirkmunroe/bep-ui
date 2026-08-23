@@ -3,7 +3,8 @@ import {
     FunCheapPayload,
     IndyBayPayload,
     SFStationPayload,
-    VisitOaklandPayload
+    VisitOaklandPayload,
+    SFWeeklyPayload
 } from "./payloadTypes.interface";
 
 export type PlatformPayload =
@@ -12,3 +13,4 @@ export type PlatformPayload =
     | FunCheapPayload
     | SFStationPayload
     | VisitOaklandPayload
+    | SFWeeklyPayload

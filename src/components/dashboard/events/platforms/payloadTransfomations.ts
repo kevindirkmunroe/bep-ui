@@ -4,6 +4,7 @@ import {
     IndyBayPayload,
     PayloadTransformation,
     SFStationPayload,
+    SFWeeklyPayload,
     VisitOaklandPayload
 } from "./payloadTypes.interface";
 import {api} from "../../../../utils/api";
@@ -96,6 +97,21 @@ const dothebayTransformation: PayloadTransformation = async (event, platform) : 
     };
 }
 
+// TODO: SFWeekly is done by hand, these might as well be dummy values
+const sfweeklyTransformation: PayloadTransformation = async (event, platform) : Promise<SFWeeklyPayload> => {
+    return {
+        name: event.name,
+        email: event.email,
+        title: event.title,
+        description: event.description,
+        date: event.start_datetime,
+        short_description: "",
+        event_type: "",
+        location: "",
+        region: ""
+    };
+}
+
 const visitOaklandTransformation: PayloadTransformation = async (event, platform) : Promise<VisitOaklandPayload> => {
     const zip: string = event.zip || '';
     let region = zipToVisitOaklandDistrict(zip);
@@ -138,4 +154,5 @@ export const PAYLOAD_TRANSFORMATIONS : PayloadTransformationMap = {
     sfstation: sfstationTransformation,
     visitoakland: visitOaklandTransformation,
     dothebay: dothebayTransformation,
+    sfweekly: sfweeklyTransformation,
 }

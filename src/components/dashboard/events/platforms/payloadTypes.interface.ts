@@ -58,6 +58,13 @@ export interface IndyBayPayload extends BaseEventPayload, ContactPayload {
     region: string;
 }
 
+export interface SFWeeklyPayload extends BaseEventPayload, ContactPayload {
+    event_type: string;
+    location: string;
+    region: string;
+    short_description: string;
+}
+
 export interface PayloadTransformation {
     (event: EventDetail, platform: Platform) : Promise<PlatformPayload>;
 }

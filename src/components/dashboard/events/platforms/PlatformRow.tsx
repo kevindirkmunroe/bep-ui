@@ -10,6 +10,7 @@ import {
     FunCheapPayload,
     IndyBayPayload,
     SFStationPayload,
+    SFWeeklyPayload,
     VisitOaklandPayload
 } from "./payloadTypes.interface";
 import {PAYLOAD_TRANSFORMATIONS} from "./payloadTransfomations";
@@ -20,6 +21,7 @@ type PlatformPayload =
     | DoTheBayPayload
     | VisitOaklandPayload
     | SFStationPayload
+    | SFWeeklyPayload
     | IndyBayPayload;
 
 function buildDateFields(startDatetime: string) : DateFields {
@@ -173,7 +175,8 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
         "visitoakland": "/visit_oakland.jpg",
         "sfstation": "/sfstation.jpg",
         "indybay":"/indybay.jpg",
-        "dothebay": "/do_the_bay.jpg"
+        "dothebay": "/do_the_bay.jpg",
+        "sfweekly": "/sfweekly2.jpg"
     }
 
     return (

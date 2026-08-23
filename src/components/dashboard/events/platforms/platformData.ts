@@ -6,7 +6,8 @@ export function getPlatformUrl(platform: Platform){
         visitoakland: "https://www.visitoakland.com/events/submit-an-event/",
         sfstation: "https://www.sfstation.com/event/add",
         indybay: "https://www.indybay.org/calendar/event_add.php",
-        dothebay: "https://dothebay.com/events/new"
+        dothebay: "https://dothebay.com/events/new",
+        sfweekly: "https://www.sfweekly.com/events/"
     };
 
     return urls[platform];
