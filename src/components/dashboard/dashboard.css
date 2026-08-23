@@ -30,7 +30,6 @@
 .dashboard-events {
     flex: 1;
     min-width: 0;
-
     max-height: 500px; /* match carousel height */
     overflow-y: auto;
 }

@@ -36,6 +36,7 @@ export default function CreateEditEventForm({
         phone: event?.phone || "",
         website: event?.website || "",
         category: event?.category || "",
+        imported_from: event?.imported_from || "",
     });
 
     const toDatetimeLocal = (date: Date) => {
@@ -271,6 +272,16 @@ export default function CreateEditEventForm({
                     placeholder="Website"
                     onChange={handleChange}
                     value={form.website}
+                />
+
+                <label htmlFor="website">Imported From</label>
+                <input
+                    id="imported_from"
+                    name="imported_from"
+                    className="input"
+                    placeholder="Imported From URI"
+                    onChange={handleChange}
+                    value={form.imported_from}
                 />
             </div>
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>

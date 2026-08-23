@@ -121,30 +121,101 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
         ) + `, ${timePart}`;
     }
 
+    type ImportedFromLinkProps = {
+        importedFrom?: string | null;
+    };
+
+    function ImportedFromLink({ importedFrom }: ImportedFromLinkProps) {
+        if (!importedFrom) return null;
+
+        let iconSrc: string | null = null;
+        let label = "Original event";
+
+        if (importedFrom.includes("eventbrite.com")) {
+            iconSrc = "/new-eventbrite-icon-orange-PNG-large-size.png";
+            label = "View original Eventbrite event";
+        } else if (importedFrom.includes("facebook.com")) {
+            iconSrc = "/facebook-icon-png-732.png";
+            label = "View original Facebook event";
+        }
+
+        if (!iconSrc) return null;
+
+        return (
+            <a
+                href={importedFrom}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={label}
+                onClick={(e) => e.stopPropagation()}
+            >
+                <img
+                    src={iconSrc}
+                    alt={label}
+                    className="imported-from-icon"
+                    style={{marginTop: "4px", width:"20px", height: "20px", marginRight: "4px"}}
+                />
+            </a>
+        );
+    }
+
     return (
-        <div style={ showAsHeader ? eventHeaderStyle : eventListStyle}>
-            <div style={{marginRight: "22px", width: "60%", backgroundColor: status === 'submitted' || isExpired ? "#f5f5f5" : '#FFF1EC'}}>
-                <div style={{fontSize: "18px", fontWeight:"bold"}}>{event.title}</div>
-                <div style={{fontSize: "16px"}}>{event.location_name}</div>
-                <div><p style={{fontSize: "14px"}}>{formatEventDate(new Date(event.start_datetime).toLocaleString())}</p></div>
+        <div style={showAsHeader ? eventHeaderStyle : eventListStyle}>
+            <div
+                style={{
+                    position: "relative",
+                    marginRight: "22px",
+                    width: "70%",
+                    paddingLeft: "36px",
+                    boxSizing: "border-box",
+                    backgroundColor:
+                        status === "submitted" || isExpired
+                            ? "#f5f5f5"
+                            : "#FFF1EC"
+                }}
+            >
+                {event.imported_from && (
+                    <div className="imported-from-link">
+                        <ImportedFromLink importedFrom={event.imported_from}/>
+                    </div>
+                )}
+
+                <div
+                    style={{
+                        fontSize: "18px",
+                        fontWeight: "bold"
+                    }}
+                >
+                    {event.title}
+                </div>
+
+                <div style={{fontSize: "16px"}}>
+                    {event.location_name}
+                </div>
+
+                <p style={{fontSize: "14px"}}>
+                    {formatEventDate(
+                        new Date(event.start_datetime).toLocaleString()
+                    )}
+                </p>
             </div>
             <div style={{width: "60%", display: "flex", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
                 {!readOnly && !isExpired && (
                     <button
                         title="Promote Event to all Platforms"
                         className="btn btn-primary-greater" disabled={isExpired} onClick={handlePromote}>
-                        <img src={"/icons8-commercial-24.png"} />
+                        <img src={"/icons8-commercial-24.png"}/>
                         Promote
                     </button>
                 )}
-                {canEdit && onEdit && !isExpired &&(
+                {canEdit && onEdit && !isExpired && (
                     <button className="btn btn-secondary"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 onEdit(event);
                             }}
                     >
-                        <img src={"/icons8-edit-64.png"} style={{width:"24px", height:"24px"}} />
+                        <img src={"/icons8-edit-64.png"} style={{width: "24px", height: "24px"}}/>
                         Edit
                     </button>
                 )}
@@ -229,7 +300,11 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                 {/* End Extras Menu */}
                 {readOnly && showRedo && (
                     <>
-                        <p style={{fontSize: "14px", marginTop: "10px", marginRight: "20px"}}>Completed {getNewestPublishDate(event.platforms)?.toLocaleString("en-US",
+                        <p style={{
+                            fontSize: "14px",
+                            marginTop: "10px",
+                            marginRight: "20px"
+                        }}>Completed {getNewestPublishDate(event.platforms)?.toLocaleString("en-US",
                             {
                                 month: "numeric",
                                 day: "numeric",
@@ -239,7 +314,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                             }
                         )}</p>
                         <button className="btn btn-primary" onClick={() => setShowRecycleModal(true)}>
-                            <img src={"/icons8-recycle-32.png"} style={{width:"24px", height:"24px"}} />Recycle
+                            <img src={"/icons8-recycle-32.png"} style={{width: "24px", height: "24px"}}/>Recycle
                         </button>
                     </>
                 )}

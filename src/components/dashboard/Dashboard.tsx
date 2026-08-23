@@ -131,6 +131,7 @@ export default function Dashboard() {
                 region: raw.location_city,
                 category: raw.categories[0],
                 city: raw.location_city,
+                imported_from: facebookEventUrl,
             }
             setFacebookImportEvent(fbImportEvent);
             setShowImportFacebookEventForm(true);

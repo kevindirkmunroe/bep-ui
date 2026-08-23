@@ -32,6 +32,7 @@ export default function ImportFacebookEventForm({
         organization: event?.organization || "",
         phone: event?.phone || "",
         website: event?.website || "",
+        imported_from: event?.imported_from || "",
         category: event?.category || "",
     });
 
@@ -60,13 +61,6 @@ export default function ImportFacebookEventForm({
                 message: "Failed to create event"
             });
         }
-    };
-    const inputStyle: React.CSSProperties = {
-        width: "100%",
-        padding: "10px",
-        borderRadius: "6px",
-        border: "1px solid #ccc",
-        fontSize: "14px"
     };
 
     return (
@@ -231,6 +225,16 @@ export default function ImportFacebookEventForm({
                     placeholder="Website"
                     onChange={handleChange}
                     value={form.website}
+                />
+
+                <label htmlFor="imported_from">Imported From</label>
+                <input
+                    id="imported_from"
+                    name="imported_from"
+                    className="input"
+                    placeholder="Imported From URI"
+                    onChange={handleChange}
+                    value={form.imported_from}
                 />
             </div>
             <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>

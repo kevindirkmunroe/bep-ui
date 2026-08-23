@@ -19,6 +19,7 @@ export interface EventDetail {
     region?: string;
     category?: string;
     city?: string;
+    imported_from: string | null;
     date_fields: DateFields;
 }
 
