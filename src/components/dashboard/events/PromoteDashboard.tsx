@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -92,7 +92,7 @@ export default function PromoteDashboard() {
                 <div style={{ paddingLeft: 40}}>
                     <div style={{ width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "20px" }}>
                         <div className="banner-div" style={{
-                            width:"100%",
+                            width: "100%",
                             height: "100px",
                             objectFit: "cover",
                             objectPosition: "top",
@@ -105,7 +105,8 @@ export default function PromoteDashboard() {
                             alignContent: "left",
                             alignItems: "center"
                         }}>
-                            &nbsp;Promote Event
+                            &nbsp;My Events /&nbsp;
+                            <b style={{fontSize: "48px"}}>Promote</b>
                         </div>
                     </div>
                     <div>
@@ -115,7 +116,7 @@ export default function PromoteDashboard() {
                             </div>
                             <div style={{marginTop: "6px", marginRight: "5px"}}>
                                 <button className="btn btn-secondary" onClick={() => navigate(`/dashboard/${user?.userId}`)}>
-                                    Back To Events
+                                   Back To Events
                                 </button>
                                 <div style={{fontSize: "11px", width: "100%", textAlign: "right", marginTop: "32px"}}>
                                     {extensionInstalled ? "🟢 Extension OK | " + extensionVersion  :

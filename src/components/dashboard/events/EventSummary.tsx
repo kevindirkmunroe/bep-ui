@@ -171,7 +171,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     backgroundColor:
                         status === "submitted" || isExpired
                             ? "#f5f5f5"
-                            : "#FFF1EC"
+                            : "white"
                 }}
             >
                 {event.imported_from && (
