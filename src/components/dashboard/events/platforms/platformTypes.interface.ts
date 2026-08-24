@@ -23,3 +23,21 @@ export interface PlatformRowProps {
     reload: () => void;
     extensionInstalled: boolean;
 }
+
+export const PLATFORM_ICONS = {
+    "funcheapsf": "/funcheapsf.jpg",
+    "visitoakland": "/visit_oakland.jpg",
+    "sfstation": "/sfstation.jpg",
+    "indybay":"/indybay.jpg",
+    "dothebay": "/do_the_bay.jpg",
+    "sfweekly": "/sfweekly2.jpg"
+}
+
+export const PRINTABLE_PLATFORM = {
+    "funcheapsf": "Funcheap SF",
+    "visitoakland": "Visit Oakland",
+    "sfstation": "SF Station",
+    "indybay":"IndyBay",
+    "dothebay": "Do The Bay",
+    "sfweekly": "SF Weekly"
+}

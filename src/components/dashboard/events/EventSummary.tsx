@@ -10,6 +10,7 @@ import RecycleEventModal from "./RecycleEventModal";
 import {FaCircleExclamation, FaCircleQuestion} from "react-icons/fa6";
 
 import './eventSummary.css';
+import {useUser} from "../../../UserContext";
 
 const overlayStyle = {
     position: "fixed" as const,
@@ -58,6 +59,8 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     const [showRecycleModal, setShowRecycleModal] = useState(false);
     const [imgSrc, setImgSrc] = useState("/icons8-delete-30.png");
     const [showMoreActions, setShowMoreActions] = useState(false);
+    const {user} = useUser();
+
     const getNewestPublishDate = (platforms: PlatformData[]): Date | undefined => {
         const dates = platforms
             .map(p => p.date_published)
@@ -74,7 +77,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     };
 
     const handlePromote = () => {
-        navigate(`/ui/events/${event.event_id}`);
+        navigate(`/dashboard/${user?.userId}/events/${event.event_id}`);
     };
 
     const handleClone = async () => {

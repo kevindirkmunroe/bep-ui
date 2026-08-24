@@ -1,4 +1,4 @@
-import {Platform, PlatformRowProps} from "./platformTypes.interface"
+import {Platform, PLATFORM_ICONS, PlatformRowProps} from "./platformTypes.interface"
 import {getPlatformUrl} from "./platformData";
 import {DateFields, EventDetail} from "../eventDetailTypes.interface";
 import {api} from "../../../../utils/api";
@@ -168,15 +168,6 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
         "submitted" : "Submitted",
         "published" : "Published",
         "skipped" : "Skipped"
-    }
-
-    const PLATFORM_ICONS = {
-        "funcheapsf": "/funcheapsf.jpg",
-        "visitoakland": "/visit_oakland.jpg",
-        "sfstation": "/sfstation.jpg",
-        "indybay":"/indybay.jpg",
-        "dothebay": "/do_the_bay.jpg",
-        "sfweekly": "/sfweekly2.jpg"
     }
 
     return (

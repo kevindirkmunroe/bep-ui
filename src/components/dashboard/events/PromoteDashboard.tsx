@@ -10,6 +10,7 @@ import { useUser } from "../../../UserContext";
 import {api} from "../../../utils/api";
 import ImageCarousel from "../../ImageCarousel";
 import {Platform, PlatformStatus} from "./platforms/platformTypes.interface";
+import EventBreadcrumb from "./EventBreadcrumb";
 
 
 export default function PromoteDashboard() {
@@ -109,21 +110,28 @@ export default function PromoteDashboard() {
                             <b style={{fontSize: "48px"}}>Promote</b>
                         </div>
                     </div>
+                    <EventBreadcrumb eventTitle={event.title}/>
                     <div>
                         <div style={{display: "flex", flexDirection: "row"}}>
                             <div style={{flex: 2, border: "2px solid #ccc", borderRadius: "14px", boxShadow: "0 4px 14px rgba(0, 0, 0, 0.07)", marginRight:"30px", marginBottom: "26px" }}>
                                 <EventSummary event={event} readOnly={true} showRedo={false} showAsHeader={true} />
                             </div>
                             <div style={{marginTop: "6px", marginRight: "5px"}}>
-                                <button className="btn btn-secondary" onClick={() => navigate(`/dashboard/${user?.userId}`)}>
-                                   Back To Events
+                                <button className="btn btn-secondary"
+                                        onClick={() => navigate(`/dashboard/${user?.userId}`)}>
+                                    Back To Events
+                                </button>
+                                <button className="btn btn-secondary"
+                                        onClick={() => navigate(`/dashboard/${user?.userId}/events/${event?.event_id}/promoted`)}>
+                                    Show Promoted
                                 </button>
                                 <div style={{fontSize: "11px", width: "100%", textAlign: "right", marginTop: "32px"}}>
-                                    {extensionInstalled ? "🟢 Extension OK | " + extensionVersion  :
+                                    {extensionInstalled ? "🟢 Extension OK | " + extensionVersion :
                                         <div>
                                             <div>⚠️ Extension Not Installed</div>
                                             <div><a href={extensionUrl} target="_blank">Install Extension</a><br/>
-                                                <button className="btn btn-secondary" onClick={() => window.location.reload()}>
+                                                <button className="btn btn-secondary"
+                                                        onClick={() => window.location.reload()}>
                                                     Refresh to Connect Extension
                                                 </button>
                                             </div>

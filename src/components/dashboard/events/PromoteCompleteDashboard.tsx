@@ -1,0 +1,66 @@
+import {api} from "../../../utils/api";
+import ImageCarousel from "../../ImageCarousel";
+import React, {useEffect, useState} from "react";
+import EventBreadcrumb from "./EventBreadcrumb";
+import {useParams} from "react-router-dom";
+import {EventDetail} from "./eventDetailTypes.interface";
+import {EventCompletionLog} from "./EventCompletionLog";
+
+export default function PromoteCompleteDashboard(){
+
+    const { eventId } = useParams();
+
+    const [event, setEvent] = useState<EventDetail | null>(null);
+
+    useEffect(() => {
+        loadEventPlatforms();
+    }, [eventId]);
+
+    const loadEventPlatforms = async () => {
+        const res = await api.get(`/events/${eventId}`);
+        console.log(`[PromoteCompleDashboard] - Events w/Platforms: \n${JSON.stringify(res.data)}`);
+        setEvent(res.data);
+    };
+
+    if (!event) {
+        return <div>Loading...</div>;
+    }
+
+    return (
+        <div style={{ display: "flex", gap: "2px" }}>
+            {/* LEFT: Carousel */}
+            <div style={{ flex: "0 0 300px" }}>
+                <ImageCarousel />
+            </div>
+            {/* RIGHT: Receipts */}
+            <div style={{ paddingLeft: 40}}>
+                <div style={{ width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "20px" }}>
+                    <div className="banner-div" style={{
+                        width: "100%",
+                        height: "100px",
+                        objectFit: "cover",
+                        objectPosition: "top",
+                        fontWeight: 800,
+                        fontSize: "40px",
+                        borderRadius: "4px",
+                        font: "bold",
+                        color: "white",
+                        display: "flex",
+                        alignContent: "left",
+                        alignItems: "center"
+                    }}>
+                        &nbsp;My Events /&nbsp;
+                        <b style={{fontSize: "48px"}}>Submitted</b>
+                    </div>
+                </div>
+            </div>
+            <div style={{display: "flex", flexDirection: "column"}}>
+                <EventBreadcrumb eventTitle={event?.title}/>
+                {/* List completed promotions only: "/events/:eventId" */}
+                <div style={{marginTop: "20px"}}>
+                    <EventCompletionLog event={event} />
+                </div>
+            </div>
+        </div>
+    )
+}

@@ -15,6 +15,7 @@ import RequestInvitePage from "./components/RequestInvitePage.js";
 import {AboutPage} from "./components/AboutPage.js";
 import {ExpiredEventsPage} from "./components/dashboard/events/ExpiredEventsPage.js";
 import CalendarView from "./components/dashboard/CalendarView.js";
+import PromoteCompleteDashboard from "./components/dashboard/events/PromoteCompleteDashboard.tsx";
 
 export default function App() {
   return (
@@ -39,15 +40,18 @@ export default function App() {
                   <Route index element={<ActiveEventsPage />} />
 
                   <Route path="active" element={<ActiveEventsPage />} />
-                  <Route path="events" element={<ActiveEventsPage />} />
                   <Route path="submitted" element={<SubmittedEventsPage />} />
                   <Route path="expired" element={<ExpiredEventsPage />} />
 
                   <Route path=":state/calendar" element={<CalendarView />} />
 
                   <Route path="published" element={<PublishedEventsPage />} />
+
+                  {/* Breadcrumb Routes */}
+                  <Route path="events" element={<ActiveEventsPage />} />
+                  <Route path="events/:eventId" element={<PromoteDashboard />} />
+                  <Route path="events/:eventId/promoted" element={<PromoteCompleteDashboard />} />
               </Route>
-              <Route path="/ui/events/:eventId" element={<PromoteDashboard />} />
           </Routes>
       </MainLayout>
   );

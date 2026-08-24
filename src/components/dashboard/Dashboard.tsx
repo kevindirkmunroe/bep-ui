@@ -16,6 +16,7 @@ import {MOCK_FACEBOOK} from "./MOCK_IMPORT_DATA";
 import {eventbriteJsonLdToEventDetail, getEventbriteJsonLd} from "./EventbriteIngestor";
 import './dashboard.css';
 import BaseDialog, {DialogState} from "../BaseDialog";
+import EventBreadcrumb from "./events/EventBreadcrumb";
 
 export default function Dashboard() {
     const { userId } = useParams();
@@ -342,6 +343,7 @@ export default function Dashboard() {
                         }
                     }>&nbsp;My Events
                     </div>
+                    <EventBreadcrumb/>
                     <div style={{display: "flex", flexDirection: "column"}}>
                         <div style={{
                             display: "flex",
