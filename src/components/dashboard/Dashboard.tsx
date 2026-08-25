@@ -327,7 +327,32 @@ export default function Dashboard() {
                             />
                         </Modal>
                     )}
-
+                    {/*
+                    <div style={{
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "20px",
+                        marginBottom: "20px"
+                    }}>
+                        <div className="banner-div" style={{
+                            width: "100%",
+                            height: "100px",
+                            objectFit: "cover",
+                            objectPosition: "top",
+                            fontWeight: 800,
+                            fontSize: "40px",
+                            borderRadius: "4px",
+                            font: "bold",
+                            color: "white",
+                            display: "flex",
+                            alignContent: "left",
+                            alignItems: "center"
+                        }}>
+                            &nbsp;My Events
+                        </div>
+                    </div>
+                    */}
                     <EventBreadcrumb/>
                     {/* ROUTED CONTENT */}
                     <ViewToggle/>

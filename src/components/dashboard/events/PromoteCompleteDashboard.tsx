@@ -18,12 +18,22 @@ export default function PromoteCompleteDashboard(){
 
     const loadEventPlatforms = async () => {
         const res = await api.get(`/events/${eventId}`);
-        console.log(`[PromoteCompleDashboard] - Events w/Platforms: \n${JSON.stringify(res.data)}`);
         setEvent(res.data);
     };
 
     if (!event) {
         return <div>Loading...</div>;
+    }
+
+    function truncateString(str: string | undefined, limit: number, ending: string = '...'): string {
+        if(!str){
+            return "unknown"
+        }
+
+        if (str.length <= limit) {
+            return str;
+        }
+        return str.slice(0, limit - ending.length) + ending;
     }
 
     return (
@@ -33,8 +43,11 @@ export default function PromoteCompleteDashboard(){
                 <ImageCarousel />
             </div>
             {/* RIGHT: Receipts */}
-            <div style={{ paddingLeft: 40}}>
-                <div style={{ width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "20px" }}>
+            <div style={{ flex: 1 }}>
+
+            <div style={{paddingLeft: 40}}>
+                {/*
+                <div style={{width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "20px"}}>
                     <div className="banner-div" style={{
                         width: "100%",
                         height: "100px",
@@ -49,17 +62,18 @@ export default function PromoteCompleteDashboard(){
                         alignContent: "left",
                         alignItems: "center"
                     }}>
-                        &nbsp;My Events /&nbsp;
-                        <b style={{fontSize: "48px"}}>Submitted</b>
+                        &nbsp;My Events
                     </div>
                 </div>
+                */}
+                <EventBreadcrumb eventTitle={truncateString(event?.title, 24)}/>
             </div>
             <div style={{display: "flex", flexDirection: "column"}}>
-                <EventBreadcrumb eventTitle={event?.title}/>
                 {/* List completed promotions only: "/events/:eventId" */}
-                <div style={{marginTop: "20px"}}>
-                    <EventCompletionLog event={event} />
+                <div style={{marginTop: "20px", marginLeft: "20px"}}>
+                    <EventCompletionLog event={event}/>
                 </div>
+            </div>
             </div>
         </div>
     )

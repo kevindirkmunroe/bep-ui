@@ -90,7 +90,8 @@ export default function PromoteDashboard() {
             </div>
             {/* RIGHT: Existing content */}
             <div style={{ flex: 1 }}>
-                <div style={{ paddingLeft: 40}}>
+                <div style={{paddingLeft: 40}}>
+                    {/*
                     <div style={{ width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "20px" }}>
                         <div className="banner-div" style={{
                             width: "100%",
@@ -106,38 +107,50 @@ export default function PromoteDashboard() {
                             alignContent: "left",
                             alignItems: "center"
                         }}>
-                            &nbsp;My Events /&nbsp;
-                            <b style={{fontSize: "48px"}}>Promote</b>
+                            &nbsp;My Events
                         </div>
                     </div>
-                    <EventBreadcrumb eventTitle={event.title}/>
+                    */}
+                    <div style={{display: "flex", flexDirection: "row", alignItems: "right"}}>
+                        <div style={{flex: "0 0 80%"}}><EventBreadcrumb eventTitle={event.title} /></div>
+                        <div style={{fontSize: "11px", width: "100%", flex: "0 0 20%"}}>
+                            {extensionInstalled ? "🟢 Extension OK | " + extensionVersion :
+                                <div>
+                                    <div>⚠️ Extension Not Installed</div>
+                                    <div><a href={extensionUrl} target="_blank">Install Extension</a><br/>
+                                        <button className="btn btn-secondary"
+                                                onClick={() => window.location.reload()}>
+                                            Refresh to Connect Extension
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
                     <div>
                         <div style={{display: "flex", flexDirection: "row"}}>
-                            <div style={{flex: 2, border: "2px solid #ccc", borderRadius: "14px", boxShadow: "0 4px 14px rgba(0, 0, 0, 0.07)", marginRight:"30px", marginBottom: "26px" }}>
-                                <EventSummary event={event} readOnly={true} showRedo={false} showAsHeader={true} />
+                            <div style={{
+                                flex: 2,
+                                border: "2px solid #ccc",
+                                borderRadius: "14px",
+                                boxShadow: "0 4px 14px rgba(0, 0, 0, 0.07)",
+                                marginRight: "30px",
+                                marginBottom: "26px"
+                            }}>
+                                <EventSummary event={event} readOnly={true} showRedo={false} showAsHeader={true}/>
                             </div>
                             <div style={{marginTop: "6px", marginRight: "5px"}}>
-                                <button className="btn btn-secondary"
-                                        onClick={() => navigate(`/dashboard/${user?.userId}`)}>
-                                    Back To Events
+                                <button
+                                    title="Promote Event to all Platforms"
+                                    className="btn btn-primary-greater"
+                                    style={{fontSize: "18px"}}
+                                    onClick={() => navigate(`/dashboard/${user?.userId}/events/${event?.event_id}/promoted`)}>
+                                    <img src={"/icons8-commercial-24.png"} style={{
+                                        width: "24px",
+                                        height: "24px"
+                                    }}/>
+                                    <b>Show Completed</b>
                                 </button>
-                                <button className="btn btn-secondary"
-                                        onClick={() => navigate(`/dashboard/${user?.userId}/events/${event?.event_id}/promoted`)}>
-                                    Show Promoted
-                                </button>
-                                <div style={{fontSize: "11px", width: "100%", textAlign: "right", marginTop: "32px"}}>
-                                    {extensionInstalled ? "🟢 Extension OK | " + extensionVersion :
-                                        <div>
-                                            <div>⚠️ Extension Not Installed</div>
-                                            <div><a href={extensionUrl} target="_blank">Install Extension</a><br/>
-                                                <button className="btn btn-secondary"
-                                                        onClick={() => window.location.reload()}>
-                                                    Refresh to Connect Extension
-                                                </button>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
                             </div>
                         </div>
                     </div>

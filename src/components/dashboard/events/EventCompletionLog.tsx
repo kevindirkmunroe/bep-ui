@@ -1,83 +1,69 @@
-import {EventDetail} from "./eventDetailTypes.interface";
 import {PLATFORM_ICONS, PRINTABLE_PLATFORM} from "./platforms/platformTypes.interface";
+import {EventDetail} from "./eventDetailTypes.interface";
+import "./eventCompletionLog.css";
 export function EventCompletionLog({ event }: { event: EventDetail }) {
     const submittedPlatforms = event.platforms.filter(
         p => p.status === "submitted"
     );
 
+    const formatDate = (date: string | null | undefined) => {
+        if (!date) return "—";
+
+        return new Date(date).toLocaleString("en-US", {
+            timeZone: "America/Los_Angeles",
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            timeZoneName: "short"
+        });
+    };
+
     return (
-        <div>
-            <div style={{ marginBottom: "16px" }}>
+        <div className="completion-log">
+
+            <div className="completion-event-info">
                 <div>
-                    <strong>Event ID</strong> {event.event_id}
+                    <span>Event ID</span>
+                    <strong>{event.event_id}</strong>
                 </div>
 
                 <div>
-                    <strong>Title</strong> {event.title}
+                    <span>Title</span>
+                    <strong>{event.title}</strong>
                 </div>
             </div>
 
-            <table
-                style={{
-                    width: "100%",
-                    borderCollapse: "collapse"
-                }}
-            >
+            <div className="completion-divider" />
+
+            <table className="completion-table">
                 <thead>
                 <tr>
-                    <th style={{ textAlign: "left" }}>Platform</th>
-                    <th style={{ textAlign: "left" }}>
-                        Date Published
-                    </th>
+                    <th>Platform</th>
+                    <th>Date Published</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                {submittedPlatforms.length === 0 ? (
-                    <tr>
-                        <td colSpan={2}>
-                            No submitted platforms yet.
-                        </td>
-                    </tr>
-                ) : (
-                    submittedPlatforms.map(p => (
-                        <tr key={p.platform}>
-                            <td
-                                style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: "8px",
-                                    padding: "8px 0"
-                                }}
-                            >
+                {submittedPlatforms.map(p => (
+                    <tr key={p.platform}>
+                        <td>
+                            <div className="completion-platform">
                                 <img
                                     src={PLATFORM_ICONS[p.platform]}
-                                    alt={`${p.platform} logo`}
-                                    style={{
-                                        width: "28px",
-                                        height: "28px",
-                                        objectFit: "contain"
-                                    }}
+                                    alt=""
                                 />
+                                {PRINTABLE_PLATFORM[p.platform] ?? p.platform}
+                            </div>
+                        </td>
 
-                                <span>
-                                        {PRINTABLE_PLATFORM[p.platform]
-                                            ?? p.platform}
-                                    </span>
-                            </td>
-
-                            <td>
-                                {p.date_published
-                                    ? new Date(
-                                        p.date_published
-                                    ).toLocaleString()
-                                    : ""}
-                            </td>
-                        </tr>
-                    ))
-                )}
+                        <td>{formatDate(p.date_published)}</td>
+                    </tr>
+                ))}
                 </tbody>
             </table>
+
         </div>
     );
 }

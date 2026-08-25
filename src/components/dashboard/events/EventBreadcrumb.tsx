@@ -17,6 +17,17 @@ export default function EventBreadcrumb({
     const onLogPage =
         location.pathname === `${eventsPath}/${eventId}/promoted`;
 
+    function truncateString(str: string | undefined, limit: number, ending: string = '...'): string {
+        if(!str){
+            return "unknown"
+        }
+
+        if (str.length <= limit) {
+            return str;
+        }
+        return str.slice(0, limit - ending.length) + ending;
+    }
+
     return (
         <div
             style={{
@@ -35,7 +46,7 @@ export default function EventBreadcrumb({
                     <span>&gt;</span>
 
                     {onEventPage ? (
-                        <strong>{eventTitle ?? "Event"}</strong>
+                        <strong>{truncateString(eventTitle, 24) ?? "Event"}</strong>
                     ) : (
                         <Link to={`${eventsPath}/${eventId}`}>
                             {eventTitle ?? "Event"}
@@ -47,7 +58,7 @@ export default function EventBreadcrumb({
             {onLogPage && (
                 <>
                     <span>&gt;</span>
-                    <strong>Promotion Complete Log</strong>
+                    <strong>Promotion Log</strong>
                 </>
             )}
         </div>

@@ -51,7 +51,7 @@ const eventHeaderStyle: CSSProperties = {
     marginBottom: 8,
 }
 
-export function EventSummary({ event, readOnly = false, reload, showRedo= false, showAsHeader=false, onEdit }: EventSummaryProps) {
+export function EventSummary({ event, readOnly = false, reload, showRedo= false, showAsHeader=false, onEdit, onPromote }: EventSummaryProps) {
     const navigate = useNavigate();
 
     const [showConfirm, setShowConfirm] = useState(false);
@@ -59,7 +59,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     const [showRecycleModal, setShowRecycleModal] = useState(false);
     const [imgSrc, setImgSrc] = useState("/icons8-delete-30.png");
     const [showMoreActions, setShowMoreActions] = useState(false);
-    const {user} = useUser();
 
     const getNewestPublishDate = (platforms: PlatformData[]): Date | undefined => {
         const dates = platforms
@@ -74,10 +73,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
         return new Date(
             Math.max(...dates.map(d => d.getTime()))
         );
-    };
-
-    const handlePromote = () => {
-        navigate(`/dashboard/${user?.userId}/events/${event.event_id}`);
     };
 
     const handleClone = async () => {
@@ -296,7 +291,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                 {!readOnly && !isExpired && (
                     <button
                         title="Promote Event to all Platforms"
-                        className="btn btn-primary-greater" disabled={isExpired} onClick={handlePromote}
+                        className="btn btn-primary-greater" disabled={isExpired} onClick={() => onPromote? onPromote(event) : null}
                         style={{marginLeft: "20", fontSize: "16px"}} >
                         <img src={"/icons8-play-50.png"} style={{
                             width: "24px",

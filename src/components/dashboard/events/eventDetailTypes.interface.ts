@@ -50,4 +50,5 @@ export type EventSummaryProps = {
     showRedo?: boolean;
     reload?: () => void;
     onEdit?: React.Dispatch<React.SetStateAction<EventDetail | null>>;
+    onPromote?: (event: EventDetail) => void;
 };

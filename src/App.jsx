@@ -30,28 +30,38 @@ export default function App() {
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/about" element={<AboutPage />} />
 
-              {/* Protected */}
-              <Route path="/dashboard/:userId"
-                     element={<ProtectedRoute>
-                                    <Dashboard />
-                            </ProtectedRoute>} >
-                  <Route index element={<Navigate to="events" replace />} />
-                  {/* Default View */}
-                  <Route index element={<ActiveEventsPage />} />
-
-                  <Route path="active" element={<ActiveEventsPage />} />
-                  <Route path="submitted" element={<SubmittedEventsPage />} />
-                  <Route path="expired" element={<ExpiredEventsPage />} />
-
-                  <Route path=":state/calendar" element={<CalendarView />} />
-
-                  <Route path="published" element={<PublishedEventsPage />} />
-
-                  {/* Breadcrumb Routes */}
+              {/* Dashboard */}
+              <Route
+                  path="/dashboard/:userId"
+                  element={
+                      <ProtectedRoute>
+                          <Dashboard />
+                      </ProtectedRoute>
+                  }
+                  >
                   <Route path="events" element={<ActiveEventsPage />} />
-                  <Route path="events/:eventId" element={<PromoteDashboard />} />
-                  <Route path="events/:eventId/promoted" element={<PromoteCompleteDashboard />} />
+                  <Route path=":state/calendar" element={<CalendarView />} />
               </Route>
+
+              {/* One Event */}
+              <Route
+                  path="/dashboard/:userId/events/:eventId"
+                  element={
+                      <ProtectedRoute>
+                          <PromoteDashboard />
+                      </ProtectedRoute>
+                  }
+              />
+
+              {/* Completion Log */}
+              <Route
+                  path="/dashboard/:userId/events/:eventId/promoted"
+                  element={
+                      <ProtectedRoute>
+                          <PromoteCompleteDashboard />
+                      </ProtectedRoute>
+                  }
+              />
           </Routes>
       </MainLayout>
   );
