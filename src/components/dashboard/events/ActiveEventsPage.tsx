@@ -12,6 +12,7 @@ export function ActiveEventsPage() {
         reload: () => Promise<void>;
     }>();
     const { setEditingEvent } = useOutletContext<{ setEditingEvent:  React.Dispatch<React.SetStateAction<EventDetail | null>> }>();
+
     const activeEvents = (events || []).filter(e => {
         return getEventStatus(e) !== "submitted" && !isOlderThanToday(e.start_datetime);
     });

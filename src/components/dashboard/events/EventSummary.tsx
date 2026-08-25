@@ -10,7 +10,6 @@ import RecycleEventModal from "./RecycleEventModal";
 import {FaCircleExclamation, FaCircleQuestion} from "react-icons/fa6";
 
 import './eventSummary.css';
-import {useUser} from "../../../UserContext";
 
 const overlayStyle = {
     position: "fixed" as const,
@@ -32,27 +31,7 @@ const modalStyle = {
     minWidth: "300px"
 };
 
-const eventListStyle: CSSProperties = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 8,
-    padding: 5,
-    borderRadius: '10px',
-    width: "95%",
-    border: '1px solid #d3d3d3'
-};
-
-const eventHeaderStyle: CSSProperties = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 8,
-}
-
 export function EventSummary({ event, readOnly = false, reload, showRedo= false, showAsHeader=false, onEdit, onPromote }: EventSummaryProps) {
-    const navigate = useNavigate();
 
     const [showConfirm, setShowConfirm] = useState(false);
     const [showRestoreModal, setShowRestoreModal] = useState(false);
@@ -158,7 +137,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     }
 
     return (
-        <div style={showAsHeader ? eventHeaderStyle : eventListStyle}>
+        <div className={showAsHeader ? "event-header-style" : "event-list-style"}>
             <div
                 style={{
                     position: "relative",
@@ -297,7 +276,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                             width: "24px",
                             height: "24px"
                         }}/>
-                        <b>Promote Event</b>
+                        <b>Promote</b>
                     </button>
                 )}
 

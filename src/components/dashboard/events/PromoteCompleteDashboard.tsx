@@ -46,7 +46,7 @@ export default function PromoteCompleteDashboard(){
             <div style={{ flex: 1 }}>
 
             <div style={{paddingLeft: 40}}>
-                {/*
+
                 <div style={{width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "20px"}}>
                     <div className="banner-div" style={{
                         width: "100%",
@@ -54,7 +54,7 @@ export default function PromoteCompleteDashboard(){
                         objectFit: "cover",
                         objectPosition: "top",
                         fontWeight: 800,
-                        fontSize: "40px",
+                        fontSize: "34px",
                         borderRadius: "4px",
                         font: "bold",
                         color: "white",
@@ -62,10 +62,10 @@ export default function PromoteCompleteDashboard(){
                         alignContent: "left",
                         alignItems: "center"
                     }}>
-                        &nbsp;My Events
+                        &nbsp;My Event &gt; Promote &gt; Receipts
                     </div>
                 </div>
-                */}
+
                 <EventBreadcrumb eventTitle={truncateString(event?.title, 24)}/>
             </div>
             <div style={{display: "flex", flexDirection: "column"}}>

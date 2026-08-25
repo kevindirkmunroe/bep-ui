@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { EventSummary } from "./EventSummary";
@@ -91,7 +91,7 @@ export default function PromoteDashboard() {
             {/* RIGHT: Existing content */}
             <div style={{ flex: 1 }}>
                 <div style={{paddingLeft: 40}}>
-                    {/*
+
                     <div style={{ width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "20px" }}>
                         <div className="banner-div" style={{
                             width: "100%",
@@ -99,7 +99,7 @@ export default function PromoteDashboard() {
                             objectFit: "cover",
                             objectPosition: "top",
                             fontWeight: 800,
-                            fontSize: "40px",
+                            fontSize: "34px",
                             borderRadius: "4px",
                             font: "bold",
                             color: "white",
@@ -107,12 +107,12 @@ export default function PromoteDashboard() {
                             alignContent: "left",
                             alignItems: "center"
                         }}>
-                            &nbsp;My Events
+                            &nbsp;My Event &gt; Promote
                         </div>
                     </div>
-                    */}
+
                     <div style={{display: "flex", flexDirection: "row", alignItems: "right"}}>
-                        <div style={{flex: "0 0 80%"}}><EventBreadcrumb eventTitle={event.title} /></div>
+                        <div style={{flex: "0 0 80%"}}><EventBreadcrumb eventTitle={event.title}/></div>
                         <div style={{fontSize: "11px", width: "100%", flex: "0 0 20%"}}>
                             {extensionInstalled ? "🟢 Extension OK | " + extensionVersion :
                                 <div>
@@ -131,26 +131,14 @@ export default function PromoteDashboard() {
                         <div style={{display: "flex", flexDirection: "row"}}>
                             <div style={{
                                 flex: 2,
-                                border: "2px solid #ccc",
+                                border: "6px solid #E27C68",
                                 borderRadius: "14px",
                                 boxShadow: "0 4px 14px rgba(0, 0, 0, 0.07)",
+                                marginTop: "4px",
                                 marginRight: "30px",
                                 marginBottom: "26px"
                             }}>
                                 <EventSummary event={event} readOnly={true} showRedo={false} showAsHeader={true}/>
-                            </div>
-                            <div style={{marginTop: "6px", marginRight: "5px"}}>
-                                <button
-                                    title="Promote Event to all Platforms"
-                                    className="btn btn-primary-greater"
-                                    style={{fontSize: "18px"}}
-                                    onClick={() => navigate(`/dashboard/${user?.userId}/events/${event?.event_id}/promoted`)}>
-                                    <img src={"/icons8-commercial-24.png"} style={{
-                                        width: "24px",
-                                        height: "24px"
-                                    }}/>
-                                    <b>Show Completed</b>
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -160,6 +148,8 @@ export default function PromoteDashboard() {
                         event={event}
                         reload={loadEvent}
                         updatePlatformStatus={updatePlatformStatus}/>
+
+                    <Link to={`/dashboard/${user?.userId}/events/${event?.event_id}/promoted`}>Receipts</Link>
                 </div>
             </div>
         </div>

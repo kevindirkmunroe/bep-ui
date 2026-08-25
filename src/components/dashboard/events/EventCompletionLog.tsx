@@ -41,7 +41,8 @@ export function EventCompletionLog({ event }: { event: EventDetail }) {
                 <thead>
                 <tr>
                     <th>Platform</th>
-                    <th>Date Published</th>
+                    <th>Date Submitted</th>
+                    <th>Platform Status</th>
                 </tr>
                 </thead>
 
@@ -59,6 +60,8 @@ export function EventCompletionLog({ event }: { event: EventDetail }) {
                         </td>
 
                         <td>{formatDate(p.date_published)}</td>
+                        <td>{p.platform === 'indybay'? "Published":
+                            (p.platform  === 'sfstation' ? "Published after Verification" : "Submitted until Confirmed")}</td>
                     </tr>
                 ))}
                 </tbody>

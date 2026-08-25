@@ -327,7 +327,7 @@ export default function Dashboard() {
                             />
                         </Modal>
                     )}
-                    {/*
+
                     <div style={{
                         width: "100%",
                         display: "flex",
@@ -341,7 +341,7 @@ export default function Dashboard() {
                             objectFit: "cover",
                             objectPosition: "top",
                             fontWeight: 800,
-                            fontSize: "40px",
+                            fontSize: "34px",
                             borderRadius: "4px",
                             font: "bold",
                             color: "white",
@@ -352,7 +352,7 @@ export default function Dashboard() {
                             &nbsp;My Events
                         </div>
                     </div>
-                    */}
+
                     <EventBreadcrumb/>
                     {/* ROUTED CONTENT */}
                     <ViewToggle/>
