@@ -203,14 +203,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                 </p>
             </div>
             <div style={{width: "60%", display: "flex", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
-                {!readOnly && !isExpired && (
-                    <button
-                        title="Promote Event to all Platforms"
-                        className="btn btn-primary-greater" disabled={isExpired} onClick={handlePromote}>
-                        <img src={"/icons8-commercial-24.png"}/>
-                        Promote
-                    </button>
-                )}
                 {canEdit && onEdit && !isExpired && (
                     <button className="btn btn-secondary"
                             onClick={(e) => {
@@ -299,8 +291,22 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                         )}
                     </div>
                 )}
-
                 {/* End Extras Menu */}
+
+                {!readOnly && !isExpired && (
+                    <button
+                        title="Promote Event to all Platforms"
+                        className="btn btn-primary-greater" disabled={isExpired} onClick={handlePromote}
+                        style={{marginLeft: "20", fontSize: "16px"}} >
+                        <img src={"/icons8-play-50.png"} style={{
+                            width: "24px",
+                            height: "24px"
+                        }}/>
+                        <b>Promote Event</b>
+                    </button>
+                )}
+
+
                 {readOnly && showRedo && (
                     <>
                         <p style={{

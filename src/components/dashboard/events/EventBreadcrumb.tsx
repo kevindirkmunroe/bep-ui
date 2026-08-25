@@ -27,7 +27,7 @@ export default function EventBreadcrumb({
             }}
         >
             <Link to={eventsPath}>
-                Event List
+                <b>Event List</b>
             </Link>
 
             {eventId && (

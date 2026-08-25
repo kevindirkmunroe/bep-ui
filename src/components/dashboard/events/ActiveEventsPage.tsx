@@ -16,6 +16,7 @@ export function ActiveEventsPage() {
     });
 
     return (
+
         <div style={{marginTop: 10}}>
             {activeEvents.length === 0 && <p>No Active Events Yet</p>}
             <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
