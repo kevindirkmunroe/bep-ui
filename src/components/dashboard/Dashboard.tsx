@@ -328,23 +328,11 @@ export default function Dashboard() {
                         </Modal>
                     )}
 
-                    <div className="banner-div" style={
-                        {
-                            font: "bold",
-                            height: "100px",
-                            marginBottom: "6px",
-                            fontWeight: 800,
-                            fontSize: "40px",
-                            borderRadius: "4px",
-                            color: "white",
-                            display: "flex",
-                            alignContent: "left",
-                            alignItems: "center"
-                        }
-                    }>&nbsp;My Events
-                    </div>
                     <EventBreadcrumb/>
-                    <div style={{display: "flex", flexDirection: "column"}}>
+                    {/* ROUTED CONTENT */}
+                    <ViewToggle/>
+
+                    <div style={{marginTop: "20px", display: "flex", flexDirection: "column"}}>
                         <div style={{
                             display: "flex",
                             width: "100%",
@@ -352,63 +340,14 @@ export default function Dashboard() {
                             marginBottom: "2px",
                             justifyContent: "space-between"
                         }}>
-                            <nav style={{
-                                display: "flex",
-                                justifyContent: "center",
-                                gap: "14px",
-                                marginTop: "14px",
-                                marginLeft: "12px"
-                            }}>
-                                {activeEventCount > 0 ? (
-                                    <NavLink
-                                        to="events"
-                                        style={({isActive}) => ({
-                                            fontSize: isActive ? "20px" : "15px",
-                                            textDecoration: isActive ? "underline" : "none",
-                                            fontWeight: isActive ? "bold" : "normal"
-                                        })}>
-                                        Active({activeEventCount})
-                                    </NavLink>
-                                ) : (
-                                    <div style={{fontSize: "18px"}}>
-                                        Active(0)
-                                    </div>
-                                )}
-                                {submittedEventCount > 0 ? (
-                                    <NavLink
-                                        to="submitted"
-                                        style={({isActive}) => ({
-                                            fontSize: isActive ? "20px" : "15px",
-                                            textDecoration: isActive ? "underline" : "none",
-                                            fontWeight: isActive ? "bold" : "normal"
-                                        })}>
-                                        Submitted({submittedEventCount})
-                                    </NavLink>
-                                ) : (
-                                    <div style={{fontSize: "15px"}}>
-                                        Submitted(0)
-                                    </div>
-                                )}
-                                {expiredEventCount > 0 && (
-                                    <NavLink
-                                        to="expired"
-                                        style={({isActive}) => ({
-                                            fontSize: isActive ? "20px" : "15px",
-                                            textDecoration: isActive ? "underline" : "none",
-                                            fontWeight: isActive ? "bold" : "normal"
-                                        })}>
-                                        Expired({expiredEventCount})
-                                    </NavLink>
-                                )}
-                            </nav>
                             <div>
                                 <button className="btn btn-primary-greater"
                                         title="Create New Event"
-                                        style={{marginLeft: "4px", fontSize: "14px"}}
+                                        style={{marginLeft: "4px", fontSize: "16px"}}
                                         onClick={() => setShowCreateEventForm(true)}>
                                     <img alt={"wtf"} style={{width: "30px", height: "28px"}}
                                          src={"/icons8-create-50.png"}/>
-                                    <b>Create</b>
+                                    <b>Create Event</b>
                                 </button>
                                 <div className="more-actions">
                                     <button
@@ -559,8 +498,6 @@ export default function Dashboard() {
                             </div>
                         </div>
                     </div>
-                    {/* ROUTED CONTENT */}
-                    <ViewToggle/>
 
                     {/* EVENTS */}
                     <div className="dashboard-events">
