@@ -54,7 +54,7 @@ export default function LoginPage() {
                 company: res.data.company
             });
             // If password is not bcrypt hashed, it is temporary. Redirect user to password reset.
-            navigate(`/dashboard/${res.data.userId}`);
+            navigate(`/dashboard/${res.data.userId}/events`);
         } catch (err: Error | any) {
             const newAttempts = attempts + 1;
             setAttempts(newAttempts);
