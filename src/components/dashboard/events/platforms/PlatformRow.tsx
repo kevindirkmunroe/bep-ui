@@ -4,7 +4,6 @@ import {DateFields, EventDetail} from "../eventDetailTypes.interface";
 import {api} from "../../../../utils/api";
 import {zipToVisitOaklandDistrict} from "./regionMappings";
 import React, {useState} from "react";
-import {SkipPromoteCheckbox} from "./SkipPromoteCheckbox";
 import {
     DoTheBayPayload,
     FunCheapPayload,
@@ -155,8 +154,6 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
             return("🔴")
         }else if(status === 'in_progress'){
             return("🟠")
-        }else if(status === 'skipped'){
-            return("⚫️")
         }else{
             return("✅")
         }
@@ -167,7 +164,6 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
         "in_progress" : "Incomplete",
         "submitted" : "Submitted",
         "published" : "Published",
-        "skipped" : "Skipped"
     }
 
     return (
@@ -189,7 +185,6 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                     />
                 )}
 
-                <SkipPromoteCheckbox disabled={status === 'submitted'} platform={platform} handleUpdateStatus={updatePlatformStatus} />
                 <div className="platform-icon" style={{display: "flex", width: "100px", height: "60px", marginLeft: "10px"}}>
                     <img alt={"platform icon"} style={{transform: "scale(0.85)", filter: "grayscale(100%)", width: "100px", height: "60px"}} src={PLATFORM_ICONS[platform]} />
                 </div>
@@ -231,7 +226,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                         </button>
                     )}
                     {status !== "submitted" && status && (
-                        <button disabled={status === 'not_started' || !extensionInstalled || status === 'skipped'}
+                        <button disabled={status === 'not_started' || !extensionInstalled}
                                 title={extensionInstalled
                                     ? "Mark this event as submitted after completing submission on the partner website"
                                     : "Install the LocalBuzz Chrome extension to enable Mark Submitted"}

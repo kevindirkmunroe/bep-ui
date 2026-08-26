@@ -6,7 +6,6 @@ export type PlatformStatus =
     | "not_started"
     | "in_progress"
     | "submitted"
-    | "skipped"
     | "published";
 
 export interface PlatformData {
