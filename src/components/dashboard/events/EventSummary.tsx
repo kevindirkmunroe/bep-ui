@@ -10,6 +10,9 @@ import RecycleEventModal from "./RecycleEventModal";
 import {FaCircleExclamation, FaCircleQuestion} from "react-icons/fa6";
 
 import './eventSummary.css';
+import Modal from "../../Modal";
+import CreateEditEventForm from "../CreateEditEventForm";
+import ViewEventForm from "../ViewEventForm";
 
 const overlayStyle = {
     position: "fixed" as const,
@@ -38,6 +41,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     const [showRecycleModal, setShowRecycleModal] = useState(false);
     const [imgSrc, setImgSrc] = useState("/icons8-delete-30.png");
     const [showMoreActions, setShowMoreActions] = useState(false);
+    const [showReadOnlyEventModal, setShowReadOnlyEventModal] = useState(false);
 
     const getNewestPublishDate = (platforms: PlatformData[]): Date | undefined => {
         const dates = platforms
@@ -171,6 +175,27 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                         new Date(event.start_datetime).toLocaleString()
                     )}
                 </p>
+                { readOnly && (
+                    <div className="view-readonly-icon"
+                         onClick={() => setShowReadOnlyEventModal(true)}>
+                        <img alt={"Read-only view"}
+                            src={"/icons8-view-48.png"} style={{width: "20px", height: "20px"}}
+                        />
+                    </div>
+                )}
+
+                {/* Modal for read-only Event viewing */}
+                {showReadOnlyEventModal && (
+                    <Modal onClose={() => setShowReadOnlyEventModal(false)}>
+                        <ViewEventForm
+                            event={event || undefined}
+                            onClose={() => {
+                                setShowReadOnlyEventModal(false);
+                            }}
+                        />
+                    </Modal>
+                )}
+
             </div>
             <div style={{width: "60%", display: "flex", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
                 {canEdit && onEdit && !isExpired && (

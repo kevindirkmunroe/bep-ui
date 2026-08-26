@@ -8,6 +8,11 @@ export interface CreateEventFormProps {
     onCancel: () => void;
 }
 
+export interface ViewEventFormProps {
+    event?: EventDetail;  // Edit mode
+    onClose: () => void;
+}
+
 export interface ImportFacebookEventFormProps {
     userId: string; // we'll handle null before rendering
     event?: FacebookEventDetail;  // Edit mode

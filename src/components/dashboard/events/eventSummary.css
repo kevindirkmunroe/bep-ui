@@ -38,6 +38,13 @@
     line-height: 1;
 }
 
+.view-readonly-icon {
+    position: absolute;
+    top: 2px;
+    left: 14px;
+    z-index: 2;
+}
+
 .event-list-style {
     display: flex;
     align-items: center;
