@@ -151,21 +151,17 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                             : "white"
                 }}
             >
-                {event.imported_from && (
-                    <div className="imported-from-link">
-                        <ImportedFromLink importedFrom={event.imported_from}/>
-                    </div>
-                )}
-
                 <div
                     style={{
                         fontSize: "18px",
-                        fontWeight: "bold"
+                        fontWeight: "bold",
                     }}
                 >
                     {event.title}
+                    {event.imported_from && (
+                        <>&nbsp;<ImportedFromLink importedFrom={event.imported_from}/></>
+                    )}
                 </div>
-
                 <div style={{fontSize: "16px"}}>
                     {event.location_name}
                 </div>

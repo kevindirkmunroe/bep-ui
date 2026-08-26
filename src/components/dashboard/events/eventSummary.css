@@ -38,13 +38,6 @@
     line-height: 1;
 }
 
-.imported-from-link {
-    position: absolute;
-    top: 6px;
-    left: 6px;
-    z-index: 2;
-}
-
 .event-list-style {
     display: flex;
     align-items: center;

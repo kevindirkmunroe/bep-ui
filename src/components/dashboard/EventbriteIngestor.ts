@@ -83,7 +83,7 @@ export function eventbriteJsonLdToEventDetail(data: EventbriteJsonLd): Eventbrit
         price: formatPrice(data.offers),
 
         organization: data.organizer?.name ?? "",
-        eventbriteEventURL: data.organizer?.url ?? "",
-        website: data.url ?? ""
+        website: data.organizer?.url ?? "",
+        eventbriteEventURL: data.url ?? ""
     };
 }
