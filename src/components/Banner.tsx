@@ -82,18 +82,20 @@ export function Banner() {
                 <strong style={{marginLeft: "2px", fontSize: "24px"}}><b
                     style={{color: "black"}}>Airhorn</b>.events</strong>
             </div>
-            <div>
+            <div style={{display: "flex"}}>
                 <img
                     onClick={handleHomeClick}
                     src="/icons8-home-48.png"
                     alt="Home"
                     style={{
                         height: "24px",
+                        marginTop: "4px",
                         width: "auto",
-                        marginLeft: "4px",
-                        objectFit: "contain"
+                        objectFit: "contain",
+                        marginRight: "4px"
                     }}
                 />
+                <div style={{...userInfoStyle, marginTop: "6px"}}>Home</div>
             </div>
             {dialog && (
                 <BaseDialog
