@@ -1,4 +1,5 @@
 import { Link, useLocation, useParams } from "react-router-dom";
+import React from "react";
 
 interface EventBreadcrumbProps {
     eventTitle?: string;
@@ -38,6 +39,15 @@ export default function EventBreadcrumb({
             }}
         >
             <Link to={eventsPath}>
+                <img
+                    src="/icons8-home-48.link.png"
+                    alt="Home"
+                    style={{
+                        height: "16px",
+                        width: "auto",
+                        objectFit: "contain",
+                    }}
+                />
                 <b>All Events</b>
             </Link>
 

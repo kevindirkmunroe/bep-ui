@@ -47,7 +47,7 @@ export function Banner() {
     };
 
     const handleLandingClick = () => {
-        window.location.href = `https://airhorn-events.onrender.com/`;
+        window.location.href = import.meta.env.VITE_LANDING_PAGE_URL;// `https://airhorn-events.onrender.com/`;
     };
 
     const userInfoStyle = {
@@ -82,21 +82,7 @@ export function Banner() {
                 <strong style={{marginLeft: "2px", fontSize: "24px"}}><b
                     style={{color: "black"}}>Airhorn</b>.events</strong>
             </div>
-            <div style={{display: "flex"}}>
-                <img
-                    onClick={handleHomeClick}
-                    src="/icons8-home-48.png"
-                    alt="Home"
-                    style={{
-                        height: "24px",
-                        marginTop: "4px",
-                        width: "auto",
-                        objectFit: "contain",
-                        marginRight: "4px"
-                    }}
-                />
-                <div style={{...userInfoStyle, marginTop: "6px"}}>Home</div>
-            </div>
+
             {dialog && (
                 <BaseDialog
                     type={dialog.type}
