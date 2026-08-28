@@ -46,6 +46,10 @@ export function Banner() {
         }
     };
 
+    const handleLandingClick = () => {
+        window.location.href = `https://airhorn-events.onrender.com/`;
+    };
+
     const userInfoStyle = {
         marginLeft: "auto",
         color: "#D2492C",
@@ -64,7 +68,8 @@ export function Banner() {
             justifyContent: "space-between"
         }}>
             <Tooltip id="my-tooltip" />
-            <div style={{ display: "flex", alignItems: "center", gap: "2px", cursor: "pointer" }} onClick={handleHomeClick}>
+            <div style={{display: "flex", alignItems: "center", gap: "2px", cursor: "pointer"}}
+                 onClick={handleLandingClick}>
                 <img
                     src="/airhorn.events.png"
                     alt="Logo"
@@ -74,7 +79,21 @@ export function Banner() {
                         objectFit: "contain"
                     }}
                 />
-                <strong style={{marginLeft: "2px", fontSize: "24px"}}><b style={{color: "black"}}>Airhorn</b>.events</strong>
+                <strong style={{marginLeft: "2px", fontSize: "24px"}}><b
+                    style={{color: "black"}}>Airhorn</b>.events</strong>
+            </div>
+            <div>
+                <img
+                    onClick={handleHomeClick}
+                    src="/icons8-home-48.png"
+                    alt="Home"
+                    style={{
+                        height: "24px",
+                        width: "auto",
+                        marginLeft: "4px",
+                        objectFit: "contain"
+                    }}
+                />
             </div>
             {dialog && (
                 <BaseDialog
