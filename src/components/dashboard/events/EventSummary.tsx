@@ -175,14 +175,14 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                         new Date(event.start_datetime).toLocaleString()
                     )}
                 </p>
-                { readOnly && (
-                    <div className="view-readonly-icon"
-                         onClick={() => setShowReadOnlyEventModal(true)}>
-                        <img alt={"Read-only view"}
-                            src={"/icons8-view-48.png"} style={{width: "20px", height: "20px"}}
-                        />
-                    </div>
-                )}
+                {/*{ readOnly && (*/}
+                {/*    <div className="view-readonly-icon"*/}
+                {/*         onClick={() => setShowReadOnlyEventModal(true)}>*/}
+                {/*        <img alt={"Read-only view"}*/}
+                {/*            src={"/icons8-view-48.png"} style={{width: "20px", height: "20px"}}*/}
+                {/*        />*/}
+                {/*    </div>*/}
+                {/*)}*/}
 
                 {/* Modal for read-only Event viewing */}
                 {showReadOnlyEventModal && (

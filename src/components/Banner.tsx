@@ -66,15 +66,15 @@ export function Banner() {
             <Tooltip id="my-tooltip" />
             <div style={{ display: "flex", alignItems: "center", gap: "2px", cursor: "pointer" }} onClick={handleHomeClick}>
                 <img
-                    src="/localbuzz2.png"
+                    src="/airhorn.events.png"
                     alt="Logo"
                     style={{
-                        height: "54px",
+                        height: "40px",
                         width: "auto",
                         objectFit: "contain"
                     }}
                 />
-                <strong style={{fontSize: "24px"}}><b style={{color: "black"}}>Local</b>Buzz</strong>
+                <strong style={{marginLeft: "2px", fontSize: "24px"}}><b style={{color: "black"}}>Airhorn</b>.events</strong>
             </div>
             {dialog && (
                 <BaseDialog

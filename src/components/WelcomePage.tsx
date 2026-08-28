@@ -21,7 +21,7 @@ export function WelcomePage() {
                 {/* RIGHT: Existing content */}
                 <div style={{display: "flex", flexDirection: "column", minHeight: "100vh", minWidth: "100vh"}}>
                     <div style={{paddingLeft: 40, marginTop: "2%"}}>
-                        <strong style={{fontSize: "24px", color: "#D2492C"}}>Promote Your <b style={{color: "black", fontSize: "28px"}}>Local
+                        <strong style={{fontSize: "24px", color: "#D2492C"}}>Put Your <b style={{color: "black", fontSize: "28px"}}>Local
                             </b> <b>Bay Area</b> Events</strong>
                         <div style={{marginTop: 50}}>
                             <nav style={{display: "flex", justifyContent: "center", gap: "20px"}}>
@@ -78,7 +78,7 @@ export function WelcomePage() {
                     </div>
                     <div style={{marginBottom: "30px", padding: "20px", fontSize: "14px"}}>All trademarks and logos are
                         the property of their respective owners.
-                        LocalBuzz is not affiliated with or endorsed by these platforms.
+                        Airhorn.events is not affiliated with or endorsed by these platforms.
                     </div>
                 </div>
             </div>

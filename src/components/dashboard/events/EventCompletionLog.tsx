@@ -9,7 +9,10 @@ export function EventCompletionLog({ event }: { event: EventDetail }) {
     const formatDate = (date: string | null | undefined) => {
         if (!date) return "—";
 
-        return new Date(date).toLocaleString("en-US", {
+        const newDate = new Date(date);
+        newDate.setHours(newDate.getHours() - 7);
+
+        return newDate.toLocaleString("en-US", {
             timeZone: "America/Los_Angeles",
             month: "short",
             day: "numeric",
