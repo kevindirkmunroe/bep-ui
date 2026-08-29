@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {EventbriteEventDetail, FacebookEventDetail} from "./events/eventDetailTypes.interface";
+import {EventbriteEventDetail} from "./events/eventDetailTypes.interface";
 import {api} from "../../utils/api";
 import {categories} from "./EventCategories";
 import {ImportEventbriteEventFormProps} from "./eventTypes.interface";

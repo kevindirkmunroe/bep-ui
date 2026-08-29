@@ -1,5 +1,4 @@
-import { useNavigate } from "react-router-dom";
-import React, {CSSProperties, useState} from "react";
+import React, {useState} from "react";
 
 import {EventSummaryProps} from "./eventDetailTypes.interface";
 import {getEventStatus, getIsExpired} from "./EventStatus";
@@ -7,12 +6,11 @@ import {api} from "../../../utils/api";
 import {PlatformData} from "./platforms/platformTypes.interface";
 import RestoreEventModal from "./RestoreEventModal";
 import RecycleEventModal from "./RecycleEventModal";
-import {FaCircleExclamation, FaCircleQuestion} from "react-icons/fa6";
+import {FaCircleExclamation} from "react-icons/fa6";
 
 import './eventSummary.css';
 import Modal from "../../Modal";
-import CreateEditEventForm from "../CreateEditEventForm";
-import ViewEventForm from "../ViewEventForm";
+import ReadOnlyViewEventForm from "../ReadOnlyViewEventForm";
 
 const overlayStyle = {
     position: "fixed" as const,
@@ -59,7 +57,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     };
 
     const handleClone = async () => {
-        console.log(`cloning event: ${event.event_id}`);
         await api.post(`/events/${event.event_id}/clone`);
         await reload?.();
     };
@@ -187,7 +184,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                 {/* Modal for read-only Event viewing */}
                 {showReadOnlyEventModal && (
                     <Modal onClose={() => setShowReadOnlyEventModal(false)}>
-                        <ViewEventForm
+                        <ReadOnlyViewEventForm
                             event={event || undefined}
                             onClose={() => {
                                 setShowReadOnlyEventModal(false);

@@ -2,18 +2,15 @@ import {Routes, Route, Navigate} from "react-router-dom";
 import Dashboard from "./components/dashboard/Dashboard.js";
 import PromoteDashboard from "./components/dashboard/events/PromoteDashboard.tsx";
 import {MainLayout} from "./MainLayout.js";
-import {SubmittedEventsPage} from "./components/dashboard/events/SubmittedEventsPage.js";
 import {ActiveEventsPage} from "./components/dashboard/events/ActiveEventsPage.js";
 import {WelcomePage} from "./components/WelcomePage.tsx";
 import LoginPage from "./components/LoginPage.js";
 import {RegisterPage} from "./components/RegisterPage.js";
 import ProtectedRoute from "./ProtectedRoute.js";
-import {PublishedEventsPage} from "./components/dashboard/events/PublishedEventsPage.js";
 import ForgotPasswordPage from "./components/ForgotPasswordPage.js";
 import ResetPasswordPage from "./components/ResetPasswordPage.js";
 import RequestInvitePage from "./components/RequestInvitePage.js";
 import {AboutPage} from "./components/AboutPage.js";
-import {ExpiredEventsPage} from "./components/dashboard/events/ExpiredEventsPage.js";
 import CalendarView from "./components/dashboard/CalendarView.js";
 import PromoteCompleteDashboard from "./components/dashboard/events/PromoteCompleteDashboard.tsx";
 
@@ -62,6 +59,7 @@ export default function App() {
                       </ProtectedRoute>
                   }
               />
+
           </Routes>
       </MainLayout>
   );

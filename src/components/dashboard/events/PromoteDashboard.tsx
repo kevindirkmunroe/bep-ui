@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
-import { EventSummary } from "./EventSummary";
+import {EventSummary} from "./EventSummary";
 import {ProgressBar} from "./platforms/ProgressBar";
 import {PlatformList} from "./platforms/PlatformList";
 import {EventDetail} from "./eventDetailTypes.interface";
-import { useUser } from "../../../UserContext";
+import {useUser} from "../../../UserContext";
 import {api} from "../../../utils/api";
 import ImageCarousel from "../../ImageCarousel";
 import {Platform, PlatformStatus} from "./platforms/platformTypes.interface";
 import EventBreadcrumb from "./EventBreadcrumb";
+import Modal from "../../Modal";
+import ServiceSelectionPage, {ServiceSelectionStatus} from "./ServiceSelectionPage";
 
 
 export default function PromoteDashboard() {
-    const navigate = useNavigate();
     const { eventId } = useParams();
 
     const [event, setEvent] = useState<EventDetail | null>(null);
+    const [showServiceSelection, setShowServiceSelection] = useState(true);
+    const [promoteSelection, setPromoteSelection] = useState<ServiceSelectionStatus>(ServiceSelectionStatus.NO_SELECTION);
 
     useEffect(() => {
         loadEvent();
@@ -54,6 +56,36 @@ export default function PromoteDashboard() {
             window.removeEventListener("message", handler);
         };
     }, []);
+
+    //
+    // Actions off of service selection:
+    //
+    // DIY - show ProgressBar + Platform list, User manually pushes event.
+    // PRO - hide ProgressBar + Platform list, show PRO banner + Receipts link.
+    // NO_SELECTION - popup ServiceSelectionPage modal, User chooses service.
+    //
+    const onSelectService = (selection: ServiceSelectionStatus) => {
+        switch(selection){
+            case ServiceSelectionStatus.DIY: {
+                if(event){
+                    setPromoteSelection(ServiceSelectionStatus.DIY);
+                }
+                break;
+            }
+            case ServiceSelectionStatus.PRO: {
+                if(event){
+                    setPromoteSelection(ServiceSelectionStatus.PRO);
+                }
+                break;
+            }
+            default: {
+                if(event){
+                    setPromoteSelection(ServiceSelectionStatus.NO_SELECTION);
+                }
+            }
+        }
+        setShowServiceSelection(false);
+    }
 
     const updatePlatformStatus = (platform: Platform, status: PlatformStatus) => {
         setEvent(prev => {
@@ -138,19 +170,35 @@ export default function PromoteDashboard() {
                                 marginRight: "30px",
                                 marginBottom: "26px"
                             }}>
-                                <EventSummary event={event} readOnly={true} showRedo={false} showAsHeader={true}/>
+                                <EventSummary event={event}
+                                              readOnly={true}
+                                              showRedo={false}
+                                              showAsHeader={true}/>
                             </div>
                         </div>
                     </div>
-                    <ProgressBar platforms={event.platforms}/>
-                    <PlatformList
-                        extensionInstalled={extensionInstalled}
-                        event={event}
-                        reload={loadEvent}
-                        updatePlatformStatus={updatePlatformStatus}/>
+                    { promoteSelection === ServiceSelectionStatus.PRO ?
+                        (<div><h2>PRO MODE!</h2></div>)
+                        :
+                        (<>
+                            <ProgressBar platforms={event.platforms}/>
+                            <PlatformList
+                                extensionInstalled={extensionInstalled}
+                                event={event}
+                                reload={loadEvent}
+                                updatePlatformStatus={updatePlatformStatus}/>
+                         </>)
+                    }
 
                     <Link to={`/dashboard/${user?.userId}/events/${event?.event_id}/promoted`}>Receipts</Link>
                 </div>
+
+                {showServiceSelection && (promoteSelection === ServiceSelectionStatus.NO_SELECTION) && (
+                    <Modal style={{width: "70%"}} onClose={() => setShowServiceSelection(false)}>
+                        <ServiceSelectionPage userId={user?.userId} event={event} onSelectService={onSelectService} />
+                    </Modal>
+                )}
+
             </div>
         </div>
     );

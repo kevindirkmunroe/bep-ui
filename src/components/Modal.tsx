@@ -1,4 +1,4 @@
-import {ReactNode, useEffect} from "react";
+import {CSSProperties, ReactNode, useEffect} from "react";
 
 const overlayStyle: React.CSSProperties = {
     position: "fixed",
@@ -25,9 +25,10 @@ const modalStyle: React.CSSProperties = {
 interface ModalProps {
     children: ReactNode;
     onClose: () => void;
+    style?: CSSProperties;
 }
 
-export default function Modal({ children, onClose } : ModalProps) {
+export default function Modal({ style, children, onClose } : ModalProps) {
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
             if (e.key === "Escape") onClose();
@@ -40,7 +41,7 @@ export default function Modal({ children, onClose } : ModalProps) {
     return (
         <div style={overlayStyle} onClick={onClose}>
             <div
-                style={modalStyle}
+                style={{...modalStyle, ...style}}
                 onClick={(e) => e.stopPropagation()} // 👈 prevent close when clicking inside
             >
                 {children}

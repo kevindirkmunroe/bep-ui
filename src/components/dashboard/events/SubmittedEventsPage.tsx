@@ -3,7 +3,6 @@ import {useOutletContext} from "react-router-dom";
 import {EventSummary} from "./EventSummary";
 import {getEventStatus} from "./EventStatus";
 import {EventDetail} from "./eventDetailTypes.interface";
-import {useState} from "react";
 
 export function SubmittedEventsPage() {
     const { events } = useOutletContext<{ events: EventDetail[] }>();

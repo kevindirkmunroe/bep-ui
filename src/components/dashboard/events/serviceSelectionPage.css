@@ -1,0 +1,47 @@
+.pricing-page {
+    --coral: #D2492C;
+    --navy: #071A37;
+    --ink: #111827;
+    --muted: #667085;
+    --cream: #FFF8F4;
+    --line: #E7E9ED;
+}
+
+.pricing-page .pageHero {
+    padding: 20px 0 10px;
+    background: var(--cream);
+    text-align: center;
+}
+
+.pricing-page h1 {
+    font-size: 38px;
+    color: var(--navy);
+}
+
+.pricing-page .prices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.pricing-page .card {
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 28px;
+    background: white;
+}
+
+.pricing-page ul {
+    text-align: left;
+}
+
+.pricing-page .featured {
+    border: 2px solid var(--coral);
+}
+
+.pricing-page .priceRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 24px 0;
+}

@@ -47,7 +47,7 @@ export function Banner() {
     };
 
     const handleLandingClick = () => {
-        window.location.href = import.meta.env.VITE_LANDING_PAGE_URL;// `https://airhorn-events.onrender.com/`;
+        window.location.href = import.meta.env.VITE_LANDING_PAGE_URL;
     };
 
     const userInfoStyle = {

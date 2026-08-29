@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {ViewEventFormProps} from "./eventTypes.interface";
 import {EventDetail} from "./events/eventDetailTypes.interface";
-import {api} from "../../utils/api";
 import {categories} from "./EventCategories";
-import BaseDialog, {DialogState} from "../BaseDialog";
 
 import "./form.css";
 
@@ -14,7 +12,7 @@ const formatDateTimeLocal = (iso?: string) => {
     return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 };
 
-export default function ViewEventForm({
+export default function ReadOnlyViewEventForm({
                                             event,
                                             onClose,
                                         }: ViewEventFormProps) {

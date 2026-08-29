@@ -13,7 +13,7 @@ export default function EventBreadcrumb({
     const eventsPath = `/dashboard/${userId}/events`;
 
     const onEventPage =
-        location.pathname === `${eventsPath}/${eventId}`;
+        location.pathname === `${eventsPath}/${eventId}`;;
 
     const onLogPage =
         location.pathname === `${eventsPath}/${eventId}/promoted`;
@@ -45,6 +45,7 @@ export default function EventBreadcrumb({
                     style={{
                         height: "16px",
                         width: "auto",
+                        marginLeft: "10px",
                         objectFit: "contain",
                     }}
                 />
