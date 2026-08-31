@@ -1,6 +1,6 @@
 import {PlatformData} from "./platforms/platformTypes.interface";
 import React from "react";
-import {ServiceSelectionStatus} from "./ServiceSelectionPage";
+import {ServiceSelectionStatus} from "./payments/ServiceSelectionPage";
 
 export interface EventDetail {
     name: string;
@@ -22,7 +22,6 @@ export interface EventDetail {
     city?: string;
     imported_from: string | null;
     date_fields: DateFields;
-    promoteSelection: ServiceSelectionStatus;
 }
 
 export interface FacebookEventDetail extends Omit<EventDetail, 'event_id' | 'platforms' | 'date_fields'> {

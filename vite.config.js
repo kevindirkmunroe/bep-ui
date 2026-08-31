@@ -12,6 +12,8 @@ export default defineConfig({
       "/events": "http://localhost:4000",
       "/mapRegion": "http://localhost:4000",
       "/mapCity": "http://localhost:4000",
+      "/orders": "http://localhost:4000",
+      "/payments": "http://localhost:4000",
     },
   },
   define: {

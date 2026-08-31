@@ -1,12 +1,12 @@
-import {EventDetail} from "./eventDetailTypes.interface";
+import {EventDetail} from "../eventDetailTypes.interface";
 import "./serviceSelectionPage.css";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import React from "react";
 
 export enum ServiceSelectionStatus {
-    NO_SELECTION = "None Selected",
+    NO_SELECTION = "NO_SELECTION",
     DIY = "DIY",
-    PRO = "Pro",
+    PRO = "PRO",
 }
 
 export interface ServiceSelectionFormProps {
@@ -16,6 +16,8 @@ export interface ServiceSelectionFormProps {
 }
 
 export default function ServiceSelectionPage({userId, onSelectService}  : ServiceSelectionFormProps) {
+
+    const navigate = useNavigate();
 
     return (
         <main className="pricing-page">
@@ -29,7 +31,7 @@ export default function ServiceSelectionPage({userId, onSelectService}  : Servic
                 <div className="container">
                     <div className="prices">
                         <div className="card">
-                            <div className="eyebrow">Self-Service</div>
+                            <div className="eyebrow">Self-Service (DIY)</div>
                             <h3>You promote with Airhorn.events.</h3>
                             <p>Use your Airhorn account and promotion workflow yourself.</p>
 
@@ -51,7 +53,7 @@ export default function ServiceSelectionPage({userId, onSelectService}  : Servic
                         </div>
 
                         <div className="card featured">
-                            <div className="eyebrow">Pro Service</div>
+                            <div className="eyebrow">Pro Service (PRO)</div>
                             <h3>Send us your event. We promote it.</h3>
                             <p>Hand off the promotion work to Airhorn.events custom workflow.</p>
 
@@ -71,21 +73,12 @@ export default function ServiceSelectionPage({userId, onSelectService}  : Servic
                             }>Submit to PRO</button>
                         </div>
                     </div>
-                    <div style={{paddingTop: "10px"}}>
-                        <Link to={`/dashboard/${userId}/events`}>
-                            <img
-                                src="/icons8-home-48.link.png"
-                                alt="Home"
-                                style={{
-                                    height: "16px",
-                                    width: "auto",
-                                    marginLeft: "10px",
-                                    marginRight: "4px",
-                                    objectFit: "contain",
-                                }}
-                            />
-                            Back To Events
-                        </Link>
+                    <div style={{paddingTop: "10px", fontSize: "16px"}}>
+                        <button onClick={() => navigate(`/dashboard/${userId}/events`)}
+                                style={{marginTop: "6px", fontSize: "16px"}}
+                                className="btn btn-secondary">
+                            Cancel
+                        </button>
                     </div>
                 </div>
             </div>

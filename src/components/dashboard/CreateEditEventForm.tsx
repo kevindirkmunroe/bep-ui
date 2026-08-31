@@ -91,7 +91,6 @@ export default function CreateEditEventForm({
     // };
 
     const handleSubmit = async () => {
-        console.log(`[CreateEventForm] submit form ${JSON.stringify(form)}`);
         try {
             if (isEdit) {
                 await api.put(`/events/${event.event_id}`, form);

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 
 import {EventSummary} from "./EventSummary";
 import {ProgressBar} from "./platforms/ProgressBar";
@@ -11,23 +11,46 @@ import ImageCarousel from "../../ImageCarousel";
 import {Platform, PlatformStatus} from "./platforms/platformTypes.interface";
 import EventBreadcrumb from "./EventBreadcrumb";
 import Modal from "../../Modal";
-import ServiceSelectionPage, {ServiceSelectionStatus} from "./ServiceSelectionPage";
+import ServiceSelectionPage, {ServiceSelectionStatus} from "./payments/ServiceSelectionPage";
+import EventOrderPage from "./payments/EventOrderPage";
+import {EventOrderManager} from "../../../workflows/payment/EventtOrderManager";
+import {EventOrder} from "../../../workflows/payment/EventOrder";
+import {MockStripeSessionManager} from "../../../workflows/payment/MockStripeSessionManager";
 
 
 export default function PromoteDashboard() {
-    const { eventId } = useParams();
+    const { userId, eventId } = useParams();
+    if (!eventId) {
+        throw new Error("eventId is required");
+    }
+
+    const navigate = useNavigate();
 
     const [event, setEvent] = useState<EventDetail | null>(null);
-    const [showServiceSelection, setShowServiceSelection] = useState(true);
-    const [promoteSelection, setPromoteSelection] = useState<ServiceSelectionStatus>(ServiceSelectionStatus.NO_SELECTION);
+    const [eventOrder, setEventOrder] = useState<EventOrder | null>(null);
+
+    const [showEventOrderModal, setShowEventOrderModal] = useState(false);
+    const [showEventOrderSelectionModal, setShowEventOrderSelectionModal] = useState(false);
+
+    const eventOrderManager = new EventOrderManager();
 
     useEffect(() => {
         loadEvent();
     }, [eventId]);
 
     const loadEvent = async () => {
+        // get event...
         const res = await api.get(`/events/${eventId}`);
         setEvent(res.data);
+
+        // get event order...
+        const order = await eventOrderManager.getOrCreateEventOrder(eventId);
+        setEventOrder(order);
+        if(order.promote_selection === ServiceSelectionStatus.NO_SELECTION){
+            setShowEventOrderSelectionModal(true);
+        }else{
+            setShowEventOrderModal(true);
+        }
     };
 
     const [extensionInstalled, setExtensionInstalled] = useState(false);
@@ -57,34 +80,22 @@ export default function PromoteDashboard() {
         };
     }, []);
 
-    //
-    // Actions off of service selection:
-    //
-    // DIY - show ProgressBar + Platform list, User manually pushes event.
-    // PRO - hide ProgressBar + Platform list, show PRO banner + Receipts link.
-    // NO_SELECTION - popup ServiceSelectionPage modal, User chooses service.
-    //
-    const onSelectService = (selection: ServiceSelectionStatus) => {
-        switch(selection){
-            case ServiceSelectionStatus.DIY: {
-                if(event){
-                    setPromoteSelection(ServiceSelectionStatus.DIY);
-                }
-                break;
+    const onCreateUpdateOrder = async (selection: ServiceSelectionStatus) => {
+        if(!eventOrder){
+            const newOrder = {
+                promote_selection: selection,
+                event_id: eventId,
+                retry_count: 0
             }
-            case ServiceSelectionStatus.PRO: {
-                if(event){
-                    setPromoteSelection(ServiceSelectionStatus.PRO);
-                }
-                break;
-            }
-            default: {
-                if(event){
-                    setPromoteSelection(ServiceSelectionStatus.NO_SELECTION);
-                }
-            }
+            const result = await api.post(`/orders/create`, newOrder);
+            setEventOrder(result.data as EventOrder);
+        }else{
+            // update order selection
+            eventOrder.promote_selection = selection;
+            await api.put(`/orders/${eventOrder.order_id}`, eventOrder);
         }
-        setShowServiceSelection(false);
+
+        setShowEventOrderModal(true);
     }
 
     const updatePlatformStatus = (platform: Platform, status: PlatformStatus) => {
@@ -140,6 +151,8 @@ export default function PromoteDashboard() {
                             alignItems: "center"
                         }}>
                             &nbsp;My Event &gt; Promote
+                                {eventOrder?.promote_selection === ServiceSelectionStatus.DIY && (<>&nbsp;|&nbsp;DIY</>)}
+                                {eventOrder?.promote_selection === ServiceSelectionStatus.PRO && (<>&nbsp;|&nbsp;PRO</>)}
                         </div>
                     </div>
 
@@ -177,10 +190,14 @@ export default function PromoteDashboard() {
                             </div>
                         </div>
                     </div>
-                    { promoteSelection === ServiceSelectionStatus.PRO ?
-                        (<div><h2>PRO MODE!</h2></div>)
-                        :
-                        (<>
+                    {
+                        eventOrder?.promote_selection === ServiceSelectionStatus.PRO &&
+                        (<div style={{padding: "16px"}}><h2>Event promoted by&nbsp;
+                            <b>Airhorn.</b><strong style={{color: "#D2492C"}}>events</strong> <b>PRO</b></h2>
+                        </div>)
+                    }
+                    {   eventOrder?.promote_selection === ServiceSelectionStatus.DIY &&   (
+                            <>
                             <ProgressBar platforms={event.platforms}/>
                             <PlatformList
                                 extensionInstalled={extensionInstalled}
@@ -190,15 +207,27 @@ export default function PromoteDashboard() {
                          </>)
                     }
 
-                    <Link to={`/dashboard/${user?.userId}/events/${event?.event_id}/promoted`}>Receipts</Link>
+                    {showEventOrderSelectionModal && (
+                        <Modal style={{width: "70%"}} onClose={() => setShowEventOrderSelectionModal(false)}>
+                            <ServiceSelectionPage userId={user?.userId} event={event} onSelectService={onCreateUpdateOrder} />
+                        </Modal>
+                    )}
+                    {showEventOrderModal && eventOrder && (
+                        <Modal style={{width: "70%"}} onClose={() => setShowEventOrderModal(false)}>
+                            <EventOrderPage     eventOrder={eventOrder}
+                                                eventOrderManager={eventOrderManager}
+                                                stripeSessionManager={new MockStripeSessionManager()}
+                                                onPaymentComplete={() => setShowEventOrderModal(false)}
+                                                onPaymentIncomplete={() =>  {
+                                                        setShowEventOrderModal(false);
+                                                        navigate(`/dashboard/${userId}/events`);
+                                                    }
+                                                }
+                                                />
+                        </Modal>
+                    )}
+                    <Link to={`/dashboard/${user?.userId}/events/${event?.event_id}/promoted`}>Promotion Results</Link>
                 </div>
-
-                {showServiceSelection && (promoteSelection === ServiceSelectionStatus.NO_SELECTION) && (
-                    <Modal style={{width: "70%"}} onClose={() => setShowServiceSelection(false)}>
-                        <ServiceSelectionPage userId={user?.userId} event={event} onSelectService={onSelectService} />
-                    </Modal>
-                )}
-
             </div>
         </div>
     );

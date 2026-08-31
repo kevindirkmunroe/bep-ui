@@ -64,7 +64,7 @@ export function EventCompletionLog({ event }: { event: EventDetail }) {
 
                         <td>{formatDate(p.date_published)}</td>
                         <td>{p.platform === 'indybay'? "Published":
-                            (p.platform  === 'sfstation' ? "Published after Verification" : "Submitted until Confirmed")}</td>
+                            (p.platform  === 'sfstation' ? "Published after Verification" : "Delivered")}</td>
                     </tr>
                 ))}
                 </tbody>
