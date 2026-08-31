@@ -45,3 +45,110 @@
     gap: 12px;
     margin: 24px 0;
 }
+
+.pricing-page .event-order-card {
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+    background: white;
+    border: 1px solid #e3e3e3;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.pricing-page .event-order-banner {
+    background: #a83a27;
+    color: white;
+    font-size: 22px;
+    font-weight: 700;
+    padding: 16px 24px;
+    text-align: left;
+}
+
+.pricing-page .event-order-body {
+    padding: 24px 28px;
+}
+
+.pricing-page .event-order-section {
+    margin-bottom: 26px;
+}
+
+.pricing-page .event-order-section h3 {
+    margin: 0 0 16px 0;
+    color: #071a37;
+    font-size: 18px;
+    text-align: left;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 8px;
+}
+
+.pricing-page .event-order-grid {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    column-gap: 24px;
+    row-gap: 16px;
+    align-items: center;
+}
+
+.pricing-page .event-order-label {
+    font-weight: 600;
+    color: #555;
+    text-align: right;
+}
+
+.pricing-page .event-order-value {
+    text-align: left;
+    color: #111;
+}
+
+.pricing-page .event-order-amount {
+    font-size: 20px;
+    font-weight: 700;
+    color: #071a37;
+}
+
+.pricing-page .stripe-logo {
+    width: 72px;
+    height: auto;
+    display: block;
+}
+
+.pricing-page .event-order-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.pricing-page .payment-success {
+    color: #267a42;
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+@media (max-width: 600px) {
+    .pricing-page .event-order-body {
+        padding: 20px;
+    }
+
+    .pricing-page .event-order-grid {
+        grid-template-columns: 1fr;
+        row-gap: 6px;
+    }
+
+    .pricing-page .event-order-label {
+        text-align: left;
+        margin-top: 8px;
+    }
+
+    .pricing-page .event-order-actions {
+        flex-direction: column;
+    }
+
+    .pricing-page .event-order-actions button {
+        width: 100%;
+    }
+}

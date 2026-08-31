@@ -95,6 +95,7 @@ export default function PromoteDashboard() {
             await api.put(`/orders/${eventOrder.order_id}`, eventOrder);
         }
 
+        setShowEventOrderSelectionModal(false);
         setShowEventOrderModal(true);
     }
 
@@ -212,12 +213,16 @@ export default function PromoteDashboard() {
                             <ServiceSelectionPage userId={user?.userId} event={event} onSelectService={onCreateUpdateOrder} />
                         </Modal>
                     )}
-                    {showEventOrderModal && eventOrder && (
+                    {showEventOrderModal && eventOrder && !eventOrder.payment_completed_at && (
                         <Modal style={{width: "70%"}} onClose={() => setShowEventOrderModal(false)}>
                             <EventOrderPage     eventOrder={eventOrder}
                                                 eventOrderManager={eventOrderManager}
                                                 stripeSessionManager={new MockStripeSessionManager()}
-                                                onPaymentComplete={() => setShowEventOrderModal(false)}
+                                                onPaymentComplete={() => {
+                                                    setShowEventOrderModal(false);
+                                                    setShowEventOrderSelectionModal(false);
+                                                    }
+                                                }
                                                 onPaymentIncomplete={() =>  {
                                                         setShowEventOrderModal(false);
                                                         navigate(`/dashboard/${userId}/events`);
