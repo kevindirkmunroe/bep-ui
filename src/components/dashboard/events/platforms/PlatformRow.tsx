@@ -218,7 +218,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                                 title={
                                     extensionInstalled
                                         ? "Open partner website and Autofill event"
-                                        : "Install the LocalBuzz Chrome extension to enable Autofill"
+                                        : "Install the Airhorn.events Chrome extension to enable Autofill"
                                 }
                                 className="btn btn-primary"
                                 onClick={handleOpen}>
@@ -229,7 +229,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                         <button disabled={status === 'not_started' || !extensionInstalled}
                                 title={extensionInstalled
                                     ? "Mark this event as submitted after completing submission on the partner website"
-                                    : "Install the LocalBuzz Chrome extension to enable Mark Submitted"}
+                                    : "Install the Airhorn.events Chrome extension to enable Mark Submitted"}
                                 className="btn btn-primary-greater"
                                 onClick={handleSubmit}>
                             <img alt={"Mark Submitted"} src={"/icons8-checklist-48.png"} style={{width:"24px", height:"24px"}} />Mark Submitted

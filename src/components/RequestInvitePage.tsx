@@ -70,7 +70,7 @@ export default function RequestInvitePage() {
                 </h3>
 
                 <p style={subtitleStyle}>
-                    LocalBuzz is currently invite-only.
+                    Airhorn.events is currently invite-only.
                     Tell us a little about yourself.
                 </p>
 
@@ -105,7 +105,7 @@ export default function RequestInvitePage() {
                 />
 
                 <textarea
-                    placeholder="How do you plan to use LocalBuzz? *"
+                    placeholder="How do you plan to use Airhorn.events? *"
                     value={useCase}
                     onChange={(e) =>
                         setUseCase(e.target.value)

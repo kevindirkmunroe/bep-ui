@@ -50,7 +50,7 @@ export default function BaseDialog({
             ? "Something went wrong"
             : type === "confirm"
                 ? "Please confirm"
-                : "LocalBuzz");
+                : "Airhorn.events");
 
     const resolvedConfirmLabel =
         confirmLabel ??
