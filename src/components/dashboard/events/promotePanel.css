@@ -1,0 +1,36 @@
+.promote-panel {
+    width: 96%;
+    max-width: 900px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.promote-panel-title {
+    background: white;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 12px 20px;
+    text-align: left;
+}
+
+.promote-panel-body {
+    padding: 20px;
+    border: 1px solid #ddd;
+}
+
+.pro-service-message {
+    text-align: center;
+    padding: 28px 20px;
+}
+
+.pro-service-message h3 {
+    margin: 0 0 10px;
+    color: #071a37;
+}
+
+.pro-service-message p {
+    margin: 0 0 20px;
+    color: #555;
+}

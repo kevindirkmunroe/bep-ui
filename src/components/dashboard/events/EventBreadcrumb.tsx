@@ -49,7 +49,7 @@ export default function EventBreadcrumb({
                         objectFit: "contain",
                     }}
                 />
-                <b>All Events</b>
+                <b>All</b>
             </Link>
 
             {eventId && (

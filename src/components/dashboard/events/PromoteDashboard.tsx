@@ -16,6 +16,7 @@ import EventOrderPage from "./payments/EventOrderPage";
 import {EventOrderManager} from "../../../workflows/payment/EventtOrderManager";
 import {EventOrder} from "../../../workflows/payment/EventOrder";
 import {MockStripeSessionManager} from "../../../workflows/payment/MockStripeSessionManager";
+import PromotePanel from "./PromotePanel";
 
 
 export default function PromoteDashboard() {
@@ -152,8 +153,6 @@ export default function PromoteDashboard() {
                             alignItems: "center"
                         }}>
                             &nbsp;My Event &gt; Promote
-                                {eventOrder?.promote_selection === ServiceSelectionStatus.DIY && (<>&nbsp;|&nbsp;DIY</>)}
-                                {eventOrder?.promote_selection === ServiceSelectionStatus.PRO && (<>&nbsp;|&nbsp;PRO</>)}
                         </div>
                     </div>
 
@@ -193,20 +192,26 @@ export default function PromoteDashboard() {
                     </div>
                     {
                         eventOrder?.promote_selection === ServiceSelectionStatus.PRO &&
-                        (<div style={{padding: "16px"}}><h2>Event promoted by&nbsp;
-                            <b>Airhorn.</b><strong style={{color: "#D2492C"}}>events</strong> <b>PRO</b></h2>
-                        </div>)
+                        (
+                            <PromotePanel title={"PRO"}>
+                                <div style={{padding: "16px"}}><h2>Event promoted by&nbsp;
+                                    <b>Airhorn.</b><strong style={{color: "#D2492C"}}>events</strong> <b>PRO</b></h2>
+                                </div>
+                            </PromotePanel>
+                        )
                     }
-                    {   eventOrder?.promote_selection === ServiceSelectionStatus.DIY &&   (
-                            <>
+                    {eventOrder?.promote_selection === ServiceSelectionStatus.DIY && (
+                        <>
+                        <PromotePanel title={"DIY"}>
                             <ProgressBar platforms={event.platforms}/>
                             <PlatformList
                                 extensionInstalled={extensionInstalled}
                                 event={event}
                                 reload={loadEvent}
                                 updatePlatformStatus={updatePlatformStatus}/>
-                         </>)
-                    }
+                            </PromotePanel>
+                        </>
+                    )}
 
                     {showEventOrderSelectionModal && (
                         <Modal style={{width: "70%"}} onClose={() => setShowEventOrderSelectionModal(false)}>
