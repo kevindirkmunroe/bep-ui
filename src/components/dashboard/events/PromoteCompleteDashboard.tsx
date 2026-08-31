@@ -62,7 +62,7 @@ export default function PromoteCompleteDashboard(){
                         alignContent: "left",
                         alignItems: "center"
                     }}>
-                        &nbsp;My Event &gt; Promote &gt; Published
+                        &nbsp;My Event &gt; Promote &gt; Results
                     </div>
                 </div>
 

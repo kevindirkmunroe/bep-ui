@@ -69,7 +69,7 @@ export default function EventBreadcrumb({
             {onLogPage && (
                 <>
                     <span>&gt;</span>
-                    <strong>Promotion Log</strong>
+                    <strong>Promotion Results</strong>
                 </>
             )}
         </div>
