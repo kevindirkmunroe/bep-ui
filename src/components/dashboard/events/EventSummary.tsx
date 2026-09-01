@@ -40,6 +40,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     const [imgSrc, setImgSrc] = useState("/icons8-delete-30.png");
     const [showMoreActions, setShowMoreActions] = useState(false);
     const [showReadOnlyEventModal, setShowReadOnlyEventModal] = useState(false);
+    const [expanded, setExpanded] = useState(false);
 
     const getNewestPublishDate = (platforms: PlatformData[]): Date | undefined => {
         const dates = platforms
@@ -158,28 +159,34 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                         fontWeight: "bold",
                     }}
                 >
-                    {event.title}
+                    <button
+                        type="button"
+                        onClick={() => setExpanded(prev => !prev)}
+                        className="event-summary-toggle"
+                        aria-expanded={expanded}
+                    >
+                        {expanded ? "▼" : "▲" }
+                    </button>
                     {event.imported_from && (
                         <>&nbsp;<ImportedFromLink importedFrom={event.imported_from}/></>
                     )}
-                </div>
-                <div style={{fontSize: "16px"}}>
-                    {event.location_name}
+                    {event.title}
+
                 </div>
 
-                <p style={{fontSize: "14px"}}>
-                    {formatEventDate(
-                        new Date(event.start_datetime).toLocaleString()
-                    )}
-                </p>
-                {/*{ readOnly && (*/}
-                {/*    <div className="view-readonly-icon"*/}
-                {/*         onClick={() => setShowReadOnlyEventModal(true)}>*/}
-                {/*        <img alt={"Read-only view"}*/}
-                {/*            src={"/icons8-view-48.png"} style={{width: "20px", height: "20px"}}*/}
-                {/*        />*/}
-                {/*    </div>*/}
-                {/*)}*/}
+                {/* Toggleable */}
+                {expanded && (
+                    <div className="event-summary-details">
+                        <div style={{fontSize: "16px"}}>
+                            {event.location_name}
+                        </div>
+                        <p style={{fontSize: "14px"}}>
+                            {formatEventDate(
+                                new Date(event.start_datetime).toLocaleString()
+                            )}
+                        </p>
+                    </div>
+                )}
 
                 {/* Modal for read-only Event viewing */}
                 {showReadOnlyEventModal && (

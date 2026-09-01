@@ -67,3 +67,35 @@
     justify-content: center;
     margin-bottom: 8px;
 }
+
+.event-summary {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px 12px;
+}
+
+.event-summary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.event-summary-header h3 {
+    margin: 0;
+}
+
+.event-summary-toggle {
+    border: none;
+    color:grey;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px 6px;
+}
+
+.event-summary-details {
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.4;
+}
