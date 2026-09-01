@@ -28,13 +28,13 @@ export function EventCompletionLog({ event }: { event: EventDetail }) {
 
             <div className="completion-event-info">
                 <div>
-                    <span>Event ID</span>
-                    <strong>{event.event_id}</strong>
+                    <span style={{fontSize: "18px"}}><b>Event ID</b></span>
+                    <strong style={{fontSize: "15px"}}>{event.event_id}</strong>
                 </div>
 
                 <div>
-                    <span>Title</span>
-                    <strong>{event.title}</strong>
+                    <span style={{fontSize: "18px"}}><b>Title</b></span>
+                    <strong style={{fontSize: "15px"}}>{event.title}</strong>
                 </div>
             </div>
 

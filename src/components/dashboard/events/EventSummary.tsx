@@ -153,28 +153,36 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                             : "white"
                 }}
             >
+                {/* Event Title */}
                 <div
+                    className="event-summary-header"
                     style={{
                         fontSize: "18px",
                         fontWeight: "bold",
-                    }}
-                >
+                    }}>
+                    {/* Column 1: toggle */}
                     <button
                         type="button"
                         onClick={() => setExpanded(prev => !prev)}
                         className="event-summary-toggle"
-                        aria-expanded={expanded}
-                    >
-                        {expanded ? "▼" : "▲" }
+                        aria-expanded={expanded}>
+                        {expanded ? "▼" : "▲"}
                     </button>
-                    {event.imported_from && (
-                        <>&nbsp;<ImportedFromLink importedFrom={event.imported_from}/></>
-                    )}
-                    {event.title}
 
+                    {/* Column 2: title */}
+                    <div className="event-summary-title">
+                        {event.title}
+                    </div>
+
+                    {/* Column 3: imported-from */}
+                    <div className="event-summary-imported">
+                        {event.imported_from && (
+                            <ImportedFromLink importedFrom={event.imported_from}/>
+                        )}
+                    </div>
                 </div>
 
-                {/* Toggleable */}
+                {/* Toggleable Event details */}
                 {expanded && (
                     <div className="event-summary-details">
                         <div style={{fontSize: "16px"}}>

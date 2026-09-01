@@ -68,9 +68,11 @@ export default function PromoteCompleteDashboard(){
 
                 <EventBreadcrumb eventTitle={truncateString(event?.title, 20)}/>
             </div>
-            <div style={{display: "flex", flexDirection: "column"}}>
-                {/* List completed promotions only: "/events/:eventId" */}
-                <div style={{marginTop: "20px", marginLeft: "20px"}}>
+                    <div style={{backgroundColor: "lightyellow", width: "85%", fontSize: "16px", marginLeft:"80px", textAlign: "left"}}><strong>Keep an eye on your inbox!</strong> Each platform will send updates about the final
+                        status of your submission to the email address you registered with.</div>
+                <div style={{display: "flex", flexDirection: "column"}}>
+                    {/* List completed promotions only: "/events/:eventId" */}
+                    <div style={{marginTop: "2px", marginLeft: "20px"}}>
                     <EventCompletionLog event={event}/>
                 </div>
             </div>
