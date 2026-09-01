@@ -6,6 +6,7 @@ export interface UserData {
     username: string;
     firstName: string;
     company?: string;
+    eventCount: number;
 }
 
 interface UserContextType {
@@ -15,9 +16,11 @@ interface UserContextType {
 }
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
+export const UserEventCountContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<UserData | null>(null);
+    const [userEventCount, setUserEventCount] = useState(0);
     const [loading, setLoading] = useState(true);
 
     // Restore user on app startup (page refresh)
@@ -48,10 +51,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
 export function useUser() {
     const context = useContext(UserContext);
-
     if (!context) {
         throw new Error("useUser must be used within UserProvider");
     }
-
     return context;
 }

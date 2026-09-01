@@ -19,6 +19,10 @@ export function ActiveEventsPage() {
 
     const navigate = useNavigate();
     const {user} = useUser();
+    if(user){
+        user.eventCount = activeEvents.length;
+    }
+
     const handlePromote = (event: EventDetail) => {
         navigate(`/dashboard/${user?.userId}/events/${event.event_id}`);
     };

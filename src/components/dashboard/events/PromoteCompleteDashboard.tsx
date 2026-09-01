@@ -62,11 +62,11 @@ export default function PromoteCompleteDashboard(){
                         alignContent: "left",
                         alignItems: "center"
                     }}>
-                        &nbsp;My Event &gt; Promote &gt; Results
+                        &nbsp;My Event / Summary
                     </div>
                 </div>
 
-                <EventBreadcrumb eventTitle={truncateString(event?.title, 24)}/>
+                <EventBreadcrumb eventTitle={truncateString(event?.title, 20)}/>
             </div>
             <div style={{display: "flex", flexDirection: "column"}}>
                 {/* List completed promotions only: "/events/:eventId" */}

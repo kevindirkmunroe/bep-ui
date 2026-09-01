@@ -1,5 +1,6 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import React from "react";
+import {useUser} from "../../../UserContext";
 
 interface EventBreadcrumbProps {
     eventTitle?: string;
@@ -9,6 +10,8 @@ export default function EventBreadcrumb({
                                         }: EventBreadcrumbProps) {
     const { userId, eventId } = useParams();
     const location = useLocation();
+    const {user} = useUser();
+
 
     const eventsPath = `/dashboard/${userId}/events`;
 
@@ -39,30 +42,43 @@ export default function EventBreadcrumb({
             }}
         >
             <Link to={eventsPath}>
+                <div style={{display: "flex", flexDirection: "row"}}>
                 <img
                     src="/icons8-home-48.link.png"
                     alt="Home"
                     style={{
-                        height: "16px",
+                        height: "20px",
                         width: "auto",
                         marginLeft: "10px",
+                        marginRight: "4px",
                         objectFit: "contain",
                     }}
                 />
-                <b>All</b>
+                    <b>All</b>
+                    <strong style={{fontSize: "14px"}}>({user?.eventCount || 0})</strong>
+                </div>
             </Link>
 
             {eventId && (
                 <>
-                    <span>&gt;</span>
+                <span>&gt;</span>
 
-                    {onEventPage ? (
-                        <strong>{truncateString(eventTitle, 24) ?? "Event"}</strong>
-                    ) : (
+                {onEventPage ? (
+                    <>
+                        <strong>{truncateString(eventTitle, 38) ?? "Event"}</strong>
+                        <span>&gt;</span>
+                        <Link to={`${eventsPath}/${eventId}/promoted`}>
+                            <strong>Promotion Results</strong>
+                        </Link>
+                    </>
+
+                ) : (
+                    <>
                         <Link to={`${eventsPath}/${eventId}`}>
                             {eventTitle ?? "Event"}
                         </Link>
-                    )}
+                    </>
+                )}
                 </>
             )}
 

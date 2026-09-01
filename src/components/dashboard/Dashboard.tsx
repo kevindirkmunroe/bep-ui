@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {NavLink, Outlet, useParams} from "react-router-dom";
+import {Outlet, useParams} from "react-router-dom";
 import CreateEditEventForm from "./CreateEditEventForm";
 import {getEventStatus} from "./events/EventStatus";
 import {EventbriteEventDetail, EventDetail, FacebookEventDetail} from "./events/eventDetailTypes.interface";
@@ -357,7 +357,7 @@ export default function Dashboard() {
                     {/* ROUTED CONTENT */}
                     <ViewToggle/>
 
-                    <div style={{marginTop: "20px", display: "flex", flexDirection: "column"}}>
+                    <div style={{marginTop: "10px", display: "flex", flexDirection: "column"}}>
                         <div style={{
                             display: "flex",
                             width: "100%",

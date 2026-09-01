@@ -152,7 +152,7 @@ export default function PromoteDashboard() {
                             alignContent: "left",
                             alignItems: "center"
                         }}>
-                            &nbsp;My Event &gt; Promote
+                            &nbsp;My Event / Promote
                         </div>
                     </div>
 
@@ -172,24 +172,24 @@ export default function PromoteDashboard() {
                             }
                         </div>
                     </div>
-                    <div>
-                        <div style={{display: "flex", flexDirection: "row"}}>
-                            <div style={{
-                                flex: 2,
-                                border: "6px solid #E27C68",
-                                borderRadius: "14px",
-                                boxShadow: "0 4px 14px rgba(0, 0, 0, 0.07)",
-                                marginTop: "4px",
-                                marginRight: "30px",
-                                marginBottom: "26px"
-                            }}>
-                                <EventSummary event={event}
-                                              readOnly={true}
-                                              showRedo={false}
-                                              showAsHeader={true}/>
-                            </div>
-                        </div>
-                    </div>
+                    {/*<div>*/}
+                    {/*    <div style={{display: "flex", flexDirection: "row"}}>*/}
+                    {/*        <div style={{*/}
+                    {/*            flex: 2,*/}
+                    {/*            border: "6px solid #E27C68",*/}
+                    {/*            borderRadius: "14px",*/}
+                    {/*            boxShadow: "0 4px 14px rgba(0, 0, 0, 0.07)",*/}
+                    {/*            marginTop: "4px",*/}
+                    {/*            marginRight: "30px",*/}
+                    {/*            marginBottom: "26px"*/}
+                    {/*        }}>*/}
+                    {/*            <EventSummary event={event}*/}
+                    {/*                          readOnly={true}*/}
+                    {/*                          showRedo={false}*/}
+                    {/*                          showAsHeader={true}/>*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
                     {
                         eventOrder?.promote_selection === ServiceSelectionStatus.PRO &&
                         (
