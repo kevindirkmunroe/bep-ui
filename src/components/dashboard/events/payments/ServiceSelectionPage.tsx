@@ -18,6 +18,7 @@ export interface ServiceSelectionFormProps {
 export default function ServiceSelectionPage({userId, onSelectService}  : ServiceSelectionFormProps) {
 
     const navigate = useNavigate();
+    const diyEnabled = import.meta.env.VITE_DIY_ENABLED === "true";
 
     return (
         <main className="pricing-page">
@@ -32,6 +33,11 @@ export default function ServiceSelectionPage({userId, onSelectService}  : Servic
                     <div className="prices">
                         <div className="card">
                             <div className="eyebrow">Self-Service (DIY)</div>
+                            {!diyEnabled && (
+                                <span className="beta-badge">
+                                        Coming after Beta
+                                </span>
+                            )}
                             <h3>You promote with Airhorn.events.</h3>
                             <p>Use your Airhorn account and promotion workflow yourself.</p>
 
@@ -46,10 +52,13 @@ export default function ServiceSelectionPage({userId, onSelectService}  : Servic
                                 <li>Platform status tracking</li>
                             </ul>
 
-                            <button className="btn" style={{fontSize: "16px"}} onClick={(e) => {
-                                e.stopPropagation();
-                                onSelectService(ServiceSelectionStatus.DIY)}
-                            }>Get Started</button>
+                            <button className="btn" style={{fontSize: "16px", color: diyEnabled ? 'lightgray' : 'darkgrey'}}
+                                    onClick={diyEnabled ? (e) => {
+                                        e.stopPropagation();
+                                        onSelectService(ServiceSelectionStatus.DIY)
+                                    } : undefined }>
+                                {diyEnabled ? "Choose DIY" : "Unavailable during Beta"}
+                            </button>
                         </div>
 
                         <div className="card featured">

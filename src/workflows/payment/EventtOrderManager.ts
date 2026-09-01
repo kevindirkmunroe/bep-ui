@@ -9,15 +9,20 @@ export class EventOrderManager {
         return result.data;
     }
 
-    async getOrCreateEventOrder(eventId: string): Promise<EventOrder>{
-        const result = await api.get(`/orders/${eventId}`);
-        if(result.status === 201) {
-            return result.data;
-        }
+    async getOrCreateEventOrder(eventId: string): Promise<EventOrder |null>{
+        try{
+            const result = await api.get(`/orders/${eventId}`);
+            if(result.status === 201) {
+                return result.data;
+            }
 
-        return await this.createEventOrder(
-            {promote_selection:ServiceSelectionStatus.NO_SELECTION, event_id: eventId}
-        );
+        }catch(err){
+            console.log(`[EventOrderManager] - create order for eventId ${eventId}`);
+            return await this.createEventOrder(
+                {promote_selection:ServiceSelectionStatus.NO_SELECTION, event_id: eventId}
+            );
+        }
+        return null;
     }
 
     getOrderCost(po: EventOrder): number {
