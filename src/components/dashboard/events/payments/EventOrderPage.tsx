@@ -145,7 +145,7 @@ export default function EventOrderPage({
                             ) : (
                                 <>
                             <span className="payment-success">
-                                ✓ Payment successful
+                                ✓ Payment In Progress
                             </span>
 
                                     <button

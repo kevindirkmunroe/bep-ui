@@ -14,6 +14,8 @@ import {AboutPage} from "./components/AboutPage.js";
 import CalendarView from "./components/dashboard/CalendarView.js";
 import PromoteCompleteDashboard from "./components/dashboard/events/PromoteCompleteDashboard.tsx";
 import AdminPage from "./components/admin/AdminPage.js";
+import PaymentSuccessPage from "./components/dashboard/events/payments/PaymentSuccessPage.js";
+import PaymentCancelledPage from "./components/dashboard/events/payments/PaymentCancelledPage.js";
 
 export default function App() {
   return (
@@ -27,6 +29,10 @@ export default function App() {
               <Route path="/invite" element={<RequestInvitePage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/about" element={<AboutPage />} />
+              <Route path="/payment-success" element={<PaymentSuccessPage />} />
+              <Route path="/payment-cancelled" element={<PaymentCancelledPage />} />
+
+
               <Route path="/admin" element={<AdminPage />} />
 
               {/* Dashboard */}

@@ -17,6 +17,7 @@ import {EventOrderManager} from "../../../workflows/payment/EventtOrderManager";
 import {EventOrder} from "../../../workflows/payment/EventOrder";
 import {MockStripeSessionManager} from "../../../workflows/payment/MockStripeSessionManager";
 import PromotePanel from "./PromotePanel";
+import {RealStripeSessionManager} from "../../../workflows/payment/RealStripeSessionManager";
 
 
 export default function PromoteDashboard() {
@@ -222,7 +223,7 @@ export default function PromoteDashboard() {
                         <Modal style={{width: "70%"}} onClose={() => setShowEventOrderModal(false)}>
                             <EventOrderPage     eventOrder={eventOrder}
                                                 eventOrderManager={eventOrderManager}
-                                                stripeSessionManager={new MockStripeSessionManager()}
+                                                stripeSessionManager={new RealStripeSessionManager()}
                                                 onPaymentComplete={() => {
                                                     setShowEventOrderModal(false);
                                                     setShowEventOrderSelectionModal(false);
