@@ -14,6 +14,7 @@ export default defineConfig({
       "/mapCity": "http://localhost:4000",
       "/orders": "http://localhost:4000",
       "/payments": "http://localhost:4000",
+      "/admin/invite-requests": "http://localhost:4000",
     },
   },
   define: {

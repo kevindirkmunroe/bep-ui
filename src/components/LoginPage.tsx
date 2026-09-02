@@ -119,6 +119,8 @@ export default function LoginPage() {
                     </div>
                     <div style={{marginTop: "20px"}}>
                         <Link to="/forgotpassword">Forgot Password?</Link>
+                        <br/><br/>
+                        <Link to="/">Home</Link>
                     </div>
                 </div>
             </div>

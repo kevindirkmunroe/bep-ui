@@ -1,5 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {api} from "../utils/api";
+import {Link} from "react-router-dom";
 
 export default function RequestInvitePage() {
     const [name, setName] = useState("");
@@ -8,6 +9,9 @@ export default function RequestInvitePage() {
     const [useCase, setUseCase] = useState("");
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
+    const [formComplete, setFormComplete] = useState(false);
+
+    const inviteCode = import.meta.env.VITE_INVITE_CODE;
 
     async function handleSubmit(
         e: React.FormEvent
@@ -32,13 +36,15 @@ export default function RequestInvitePage() {
                     name,
                     email,
                     company,
-                    use_case: useCase
+                    use_case: useCase,
+                    invite_code: inviteCode
                 }
             );
 
             setMessage(
                 "Thanks! We'll review your request and email you an invite code."
             );
+            setFormComplete(true);
 
             setName("");
             setEmail("");
@@ -131,6 +137,11 @@ export default function RequestInvitePage() {
                         {message}
                     </div>
                 )}
+
+                {formComplete && (
+                    <Link to="/register">Back to Registration</Link>
+                )}
+                <Link to="/">Home</Link>
             </form>
         </div>
     );

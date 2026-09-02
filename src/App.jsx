@@ -13,6 +13,7 @@ import RequestInvitePage from "./components/RequestInvitePage.js";
 import {AboutPage} from "./components/AboutPage.js";
 import CalendarView from "./components/dashboard/CalendarView.js";
 import PromoteCompleteDashboard from "./components/dashboard/events/PromoteCompleteDashboard.tsx";
+import AdminPage from "./components/admin/AdminPage.js";
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
               <Route path="/invite" element={<RequestInvitePage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/about" element={<AboutPage />} />
+              <Route path="/admin" element={<AdminPage />} />
 
               {/* Dashboard */}
               <Route

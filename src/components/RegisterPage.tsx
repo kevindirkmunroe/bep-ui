@@ -122,6 +122,8 @@ export function RegisterPage() {
                     <div style={{marginTop: "10px"}}>
                         No Invite Code? &nbsp;&nbsp; <Link to="/invite">Request Invite</Link>
                     </div>
+                    <br/><br/>
+                    <Link to="/">Home</Link>
                 </div>
             </div>
         </div>
