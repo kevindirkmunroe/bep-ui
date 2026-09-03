@@ -5,10 +5,12 @@ import EventBreadcrumb from "./EventBreadcrumb";
 import {useParams} from "react-router-dom";
 import {EventDetail} from "./eventDetailTypes.interface";
 import {EventCompletionLog} from "./EventCompletionLog";
+import {useUser} from "../../../UserContext";
 
 export default function PromoteCompleteDashboard(){
 
     const { eventId } = useParams();
+    const { user } = useUser();
 
     const [event, setEvent] = useState<EventDetail | null>(null);
 
@@ -66,7 +68,7 @@ export default function PromoteCompleteDashboard(){
                     </div>
                 </div>
 
-                <EventBreadcrumb eventTitle={truncateString(event?.title, 20)}/>
+                <EventBreadcrumb eventTitle={truncateString(event?.title, 20)} eventCount={user?.eventCount || 0}/>
             </div>
                     <div style={{backgroundColor: "lightyellow", width: "85%", fontSize: "16px", marginLeft:"80px", textAlign: "left"}}><strong>Keep an eye on your inbox!</strong> Each platform will send updates about the final
                         status of your submission to the email address you registered with.</div>

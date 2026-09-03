@@ -1,4 +1,10 @@
+import {Link} from "react-router-dom";
+import React from "react";
+import {useUser} from "../UserContext";
+
 export function AboutPage(){
+
+    const {user}  = useUser();
 
     return (
         <div className="about-div" style={{
@@ -65,6 +71,7 @@ export function AboutPage(){
                     building <span
                         style={{color: "#D2492C"}}>Airhorn.events</span> in the Bay Area and working closely with local
                     businesses, venues, and event organizers to make event promotion simpler and more effective.</p>
+                <Link style={{color: "white", marginTop: "24px", fontSize: "18px"}} to={`/dashboard/${user?.userId}`}>Home</Link>
             </div>
         </div>
     )

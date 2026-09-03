@@ -12,6 +12,7 @@ export interface UserData {
 interface UserContextType {
     user: UserData | null;
     setUser: (user: UserData | null) => void;
+    setUserEventCount: (count: number) => void;
     loading: boolean;
 }
 
@@ -43,7 +44,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     }, []);
 
     return (
-        <UserContext.Provider value={{ user, setUser, loading }}>
+        <UserContext.Provider value={{ user, setUser, setUserEventCount, loading }}>
             {children}
         </UserContext.Provider>
     );

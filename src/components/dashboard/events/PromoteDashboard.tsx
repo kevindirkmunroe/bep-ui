@@ -48,6 +48,9 @@ export default function PromoteDashboard() {
         // get event order...
         const order = await eventOrderManager.getOrCreateEventOrder(eventId);
         setEventOrder(order);
+        if(!order){
+            return;
+        }
         if(order.promote_selection === ServiceSelectionStatus.NO_SELECTION){
             setShowEventOrderSelectionModal(true);
         }else{
@@ -158,7 +161,7 @@ export default function PromoteDashboard() {
                     </div>
 
                     <div style={{display: "flex", flexDirection: "row", alignItems: "right"}}>
-                        <div style={{flex: "0 0 80%"}}><EventBreadcrumb eventTitle={event.title}/></div>
+                        <div style={{flex: "0 0 80%"}}><EventBreadcrumb eventTitle={event.title} eventCount={user?.eventCount || 0}/></div>
                         <div style={{fontSize: "11px", width: "100%", flex: "0 0 20%"}}>
                             {extensionInstalled ? "🟢 Extension OK | " + extensionVersion :
                                 <div>

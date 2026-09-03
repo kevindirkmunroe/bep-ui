@@ -17,6 +17,7 @@ import {eventbriteJsonLdToEventDetail, getEventbriteJsonLd} from "./EventbriteIn
 import './dashboard.css';
 import BaseDialog, {DialogState} from "../BaseDialog";
 import EventBreadcrumb from "./events/EventBreadcrumb";
+import {useUser} from "../../UserContext";
 
 export default function Dashboard() {
     const { userId } = useParams();
@@ -165,7 +166,9 @@ export default function Dashboard() {
         setShowCreateEventForm(false);
         try{
             const eventsRes = await api.get(`/users/${userId}/events`);
-            setEvents(eventsRes.data.data);
+            const eventList = eventsRes.data.data;
+            setEvents(eventList);
+
         } catch (err: Error | any) {
             const status = err.response?.status;
 
@@ -189,6 +192,11 @@ export default function Dashboard() {
         loadEvents();
     }, [userId]);
 
+
+    // Breadcrumbs depends on event count being correct
+    // for display, otherwise erroneously displays event count = 0
+    const userContext = useUser();
+    userContext.setUserEventCount(getActiveEventCount());
     if (!userId) return <div style={{marginTop: "50px"}}>Loading...</div>;
 
     const activeEventCount = getActiveEventCount();
@@ -353,7 +361,7 @@ export default function Dashboard() {
                         </div>
                     </div>
 
-                    <EventBreadcrumb/>
+                    <EventBreadcrumb eventTitle="" eventCount={getActiveEventCount()}/>
                     {/* ROUTED CONTENT */}
                     <ViewToggle/>
 

@@ -1,17 +1,16 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import React from "react";
-import {useUser} from "../../../UserContext";
 
 interface EventBreadcrumbProps {
     eventTitle?: string;
+    eventCount: number;
 }
 export default function EventBreadcrumb({
-                                            eventTitle
+                                            eventTitle,
+                                            eventCount
                                         }: EventBreadcrumbProps) {
     const { userId, eventId } = useParams();
     const location = useLocation();
-    const {user} = useUser();
-
 
     const eventsPath = `/dashboard/${userId}/events`;
 
@@ -55,7 +54,7 @@ export default function EventBreadcrumb({
                     }}
                 />
                     <b>All</b>
-                    <strong style={{fontSize: "14px"}}>({user?.eventCount || 0})</strong>
+                    <strong style={{fontSize: "14px"}}>({eventCount})</strong>
                 </div>
             </Link>
 
