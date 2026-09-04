@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 
-import {EventSummary} from "./EventSummary";
 import {ProgressBar} from "./platforms/ProgressBar";
 import {PlatformList} from "./platforms/PlatformList";
 import {EventDetail} from "./eventDetailTypes.interface";
@@ -16,7 +15,7 @@ import EventOrderPage from "./payments/EventOrderPage";
 import {EventOrderManager} from "../../../workflows/payment/EventtOrderManager";
 import {EventOrder} from "../../../workflows/payment/EventOrder";
 import {MockStripeSessionManager} from "../../../workflows/payment/MockStripeSessionManager";
-import PromotePanel from "./PromotePanel";
+import PromoteFulfillmentPanel from "./PromoteFulfillmentPanel";
 import {RealStripeSessionManager} from "../../../workflows/payment/RealStripeSessionManager";
 
 
@@ -121,6 +120,10 @@ export default function PromoteDashboard() {
 
     if (!event || !event.platforms) return <div>Loading...</div>;
 
+    const submittedPlatforms = event.platforms.filter(
+        p => p.status === "submitted"
+    );
+
     window.postMessage(
         {
             type: "LOCALBUZZ_PING"
@@ -161,7 +164,11 @@ export default function PromoteDashboard() {
                     </div>
 
                     <div style={{display: "flex", flexDirection: "row", alignItems: "right"}}>
-                        <div style={{flex: "0 0 80%"}}><EventBreadcrumb eventTitle={event.title} eventCount={user?.eventCount || 0}/></div>
+                        <div style={{flex: "0 0 80%"}}>
+                            <EventBreadcrumb eventTitle={event.title}
+                                             deliveryCount={submittedPlatforms.length}
+                                             eventCount={user?.eventCount || 0}/>
+                        </div>
                         <div style={{fontSize: "11px", width: "100%", flex: "0 0 20%"}}>
                             {extensionInstalled ? "🟢 Extension OK | " + extensionVersion :
                                 <div>
@@ -197,23 +204,23 @@ export default function PromoteDashboard() {
                     {
                         eventOrder?.promote_selection === ServiceSelectionStatus.PRO &&
                         (
-                            <PromotePanel title={"PRO"}>
+                            <PromoteFulfillmentPanel title={"PRO"}>
                                 <div style={{padding: "16px"}}><h2>Event promoted by&nbsp;
                                     <b>Airhorn.</b><strong style={{color: "#D2492C"}}>events</strong> <b>PRO</b></h2>
                                 </div>
-                            </PromotePanel>
+                            </PromoteFulfillmentPanel>
                         )
                     }
                     {eventOrder?.promote_selection === ServiceSelectionStatus.DIY && (
                         <>
-                        <PromotePanel title={"DIY"}>
+                        <PromoteFulfillmentPanel title={"DIY"}>
                             <ProgressBar platforms={event.platforms}/>
                             <PlatformList
                                 extensionInstalled={extensionInstalled}
                                 event={event}
                                 reload={loadEvent}
                                 updatePlatformStatus={updatePlatformStatus}/>
-                            </PromotePanel>
+                            </PromoteFulfillmentPanel>
                         </>
                     )}
 
@@ -240,7 +247,6 @@ export default function PromoteDashboard() {
                                                 />
                         </Modal>
                     )}
-                    <Link to={`/dashboard/${user?.userId}/events/${event?.event_id}/promoted`}>Promotion Results</Link>
                 </div>
             </div>
         </div>

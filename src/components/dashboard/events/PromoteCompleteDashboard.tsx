@@ -27,16 +27,9 @@ export default function PromoteCompleteDashboard(){
         return <div>Loading...</div>;
     }
 
-    function truncateString(str: string | undefined, limit: number, ending: string = '...'): string {
-        if(!str){
-            return "unknown"
-        }
-
-        if (str.length <= limit) {
-            return str;
-        }
-        return str.slice(0, limit - ending.length) + ending;
-    }
+    const submittedPlatforms = event.platforms.filter(
+        p => p.status === "submitted"
+    );
 
     return (
         <div style={{ display: "flex", gap: "2px" }}>
@@ -46,38 +39,44 @@ export default function PromoteCompleteDashboard(){
             </div>
             {/* RIGHT: Receipts */}
             <div style={{ flex: 1 }}>
-
-            <div style={{paddingLeft: 40}}>
-
-                <div style={{width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "20px"}}>
-                    <div className="banner-div" style={{
-                        width: "100%",
-                        height: "100px",
-                        objectFit: "cover",
-                        objectPosition: "top",
-                        fontWeight: 800,
-                        fontSize: "34px",
-                        borderRadius: "4px",
-                        font: "bold",
-                        color: "white",
-                        display: "flex",
-                        alignContent: "left",
-                        alignItems: "center"
-                    }}>
-                        &nbsp;My Event / Summary
+                <div style={{paddingLeft: 40}}>
+                    <div style={{width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "20px"}}>
+                        <div className="banner-div" style={{
+                            width: "100%",
+                            height: "100px",
+                            objectFit: "cover",
+                            objectPosition: "top",
+                            fontWeight: 800,
+                            fontSize: "34px",
+                            borderRadius: "4px",
+                            font: "bold",
+                            color: "white",
+                            display: "flex",
+                            alignContent: "left",
+                            alignItems: "center"
+                        }}>
+                            &nbsp;My Event / Live
+                        </div>
                     </div>
+                    <EventBreadcrumb eventTitle={event?.title}
+                                     deliveryCount={submittedPlatforms.length}
+                                     eventCount={user?.eventCount || 0}/>
                 </div>
-
-                <EventBreadcrumb eventTitle={truncateString(event?.title, 20)} eventCount={user?.eventCount || 0}/>
-            </div>
-                    <div style={{backgroundColor: "lightyellow", width: "85%", fontSize: "16px", marginLeft:"80px", textAlign: "left"}}><strong>Keep an eye on your inbox!</strong> Each platform will send updates about the final
-                        status of your submission to the email address you registered with.</div>
                 <div style={{display: "flex", flexDirection: "column"}}>
                     {/* List completed promotions only: "/events/:eventId" */}
                     <div style={{marginTop: "2px", marginLeft: "20px"}}>
-                    <EventCompletionLog event={event}/>
+                        <EventCompletionLog event={event}/>
+                    </div>
+                    <div style={{
+                        backgroundColor: "lightyellow",
+                        width: "85%",
+                        fontSize: "15px",
+                        marginLeft: "80px",
+                        textAlign: "left"
+                    }}><b>*</b> Pending Verification. <strong>Keep an eye on your inbox!</strong> Each platform will send updates about the final
+                        status of your submission to the email address you registered with.
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
     )

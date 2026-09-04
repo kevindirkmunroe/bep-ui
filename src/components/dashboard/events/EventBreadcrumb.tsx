@@ -4,10 +4,15 @@ import React from "react";
 interface EventBreadcrumbProps {
     eventTitle?: string;
     eventCount: number;
+    deliveryCount?: number;
 }
+
+const BREADCRUMB_MAX_STEP_LENGTH = 38;
+
 export default function EventBreadcrumb({
                                             eventTitle,
-                                            eventCount
+                                            eventCount,
+                                            deliveryCount,
                                         }: EventBreadcrumbProps) {
     const { userId, eventId } = useParams();
     const location = useLocation();
@@ -64,17 +69,18 @@ export default function EventBreadcrumb({
 
                 {onEventPage ? (
                     <>
-                        <strong>{truncateString(eventTitle, 38) ?? "Event"}</strong>
+                        <strong>{truncateString(eventTitle, BREADCRUMB_MAX_STEP_LENGTH) ?? "Event"}</strong>
                         <span>&gt;</span>
                         <Link to={`${eventsPath}/${eventId}/promoted`}>
-                            <strong>Live Platforms (0)</strong>
+                            <b>Delivered</b>
+                            <strong style={{fontSize: "14px"}}>({deliveryCount})*</strong>
                         </Link>
                     </>
 
                 ) : (
                     <>
                         <Link to={`${eventsPath}/${eventId}`}>
-                            {eventTitle ?? "Event"}
+                            <strong>{truncateString(eventTitle, BREADCRUMB_MAX_STEP_LENGTH) ?? "Event"}</strong>
                         </Link>
                     </>
                 )}
@@ -82,10 +88,11 @@ export default function EventBreadcrumb({
             )}
 
             {onLogPage && (
-                <>
-                    <span>&gt;</span>
-                    <strong>Live Platforms (0)</strong>
-                </>
+                <div style={{display: "flex", flexDirection: "row", fontSize: "18px"}}>
+                    <span>&gt;&nbsp;&nbsp;</span>
+                    <b>Delivered</b>
+                    <strong style={{fontSize: "18px"}}>&nbsp;({deliveryCount || 0})*</strong>
+                </div>
             )}
         </div>
     );

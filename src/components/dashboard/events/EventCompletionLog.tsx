@@ -25,15 +25,14 @@ export function EventCompletionLog({ event }: { event: EventDetail }) {
 
     return (
         <div className="completion-log">
-
             <div className="completion-event-info">
                 <div>
-                    <span style={{fontSize: "18px"}}><b>Event ID</b></span>
+                    <span style={{fontSize: "18px"}}><b><u>Event ID</u></b></span>
                     <strong style={{fontSize: "15px"}}>{event.event_id}</strong>
                 </div>
 
                 <div>
-                    <span style={{fontSize: "18px"}}><b>Title</b></span>
+                    <span style={{fontSize: "18px"}}><b><u>Title</u></b></span>
                     <strong style={{fontSize: "15px"}}>{event.title}</strong>
                 </div>
             </div>
@@ -43,9 +42,9 @@ export function EventCompletionLog({ event }: { event: EventDetail }) {
             <table className="completion-table">
                 <thead>
                 <tr>
-                    <th>Platform</th>
+                    <th>Delivery Platform</th>
                     <th>Date Submitted</th>
-                    <th>Platform Status</th>
+                    <th>Delivery Status</th>
                 </tr>
                 </thead>
 

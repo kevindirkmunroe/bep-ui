@@ -1,10 +1,10 @@
-import "./promotePanel.css";
+import "./promoteFulfillmentPanel.css";
 interface PromotePanelProps {
     title: string;
     children: React.ReactNode;
 }
 
-export default function PromotePanel({
+export default function PromoteFulfillmentPanel({
                                          title,
                                          children
                                      }: PromotePanelProps) {
