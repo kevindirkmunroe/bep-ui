@@ -58,7 +58,7 @@ export default function EventBreadcrumb({
                         objectFit: "contain",
                     }}
                 />
-                    <b>All</b>
+                    <b>All Events</b>
                     <strong style={{fontSize: "14px"}}>({eventCount})</strong>
                 </div>
             </Link>
@@ -72,8 +72,8 @@ export default function EventBreadcrumb({
                         <strong>{truncateString(eventTitle, BREADCRUMB_MAX_STEP_LENGTH) ?? "Event"}</strong>
                         <span>&gt;</span>
                         <Link to={`${eventsPath}/${eventId}/promoted`}>
-                            <b>Delivered</b>
-                            <strong style={{fontSize: "14px"}}>({deliveryCount})*</strong>
+                            <b>Platforms</b>
+                            <strong style={{fontSize: "14px"}}>({deliveryCount}/5)*</strong>
                         </Link>
                     </>
 
@@ -89,9 +89,9 @@ export default function EventBreadcrumb({
 
             {onLogPage && (
                 <div style={{display: "flex", flexDirection: "row", fontSize: "18px"}}>
-                    <span>&gt;&nbsp;&nbsp;</span>
-                    <b>Delivered</b>
-                    <strong style={{fontSize: "18px"}}>&nbsp;({deliveryCount || 0})*</strong>
+                    <span>&gt;&nbsp;</span>
+                    <b>Platforms</b>
+                    <strong style={{fontSize: "18px"}}>({deliveryCount || 0}/5)*</strong>
                 </div>
             )}
         </div>
