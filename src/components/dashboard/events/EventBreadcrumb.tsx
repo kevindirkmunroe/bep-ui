@@ -7,7 +7,7 @@ interface EventBreadcrumbProps {
     deliveryCount?: number;
 }
 
-const BREADCRUMB_MAX_STEP_LENGTH = 38;
+const BREADCRUMB_MAX_STEP_LENGTH = 34;
 
 export default function EventBreadcrumb({
                                             eventTitle,
