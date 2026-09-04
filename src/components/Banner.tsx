@@ -94,25 +94,42 @@ export function Banner() {
             {user && (
                 <div style={{display: "flex", alignItems: "right", marginRight: "50px", marginTop: "16px"}}>
                     <img
-                        data-tooltip-id="my-tooltip"
-                        data-tooltip-content="Change Password"
-                        onClick={handleChangePassword}
-                        style={{width: "22px", height: "22px", verticalAlign: "text-bottom", cursor: "pointer"}} src={"/icons8-user-male-30.png"} alt={'.'}
+                        style={{width: "22px", height: "22px", verticalAlign: "text-bottom", cursor: "pointer"}} src={"/icons8-home-48.png"} alt={'.'}
                     />&nbsp;
                     {user?.firstName && (
-                        <div style={userInfoStyle}>
+                        <div style={{...userInfoStyle, cursor: "pointer"}}
+                             data-tooltip-id="my-tooltip"
+                             data-tooltip-content="Home"
+                             onClick={() => navigate('/')}>
+                            Home
+                        </div>
+                    )}
+                    <img
+                        style={{width: "22px", height: "22px", marginLeft: "18px", verticalAlign: "text-bottom"}} src={"/icons8-user-male-30.png"} alt={'.'}
+                    />&nbsp;
+                    {user?.firstName && (
+                        <div style={{...userInfoStyle, cursor: "pointer"}}
+                             data-tooltip-id="my-tooltip"
+                             data-tooltip-content="Change Password"
+                             onClick={handleChangePassword}>
                             {user.firstName}
                             {user.company && ` | ${user.company}`}
                         </div>
                     )}
-                    <div style={{marginLeft: '28px', marginTop: "1px", fontSize: "14px" , cursor: "pointer"}}>
+                    <div style={{marginLeft: '28px', marginTop: "1px", fontSize: "14px" , cursor: "pointer"}}
+                         data-tooltip-id="my-tooltip"
+                         data-tooltip-content="About Airhorn.events ...">
                         <p onClick={handleAbout}>About</p>
                     </div>
                     <div style={{marginLeft: '16px', marginRight: '32px', marginTop: "1px", fontSize: "14px", cursor: "pointer"}}>
                         <p onClick={handleLogout}>Logout</p>
                     </div>
                     {adminList.includes(user.email) && (
-                        <div style={{
+                        <div
+                            data-tooltip-id="my-tooltip"
+                            data-tooltip-content="How'd YOU get here?"
+                            onClick={handleChangePassword}
+                            style={{
                             marginLeft: '4px',
                             marginRight: '34px',
                             marginTop: "1px",
