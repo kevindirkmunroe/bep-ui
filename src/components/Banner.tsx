@@ -33,18 +33,16 @@ export function Banner() {
         navigate("/about");
     }
 
+    const handleAdmin = () => {
+        navigate("/admin");
+    }
+
+    const adminList = import.meta.env.VITE_ADMIN_EMAIL_LIST ?
+        import.meta.env.VITE_ADMIN_EMAIL_LIST.split(',') : [];
+
     const handleChangePassword = async () => {
         setShowForm(true);
     }
-
-    // If user is already logged in, show the dashboard, otherwise back to Welcome page...
-    const handleHomeClick = () => {
-        if (user) {
-            navigate(`/dashboard/${user.userId}/events`);
-        } else {
-            navigate("/");
-        }
-    };
 
     const handleLandingClick = () => {
         window.location.href = import.meta.env.VITE_LANDING_PAGE_URL;
@@ -113,8 +111,19 @@ export function Banner() {
                     <div style={{marginLeft: '16px', marginRight: '32px', marginTop: "1px", fontSize: "14px", cursor: "pointer"}}>
                         <p onClick={handleLogout}>Logout</p>
                     </div>
+                    {adminList.includes(user.email) && (
+                        <div style={{
+                            marginLeft: '4px',
+                            marginRight: '34px',
+                            marginTop: "1px",
+                            fontSize: "14px",
+                            cursor: "pointer"
+                        }}>
+                            <p onClick={handleAdmin}>🔥Admin</p>
+                        </div>
+                    )}
                     <div>
-                        <CalendarDate />
+                        <CalendarDate/>
                     </div>
                     {showForm && (
                         <div>

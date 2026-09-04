@@ -10,20 +10,40 @@ interface InviteRequest {
     invite_code: string;
 }
 
+interface ProOrder {
+    order_id: string;
+    event_id: string;
+    created_at: string;
+    payment_completed_at: string;
+    order_fulfilled_at: string;
+}
+
 export default function AdminPage() {
 
-    const [requests, setRequests] = useState<InviteRequest[]>([]);
+    const [inviteRequests, setInviteRequests] = useState<InviteRequest[]>([]);
+    const [proOrders, setProOrders] = useState<ProOrder[]>([]);
 
-    const loadRequests = async () => {
+    const loadInviteRequests = async () => {
         const { data } = await api.get<InviteRequest[]>(
-            "/admin/invite-requests"
+            `/admin/invite-requests`
         );
+        setInviteRequests(data);
+    };
 
-        setRequests(data);
+    const loadProOrders = async () => {
+        try {
+            const {data} = await api.get<ProOrder[]>(
+                `/admin/pro-orders`
+            );
+            setProOrders(data);
+        }catch(err){
+            console.log(`[AdminPage] err loading proOrders: ${err}`);
+        }
     };
 
     useEffect(() => {
-        loadRequests();
+        loadInviteRequests();
+        loadProOrders();
     }, []);
 
     const onApprove = async (request: InviteRequest) => {
@@ -36,18 +56,24 @@ export default function AdminPage() {
         });
 
         // Remove approved request from the pending list
-        setRequests(current =>
+        setInviteRequests(current =>
             current.filter(
                 r => r.request_id !== request.request_id
             )
         );
     };
 
+    const onMarkFulfilled = async (order: ProOrder) => {
+        await api.put("/users/fulfill-order", {
+            order_id: order.order_id,
+        });
+    };
+
     return (
-        <div style={{ padding: "30px", textAlign: "left" }}>
+        <div style={{padding: "30px", textAlign: "left"}}>
+            <h1><strong>Admin </strong></h1>
 
-            <h1><strong>Admin </strong>/&nbsp;Invite Requests</h1>
-
+            <h2>/ Invite Requests</h2>
             <table
                 style={{
                     width: "100%",
@@ -65,8 +91,9 @@ export default function AdminPage() {
                 </thead>
 
                 <tbody>
-                {requests.map(request => (
-                    <tr style={{backgroundColor: request.status !== 'approved' ? 'lightyellow' : ""}} key={request.request_id}>
+                {inviteRequests?.map(request => (
+                    <tr style={{backgroundColor: request.status !== 'approved' ? 'lightyellow' : ""}}
+                        key={request.request_id}>
 
                         <td>{request.email}</td>
 
@@ -80,13 +107,13 @@ export default function AdminPage() {
                         </td>
 
                         <td>
-                            { request.status !== 'approved' ? (
-                            <button
-                                onClick={() => onApprove(request)}
-                            >
-                                ✅&nbsp;Approve
-                            </button>
-                            ) : ( <>---</>)
+                            {request.status !== 'approved' ? (
+                                <button
+                                    onClick={() => onApprove(request)}
+                                >
+                                    ✅&nbsp;Approve
+                                </button>
+                            ) : (<>---</>)
                             }
                         </td>
 
@@ -95,10 +122,59 @@ export default function AdminPage() {
                 </tbody>
             </table>
 
-            {requests.length === 0 && (
-                <p>No pending invite requests.</p>
-            )}
+            <br/>
+            <h2>/ PRO Orders</h2>
+            <table
+                style={{
+                    width: "100%",
+                    borderCollapse: "collapse"
+                }}
+            >
+                <thead>
+                <tr>
+                    <th>Event ID</th>
+                    <th>Order ID</th>
+                    <th>Create Date</th>
+                    <th>Paid?</th>
+                    <th>Fulfill Date</th>
+                </tr>
+                </thead>
 
+                <tbody>
+                {proOrders && proOrders.map(order => (
+                    <tr style={{backgroundColor: order.order_fulfilled_at ? '' : "lightyellow"}}
+                        key={order.event_id}>
+
+                        <td>{order.event_id}</td>
+                        <td>{order.order_id}</td>
+
+                        <td>{order.created_at ?? ""}</td>
+                        <td>{order.payment_completed_at ? "YES" : "NO"}</td>
+
+                        <td>
+                            {order.order_fulfilled_at ? new Date(
+                                order.order_fulfilled_at
+                            ).toLocaleString() : "---"}
+                        </td>
+                        <td>
+                            {!order.order_fulfilled_at ? (
+                                <button
+                                    disabled={!order.payment_completed_at}
+                                    onClick={() => onMarkFulfilled(order)}
+                                >
+                                    🤝&nbsp;Fulfill
+                                </button>
+                            ) : (<>---</>)
+                            }
+                        </td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+
+            {inviteRequests.length === 0 && (
+                <p>No pending Orders to fulfill.</p>
+            )}
         </div>
     );
 }

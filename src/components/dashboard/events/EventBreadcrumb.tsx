@@ -67,7 +67,7 @@ export default function EventBreadcrumb({
                         <strong>{truncateString(eventTitle, 38) ?? "Event"}</strong>
                         <span>&gt;</span>
                         <Link to={`${eventsPath}/${eventId}/promoted`}>
-                            <strong>Promotion Results</strong>
+                            <strong>Live Platforms (0)</strong>
                         </Link>
                     </>
 
@@ -84,7 +84,7 @@ export default function EventBreadcrumb({
             {onLogPage && (
                 <>
                     <span>&gt;</span>
-                    <strong>Promotion Results</strong>
+                    <strong>Live Platforms (0)</strong>
                 </>
             )}
         </div>

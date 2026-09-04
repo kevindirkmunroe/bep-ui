@@ -5,6 +5,7 @@ export interface UserData {
     userId: string;
     username: string;
     firstName: string;
+    email: string;
     company?: string;
     eventCount: number;
 }

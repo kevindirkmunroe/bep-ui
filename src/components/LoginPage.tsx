@@ -50,8 +50,10 @@ export default function LoginPage() {
             setUser({
                 userId: res.data.userId,
                 username: res.data.username,
+                email: res.data.email,
                 firstName: res.data.firstName,
-                company: res.data.company
+                company: res.data.company,
+                eventCount: 0
             });
             // If password is not bcrypt hashed, it is temporary. Redirect user to password reset.
             navigate(`/dashboard/${res.data.userId}/events`);
