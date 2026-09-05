@@ -6,13 +6,8 @@ import {categories} from "./EventCategories";
 import BaseDialog, {DialogState} from "../BaseDialog";
 
 import "./form.css";
-
-const formatDateTimeLocal = (iso?: string) => {
-    if (!iso) return "";
-    const d = new Date(iso);
-    const pad = (n: number) => String(n).padStart(2, "0");
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-};
+import {formatDateTimeLocal} from "../../utils/DateTime";
+import ImageUpload from "./ImageUpload";
 
 export default function CreateEditEventForm({
                                             userId,
@@ -38,6 +33,8 @@ export default function CreateEditEventForm({
         category: event?.category || "",
         imported_from: event?.imported_from || "",
     });
+
+    const [imageUrl, setImageUrl] = useState<string>("");
 
     const toDatetimeLocal = (date: Date) => {
         const pad = (n: number) => String(n).padStart(2, "0");
@@ -71,25 +68,6 @@ export default function CreateEditEventForm({
         }
     };
 
-    // TODO: handle image upload
-    // const handleFileChange = async (
-    //     e: React.ChangeEvent<HTMLInputElement>
-    // ) => {
-    //     const file = e.target.files?.[0];
-    //     if (!file) return;
-    //
-    //     const base64 = await fileToBase64(file);
-    //
-    //     window.postMessage({
-    //         type: "BEP_IMAGE_UPLOAD",
-    //         payload: {
-    //             base64,
-    //             filename: file.name,
-    //             mimeType: file.type
-    //         }
-    //     }, "*");
-    // };
-
     const handleSubmit = async () => {
         try {
             if (isEdit) {
@@ -106,13 +84,6 @@ export default function CreateEditEventForm({
                 message: "Failed to create event"
             });
         }
-    };
-    const inputStyle: React.CSSProperties = {
-        width: "100%",
-        padding: "10px",
-        borderRadius: "6px",
-        border: "1px solid #ccc",
-        fontSize: "14px"
     };
 
     return (
@@ -242,6 +213,9 @@ export default function CreateEditEventForm({
                     onChange={handleChange}
                     value={form.price}
                 />
+
+                <label htmlFor="phone">Cover Photo</label>
+                <ImageUpload onUploaded={setImageUrl}/>
 
                 <label htmlFor="phone">Phone</label>
                 <input

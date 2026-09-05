@@ -3,7 +3,7 @@ import {EventDetail} from "./eventDetailTypes.interface";
 import {EventSummary} from "./EventSummary";
 import {getEventStatus, getIsExpired} from "./EventStatus";
 import React from "react";
-import {isOlderThanToday} from "../../../utils/Time";
+import {isOlderThanToday} from "../../../utils/DateTime";
 
 export function ExpiredEventsPage() {
     const { events, reload } = useOutletContext<{

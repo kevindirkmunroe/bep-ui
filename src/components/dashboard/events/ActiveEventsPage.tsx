@@ -2,7 +2,7 @@ import {useNavigate, useOutletContext} from "react-router-dom";
 import {EventDetail} from "./eventDetailTypes.interface";
 import {EventSummary} from "./EventSummary";
 import {getEventStatus} from "./EventStatus";
-import {isOlderThanToday} from "../../../utils/Time";
+import {isOlderThanToday} from "../../../utils/DateTime";
 import {useUser} from "../../../UserContext";
 
 

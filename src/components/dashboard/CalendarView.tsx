@@ -4,7 +4,7 @@ import './calendar.css';
 import {EventDetail} from "./events/eventDetailTypes.interface";
 import {useOutletContext} from "react-router-dom";
 import {getEventStatus} from "./events/EventStatus";
-import {isOlderThanToday} from "../../utils/Time";
+import {isOlderThanToday} from "../../utils/DateTime";
 import { useParams } from "react-router-dom";
 import RecycleEventModal from "./events/RecycleEventModal";
 import RestoreEventModal from "./events/RestoreEventModal";
