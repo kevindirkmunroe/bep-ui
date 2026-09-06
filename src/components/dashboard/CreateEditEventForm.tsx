@@ -8,6 +8,7 @@ import BaseDialog, {DialogState} from "../BaseDialog";
 import "./form.css";
 import {formatDateTimeLocal} from "../../utils/DateTime";
 import ImageUpload from "./ImageUpload";
+import S3ImageUploader from "./S3ImageUploader";
 
 export default function CreateEditEventForm({
                                             userId,
@@ -29,12 +30,12 @@ export default function CreateEditEventForm({
         price: event?.price || "",
         organization: event?.organization || "",
         phone: event?.phone || "",
+        image: event?.image || "",
+        image_title: event?.image_title || "",
         website: event?.website || "",
         category: event?.category || "",
         imported_from: event?.imported_from || "",
     });
-
-    const [imageUrl, setImageUrl] = useState<string>("");
 
     const toDatetimeLocal = (date: Date) => {
         const pad = (n: number) => String(n).padStart(2, "0");
@@ -69,6 +70,7 @@ export default function CreateEditEventForm({
     };
 
     const handleSubmit = async () => {
+        console.log(`[CreateEditEventForm] UPDATE form ${JSON.stringify(form)}`);
         try {
             if (isEdit) {
                 await api.put(`/events/${event.event_id}`, form);
@@ -85,6 +87,10 @@ export default function CreateEditEventForm({
             });
         }
     };
+
+    const setImageUrl = (newUrl: string) => {
+        form.image = newUrl;
+    }
 
     return (
         <div style={{marginBottom: 20, display: "flex", flexDirection: "column"}}>
@@ -215,7 +221,7 @@ export default function CreateEditEventForm({
                 />
 
                 <label htmlFor="phone">Cover Photo</label>
-                <ImageUpload onUploaded={setImageUrl}/>
+                <S3ImageUploader />
 
                 <label htmlFor="phone">Phone</label>
                 <input

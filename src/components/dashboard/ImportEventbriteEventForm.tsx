@@ -7,6 +7,7 @@ import BaseDialog, {DialogState} from "../BaseDialog";
 
 import "./form.css";
 import {formatDateTimeLocal} from "../../utils/DateTime";
+import ImageUpload from "./ImageUpload";
 
 export default function ImportEventbriteEventForm({
                                                     userId,
@@ -27,6 +28,8 @@ export default function ImportEventbriteEventForm({
         price: event?.price || "",
         organization: event?.organization || "",
         phone: event?.phone || "",
+        image: event?.image || "",
+        image_title: event?.image_title || "",
         website: event?.website || "",
         imported_from: event?.imported_from || event?.eventbriteEventURL,
         category: event?.category || "",
@@ -37,6 +40,10 @@ export default function ImportEventbriteEventForm({
         setForm(buildForm(event));
     }, [event]);
     const [dialog, setDialog] = useState<DialogState>(null);
+
+    const setImageUrl = (newUrl: string) => {
+        form.image = newUrl;
+    }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setForm({
@@ -54,6 +61,7 @@ export default function ImportEventbriteEventForm({
             });
             return;
         }
+        console.log(`[ImportEventbriteEventForm] image is ${form.image}`);
         try {
             await api.post(`/users/${userId}/events`, form);
             onSuccess(); // reload events
@@ -219,6 +227,9 @@ export default function ImportEventbriteEventForm({
                     onChange={handleChange}
                     value={form.price}
                 />
+
+                <label htmlFor="phone">Cover Photo</label>
+                <ImageUpload currImage={form.image} currImageTitle={form.image_title} onUploaded={setImageUrl}/>
 
                 <label htmlFor="phone">Phone</label>
                 <input

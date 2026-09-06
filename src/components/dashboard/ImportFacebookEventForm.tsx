@@ -5,6 +5,7 @@ import {categories} from "./EventCategories";
 import {ImportFacebookEventFormProps} from "./eventTypes.interface";
 import BaseDialog, {DialogState} from "../BaseDialog";
 import {formatDateTimeLocal} from "../../utils/DateTime";
+import ImageUpload from "./ImageUpload";
 
 export default function ImportFacebookEventForm({
                                                 userId,
@@ -25,6 +26,8 @@ export default function ImportFacebookEventForm({
         price: event?.price || "",
         organization: event?.organization || "",
         phone: event?.phone || "",
+        image: event?.image || "",
+        image_title: event?.image_title || "",
         website: event?.website || "",
         imported_from: event?.imported_from || "",
         category: event?.category || "",
@@ -42,6 +45,10 @@ export default function ImportFacebookEventForm({
             [e.target.name]: e.target.value,
         });
     };
+
+    const setImageUrl = (newUrl: string) => {
+        form.image = newUrl;
+    }
 
     const handleSubmit = async () => {
         try {
@@ -190,6 +197,9 @@ export default function ImportFacebookEventForm({
                     onChange={handleChange}
                     value={form.price}
                 />
+
+                <label htmlFor="phone">Cover Photo</label>
+                <ImageUpload currImage={form.image} currImageTitle={form.image_title}  onUploaded={setImageUrl}/>
 
                 <label htmlFor="phone">Phone</label>
                 <input

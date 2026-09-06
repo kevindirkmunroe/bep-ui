@@ -1,11 +1,14 @@
-import { useRef, useState } from "react";
+import {useRef, useState} from "react";
 import { api } from "../../utils/api";
 
 interface ImageUploadProps {
-    onUploaded: (imageUrl: string) => void;
+    currImage: string;
+    currImageTitle: string;
+    onUploaded: (image: string) => void;
 }
 
-export default function ImageUpload({
+export default function ImageUpload({   currImage,
+                                        currImageTitle,
                                         onUploaded
                                     }: ImageUploadProps) {
 
@@ -13,7 +16,8 @@ export default function ImageUpload({
 
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [imageUrl, setImageUrl] = useState<string | null>(null);
+    const [image, setImage] = useState<string | null>(currImage);
+    const [imageTitle, setImageTitle] = useState<string | null>(currImageTitle);
 
     const onChooseFile = () => {
         fileInputRef.current?.click();
@@ -24,11 +28,11 @@ export default function ImageUpload({
     ) => {
 
         const file = e.target.files?.[0];
-
         if (!file) {
             return;
         }
 
+        setImageTitle(file.name);
         setError(null);
 
         // Basic browser-side validation
@@ -48,21 +52,17 @@ export default function ImageUpload({
         }
 
         const formData = new FormData();
-
-        formData.append("imageUrl", file);
+        formData.append("image", file);
 
         try {
-
             setUploading(true);
-
-            const response = await api.post<{ imageUrl: string; }>(
+            const response = await api.post<{ image: string; }>(
                 `/events/image`,
                 formData
             );
 
-            setImageUrl(response.data.imageUrl);
-
-            onUploaded(response.data.imageUrl);
+            setImage(response.data.image);
+            onUploaded(response.data.image);
 
         } catch (err) {
 
@@ -79,7 +79,7 @@ export default function ImageUpload({
     };
 
     return (
-        <div>
+        <div style={{display: "flex 0 1", width: "100%", alignItems: "flex-start"}}>
             <input
                 ref={fileInputRef}
                 type="file"
@@ -88,24 +88,26 @@ export default function ImageUpload({
                 onChange={onFileSelected}
             />
 
-            <button
-                type="button"
-                onClick={onChooseFile}
-                disabled={uploading}
-            >
-                {uploading ? "Uploading..." : "Upload Image"}
-            </button>
-
+            <div style={{display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
+                <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={onChooseFile}
+                    disabled={uploading}
+                >
+                    {uploading ? "Uploading..." : "Upload Image"}
+                </button>
+            </div>
             {error && (
                 <div style={{ color: "red", marginTop: "8px" }}>
                     {error}
                 </div>
             )}
 
-            {imageUrl && (
+            {image && (
                 <div style={{ marginTop: "12px" }}>
                     <img
-                        src={imageUrl}
+                        src={image}
                         alt="Uploaded event"
                         style={{
                             maxWidth: "240px",
@@ -113,6 +115,7 @@ export default function ImageUpload({
                             objectFit: "contain"
                         }}
                     />
+                    <p style={{fontSize: "14px"}}>{imageTitle}</p>
                 </div>
             )}
         </div>
