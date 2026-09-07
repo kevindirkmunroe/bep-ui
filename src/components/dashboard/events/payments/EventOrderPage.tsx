@@ -1,6 +1,6 @@
 import {EventOrderManager} from "../../../../workflows/payment/EventtOrderManager";
 import {EventOrder} from "../../../../workflows/payment/EventOrder";
-import {StripeCheckoutResult, StripeSessionManager} from "../../../../workflows/payment/StripeSessionManager";
+import {StripeSessionManager} from "../../../../workflows/payment/StripeSessionManager";
 import {useState} from "react";
 
 import "./serviceSelectionPage.css";
@@ -22,7 +22,7 @@ export default function EventOrderPage({
 
     const [orderPaid, setOrderPaid] = useState(false);
 
-    const onMakePayment = async (eventOrder: EventOrder) : Promise<StripeCheckoutResult> => {
+    const onMakePayment = async (eventOrder: EventOrder) : Promise<void> => {
         setOrderPaid(true);
         return stripeSessionManager.checkout(eventOrder);
     }

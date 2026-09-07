@@ -1,4 +1,4 @@
-import {StripeCheckoutResult, StripeSessionManager} from "./StripeSessionManager";
+import {StripeSessionManager} from "./StripeSessionManager";
 import {EventOrder} from "./EventOrder";
 import {api} from "../../utils/api";
 import {ServiceSelectionStatus} from "../../components/dashboard/events/payments/ServiceSelectionPage";
@@ -6,7 +6,7 @@ import {ServiceSelectionStatus} from "../../components/dashboard/events/payments
 export class MockStripeSessionManager implements StripeSessionManager {
     async checkout(
         order: EventOrder
-    ): Promise<StripeCheckoutResult> {
+    ): Promise<void> {
 
         // TODO: implement transaction rollback policy across stripe update + event_order update
         const result = await api.post(`/payments/stripe/checkout`, {eventOrder: order});

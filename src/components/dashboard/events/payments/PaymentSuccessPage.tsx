@@ -1,9 +1,20 @@
 import { Link } from "react-router-dom";
 import {useUser} from "../../../../UserContext";
+import {api} from "../../../../utils/api";
 
-export default function PaymentSuccessPage() {
+export default async function PaymentSuccessPage() {
 
     const { user } = useUser();
+
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get("session_id");
+
+    if (sessionId) {
+        await api.post("/stripe/verify-payment", {
+            sessionId
+        });
+    }
+
     return (
         <div style={styles.page}>
             <div style={styles.card}>

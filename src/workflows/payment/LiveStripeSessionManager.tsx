@@ -1,12 +1,12 @@
-import {StripeCheckoutResult, StripeSessionManager} from "./StripeSessionManager";
+import { StripeSessionManager} from "./StripeSessionManager";
 import {EventOrder} from "./EventOrder";
 import {api} from "../../utils/api";
 import {ServiceSelectionStatus} from "../../components/dashboard/events/payments/ServiceSelectionPage";
 
-export class RealStripeSessionManager implements StripeSessionManager {
+export class LiveStripeSessionManager implements StripeSessionManager {
     async checkout(
         order: EventOrder
-    ): Promise<StripeCheckoutResult> {
+    ): Promise<void> {
 
         // Real endpoint returns URL to Stripe payment page...
         const { data } = await api.post("/payments/stripe/checkout", order);
