@@ -17,7 +17,6 @@ export interface EventDetail {
     organization?: string;
     phone?: string;
     image?: string;
-    image_title?: string;
     platforms: PlatformData[];
     region?: string;
     category?: string;

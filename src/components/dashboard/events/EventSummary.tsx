@@ -144,7 +144,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                 style={{
                     position: "relative",
                     marginRight: "22px",
-                    width: "70%",
+                    width: "80%",
                     paddingLeft: "36px",
                     boxSizing: "border-box",
                     backgroundColor:
@@ -176,9 +176,23 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
 
                     {/* Column 3: imported-from */}
                     <div className="event-summary-imported">
-                        {event.imported_from && (
-                            <ImportedFromLink importedFrom={event.imported_from}/>
-                        )}
+                        { event.image ? (
+                            <img src={event.image} alt="Image" style={{
+                                maxWidth: "90px",
+                                maxHeight: "60px",
+                                marginLeft: "10px",
+                                borderRadius: "6px",
+                                objectFit: "contain" }} />
+                        ) : (
+                            <img src={"/icons8-image-64.png"} alt="No Image" style={{
+                                width: "32px",
+                                height: "28px",
+                                marginLeft: "10px",
+                                borderRadius: "6px",
+                                objectFit: "contain" }} />
+                        )
+                        }
+
                     </div>
                 </div>
 
@@ -193,6 +207,11 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                                 new Date(event.start_datetime).toLocaleString()
                             )}
                         </p>
+                        <div>
+                            {event.imported_from && (
+                                <ImportedFromLink importedFrom={event.imported_from}/>
+                            )}
+                        </div>
                     </div>
                 )}
 

@@ -12,6 +12,7 @@ interface InviteRequest {
 
 interface ProOrder {
     order_id: string;
+    image: string;
     event_id: string;
     created_at: string;
     payment_completed_at: string;
@@ -133,7 +134,8 @@ export default function AdminPage() {
                 <thead>
                 <tr>
                     <th>Event ID</th>
-                    <th>Order ID</th>
+                    <th>S3 Image</th>
+                    <th>Order Id</th>
                     <th>Create Date</th>
                     <th>Paid?</th>
                     <th>Fulfill Date</th>
@@ -146,6 +148,19 @@ export default function AdminPage() {
                         key={order.event_id}>
 
                         <td>{order.event_id}</td>
+                        <td>{order.image ? (
+                            <a
+                                href={order.image}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <img alt={"No Image"} style={{maxWidth: "80px", maxHeight: "48px"}} src={order.image}/>
+                            </a>
+                        ) : (
+                            <>---</>
+                        )}
+
+                        </td>
                         <td>{order.order_id}</td>
 
                         <td>{order.created_at ?? ""}</td>

@@ -7,7 +7,6 @@ import BaseDialog, {DialogState} from "../BaseDialog";
 
 import "./form.css";
 import {formatDateTimeLocal} from "../../utils/DateTime";
-import ImageUpload from "./ImageUpload";
 import S3ImageUploader from "./S3ImageUploader";
 
 export default function CreateEditEventForm({
@@ -31,7 +30,6 @@ export default function CreateEditEventForm({
         organization: event?.organization || "",
         phone: event?.phone || "",
         image: event?.image || "",
-        image_title: event?.image_title || "",
         website: event?.website || "",
         category: event?.category || "",
         imported_from: event?.imported_from || "",
@@ -57,6 +55,13 @@ export default function CreateEditEventForm({
     useEffect(() => {
         setForm(buildForm(event));
     }, [event]);
+
+    const handleImageUploaded = (newImageUrl: string) => {
+        setForm({
+            ...form,
+            image: newImageUrl
+        })
+    }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
         setForm({
@@ -87,10 +92,6 @@ export default function CreateEditEventForm({
             });
         }
     };
-
-    const setImageUrl = (newUrl: string) => {
-        form.image = newUrl;
-    }
 
     return (
         <div style={{marginBottom: 20, display: "flex", flexDirection: "column"}}>
@@ -221,7 +222,7 @@ export default function CreateEditEventForm({
                 />
 
                 <label htmlFor="phone">Cover Photo</label>
-                <S3ImageUploader />
+                <S3ImageUploader currImage={form.image} onUploadSuccess={handleImageUploaded} />
 
                 <label htmlFor="phone">Phone</label>
                 <input

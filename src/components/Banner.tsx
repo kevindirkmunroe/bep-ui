@@ -128,7 +128,7 @@ export function Banner() {
                         <div
                             data-tooltip-id="my-tooltip"
                             data-tooltip-content="How'd YOU get here?"
-                            onClick={handleChangePassword}
+                            onClick={handleAdmin}
                             style={{
                             marginLeft: '4px',
                             marginRight: '34px',
@@ -136,7 +136,7 @@ export function Banner() {
                             fontSize: "14px",
                             cursor: "pointer"
                         }}>
-                            <p onClick={handleAdmin}>🔥Admin</p>
+                            <p>🔥Admin</p>
                         </div>
                     )}
                     <div>

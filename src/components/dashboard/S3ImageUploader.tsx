@@ -2,10 +2,16 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import {api} from "../../utils/api";
 
-export default function S3ImageUploader() {
+interface S3ImageUploaderProps {
+    currImage: string;
+    onUploadSuccess: (uploadedUrl: string) => void;
+}
+
+export default function S3ImageUploader({currImage, onUploadSuccess} : S3ImageUploaderProps) {
+
     const [file, setFile] = useState(null);
     const [uploading, setUploading] = useState(false);
-    const [imageUrl, setImageUrl] = useState('');
+    const [imageUrl, setImageUrl] = useState(currImage);
     const [previewUrl, setPreviewUrl] = useState('');
 
     const handleFileChange = (e) => {
@@ -20,8 +26,12 @@ export default function S3ImageUploader() {
 
             setFile(selectedFile);
 
+            // show FS image, should match S#
             const url = URL.createObjectURL(selectedFile);
             setPreviewUrl(url);
+
+            // update form with S3 url...
+            onUploadSuccess(imageUrl);
         }
     };
 
@@ -55,7 +65,7 @@ export default function S3ImageUploader() {
                 const s3Prefix = import.meta.env.VITE_AWS_S3_IMAGES_PREFIX;
                 setImageUrl(`${s3Prefix}/${key}`);
                 console.log(`[S3ImageUploader] Successful upload to S3, uploaded=${s3Prefix}/${key}`);
-
+                onUploadSuccess(`${s3Prefix}/${key}`);
             }
         } catch (err) {
             if (axios.isAxiosError(err)) {
@@ -92,7 +102,7 @@ export default function S3ImageUploader() {
             )}
             {imageUrl && (
                 <div style={{ marginTop: '20px' }}>
-                    <p>Uploaded Image Upload:</p>
+                    <p>Uploaded Image:</p>
                     <img src={imageUrl} alt="Uploaded" style={{
                         maxWidth: "240px",
                         maxHeight: "180px",
