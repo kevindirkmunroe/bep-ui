@@ -1,34 +1,68 @@
 import { Link } from "react-router-dom";
+import axios from "axios";
 import {useUser} from "../../../../UserContext";
 import {api} from "../../../../utils/api";
+import {useEffect, useState} from "react";
 
-export default async function PaymentSuccessPage() {
+export default function PaymentSuccessPage() {
 
     const { user } = useUser();
+    const [errorMessage, setErrorMessage] = useState("");
+    const [msgHeader, setMsgHeader] = useState("");
+    const [msgDetail, setMsgDetail] = useState("");
+
 
     const params = new URLSearchParams(window.location.search);
     const sessionId = params.get("session_id");
 
-    if (sessionId) {
-        await api.post("/stripe/verify-payment", {
-            sessionId
-        });
-    }
+    useEffect(() => {
+
+        const verifyPayment = async () => {
+            try {
+                const response = await api.post("/payments/stripe/verify-payment", {
+                    sessionId
+                });
+
+                // success
+                console.log(response.data);
+                setMsgHeader( "Payment Successful");
+                setMsgDetail("Your payment was successfully processed.");
+            } catch (error) {
+
+                if (axios.isAxiosError(error)) {
+                    const data = error.response?.data;
+
+                    const message =
+                        data?.error ??
+                        (data?.paymentStatus
+                            ? `Payment status: ${data.paymentStatus}`
+                            : "Payment verification failed.");
+
+                    setErrorMessage(message);
+
+                } else {
+                    setErrorMessage("Unexpected error.");
+                }
+            }
+        }
+
+        verifyPayment();
+    }, []); // <-- important
 
     return (
         <div style={styles.page}>
             <div style={styles.card}>
-                <h1>Payment Successful</h1>
+                <h1>{msgHeader}</h1>
 
                 <p>
-                    Your payment was successfully processed.
+                    { errorMessage ? `${errorMessage}\n${msgDetail}` : `${msgDetail}` }
                 </p>
 
                 <Link
                     to={`/dashboard/${user?.userId}`}
                     style={styles.link}
                 >
-                    Return to Event
+                    Return to Events
                 </Link>
             </div>
         </div>
