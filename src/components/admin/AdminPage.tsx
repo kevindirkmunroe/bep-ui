@@ -14,6 +14,7 @@ interface ProOrder {
     order_id: string;
     image: string;
     event_id: string;
+    title: string;
     created_at: string;
     payment_completed_at: string;
     order_fulfilled_at: string;
@@ -74,7 +75,7 @@ export default function AdminPage() {
         <div style={{padding: "30px", textAlign: "left"}}>
             <h1><strong>Admin </strong></h1>
 
-            <h2>/ Invite Requests</h2>
+            <h2 style={{backgroundColor: "#E5E5E5"}}>/ Invite Requests</h2>
             <table
                 style={{
                     width: "100%",
@@ -124,7 +125,7 @@ export default function AdminPage() {
             </table>
 
             <br/>
-            <h2>/ PRO Orders</h2>
+            <h2 style={{backgroundColor: "#E5E5E5"}}>/ PRO Orders</h2>
             <table
                 style={{
                     width: "100%",
@@ -133,12 +134,11 @@ export default function AdminPage() {
             >
                 <thead>
                 <tr>
+                    <th>Event Title</th>
                     <th>Event ID</th>
-                    <th>S3 Image</th>
-                    <th>Order Id</th>
+                    <th>Order ID</th>
+                    <th>Image (S3)</th>
                     <th>Create Date</th>
-                    <th>Paid?</th>
-                    <th>Fulfill Date</th>
                 </tr>
                 </thead>
 
@@ -147,33 +147,28 @@ export default function AdminPage() {
                     <tr style={{backgroundColor: order.order_fulfilled_at ? '' : "lightyellow"}}
                         key={order.event_id}>
 
+                        <td style={{width: "35%"}}>{order.title}</td>
                         <td>{order.event_id}</td>
+                        <td style={{textAlign: "center"}}>{order.order_id}</td>
                         <td>{order.image ? (
                             <a
                                 href={order.image}
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <img alt={"No Image"} style={{maxWidth: "80px", maxHeight: "48px"}} src={order.image}/>
+                                <img alt={"No Image"} style={{borderRadius: "6px", maxWidth: "80px", maxHeight: "48px"}} src={order.image}/>
                             </a>
                         ) : (
                             <>---</>
                         )}
 
                         </td>
-                        <td>{order.order_id}</td>
 
-                        <td>{order.created_at ?? ""}</td>
-                        <td>{order.payment_completed_at ? "YES" : "NO"}</td>
-
-                        <td>
-                            {order.order_fulfilled_at ? new Date(
-                                order.order_fulfilled_at
-                            ).toLocaleString() : "---"}
-                        </td>
+                        <td>{order.created_at ? new Date(order.created_at).toISOString().split('T')[0] : "---"}</td>
                         <td>
                             {!order.order_fulfilled_at ? (
                                 <button
+                                    style={{marginLeft: "6px"}}
                                     disabled={!order.payment_completed_at}
                                     onClick={() => onMarkFulfilled(order)}
                                 >
