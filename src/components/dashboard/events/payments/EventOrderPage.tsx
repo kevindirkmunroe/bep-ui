@@ -1,4 +1,4 @@
-import {EventOrderManager} from "../../../../workflows/payment/EventtOrderManager";
+import {EventOrderManager} from "../../../../workflows/payment/EventOrderManager";
 import {EventOrder} from "../../../../workflows/payment/EventOrder";
 import {StripeSessionManager} from "../../../../workflows/payment/StripeSessionManager";
 import {useState} from "react";

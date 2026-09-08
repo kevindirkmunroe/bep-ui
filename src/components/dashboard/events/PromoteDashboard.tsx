@@ -12,7 +12,7 @@ import EventBreadcrumb from "./EventBreadcrumb";
 import Modal from "../../Modal";
 import ServiceSelectionPage, {ServiceSelectionStatus} from "./payments/ServiceSelectionPage";
 import EventOrderPage from "./payments/EventOrderPage";
-import {EventOrderManager} from "../../../workflows/payment/EventtOrderManager";
+import {EventOrderManager} from "../../../workflows/payment/EventOrderManager";
 import {EventOrder} from "../../../workflows/payment/EventOrder";
 import PromoteFulfillmentPanel from "./PromoteFulfillmentPanel";
 import {LiveStripeSessionManager} from "../../../workflows/payment/LiveStripeSessionManager";
