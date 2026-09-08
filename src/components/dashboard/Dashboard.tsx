@@ -69,7 +69,7 @@ export default function Dashboard() {
             //
 
             let raw: FacebookEventRaw | undefined;
-            if(import.meta.env.VITE_MOCK_FACEBOOK_IMPORT === true) {
+            if(import.meta.env.VITE_MOCK_FACEBOOK_IMPORT === "true") {
                 console.log(`[Dashboard] Using MOCK Facebook data, import.meta.env.VITE_MOCK_FACEBOOK_IMPORT = ${import.meta.env.VITE_MOCK_FACEBOOK_IMPORT}`);
                 raw = MOCK_FACEBOOK;
             }else{

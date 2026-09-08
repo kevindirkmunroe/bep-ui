@@ -26,11 +26,16 @@ export class EventOrderManager {
     }
 
     getOrderCost(po: EventOrder): number {
+        const isBeta = import.meta.env.VITE_APP_MODE_BETA;
+
         switch (po.promote_selection) {
             case "DIY":
                 return 1995;
 
             case "PRO":
+                if(isBeta){
+                    return 1495;
+                }
                 return 2995;
 
             default:
