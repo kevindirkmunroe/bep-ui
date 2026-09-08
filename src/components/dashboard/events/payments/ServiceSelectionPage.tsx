@@ -67,7 +67,7 @@ export default function ServiceSelectionPage({userId, onSelectService}  : Servic
                             <p>Hand off the promotion work to Airhorn.events custom workflow.</p>
 
                             <div className="priceRow">
-                                <div className="mini"><span>ONE-TIME EVENT</span><strong>$29.95</strong></div>
+                                <div className="mini"><span>ONE-TIME EVENT</span><strong>(BETA) $14.95</strong></div>
                             </div>
 
                             <ul>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 import {ProgressBar} from "./platforms/ProgressBar";
 import {PlatformList} from "./platforms/PlatformList";
@@ -14,7 +14,6 @@ import ServiceSelectionPage, {ServiceSelectionStatus} from "./payments/ServiceSe
 import EventOrderPage from "./payments/EventOrderPage";
 import {EventOrderManager} from "../../../workflows/payment/EventtOrderManager";
 import {EventOrder} from "../../../workflows/payment/EventOrder";
-import {MockStripeSessionManager} from "../../../workflows/payment/MockStripeSessionManager";
 import PromoteFulfillmentPanel from "./PromoteFulfillmentPanel";
 import {LiveStripeSessionManager} from "../../../workflows/payment/LiveStripeSessionManager";
 

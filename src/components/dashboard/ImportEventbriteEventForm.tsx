@@ -63,6 +63,14 @@ export default function ImportEventbriteEventForm({
             });
             return;
         }
+        if(!form.image){
+            setDialog({
+                type: "error",
+                title: "Import Eventbrite",
+                message: "Please Upload an Event Cover Image to Continue."
+            });
+            return;
+        }
         console.log(`[ImportEventbriteEventForm] image is ${form.image}`);
         try {
             await api.post(`/users/${userId}/events`, form);

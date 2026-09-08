@@ -84,13 +84,15 @@ export default function S3ImageUploader({currImage, onUploadSuccess} : S3ImageUp
 
     return (
         <div style={{ padding: '20px' }}>
-            <input type="file" accept="image/*" onChange={handleFileChange} />
-
-            <button onClick={handleUpload} disabled={uploading || !file} style={{ marginLeft: '10px' }}>
-                {uploading ? 'Uploading...' : 'Upload'}
-            </button>
-
-            {file && <p style={{ fontSize: '12px', color: '#666' }}>Selected: {file.name} ({(file.size / 1024 / 1024).toFixed(10)} MB)</p>}
+            <input className="btn btn-primary" type="file" accept="image/*" onChange={handleFileChange} />
+            {!previewUrl && (
+                <div className="field-hint">
+                    Required — Event requires a single cover photo
+                </div>
+            )}
+            {/*
+                 {file && <p style={{ fontSize: '12px', color: '#666' }}>Selected: {file.name} ({(file.size / 1024 / 1024).toFixed(10)} MB)</p>}
+            */}
             {previewUrl && (
                 <div style={{ marginTop: '20px' }}>
                     <p>Image Preview:</p>
@@ -100,6 +102,16 @@ export default function S3ImageUploader({currImage, onUploadSuccess} : S3ImageUp
                         objectFit: "contain"  }} />
                 </div>
             )}
+
+            <button className="btn btn-primary" onClick={handleUpload} disabled={uploading || !file} style={{ marginLeft: '10px' }}>
+                {uploading ? 'Uploading...' : 'Upload'}
+            </button>
+            {previewUrl && !imageUrl && (
+                <div className="field-hint">
+                    Required — Upload selected image
+                </div>
+            )}
+
             {imageUrl && (
                 <div style={{ marginTop: '20px' }}>
                     <p>Uploaded Image:</p>

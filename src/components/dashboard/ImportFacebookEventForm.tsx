@@ -4,7 +4,7 @@ import {api} from "../../utils/api";
 import {categories} from "./EventCategories";
 import {ImportFacebookEventFormProps} from "./eventTypes.interface";
 import BaseDialog, {DialogState} from "../BaseDialog";
-import {formatDateTimeLocal} from "../../utils/DateTime";
+import {formatDateTimeLocal, isOlderThanToday} from "../../utils/DateTime";
 import S3ImageUploader from "./S3ImageUploader";
 
 export default function ImportFacebookEventForm({
@@ -53,6 +53,22 @@ export default function ImportFacebookEventForm({
     }
 
     const handleSubmit = async () => {
+        if(!form.image){
+            setDialog({
+                type: "error",
+                title: "Import Facebook",
+                message: "Please Upload an Event Cover Image to Continue."
+            });
+            return;
+        }
+        if(isOlderThanToday(form.start_datetime)){
+            setDialog({
+                type: "error",
+                title: "Import Facebook",
+                message: "Please Select a start date older than today to Continue."
+            });
+            return;
+        }
         try {
             await api.post(`/users/${userId}/events`, form);
             onSuccess(); // reload events
@@ -131,13 +147,23 @@ export default function ImportFacebookEventForm({
 
                 <label htmlFor="start_datetime">Start Date / Time</label>
                 <input
-                    id="start_datetime"
-                    name="start_datetime"
-                    className="input"
-                    type="datetime-local"
-                    onChange={handleChange}
-                    value={form.start_datetime}
-                />
+                        id="start_datetime"
+                        name="start_datetime"
+                        className="input"
+                        type="datetime-local"
+                        onChange={handleChange}
+                        value={form.start_datetime}
+                    >
+                </input>
+
+                {isOlderThanToday(form.start_datetime) && (
+                    <>
+                    <label htmlFor="start_datetime"></label>
+                    <div className="field-hint">
+                        Start Date must be older than today.
+                    </div>
+                    </>
+                )}
 
                 <label htmlFor="description">Description</label>
                 <textarea
