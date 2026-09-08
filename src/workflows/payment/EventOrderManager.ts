@@ -34,7 +34,7 @@ export class EventOrderManager {
 
             case "PRO":
                 if(isBeta === "true"){
-                    return 100;
+                    return 1495;
                 }
                 return 2995;
 

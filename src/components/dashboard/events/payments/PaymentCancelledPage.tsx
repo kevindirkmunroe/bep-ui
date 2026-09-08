@@ -17,7 +17,7 @@ export default function PaymentCancelledPage() {
                     to={`/dashboard/${user?.userId}`}
                     style={styles.link}
                 >
-                    Return to Event
+                    Return to Events
                 </Link>
             </div>
         </div>
