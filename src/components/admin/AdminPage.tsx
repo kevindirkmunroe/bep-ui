@@ -11,6 +11,7 @@ interface InviteRequest {
 }
 
 interface ProOrder {
+    email: string;
     order_id: string;
     image: string;
     event_id: string;
@@ -84,8 +85,8 @@ export default function AdminPage() {
             >
                 <thead>
                 <tr>
-                    <th>Email</th>
-                    <th>Name</th>
+                    <th>User Email</th>
+                    <th>User Name</th>
                     <th>Status</th>
                     <th>Requested</th>
                     <th></th>
@@ -133,7 +134,8 @@ export default function AdminPage() {
                 }}
             >
                 <thead>
-                <tr>
+                <tr style={{fontSize: "16px"}}>
+                    <th>User Email</th>
                     <th>Event Title</th>
                     <th>Event ID</th>
                     <th>Order ID</th>
@@ -144,9 +146,10 @@ export default function AdminPage() {
 
                 <tbody>
                 {proOrders && proOrders.map(order => (
-                    <tr style={{backgroundColor: order.order_fulfilled_at ? '' : "lightyellow"}}
+                    <tr style={{fontSize: "14px", verticalAlign: "top", backgroundColor: order.order_fulfilled_at ? '' : "lightyellow"}}
                         key={order.event_id}>
 
+                        <td>{order.email}</td>
                         <td style={{width: "35%"}}>{order.title}</td>
                         <td>{order.event_id}</td>
                         <td style={{textAlign: "center"}}>{order.order_id}</td>
