@@ -57,7 +57,7 @@
 }
 
 .event-list-style:hover {
-    background-color: #F9E2DD;
+    background-color: #F2F2F2;
 }
 
 .event-header-style {
@@ -82,13 +82,13 @@
 
 .event-summary-header {
     display: grid;
-    grid-template-columns: 22px minmax(0, 1fr) 24px;
+    grid-template-columns: 14px minmax(0, 0.9fr) 24px;
     column-gap: 3px;    align-items: center;
     width: 100%;
 }
 
 .event-summary-toggle {
-    width: 24px;
+    width: 14px;
     padding: 0;
     border: none;
     background: none;
@@ -111,4 +111,12 @@
 
 .imported-from-icon {
     filter: grayscale(100%);
+}
+
+.event-summary-details {
+    padding: 5px;
+    margin-top: 6px;
+    border-top-color: darkgray;
+    border-top-width:1px;
+    border-top-style: solid;
 }

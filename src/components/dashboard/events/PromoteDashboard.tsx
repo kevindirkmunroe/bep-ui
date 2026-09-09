@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 
 import {ProgressBar} from "./platforms/ProgressBar";
 import {PlatformList} from "./platforms/PlatformList";
@@ -204,8 +204,13 @@ export default function PromoteDashboard() {
                         eventOrder?.promote_selection === ServiceSelectionStatus.PRO &&
                         (
                             <PromoteFulfillmentPanel title={"PRO"}>
-                                <div style={{padding: "16px"}}><h2>Event promoted by&nbsp;
-                                    <b>Airhorn.</b><strong style={{color: "#D2492C"}}>events</strong> <b>PRO</b></h2>
+                                <div style={{padding: "16px"}}>
+                                    <h2>Event Promotion managed by&nbsp;
+                                    <b>Airhorn.</b><strong style={{color: "#D2492C"}}>events</strong> <b>PRO</b>
+                                    </h2>
+                                    <Link to={`promoted`}>
+                                        <h4>Platforms</h4>
+                                    </Link>
                                 </div>
                             </PromoteFulfillmentPanel>
                         )

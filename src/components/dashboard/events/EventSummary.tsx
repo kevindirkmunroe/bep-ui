@@ -178,21 +178,20 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     <div className="event-summary-imported">
                         { event.image ? (
                             <img src={event.image} alt="Image" style={{
-                                maxWidth: "90px",
+                                maxWidth: "60px",
                                 maxHeight: "60px",
-                                marginLeft: "10px",
+                                marginLeft: "30px",
                                 borderRadius: "6px",
                                 objectFit: "contain" }} />
-                        ) : (
+                            ) : (
                             <img src={"/icons8-image-64.png"} alt="No Image" style={{
                                 width: "32px",
                                 height: "28px",
-                                marginLeft: "10px",
+                                marginLeft: "30px",
                                 borderRadius: "6px",
                                 objectFit: "contain" }} />
-                        )
+                            )
                         }
-
                     </div>
                 </div>
 
