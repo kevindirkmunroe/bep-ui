@@ -205,11 +205,12 @@ export default function PromoteDashboard() {
                         (
                             <PromoteFulfillmentPanel title={"PRO"}>
                                 <div style={{padding: "16px"}}>
-                                    <h2>Event Promotion managed by&nbsp;
+                                    <h2>This Event currently being promoted by&nbsp;
                                     <b>Airhorn.</b><strong style={{color: "#D2492C"}}>events</strong> <b>PRO</b>
                                     </h2>
+                                    <br/>
                                     <Link to={`promoted`}>
-                                        <h4>Platforms</h4>
+                                        Check Progress
                                     </Link>
                                 </div>
                             </PromoteFulfillmentPanel>

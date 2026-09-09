@@ -37,6 +37,7 @@ export function EventCompletionLog({ event }: { event: EventDetail }) {
                 </div>
             </div>
 
+            <div style={{marginTop: "14px", textAlign: "left"}}><b>&nbsp;&nbsp;🟠&nbsp;&nbsp;In Progress</b></div>
             <div className="completion-divider" />
 
             <table className="completion-table">
