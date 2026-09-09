@@ -41,7 +41,7 @@
 
 .pricing-page .priceRow {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    align-items: center;
     gap: 12px;
     margin: 24px 0;
 }

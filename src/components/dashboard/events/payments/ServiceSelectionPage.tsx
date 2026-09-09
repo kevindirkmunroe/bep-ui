@@ -33,16 +33,11 @@ export default function ServiceSelectionPage({userId, onSelectService}  : Servic
                     <div className="prices">
                         <div className="card">
                             <div className="eyebrow">Self-Service (DIY)</div>
-                            {!diyEnabled && (
-                                <span className="beta-badge">
-                                        Coming after Beta
-                                </span>
-                            )}
                             <h3>You promote with Airhorn.events.</h3>
                             <p>Use your Airhorn account and promotion workflow yourself.</p>
 
                             <div className="priceRow">
-                                <div className="mini"><span>ONE-TIME EVENT</span><strong>$19.95</strong></div>
+                                <div className="mini"><span>ONE-TIME EVENT</span><strong><br/>$19.95</strong></div>
                             </div>
 
                             <ul>
@@ -67,7 +62,7 @@ export default function ServiceSelectionPage({userId, onSelectService}  : Servic
                             <p>Hand off the promotion work to Airhorn.events custom workflow.</p>
 
                             <div className="priceRow">
-                                <div className="mini"><span>ONE-TIME EVENT</span><strong>(BETA) $14.95</strong></div>
+                                <div className="mini"><span>ONE-TIME EVENT</span><strong><br/>🔥BETA Intro Price 🔥 $9.95</strong></div>
                             </div>
 
                             <ul>

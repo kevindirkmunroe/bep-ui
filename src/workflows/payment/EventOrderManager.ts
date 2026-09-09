@@ -17,7 +17,6 @@ export class EventOrderManager {
             }
 
         }catch(err){
-            console.log(`[EventOrderManager] - create order for eventId ${eventId}`);
             return await this.createEventOrder(
                 {promote_selection:ServiceSelectionStatus.NO_SELECTION, event_id: eventId}
             );
@@ -34,7 +33,7 @@ export class EventOrderManager {
 
             case "PRO":
                 if(isBeta === "true"){
-                    return 1495;
+                    return 995;
                 }
                 return 2995;
 
