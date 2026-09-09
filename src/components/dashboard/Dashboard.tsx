@@ -48,7 +48,7 @@ export default function Dashboard() {
         }else{
             // get raw data using JSON-LD
             const raw = await getEventbriteJsonLd(eventbriteEventUrl);
-            const eventbriteImportEvent = eventbriteJsonLdToEventDetail(raw);
+            const eventbriteImportEvent = eventbriteJsonLdToEventDetail(raw, eventbriteEventUrl);
 
             setEventbriteImportEvent(eventbriteImportEvent);
             setShowImportEventbriteEventForm(true);
@@ -135,6 +135,7 @@ export default function Dashboard() {
                 category: raw.categories[0],
                 city: raw.location_city,
                 imported_from: facebookEventUrl,
+                is_locked: false,
             }
             setFacebookImportEvent(fbImportEvent);
             setShowImportFacebookEventForm(true);

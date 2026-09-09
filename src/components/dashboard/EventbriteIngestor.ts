@@ -62,7 +62,7 @@ export async function getEventbriteJsonLd(eventbriteUrl: string) : Promise<Event
     return html;
 }
 
-export function eventbriteJsonLdToEventDetail(data: EventbriteJsonLd): EventbriteEventDetail {
+export function eventbriteJsonLdToEventDetail(data: EventbriteJsonLd, fromUrl: string): EventbriteEventDetail {
     return {
         name: data.name ?? "",
         title: data.name ?? "",
@@ -84,6 +84,8 @@ export function eventbriteJsonLdToEventDetail(data: EventbriteJsonLd): Eventbrit
 
         organization: data.organizer?.name ?? "",
         website: data.organizer?.url ?? "",
-        eventbriteEventURL: data.url ?? ""
+        eventbriteEventURL: data.url ?? "",
+        imported_from: fromUrl ?? "",
+        is_locked: false
     };
 }

@@ -23,6 +23,7 @@ export interface EventDetail {
     city?: string;
     imported_from: string | null;
     date_fields: DateFields;
+    is_locked: boolean;
 }
 
 export interface FacebookEventDetail extends Omit<EventDetail, 'event_id' | 'platforms' | 'date_fields'> {

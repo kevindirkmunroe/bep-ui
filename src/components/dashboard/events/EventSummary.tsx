@@ -162,6 +162,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     }}>
                     {/* Column 1: toggle */}
                     <button
+                        style={{marginLeft: "8px"}}
                         type="button"
                         onClick={() => setExpanded(prev => !prev)}
                         className="event-summary-toggle"
@@ -230,6 +231,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
             <div style={{width: "60%", display: "flex", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
                 {canEdit && onEdit && !isExpired && (
                     <button className="btn btn-secondary"
+                            disabled={event.is_locked}
                             onClick={(e) => {
                                 e.stopPropagation();
                                 onEdit(event);
@@ -323,11 +325,11 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                         title="Promote Event to all Platforms"
                         className="btn btn-primary-greater" disabled={isExpired} onClick={() => onPromote? onPromote(event) : null}
                         style={{marginLeft: "20", fontSize: "16px"}} >
-                        <img src={"/icons8-play-50.png"} style={{
+                        <img src={!event.is_locked ? "/icons8-play-50.png" : "/icons8-progress-64.png"} style={{
                             width: "24px",
                             height: "24px"
                         }}/>
-                        <b>Promote</b>
+                        <b>{event.is_locked ? `Track....` : `Promote`}</b>
                     </button>
                 )}
 
