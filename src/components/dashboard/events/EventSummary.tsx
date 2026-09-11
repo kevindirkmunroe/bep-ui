@@ -4,13 +4,9 @@ import {EventSummaryProps} from "./eventDetailTypes.interface";
 import {getEventStatus, getIsExpired} from "./EventStatus";
 import {api} from "../../../utils/api";
 import {PlatformData} from "./platforms/platformTypes.interface";
-import RestoreEventModal from "./RestoreEventModal";
-import RecycleEventModal from "./RecycleEventModal";
 import {FaCircleExclamation} from "react-icons/fa6";
 
 import './eventSummary.css';
-import Modal from "../../Modal";
-import ReadOnlyViewEventForm from "../ReadOnlyViewEventForm";
 
 const overlayStyle = {
     position: "fixed" as const,
@@ -35,11 +31,8 @@ const modalStyle = {
 export function EventSummary({ event, readOnly = false, reload, showRedo= false, showAsHeader=false, onEdit, onPromote }: EventSummaryProps) {
 
     const [showConfirm, setShowConfirm] = useState(false);
-    const [showRestoreModal, setShowRestoreModal] = useState(false);
-    const [showRecycleModal, setShowRecycleModal] = useState(false);
     const [imgSrc, setImgSrc] = useState("/icons8-delete-30.png");
     const [showMoreActions, setShowMoreActions] = useState(false);
-    const [showReadOnlyEventModal, setShowReadOnlyEventModal] = useState(false);
     const [expanded, setExpanded] = useState(false);
 
     const getNewestPublishDate = (platforms: PlatformData[]): Date | undefined => {
@@ -215,18 +208,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     </div>
                 )}
 
-                {/* Modal for read-only Event viewing */}
-                {showReadOnlyEventModal && (
-                    <Modal onClose={() => setShowReadOnlyEventModal(false)}>
-                        <ReadOnlyViewEventForm
-                            event={event || undefined}
-                            onClose={() => {
-                                setShowReadOnlyEventModal(false);
-                            }}
-                        />
-                    </Modal>
-                )}
-
             </div>
             <div style={{width: "60%", display: "flex", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
                 {canEdit && onEdit && !isExpired && (
@@ -356,9 +337,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                 )}
                 {isExpired && !readOnly && (
                     <>
-                        <button className="btn btn-primary" onClick={() => setShowRestoreModal(true)}>
-                            <img src={"/icons8-redo-48.png"} style={{width: "24px", height: "24px"}}/>Restore
-                        </button>
                         <button className="btn btn-danger"
                                 onClick={(e) => {
                                     e.stopPropagation();
@@ -396,37 +374,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                             </div>
                         </div>
                     </div>
-                )}
-                {showRestoreModal && (
-                    <RestoreEventModal
-                        name={event.title}
-                        onCancel={() => setShowRestoreModal(false)}
-                        onRestore={async (newDate) => {
-                            console.log(`[EventSummary] restore event=${JSON.stringify(event)}`);
-
-                            await api.patch(`/events/${event.event_id}/restore`, {
-                                start_date: newDate
-                            });
-
-                            setShowRestoreModal(false);
-                            await reload?.();
-                        }}
-                    />
-                )}
-                {showRecycleModal && (
-                    <RecycleEventModal
-                        name={event.title}
-                        onCancel={() => setShowRecycleModal(false)}
-                        onRecycle={async (newDate) => {
-                            await api.post(`/events/${event.event_id}/clone`, {
-                                start_date: newDate
-                            });
-
-                            setShowRecycleModal(false);
-                            window.location.reload();
-                            await reload?.();
-                        }}
-                    />
                 )}
             </div>
         </div>

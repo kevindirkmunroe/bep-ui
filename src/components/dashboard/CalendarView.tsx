@@ -1,14 +1,9 @@
 import React, { useMemo, useState } from "react";
-import CreateEditEventForm from "./CreateEditEventForm";
 import './calendar.css';
 import {EventDetail} from "./events/eventDetailTypes.interface";
 import {useOutletContext} from "react-router-dom";
 import {getEventStatus} from "./events/EventStatus";
-import {isOlderThanToday} from "../../utils/DateTime";
 import { useParams } from "react-router-dom";
-import RecycleEventModal from "./events/RecycleEventModal";
-import RestoreEventModal from "./events/RestoreEventModal";
-import {api} from "../../utils/api";
 
 interface Event {
     event_id: number;
@@ -45,11 +40,6 @@ export default function CalendarView() {
     const { state } = useParams<{ state: string }>();
 
     const [currentDate, setCurrentDate] = useState(new Date());
-    const [selectedEvent, setSelectedEvent] = useState<EventDetail | null>(null);
-    const [restoreEvent, setRestoreEvent] = useState<EventDetail | null>(null);
-    const [recycleEvent, setRecycleEvent] = useState<EventDetail | null>(null);
-    const [showRecycleModal, setShowRecycleModal] = useState<boolean>(false);
-    const [showRestoreModal, setShowRestoreModal] = useState<boolean>(false);
 
     function isOlderThanToday(date: string) {
         return new Date(date) < new Date();
@@ -114,17 +104,6 @@ export default function CalendarView() {
     const editEvent = (event: EventDetail) => {
         if (state === "active" || state === "events") {
             setEditingEvent(event);
-            setSelectedEvent(true);
-        }
-
-        if (state === "submitted") {
-            setRecycleEvent(event);
-            setShowRecycleModal(true);
-        }
-
-        if (state === "expired") {
-            setRestoreEvent(event);
-            setShowRestoreModal(true);
         }
     };
 
@@ -191,44 +170,6 @@ export default function CalendarView() {
                     {cells}
                 </div>
             </div>
-
-            {showRecycleModal && (
-                <RecycleEventModal
-                    name={recycleEvent?.title}
-                    onCancel={() => {
-                        console.log("closing recycle modal");
-
-                        setSelectedEvent(null);
-                        setShowRecycleModal(false)
-                    }}
-                    onRecycle={async (newDate) => {
-                        console.log(`[CalendarView] recycle selectedEvent=${JSON.stringify(selectedEvent)}`);
-                        await api.post(`/events/${recycleEvent?.event_id}/clone`, {
-                            start_date: newDate
-                        });
-
-                        setShowRecycleModal(false);
-                        window.location.reload();
-                        await reload?.();
-                    }}
-                />
-            )}
-
-            {showRestoreModal && (
-                <RestoreEventModal
-                    name={restoreEvent?.title}
-                    onCancel={() => setShowRestoreModal(false)}
-                    onRestore={async (newDate) => {
-                        console.log(`[CalendarView] restore selectedEvent=${JSON.stringify(selectedEvent)}`);
-                        await api.patch(`/events/${restoreEvent?.event_id}/restore`, {
-                            start_date: newDate
-                        });
-
-                        setShowRestoreModal(false);
-                        await reload?.();
-                    }}
-                />
-            )}
         </>
     );
 }
