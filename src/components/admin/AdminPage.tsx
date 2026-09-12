@@ -1,5 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { api } from "../../utils/api";
+import Modal from "../Modal";
+import FacebookURLInputForm from "../dashboard/FacebookURLInputForm";
+import PromoteFulfillmentPanel from "../dashboard/events/PromoteFulfillmentPanel";
+import {ProgressBar} from "../dashboard/events/platforms/ProgressBar";
+import {PlatformList} from "../dashboard/events/platforms/PlatformList";
 
 interface InviteRequest {
     request_id: number;
@@ -25,6 +30,7 @@ export default function AdminPage() {
 
     const [inviteRequests, setInviteRequests] = useState<InviteRequest[]>([]);
     const [proOrders, setProOrders] = useState<ProOrder[]>([]);
+    const [showFulfillOrder, setShowFulfillOrder] = useState(false);
 
     const loadInviteRequests = async () => {
         const { data } = await api.get<InviteRequest[]>(
@@ -74,6 +80,20 @@ export default function AdminPage() {
 
     return (
         <div style={{padding: "30px", textAlign: "left"}}>
+            {showFulfillOrder && (
+                <Modal onClose={() => setShowFulfillOrder(false)}>
+                    <PromoteFulfillmentPanel title={"ADMIN"}>
+                        TODO: fulfillment map onclick eventId
+                        show DIY view of event.
+                        {/*<ProgressBar platforms={event.platforms}/>*/}
+                        {/*<PlatformList*/}
+                        {/*    extensionInstalled={extensionInstalled}*/}
+                        {/*    event={event}*/}
+                        {/*    reload={loadEvent}*/}
+                        {/*    updatePlatformStatus={updatePlatformStatus}/>*/}
+                    </PromoteFulfillmentPanel>
+                </Modal>
+            )}
             <h2 style={{backgroundColor: "#E5E5E5"}}>/ Invite Requests</h2>
             <table
                 style={{
@@ -168,13 +188,16 @@ export default function AdminPage() {
                         <td>{order.created_at ? new Date(order.created_at).toISOString().split('T')[0] : "---"}</td>
                         <td>
                             {!order.order_fulfilled_at ? (
-                                <button
-                                    style={{marginLeft: "6px"}}
-                                    disabled={!order.payment_completed_at}
-                                    onClick={() => onMarkFulfilled(order)}
-                                >
-                                    🤝&nbsp;Fulfill
-                                </button>
+                                <>
+                                    <button
+                                        style={{marginLeft: "6px"}}
+                                        disabled={!order.payment_completed_at}
+                                        onClick={() => setShowFulfillOrder(true)}
+                                    >
+                                        🤝&nbsp;Fulfill
+                                    </button>
+                                </>
+
                             ) : (<>---</>)
                             }
                         </td>

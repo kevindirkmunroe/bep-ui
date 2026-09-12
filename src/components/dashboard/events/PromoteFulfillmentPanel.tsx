@@ -14,7 +14,13 @@ export default function PromoteFulfillmentPanel({
                 {title === 'DIY' ?
                 <img src={"/icons8-tools-30.png"} style={{ width: "18px", height: "18px"}}/>
                 :
-                <img src={"/icons8-robot-48.png"} style={{ width: "18px", height: "18px"}}/>
+                    title === 'ADMIN' ?
+                        <>
+                            <img src={"/icons8-worker-48.png"} style={{ width: "18px", height: "18px"}}/>
+                            <img src={"/icons8-tools-30.png"} style={{ width: "18px", height: "18px"}}/>
+                        </>
+                        :
+                        <img src={"/icons8-robot-48.png"} style={{ width: "18px", height: "18px"}}/>
                 }
                 &nbsp;{title}
             </div>

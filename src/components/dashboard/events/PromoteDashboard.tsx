@@ -186,7 +186,7 @@ export default function PromoteDashboard() {
                         </div>
                     </div>
                     {
-                        eventOrder?.promote_selection === ServiceSelectionStatus.PRO && !user.isAdmin &&
+                        eventOrder?.promote_selection === ServiceSelectionStatus.PRO &&
                         (
                             <>
                                 <PromoteFulfillmentPanel title={"PRO"}>
