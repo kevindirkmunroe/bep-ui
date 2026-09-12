@@ -7,6 +7,7 @@ import {PlatformData} from "./platforms/platformTypes.interface";
 import {FaCircleExclamation} from "react-icons/fa6";
 
 import './eventSummary.css';
+import {formatDateLocal, formatDateTimeLocal} from "../../../utils/DateTime";
 
 const overlayStyle = {
     position: "fixed" as const,
@@ -136,9 +137,8 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
             <div
                 style={{
                     position: "relative",
-                    marginRight: "22px",
-                    width: "80%",
-                    paddingLeft: "36px",
+                    width: "100%",
+                    paddingLeft: "8px",
                     boxSizing: "border-box",
                     backgroundColor:
                         status === "submitted" || isExpired
@@ -155,7 +155,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     }}>
                     {/* Column 1: toggle */}
                     <button
-                        style={{marginLeft: "8px"}}
+                        style={{marginLeft: "8px", paddingRight: "16px"}}
                         type="button"
                         onClick={() => setExpanded(prev => !prev)}
                         className="event-summary-toggle"
@@ -163,8 +163,14 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                         {expanded ? "▼" : "▲"}
                     </button>
 
+                    {/* Column 2: date */}
+                    <div style={{fontSize: "14px", fontFamily: "Arial, sans-serif", alignItems: "flex-start"}}>
+                        {formatDateLocal(event.start_datetime)}
+                    </div>
+
+
                     {/* Column 2: title */}
-                    <div className="event-summary-title">
+                    <div style={{fontSize: "14px", fontFamily: "Arial, sans-serif"}} className="event-summary-title">
                         {event.title}
                     </div>
 

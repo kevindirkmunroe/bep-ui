@@ -82,8 +82,9 @@
 
 .event-summary-header {
     display: grid;
-    grid-template-columns: 14px minmax(0, 0.9fr) 24px;
-    column-gap: 3px;    align-items: center;
+    grid-template-columns: 14px 80px minmax(0, 0.95fr) 24px;
+    column-gap: 6px;
+    align-items: center;
     width: 100%;
 }
 
@@ -99,6 +100,7 @@
 
 .event-summary-title {
     text-align: left;
+    margin-left: 12px;
     min-width: 0;
     line-height: 1.25;
 }

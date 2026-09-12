@@ -34,7 +34,7 @@ export default function PromoteCompleteDashboard(){
     return (
         <div style={{ display: "flex", gap: "2px" }}>
             {/* LEFT: Carousel */}
-            <div style={{ flex: "0 0 300px" }}>
+            <div style={{ flex: "0 0 200px" }}>
                 <ImageCarousel />
             </div>
             {/* RIGHT: Receipts */}

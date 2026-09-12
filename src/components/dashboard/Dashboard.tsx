@@ -219,7 +219,7 @@ export default function Dashboard() {
             {/* LEFT: Carousel */}
             <div
                 style={{
-                    flex: "0 0 300px",
+                    flex: "0 0 200px",
                     minHeight: 0,
                     overflow: "hidden"
                 }}
@@ -363,10 +363,6 @@ export default function Dashboard() {
                         </div>
                     </div>
 
-                    <EventBreadcrumb eventTitle="" eventCount={getActiveEventCount()}/>
-                    {/* ROUTED CONTENT */}
-                    <ViewToggle/>
-
                     <div style={{marginTop: "10px", display: "flex", flexDirection: "column"}}>
                         <div style={{
                             display: "flex",
@@ -375,6 +371,7 @@ export default function Dashboard() {
                             marginBottom: "2px",
                             justifyContent: "space-between"
                         }}>
+                            <EventBreadcrumb eventTitle="" eventCount={getActiveEventCount()}/>
                             <div>
                                 <button className="btn btn-primary-greater"
                                         title="Create New Event"
@@ -382,7 +379,7 @@ export default function Dashboard() {
                                         onClick={() => setShowCreateEventForm(true)}>
                                     <img alt={"wtf"} style={{width: "30px", height: "28px"}}
                                          src={"/icons8-create-50.png"}/>
-                                    <b>Create Event</b>
+                                    <b>Create</b>
                                 </button>
                                 <div className="more-actions">
                                     <button
@@ -423,7 +420,7 @@ export default function Dashboard() {
                                                 strokeLinecap="round"
                                             />
                                         </svg>
-                                        Import Event...
+                                        Import...
                                     </button>
 
                                     {showImportActions && (
@@ -533,6 +530,9 @@ export default function Dashboard() {
                             </div>
                         </div>
                     </div>
+
+                    {/* Toggle views of event list */}
+                    <ViewToggle/>
 
                     {/* EVENTS */}
                     <div className="dashboard-events">

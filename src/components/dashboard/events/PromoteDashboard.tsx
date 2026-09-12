@@ -139,7 +139,7 @@ export default function PromoteDashboard() {
     return (
         <div style={{ display: "flex", gap: "2px" }}>
             {/* LEFT: Carousel */}
-            <div style={{ flex: "0 0 300px" }}>
+            <div style={{ flex: "0 0 200px" }}>
                 <ImageCarousel />
             </div>
             {/* RIGHT: Existing content */}
@@ -185,25 +185,6 @@ export default function PromoteDashboard() {
                             }
                         </div>
                     </div>
-
-                    {
-                        user.isAdmin && (
-                            <>
-                                <div className="promote-panel-title">
-                                    <img src={"/icons8-robot-48.png"} style={{ width: "18px", height: "18px"}}/>
-                                    &nbsp;PRO&nbsp;
-                                    <img src={"/icons8-worker-48.png"} style={{marginTop: "2px", width: "18px", height: "18px"}}/>
-                                    &nbsp;Worker
-                                </div>
-                                <ProgressBar platforms={event.platforms}/>
-                                <PlatformList
-                                    extensionInstalled={extensionInstalled}
-                                    event={event}
-                                    reload={loadEvent}
-                                    updatePlatformStatus={updatePlatformStatus}/>
-                            </>
-                        )
-                    }
                     {
                         eventOrder?.promote_selection === ServiceSelectionStatus.PRO && !user.isAdmin &&
                         (

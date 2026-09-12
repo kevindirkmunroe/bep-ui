@@ -42,7 +42,7 @@ export default function EventBreadcrumb({
                 display: "flex",
                 gap: "8px",
                 alignItems: "center",
-                marginBottom: "20px"
+                marginBottom: "20px",
             }}
         >
             <Link to={eventsPath}>
