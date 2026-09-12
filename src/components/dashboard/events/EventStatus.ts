@@ -1,6 +1,6 @@
 import {EventDetail} from "./eventDetailTypes.interface";
 
-export function getEventStatus(event: EventDetail) {
+export function getEventStatusFromPlatforms(event: EventDetail) {
     const platforms = event.platforms || [];  // 👈 fix
     const statuses = platforms.map(p => p.status);
 

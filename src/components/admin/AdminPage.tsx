@@ -74,8 +74,6 @@ export default function AdminPage() {
 
     return (
         <div style={{padding: "30px", textAlign: "left"}}>
-            <h1><strong>Admin </strong></h1>
-
             <h2 style={{backgroundColor: "#E5E5E5"}}>/ Invite Requests</h2>
             <table
                 style={{

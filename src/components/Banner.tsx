@@ -37,9 +37,6 @@ export function Banner() {
         navigate("/admin");
     }
 
-    const adminList = import.meta.env.VITE_ADMIN_EMAIL_LIST ?
-        import.meta.env.VITE_ADMIN_EMAIL_LIST.split(',') : [];
-
     const handleChangePassword = async () => {
         setShowForm(true);
     }
@@ -56,6 +53,7 @@ export function Banner() {
     };
 
     return (
+        <>
         <div style={{
             width: "100%",
             padding: "12px 20px",
@@ -124,7 +122,7 @@ export function Banner() {
                     <div style={{marginLeft: '16px', marginRight: '32px', marginTop: "1px", fontSize: "14px", cursor: "pointer"}}>
                         <p onClick={handleLogout}>Logout</p>
                     </div>
-                    {adminList.includes(user.email) && (
+                    {user.isAdmin && (
                         <div
                             data-tooltip-id="my-tooltip"
                             data-tooltip-content="How'd YOU get here?"
@@ -152,5 +150,7 @@ export function Banner() {
                 </div>
             )}
         </div>
+            <div>{user?.isAdmin && (<div style={{padding: "8px", borderRadius: '5px', marginBottom: "8px", backgroundColor: "#FFED29"}}><strong style={{color: 'black'}}>Airhorn</strong><b style={{color: "#D2492C"}}>.admin</b></div>) }</div>
+        </>
     );
 }

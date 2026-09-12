@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {Outlet, useParams} from "react-router-dom";
 import CreateEditEventForm from "./CreateEditEventForm";
-import {getEventStatus} from "./events/EventStatus";
+import {getEventStatusFromPlatforms} from "./events/EventStatus";
 import {EventbriteEventDetail, EventDetail, FacebookEventDetail} from "./events/eventDetailTypes.interface";
 import Modal from "../Modal";
 import ImageCarousel from "../ImageCarousel";
@@ -145,21 +145,21 @@ export default function Dashboard() {
 
     function getActiveEventCount(){
         const activeEvents = (events || []).filter(e => {
-            return getEventStatus(e) !== "submitted" && !isOlderThanToday(e.start_datetime);;
+            return getEventStatusFromPlatforms(e) !== "submitted" && !isOlderThanToday(e.start_datetime);;
         });
         return activeEvents.length;
     }
 
     function getSubmittedEventCount(){
         const submittedEvents = (events || []).filter(e => {
-            return getEventStatus(e) === "submitted";
+            return getEventStatusFromPlatforms(e) === "submitted";
         });
         return submittedEvents.length;
     }
 
     function getExpiredEventCount(){
         const submittedEvents = (events || []).filter(e => {
-            return getEventStatus(e) !== "submitted" && isOlderThanToday(e.start_datetime);;
+            return getEventStatusFromPlatforms(e) !== "submitted" && isOlderThanToday(e.start_datetime);;
         });
         return submittedEvents.length;
     }

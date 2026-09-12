@@ -131,6 +131,9 @@ export default function PromoteDashboard() {
     );
 
     const { user } = useUser();
+    console.log(`[PromoteDashboard] user = ${JSON.stringify(user)}`);
+    if(!user) return <div>Error retrieving User, please Login again.</div>
+
     const extensionUrl = import.meta.env.VITE_CHROME_WEB_STORE_EXTENSION_URL;
 
     return (
@@ -182,49 +185,52 @@ export default function PromoteDashboard() {
                             }
                         </div>
                     </div>
-                    {/*<div>*/}
-                    {/*    <div style={{display: "flex", flexDirection: "row"}}>*/}
-                    {/*        <div style={{*/}
-                    {/*            flex: 2,*/}
-                    {/*            border: "6px solid #E27C68",*/}
-                    {/*            borderRadius: "14px",*/}
-                    {/*            boxShadow: "0 4px 14px rgba(0, 0, 0, 0.07)",*/}
-                    {/*            marginTop: "4px",*/}
-                    {/*            marginRight: "30px",*/}
-                    {/*            marginBottom: "26px"*/}
-                    {/*        }}>*/}
-                    {/*            <EventSummary event={event}*/}
-                    {/*                          readOnly={true}*/}
-                    {/*                          showRedo={false}*/}
-                    {/*                          showAsHeader={true}/>*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
+
                     {
-                        eventOrder?.promote_selection === ServiceSelectionStatus.PRO &&
-                        (
-                            <PromoteFulfillmentPanel title={"PRO"}>
-                                <div style={{padding: "16px"}}>
-                                    <h2>This Event currently being promoted by&nbsp;
-                                    <b>Airhorn.</b><strong style={{color: "#D2492C"}}>events</strong> <b>PRO</b>
-                                    </h2>
-                                    <br/>
-                                    <Link to={`promoted`}>
-                                        Check Progress
-                                    </Link>
+                        user.isAdmin && (
+                            <>
+                                <div className="promote-panel-title">
+                                    <img src={"/icons8-robot-48.png"} style={{ width: "18px", height: "18px"}}/>
+                                    &nbsp;PRO&nbsp;
+                                    <img src={"/icons8-worker-48.png"} style={{marginTop: "2px", width: "18px", height: "18px"}}/>
+                                    &nbsp;Worker
                                 </div>
-                            </PromoteFulfillmentPanel>
+                                <ProgressBar platforms={event.platforms}/>
+                                <PlatformList
+                                    extensionInstalled={extensionInstalled}
+                                    event={event}
+                                    reload={loadEvent}
+                                    updatePlatformStatus={updatePlatformStatus}/>
+                            </>
                         )
                     }
-                    {eventOrder?.promote_selection === ServiceSelectionStatus.DIY && (
+                    {
+                        eventOrder?.promote_selection === ServiceSelectionStatus.PRO && !user.isAdmin &&
+                        (
+                            <>
+                                <PromoteFulfillmentPanel title={"PRO"}>
+                                    <div style={{padding: "16px"}}>
+                                        <h2>This Event currently being promoted by&nbsp;
+                                            <b>Airhorn.</b><strong style={{color: "#D2492C"}}>events</strong> <b>PRO</b>
+                                        </h2>
+                                        <br/>
+                                        <Link to={`promoted`}>
+                                            Check Progress
+                                        </Link>
+                                    </div>
+                                </PromoteFulfillmentPanel>
+                            </>
+                        )
+                    }
+                    {( eventOrder?.promote_selection === ServiceSelectionStatus.DIY )&& (
                         <>
-                        <PromoteFulfillmentPanel title={"DIY"}>
-                            <ProgressBar platforms={event.platforms}/>
-                            <PlatformList
-                                extensionInstalled={extensionInstalled}
-                                event={event}
-                                reload={loadEvent}
-                                updatePlatformStatus={updatePlatformStatus}/>
+                            <PromoteFulfillmentPanel title={"DIY"}>
+                                <ProgressBar platforms={event.platforms}/>
+                                <PlatformList
+                                    extensionInstalled={extensionInstalled}
+                                    event={event}
+                                    reload={loadEvent}
+                                    updatePlatformStatus={updatePlatformStatus}/>
                             </PromoteFulfillmentPanel>
                         </>
                     )}

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 import {EventSummaryProps} from "./eventDetailTypes.interface";
-import {getEventStatus, getIsExpired} from "./EventStatus";
+import {getEventStatusFromPlatforms, getIsExpired} from "./EventStatus";
 import {api} from "../../../utils/api";
 import {PlatformData} from "./platforms/platformTypes.interface";
 import {FaCircleExclamation} from "react-icons/fa6";
@@ -60,7 +60,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
         await reload?.();
     };
 
-    const status = getEventStatus(event);
+    const status = getEventStatusFromPlatforms(event);
     const isExpired = getIsExpired(event);
     const canEdit = status === "not_started" || status === "in_progress";
 

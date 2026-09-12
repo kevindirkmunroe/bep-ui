@@ -14,6 +14,9 @@ export default function LoginPage() {
     const { setUser } = useUser();
     const navigate = useNavigate();
 
+    const adminList = import.meta.env.VITE_ADMIN_EMAIL_LIST ?
+        import.meta.env.VITE_ADMIN_EMAIL_LIST.split(',') : [];
+
     const passwordInputStyle = {
         flex: 1,
         border: "none",
@@ -53,7 +56,8 @@ export default function LoginPage() {
                 email: res.data.email,
                 firstName: res.data.firstName,
                 company: res.data.company,
-                eventCount: 0
+                eventCount: 0,
+                isAdmin: adminList.includes(res.data.email)
             });
             // If password is not bcrypt hashed, it is temporary. Redirect user to password reset.
             navigate(`/dashboard/${res.data.userId}/events`);

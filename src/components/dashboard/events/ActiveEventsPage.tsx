@@ -1,7 +1,7 @@
 import {useNavigate, useOutletContext} from "react-router-dom";
 import {EventDetail} from "./eventDetailTypes.interface";
 import {EventSummary} from "./EventSummary";
-import {getEventStatus} from "./EventStatus";
+import {getEventStatusFromPlatforms} from "./EventStatus";
 import {isOlderThanToday} from "../../../utils/DateTime";
 import {useUser} from "../../../UserContext";
 
@@ -14,7 +14,7 @@ export function ActiveEventsPage() {
     const { setEditingEvent } = useOutletContext<{ setEditingEvent:  React.Dispatch<React.SetStateAction<EventDetail | null>> }>();
 
     const activeEvents = (events || []).filter(e => {
-        return getEventStatus(e) !== "submitted" && !isOlderThanToday(e.start_datetime);
+        return getEventStatusFromPlatforms(e) !== "submitted" && !isOlderThanToday(e.start_datetime);
     });
 
     const navigate = useNavigate();

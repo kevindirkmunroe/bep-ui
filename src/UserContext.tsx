@@ -8,6 +8,7 @@ export interface UserData {
     email: string;
     company?: string;
     eventCount: number;
+    isAdmin: boolean;
 }
 
 interface UserContextType {

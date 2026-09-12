@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import './calendar.css';
 import {EventDetail} from "./events/eventDetailTypes.interface";
 import {useOutletContext} from "react-router-dom";
-import {getEventStatus} from "./events/EventStatus";
+import {getEventStatusFromPlatforms} from "./events/EventStatus";
 import { useParams } from "react-router-dom";
 
 interface Event {
@@ -57,15 +57,15 @@ export default function CalendarView() {
         switch(state){
             case "events":
                 return (events || []).filter(e => {
-                    return getEventStatus(e) !== "submitted" && !isOlderThanToday(e.start_datetime);
+                    return getEventStatusFromPlatforms(e) !== "submitted" && !isOlderThanToday(e.start_datetime);
                 });
             case "submitted":
                 return (events || []).filter(e => {
-                    return getEventStatus(e) === "submitted";
+                    return getEventStatusFromPlatforms(e) === "submitted";
                 })
             case "expired":
                 return (events || []).filter(e => {
-                    return getEventStatus(e) !== "submitted" && isOlderThanToday(e.start_datetime);
+                    return getEventStatusFromPlatforms(e) !== "submitted" && isOlderThanToday(e.start_datetime);
                 })
         }
 
