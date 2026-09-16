@@ -1,0 +1,60 @@
+.order-fulfillment-panel {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    width: 100%;
+    min-height: 500px;
+}
+
+.fulfillment-orders-pane {
+    border-right: 1px solid #ddd;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.fulfillment-platforms-pane {
+    padding: 0 20px;
+    min-width: 0;
+}
+
+.fulfillment-orders-pane h3 {
+    margin: 0 0 12px;
+}
+
+.fulfillment-order {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 6px;
+
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+
+    text-align: left;
+    cursor: pointer;
+}
+
+.fulfillment-order:hover {
+    background: #f7f7f7;
+}
+
+.fulfillment-order.selected {
+    border-left: 8px solid #D2492C;
+    background: #fafafa;
+}
+
+.fulfillment-order-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.fulfillment-order-number {
+    font-size: 12px;
+    color: #777;
+}
+
+.no-order-selected {
+    padding: 40px;
+    text-align: center;
+    color: #777;
+}

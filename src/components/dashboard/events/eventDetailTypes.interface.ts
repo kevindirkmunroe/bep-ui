@@ -1,6 +1,5 @@
 import {PlatformData} from "./platforms/platformTypes.interface";
 import React from "react";
-import {ServiceSelectionStatus} from "./payments/ServiceSelectionPage";
 
 export interface EventDetail {
     name: string;

@@ -2,7 +2,7 @@ import {PlatformRow} from "./PlatformRow";
 import {Platform, PlatformData, PlatformStatus} from "./platformTypes.interface";
 import {EventDetail} from "../eventDetailTypes.interface";
 
-export function PlatformList(
+export function     PlatformList(
     {extensionInstalled, event, reload, updatePlatformStatus}:
         {extensionInstalled: boolean;
          event: EventDetail;

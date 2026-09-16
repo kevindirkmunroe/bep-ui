@@ -56,7 +56,7 @@ export default function PromoteDashboard() {
         }
     };
 
-    const [extensionInstalled, setExtensionInstalled] = useState(false);
+    const [extensionInstalled , setExtensionInstalled] = useState(false);
     const [extensionVersion, setExtensionVersion] = useState("Unknown");
 
     useEffect(() => {

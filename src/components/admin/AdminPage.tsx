@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../utils/api";
-import Modal from "../Modal";
-import FacebookURLInputForm from "../dashboard/FacebookURLInputForm";
-import PromoteFulfillmentPanel from "../dashboard/events/PromoteFulfillmentPanel";
-import {ProgressBar} from "../dashboard/events/platforms/ProgressBar";
-import {PlatformList} from "../dashboard/events/platforms/PlatformList";
+import {PlatformData} from "../dashboard/events/platforms/platformTypes.interface";
+import OrderFulfillmentPanel from "./OrderFulfillmentPage";
+import {EventDetail} from "../dashboard/events/eventDetailTypes.interface";
 
 interface InviteRequest {
     request_id: number;
@@ -15,7 +13,7 @@ interface InviteRequest {
     invite_code: string;
 }
 
-interface ProOrder {
+export interface ProOrder {
     email: string;
     order_id: string;
     image: string;
@@ -24,13 +22,13 @@ interface ProOrder {
     created_at: string;
     payment_completed_at: string;
     order_fulfilled_at: string;
+    platforms: PlatformData[];
 }
 
 export default function AdminPage() {
 
     const [inviteRequests, setInviteRequests] = useState<InviteRequest[]>([]);
     const [proOrders, setProOrders] = useState<ProOrder[]>([]);
-    const [showFulfillOrder, setShowFulfillOrder] = useState(false);
 
     const loadInviteRequests = async () => {
         const { data } = await api.get<InviteRequest[]>(
@@ -72,28 +70,8 @@ export default function AdminPage() {
         );
     };
 
-    const onMarkFulfilled = async (order: ProOrder) => {
-        await api.put("/users/fulfill-order", {
-            order_id: order.order_id,
-        });
-    };
-
     return (
         <div style={{padding: "30px", textAlign: "left"}}>
-            {showFulfillOrder && (
-                <Modal onClose={() => setShowFulfillOrder(false)}>
-                    <PromoteFulfillmentPanel title={"ADMIN"}>
-                        TODO: fulfillment map onclick eventId
-                        show DIY view of event.
-                        {/*<ProgressBar platforms={event.platforms}/>*/}
-                        {/*<PlatformList*/}
-                        {/*    extensionInstalled={extensionInstalled}*/}
-                        {/*    event={event}*/}
-                        {/*    reload={loadEvent}*/}
-                        {/*    updatePlatformStatus={updatePlatformStatus}/>*/}
-                    </PromoteFulfillmentPanel>
-                </Modal>
-            )}
             <h2 style={{backgroundColor: "#E5E5E5"}}>/ Invite Requests</h2>
             <table
                 style={{
@@ -145,68 +123,9 @@ export default function AdminPage() {
 
             <br/>
             <h2 style={{backgroundColor: "#E5E5E5"}}>/ PRO Orders</h2>
-            <table
-                style={{
-                    width: "100%",
-                    borderCollapse: "collapse"
-                }}
-            >
-                <thead>
-                <tr style={{fontSize: "16px"}}>
-                    <th>User Email</th>
-                    <th>Event Title</th>
-                    <th>Event ID</th>
-                    <th>Order ID</th>
-                    <th>Image (S3)</th>
-                    <th>Create Date</th>
-                </tr>
-                </thead>
+            <OrderFulfillmentPanel orders={proOrders} />
 
-                <tbody>
-                {proOrders && proOrders.map(order => (
-                    <tr style={{fontSize: "14px", verticalAlign: "top", backgroundColor: order.order_fulfilled_at ? '' : "lightyellow"}}
-                        key={order.event_id}>
-
-                        <td>{order.email}</td>
-                        <td style={{width: "35%"}}>{order.title}</td>
-                        <td>{order.event_id}</td>
-                        <td style={{textAlign: "center"}}>{order.order_id}</td>
-                        <td>{order.image ? (
-                            <a
-                                href={order.image}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <img alt={"No Image"} style={{borderRadius: "6px", maxWidth: "80px", maxHeight: "48px"}} src={order.image}/>
-                            </a>
-                        ) : (
-                            <>---</>
-                        )}
-
-                        </td>
-
-                        <td>{order.created_at ? new Date(order.created_at).toISOString().split('T')[0] : "---"}</td>
-                        <td>
-                            {!order.order_fulfilled_at ? (
-                                <>
-                                    <button
-                                        style={{marginLeft: "6px"}}
-                                        disabled={!order.payment_completed_at}
-                                        onClick={() => setShowFulfillOrder(true)}
-                                    >
-                                        🤝&nbsp;Fulfill
-                                    </button>
-                                </>
-
-                            ) : (<>---</>)
-                            }
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-
-            {inviteRequests.length === 0 && (
+            {inviteRequests?.length === 0 && (
                 <p>No pending Orders to fulfill.</p>
             )}
         </div>
