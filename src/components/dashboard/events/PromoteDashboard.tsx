@@ -16,6 +16,7 @@ import {EventOrderManager} from "../../../workflows/payment/EventOrderManager";
 import {EventOrder} from "../../../workflows/payment/EventOrder";
 import PromoteFulfillmentPanel from "./PromoteFulfillmentPanel";
 import {LiveStripeSessionManager} from "../../../workflows/payment/LiveStripeSessionManager";
+import DashboardTabs from "../../DashboardTabs";
 
 
 export default function PromoteDashboard() {
@@ -164,6 +165,8 @@ export default function PromoteDashboard() {
                             &nbsp;My Event / Promote
                         </div>
                     </div>
+                    <DashboardTabs/>
+
 
                     <div style={{display: "flex", flexDirection: "row", alignItems: "right"}}>
                         <div style={{flex: "0 0 80%"}}>

@@ -6,6 +6,7 @@ import {useParams} from "react-router-dom";
 import {EventDetail} from "./eventDetailTypes.interface";
 import {EventCompletionLog} from "./EventCompletionLog";
 import {useUser} from "../../../UserContext";
+import DashboardTabs from "../../DashboardTabs";
 
 export default function PromoteCompleteDashboard(){
 
@@ -55,9 +56,11 @@ export default function PromoteCompleteDashboard(){
                             alignContent: "left",
                             alignItems: "center"
                         }}>
-                            &nbsp;My Event / Live
+                            &nbsp;My Event / Results
                         </div>
                     </div>
+                    <DashboardTabs/>
+
                     <EventBreadcrumb eventTitle={event?.title}
                                      deliveryCount={submittedPlatforms.length}
                                      eventCount={user?.eventCount || 0}/>

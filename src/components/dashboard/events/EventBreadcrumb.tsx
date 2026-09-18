@@ -58,7 +58,7 @@ export default function EventBreadcrumb({
                         objectFit: "contain",
                     }}
                 />
-                    <b>All Events</b>
+                    <b>All</b>
                     <strong style={{fontSize: "14px"}}>({eventCount})</strong>
                 </div>
             </Link>
@@ -69,7 +69,7 @@ export default function EventBreadcrumb({
 
                 {onEventPage ? (
                     <>
-                        <strong>{truncateString(eventTitle, BREADCRUMB_MAX_STEP_LENGTH) ?? "Event"}</strong>
+                        <strong><i>{truncateString(eventTitle, BREADCRUMB_MAX_STEP_LENGTH) ?? "Event"}</i></strong>
                         <span>&gt;</span>
                         <Link to={`${eventsPath}/${eventId}/promoted`}>
                             <b>Platforms</b>
@@ -80,7 +80,7 @@ export default function EventBreadcrumb({
                 ) : (
                     <>
                         <Link to={`${eventsPath}/${eventId}`}>
-                            <strong>{truncateString(eventTitle, BREADCRUMB_MAX_STEP_LENGTH) ?? "Event"}</strong>
+                            <strong><i>{truncateString(eventTitle, BREADCRUMB_MAX_STEP_LENGTH) ?? "Event"}</i></strong>
                         </Link>
                     </>
                 )}

@@ -18,6 +18,7 @@ import './dashboard.css';
 import BaseDialog, {DialogState} from "../BaseDialog";
 import EventBreadcrumb from "./events/EventBreadcrumb";
 import {useUser} from "../../UserContext";
+import DashboardTabs from "../DashboardTabs";
 
 export default function Dashboard() {
     const { userId } = useParams();
@@ -343,7 +344,7 @@ export default function Dashboard() {
                         display: "flex",
                         flexDirection: "row",
                         gap: "20px",
-                        marginBottom: "20px"
+                        marginBottom: "2px"
                     }}>
                         <div className="banner-div" style={{
                             width: "100%",
@@ -362,6 +363,7 @@ export default function Dashboard() {
                             &nbsp;My Events
                         </div>
                     </div>
+                    <DashboardTabs/>
 
                     <div style={{marginTop: "10px", display: "flex", flexDirection: "column"}}>
                         <div style={{
@@ -373,14 +375,6 @@ export default function Dashboard() {
                         }}>
                             <EventBreadcrumb eventTitle="" eventCount={getActiveEventCount()}/>
                             <div>
-                                <button className="btn btn-primary-greater"
-                                        title="Create New Event"
-                                        style={{marginLeft: "4px", fontSize: "16px"}}
-                                        onClick={() => setShowCreateEventForm(true)}>
-                                    <img alt={"wtf"} style={{width: "30px", height: "28px"}}
-                                         src={"/icons8-create-50.png"}/>
-                                    <b>Create</b>
-                                </button>
                                 <div className="more-actions">
                                     <button
                                         type="button"
@@ -421,6 +415,14 @@ export default function Dashboard() {
                                             />
                                         </svg>
                                         Import...
+                                    </button>
+                                    <button className="btn btn-primary-greater"
+                                            title="Create New Event"
+                                            style={{marginLeft: "4px", fontSize: "16px"}}
+                                            onClick={() => setShowCreateEventForm(true)}>
+                                        <img alt={"wtf"} style={{width: "30px", height: "28px"}}
+                                             src={"/icons8-create-50.png"}/>
+                                        <b>Create</b>
                                     </button>
 
                                     {showImportActions && (

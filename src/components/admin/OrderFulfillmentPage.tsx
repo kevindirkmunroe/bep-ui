@@ -120,10 +120,9 @@ export default function OrderFulfillmentPanel({   orders,
                 </div>
                 { event && !selectedOrder && (
                     <div className="no-order-selected">
-                        Select an order
+                        Select Order
                     </div>
                 )}
-
                 {event && selectedOrder && (
                     <PromoteFulfillmentPanel title="DIY">
                         <ProgressBar
