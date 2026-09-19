@@ -1,5 +1,5 @@
 import { NavLink, useParams } from "react-router-dom";
-import "./DashboardTabs.css";
+import "./dashboardTabs.css";
 
 export default function DashboardTabs() {
     const { userId } = useParams<{ userId: string }>();
