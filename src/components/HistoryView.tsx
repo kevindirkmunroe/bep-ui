@@ -84,25 +84,29 @@ export default function HistoryView() {
                             <div className="history-list-header">
                                 Event History ({events.length})
                             </div>
-                            {events.map(event => (
-                                <button
-                                    key={event.event_id}
-                                    className={
-                                        "history-event-row " +
-                                        (selectedEvent?.event_id === event.event_id
-                                            ? "selected"
-                                            : "")
-                                    }
-                                    onClick={() => setSelectedEvent(event)}
-                                >
-                                    <span className="history-event-title">
-                                        {event.title}
-                                    </span>
-                                    <span className="history-event-date">
-                                        {new Date(event.start_datetime).toLocaleDateString()}
-                                    </span>
-                                </button>
-                            ))}
+
+                            <div className="history-event-list-scroll">
+                                {events.map(event => (
+                                    <button
+                                        key={event.event_id}
+                                        className={
+                                            "history-event-row " +
+                                            (selectedEvent?.event_id === event.event_id
+                                                ? "selected"
+                                                : "")
+                                        }
+                                        onClick={() => setSelectedEvent(event)}
+                                    >
+                                        <span className="history-event-title">
+                                            {event.title}
+                                        </span>
+
+                                                                <span className="history-event-date">
+                                            {new Date(event.start_datetime).toLocaleDateString()}
+                                        </span>
+                                    </button>
+                                ))}
+                            </div>
                         </div>
 
                         {/* DETAIL */}
