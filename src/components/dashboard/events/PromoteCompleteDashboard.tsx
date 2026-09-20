@@ -41,7 +41,7 @@ export default function PromoteCompleteDashboard(){
             {/* RIGHT: Receipts */}
             <div style={{ flex: 1 }}>
                 <div style={{paddingLeft: 40}}>
-                    <div style={{width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "20px"}}>
+                    <div style={{width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "2px"}}>
                         <div className="banner-div" style={{
                             width: "100%",
                             height: "100px",

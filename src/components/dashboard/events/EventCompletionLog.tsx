@@ -27,13 +27,8 @@ export function EventCompletionLog({ event }: { event: EventDetail }) {
         <div className="completion-log">
             <div className="completion-event-info">
                 <div>
-                    <span style={{fontSize: "18px"}}><b><u>Event ID</u></b></span>
-                    <strong style={{fontSize: "15px"}}>{event.event_id}</strong>
-                </div>
-
-                <div>
-                    <span style={{fontSize: "18px"}}><b><u>Title</u></b></span>
-                    <strong style={{fontSize: "15px"}}>{event.title}</strong>
+                    <strong style={{fontSize: "15px"}}><b>{event.title}</b></strong>
+                    <p style={{fontSize: "14px"}}>{event.event_id}</p>
                 </div>
             </div>
 

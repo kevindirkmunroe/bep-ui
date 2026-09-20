@@ -16,7 +16,7 @@ import PromoteCompleteDashboard from "./components/dashboard/events/PromoteCompl
 import AdminPage from "./components/admin/AdminPage.js";
 import PaymentSuccessPage from "./components/dashboard/events/payments/PaymentSuccessPage.js";
 import PaymentCancelledPage from "./components/dashboard/events/payments/PaymentCancelledPage.js";
-import HistoryTab from "./components/HistoryTab.js";
+import HistoryView from "./components/HistoryView.tsx";
 
 export default function App() {
   return (
@@ -74,7 +74,7 @@ export default function App() {
                   path="/dashboard/:userId/history"
                   element={
                       <ProtectedRoute>
-                          <HistoryTab />
+                          <HistoryView />
                       </ProtectedRoute>
                   }
               />

@@ -240,7 +240,7 @@ export default function Dashboard() {
                 }}>
                 <div
                     style={{
-                        paddingLeft: 40,
+                        paddingLeft: 18,
                         height: "100%",
                         minHeight: 0,
                         overflow: "hidden"
