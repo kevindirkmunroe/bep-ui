@@ -86,7 +86,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
         let pl = null;
         try {
             pl = await buildPayload(event, platform)
-            console.log(`[PlatformRow] payload for DB, ${platform}: ${JSON.stringify(event)}`);
+            //console.log(`[PlatformRow] payload for DB, ${platform}: ${JSON.stringify(event)}`);
         }catch(err){
             console.log(`[PlatformRow] error creating payload for ${platform}: ${err}`);
         }
@@ -122,7 +122,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
             },
             "*"
         );
-
+        updatePlatformStatus(platform, 'in_progress');
         await reload();
     };
 

@@ -1,4 +1,6 @@
 import {useEffect, useState} from "react";
+import { useUser } from "../../UserContext";
+
 import PromoteFulfillmentPanel from "../dashboard/events/PromoteFulfillmentPanel";
 import {ProgressBar} from "../dashboard/events/platforms/ProgressBar";
 import {PlatformList} from "../dashboard/events/platforms/PlatformList";
@@ -15,6 +17,8 @@ interface OrderFulfillmentPanelProps {
 
 export default function OrderFulfillmentPanel({   orders,
                                               }: OrderFulfillmentPanelProps) {
+
+    const userCtx = useUser();
 
     // Work starts with orders...
     const [selectedOrder, setSelectedOrder] =
@@ -46,9 +50,6 @@ export default function OrderFulfillmentPanel({   orders,
     }
 
     const handleLoadEvent = async () : Promise<void> => {
-        // Do Nothing
-        // Here because reusing Platform* objects which need to reload
-        // current event on platform selection. Not needed in Admin mode.
         const res = await api.get(`/events/${selectedOrder.event_id}`);
         setEvent(res.data);
     }
@@ -67,7 +68,8 @@ export default function OrderFulfillmentPanel({   orders,
         };
     }, [selectedOrder?.event_id]);
 
-    const updatePlatformStatus = (platform: Platform, status: PlatformStatus) => {
+    const updatePlatformStatus = async (platform: Platform, status: PlatformStatus) => {
+        console.log(`[OrderFulfillmentPage] - updatePlatformStatus: ${JSON.stringify(status)}`);
         setEvent(prev => {
             if (!prev) return prev;
 
@@ -80,6 +82,19 @@ export default function OrderFulfillmentPanel({   orders,
                 )
             };
         });
+
+        // update audit log
+        try{
+            const worker_user_id = userCtx.user?.userId;
+            const order_id = selectedOrder.order_id;
+            console.log(`[OrderFulfillmentPage] Audit worker ${worker_user_id} order ${order_id}`);
+
+            const res = await api.put(`/admin/update-fulfillment-log`,
+                {worker_user_id, order_id});
+
+        }catch(error){
+            console.error(error);
+        }
     };
 
     return (
@@ -90,7 +105,7 @@ export default function OrderFulfillmentPanel({   orders,
                 <h3>Orders</h3>
 
                 {orders.map(order => (
-                    <button
+                    <div role={"button"}
                         key={order.order_id}
                         className={
                             selectedOrder?.order_id === order.order_id
@@ -101,14 +116,15 @@ export default function OrderFulfillmentPanel({   orders,
                             setSelectedOrder(order)
                         }
                     >
-                        <div className="fulfillment-order-title">
+                        <div className="fulfillment-o rder-title">
                             {order.title}
                         </div>
 
                         <div className="fulfillment-order-number">
-                            Order #{order.order_id}
+                            Event ID: {order.event_id}<br/>
+                            Order ID: {order.order_id}
                         </div>
-                    </button>
+                    </div>
                 ))}
             </div>
 
