@@ -14,7 +14,7 @@ export default function DashboardTabs() {
                 to={`/dashboard/${userId}/events`}
                 className="dashboard-tab active"
             >
-                Current
+                Active
             </NavLink>
 
             <NavLink

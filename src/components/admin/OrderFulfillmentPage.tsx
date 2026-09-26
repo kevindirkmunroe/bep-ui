@@ -6,10 +6,10 @@ import {ProgressBar} from "../dashboard/events/platforms/ProgressBar";
 import {PlatformList} from "../dashboard/events/platforms/PlatformList";
 
 import "./orderFulfillment.css";
-import {ProOrder} from "./AdminPage";
+import {ProOrder} from "./adminPage.css";
 import {api} from "../../utils/api";
 import {EventDetail} from "../dashboard/events/eventDetailTypes.interface";
-import {Platform, PlatformStatus} from "../dashboard/events/platforms/platformTypes.interface";
+import {Platform, PlatformData, PlatformStatus} from "../dashboard/events/platforms/platformTypes.interface";
 
 interface OrderFulfillmentPanelProps {
     orders: ProOrder[];
@@ -90,7 +90,7 @@ export default function OrderFulfillmentPanel({   orders,
             console.log(`[OrderFulfillmentPage] Audit worker ${worker_user_id} order ${order_id}`);
 
             const res = await api.put(`/admin/update-fulfillment-log`,
-                {worker_user_id, order_id});
+                {event_id:  selectedOrder.event_id, worker_user_id, order_id});
 
         }catch(error){
             console.error(error);
@@ -102,30 +102,30 @@ export default function OrderFulfillmentPanel({   orders,
 
             {/* LEFT: Orders */}
             <div className="fulfillment-orders-pane">
-                <h3>Orders</h3>
+                <div>
+                    {orders.map(order => (
+                        <div role={"button"}
+                             key={order.order_id}
+                             className={
+                                 selectedOrder?.order_id === order.order_id
+                                     ? "fulfillment-order selected"
+                                     : "fulfillment-order"
+                             }
+                             onClick={() =>
+                                 setSelectedOrder(order)
+                             }
+                        >
+                            <div className="fulfillment-o rder-title" style={{display: 'flex', flexDirection: 'row'}}>
+                                <p style={{fontSize: '8px'}}>{order.order_fulfilled_at ? "✅" : "🔴"}</p> &nbsp;{order.title}
+                            </div>
 
-                {orders.map(order => (
-                    <div role={"button"}
-                        key={order.order_id}
-                        className={
-                            selectedOrder?.order_id === order.order_id
-                                ? "fulfillment-order selected"
-                                : "fulfillment-order"
-                        }
-                        onClick={() =>
-                            setSelectedOrder(order)
-                        }
-                    >
-                        <div className="fulfillment-o rder-title">
-                            {order.title}
+                            <div className="fulfillment-order-number">
+                                Event ID: {order.event_id}<br/>
+                                Order ID: {order.order_id}
+                            </div>
                         </div>
-
-                        <div className="fulfillment-order-number">
-                            Event ID: {order.event_id}<br/>
-                            Order ID: {order.order_id}
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
 
             {/* RIGHT: Selected Order */}

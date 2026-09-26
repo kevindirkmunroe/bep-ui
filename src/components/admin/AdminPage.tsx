@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { api } from "../../utils/api";
 import {PlatformData} from "../dashboard/events/platforms/platformTypes.interface";
 import OrderFulfillmentPanel from "./OrderFulfillmentPage";
-import {EventDetail} from "../dashboard/events/eventDetailTypes.interface";
+import"./adminPage.css";
 
 interface InviteRequest {
     request_id: number;
@@ -29,6 +29,11 @@ export default function AdminPage() {
 
     const [inviteRequests, setInviteRequests] = useState<InviteRequest[]>([]);
     const [proOrders, setProOrders] = useState<ProOrder[]>([]);
+    const [unfulfilledOnly, setUnfulfilledOnly] = useState(true);
+
+    const visibleOrders = unfulfilledOnly
+        ? proOrders.filter(order => !order.order_fulfilled_at)
+        : proOrders;
 
     const loadInviteRequests = async () => {
         const { data } = await api.get<InviteRequest[]>(
@@ -72,6 +77,22 @@ export default function AdminPage() {
 
     return (
         <div style={{padding: "30px", textAlign: "left"}}>
+
+            <h2 style={{backgroundColor: "#E5E5E5"}}>/ PRO Orders</h2>
+            <button
+                type="button"
+                className={`filter-toggle ${unfulfilledOnly ? "active" : ""}`}
+                onClick={() => setUnfulfilledOnly(prev => !prev)}
+            >
+                Unfulfilled Only
+            </button>
+            <OrderFulfillmentPanel orders={visibleOrders} />
+
+            {inviteRequests?.length === 0 && (
+                <p>No pending Orders to fulfill.</p>
+            )}
+            <br/>
+
             <h2 style={{backgroundColor: "#E5E5E5"}}>/ Invite Requests</h2>
             <table
                 style={{
@@ -121,13 +142,7 @@ export default function AdminPage() {
                 </tbody>
             </table>
 
-            <br/>
-            <h2 style={{backgroundColor: "#E5E5E5"}}>/ PRO Orders</h2>
-            <OrderFulfillmentPanel orders={proOrders} />
 
-            {inviteRequests?.length === 0 && (
-                <p>No pending Orders to fulfill.</p>
-            )}
         </div>
     );
 }

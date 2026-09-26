@@ -6,6 +6,8 @@ export function EventCompletionLog({ event }: { event: EventDetail }) {
         p => p.status === "submitted"
     );
 
+    const fulfillmentComplete = submittedPlatforms.length === event.platforms.length;
+
     const formatDate = (date: string | null | undefined) => {
         if (!date) return "—";
 
@@ -32,7 +34,7 @@ export function EventCompletionLog({ event }: { event: EventDetail }) {
                 </div>
             </div>
 
-            <div style={{marginTop: "14px", textAlign: "left"}}><b>&nbsp;&nbsp;🟠&nbsp;&nbsp;In Progress</b></div>
+            <div style={{marginTop: "14px", textAlign: "left"}}><b>&nbsp;&nbsp;{fulfillmentComplete ? '✅ Complete' : '🟠 In Progress' }</b></div>
             <div className="completion-divider" />
 
             <table className="completion-table">
