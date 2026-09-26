@@ -27,6 +27,8 @@ export default function EventOrderPage({
         return stripeSessionManager.checkout(eventOrder);
     }
 
+    const stripePaymentSource = import.meta.env.VITE_STRIPE_SESSION_MANAGER;
+
     return (
         <main className="pricing-page">
             <div className="page-hero">
@@ -145,7 +147,7 @@ export default function EventOrderPage({
                             ) : (
                                 <>
                             <span className="payment-success">
-                                ✓ Payment In Progress
+                                {stripePaymentSource === 'mock' ? '✓ Payment Complete': 'Payment In Progress...'}
                             </span>
 
                                     <button

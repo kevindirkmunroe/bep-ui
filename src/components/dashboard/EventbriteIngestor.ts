@@ -55,8 +55,9 @@ function formatPrice(offers: any[]): string {
 export async function getEventbriteJsonLd(eventbriteUrl: string) : Promise<EventbriteJsonLd> {
     const response = await api.get(`/events/import/eventbrite?url=${encodeURIComponent(eventbriteUrl)}`);
     const html = response.data;  //await response.text();
-    if (html["@type"] !== "Event") {
-        throw new Error("JSON-LD is not an Event");
+    const EVENTBRITE_EVENT_TYPES = ["Event", "SocialEvent"];
+    if (!EVENTBRITE_EVENT_TYPES.includes(html["@type"]?.toString())) {
+        throw new Error("JSON-LD is not an Event: [" + html["@type"] + "]");
     }
 
     return html;

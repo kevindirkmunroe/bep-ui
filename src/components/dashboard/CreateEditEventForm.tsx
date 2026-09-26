@@ -106,10 +106,7 @@ export default function CreateEditEventForm({
                 />
             )}
             <h2>{isEdit ? "Edit Event" : "New Event"}</h2>
-            {isEdit && (
-                <p>Warning: Changes will not affect already submitted platforms.</p>
-            )}
-            <div className="form-group">
+            <div className="form-group" style={{marginTop: "6px"}}>
                 <label htmlFor="name">Your Name</label>
                 <input
                     id="name"

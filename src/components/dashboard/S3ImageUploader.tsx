@@ -84,8 +84,13 @@ export default function S3ImageUploader({currImage, onUploadSuccess} : S3ImageUp
 
     return (
         <div style={{ padding: '20px' }}>
+            {!previewUrl && imageUrl && (
+                <div className="field-hint">
+                    Change Uploaded Image
+                </div>
+            )}
             <input className="btn btn-primary" type="file" accept="image/*" onChange={handleFileChange} />
-            {!previewUrl && (
+            {!previewUrl && !imageUrl && (
                 <div className="field-hint">
                     Required — Event requires a single cover photo
                 </div>

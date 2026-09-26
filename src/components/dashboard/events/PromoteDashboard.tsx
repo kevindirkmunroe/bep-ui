@@ -17,6 +17,7 @@ import {EventOrder} from "../../../workflows/payment/EventOrder";
 import PromoteFulfillmentPanel from "./PromoteFulfillmentPanel";
 import {LiveStripeSessionManager} from "../../../workflows/payment/LiveStripeSessionManager";
 import DashboardTabs from "../../DashboardTabs";
+import {StripeSessionManagerFactory} from "../../../workflows/payment/StripeSessionManagerFactory";
 
 
 export default function PromoteDashboard() {
@@ -132,7 +133,6 @@ export default function PromoteDashboard() {
     );
 
     const { user } = useUser();
-    console.log(`[PromoteDashboard] user = ${JSON.stringify(user)}`);
     if(!user) return <div>Error retrieving User, please Login again.</div>
 
     const extensionUrl = import.meta.env.VITE_CHROME_WEB_STORE_EXTENSION_URL;
@@ -227,7 +227,7 @@ export default function PromoteDashboard() {
                         <Modal style={{width: "70%"}} onClose={() => setShowEventOrderModal(false)}>
                             <EventOrderPage     eventOrder={eventOrder}
                                                 eventOrderManager={eventOrderManager}
-                                                stripeSessionManager={new LiveStripeSessionManager()}
+                                                stripeSessionManager={StripeSessionManagerFactory.create()}
                                                 onPaymentComplete={() => {
                                                     setShowEventOrderModal(false);
                                                     setShowEventOrderSelectionModal(false);
