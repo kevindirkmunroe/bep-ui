@@ -1,10 +1,12 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 
 import {EventSummaryProps} from "./eventDetailTypes.interface";
 import {getEventStatusFromPlatforms, getIsExpired} from "./EventStatus";
 import {api} from "../../../utils/api";
 import {PlatformData} from "./platforms/platformTypes.interface";
 import {FaCircleExclamation} from "react-icons/fa6";
+import { createPortal } from "react-dom";
+
 
 import './eventSummary.css';
 import {formatDateLocal, formatDateTimeLocal} from "../../../utils/DateTime";
@@ -132,6 +134,24 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
         );
     }
 
+    const [menuPosition, setMenuPosition] = useState({
+        top: 0,
+        left: 0
+    });
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const openMenu = () => {
+        if (!buttonRef.current) return;
+
+        const rect = buttonRef.current.getBoundingClientRect();
+
+        setMenuPosition({
+            top: rect.bottom + 6,
+            left: rect.right - 130
+        });
+
+        setShowMoreActions(true);
+    };
+
     return (
         <div className={showAsHeader ? "event-header-style" : "event-list-style"}>
             <div
@@ -206,6 +226,9 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                                 new Date(event.start_datetime).toLocaleString()
                             )}
                         </p>
+                        <p style={{fontSize: "14px"}}>
+                            {event.price ? `$${event.price}` : 'Free/Unspecified'}
+                        </p>
                         <div>
                             {event.imported_from && (
                                 <ImportedFromLink importedFrom={event.imported_from}/>
@@ -278,6 +301,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                                 {!readOnly && (
                                     <button
                                         className="btn btn-danger"
+                                        disabled={event.is_locked}
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             setShowMoreActions(false);
@@ -320,27 +344,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     </button>
                 )}
 
-
-                {readOnly && showRedo && (
-                    <>
-                        <p style={{
-                            fontSize: "14px",
-                            marginTop: "10px",
-                            marginRight: "20px"
-                        }}>Completed {getNewestPublishDate(event.platforms)?.toLocaleString("en-US",
-                            {
-                                month: "numeric",
-                                day: "numeric",
-                                year: "numeric",
-                                hour: "numeric",
-                                minute: "2-digit"
-                            }
-                        )}</p>
-                        <button className="btn btn-primary" onClick={() => setShowRecycleModal(true)}>
-                            <img src={"/icons8-recycle-32.png"} style={{width: "24px", height: "24px"}}/>Recycle
-                        </button>
-                    </>
-                )}
                 {isExpired && !readOnly && (
                     <>
                         <button className="btn btn-danger"

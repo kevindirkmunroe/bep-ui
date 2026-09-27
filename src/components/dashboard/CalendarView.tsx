@@ -131,7 +131,8 @@ export default function CalendarView() {
                 {eventsByDay[day]?.map(event => (
                     <button
                         key={event.event_id}
-                        className="calendar-event"
+                        disabled={event.is_locked}
+                        className={event.is_locked ? "calendar-event-disabled" : "calendar-event"}
                         onClick={(e) => {
                             e.stopPropagation();
                             editEvent(event);
