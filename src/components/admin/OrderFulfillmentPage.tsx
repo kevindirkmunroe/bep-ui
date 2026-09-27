@@ -69,7 +69,6 @@ export default function OrderFulfillmentPanel({   orders,
     }, [selectedOrder?.event_id]);
 
     const updatePlatformStatus = async (platform: Platform, status: PlatformStatus) => {
-        console.log(`[OrderFulfillmentPage] - updatePlatformStatus: ${JSON.stringify(status)}`);
         setEvent(prev => {
             if (!prev) return prev;
 
@@ -87,7 +86,6 @@ export default function OrderFulfillmentPanel({   orders,
         try{
             const worker_user_id = userCtx.user?.userId;
             const order_id = selectedOrder.order_id;
-            console.log(`[OrderFulfillmentPage] Audit worker ${worker_user_id} order ${order_id}`);
 
             const res = await api.put(`/admin/update-fulfillment-log`,
                 {event_id:  selectedOrder.event_id, worker_user_id, order_id});

@@ -17,21 +17,20 @@ export default function HistoryView() {
     const [selectedEvent, setSelectedEvent] =
         useState<EventDetail | null>(null);
 
+    const loadEvents = async () => {
+        try {
+            const { data } = await api.get<EventDetail[]>(
+                `/users/${userId}/events`
+            );
+
+            setEvents(data.data);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         if (!userId) return;
-
-        const loadEvents = async () => {
-            try {
-                const { data } = await api.get<EventDetail[]>(
-                    `/users/${userId}/events`
-                );
-
-                setEvents(data.data);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         loadEvents();
     }, [userId]);
 
@@ -75,7 +74,7 @@ export default function HistoryView() {
                 </div>
                 <>
                     <button className="btn btn-secondary" style={{fontSize: "16px", marginBottom: "12px"}} onClick={() => navigate(-1)}>
-                        ← Go Back
+                        ← Back
                     </button>
                     <div className="history-layout">
 
@@ -101,7 +100,7 @@ export default function HistoryView() {
                                             {event.title}
                                         </span>
 
-                                                                <span className="history-event-date">
+                                        <span className="history-event-date">
                                             {new Date(event.start_datetime).toLocaleDateString()}
                                         </span>
                                     </button>
@@ -112,10 +111,9 @@ export default function HistoryView() {
                         {/* DETAIL */}
                         <div className="history-event-detail">
                             {selectedEvent && (
-                                <EventCompletionLog event={selectedEvent} />
+                                <EventCompletionLog event={selectedEvent} handleRefresh={loadEvents}/>
                             )}
                         </div>
-
                     </div>
                     <p/>
                 </>

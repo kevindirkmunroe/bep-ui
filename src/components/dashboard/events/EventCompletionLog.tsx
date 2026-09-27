@@ -1,7 +1,13 @@
 import {PLATFORM_ICONS, PRINTABLE_PLATFORM} from "./platforms/platformTypes.interface";
 import {EventDetail} from "./eventDetailTypes.interface";
 import "./eventCompletionLog.css";
-export function EventCompletionLog({ event }: { event: EventDetail }) {
+import React from "react";
+
+interface EventCompletionLogProps {
+    event: EventDetail;
+    handleRefresh: () => Promise<void>;
+}
+export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogProps) {
     const submittedPlatforms = event.platforms.filter(
         p => p.status === "submitted"
     );
@@ -28,14 +34,27 @@ export function EventCompletionLog({ event }: { event: EventDetail }) {
     return (
         <div className="completion-log">
             <div className="completion-event-info">
-                <div>
-                    <strong style={{fontSize: "15px"}}><b>{event.title}</b></strong>
-                    <p style={{fontSize: "14px"}}>{event.event_id}</p>
+                <div style={{display: "flex", flexDirection: "row"}}>
+                    <div style={{display: "flex", flexDirection: "column"}}>
+                        <strong style={{fontSize: "15px"}}><b>{event.title}</b></strong>
+                        <p style={{fontSize: "14px"}}>{event.event_id}</p>
+                    </div>
+                    <div style={{marginLeft: "80px"}}/>
+                    <div style={{alignContent: "right", justifyContent: "flex-end"}}>
+                        <button
+                            style={{width: "120px"}}
+                            onClick={handleRefresh}
+                            className={"btn btn-secondary"}>
+                            <img alt="Refresh" src={"/icons8-refresh-30.png"} style={{width: "24px", height: "24px"}}/>
+                            Refresh
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div style={{marginTop: "14px", textAlign: "left"}}><b>&nbsp;&nbsp;{fulfillmentComplete ? '✅ Complete' : '🟠 In Progress' }</b></div>
-            <div className="completion-divider" />
+            <div style={{marginTop: "14px", textAlign: "left"}}>
+                <b>&nbsp;&nbsp;{fulfillmentComplete ? '✅ Complete' : '🟠 In Progress'}</b></div>
+            <div className="completion-divider"/>
 
             <table className="completion-table">
                 <thead>

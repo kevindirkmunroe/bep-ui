@@ -3,7 +3,6 @@ import React, {useRef, useState} from "react";
 import {EventSummaryProps} from "./eventDetailTypes.interface";
 import {getEventStatusFromPlatforms, getIsExpired} from "./EventStatus";
 import {api} from "../../../utils/api";
-import {PlatformData} from "./platforms/platformTypes.interface";
 import {FaCircleExclamation} from "react-icons/fa6";
 import { createPortal } from "react-dom";
 
@@ -37,21 +36,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     const [imgSrc, setImgSrc] = useState("/icons8-delete-30.png");
     const [showMoreActions, setShowMoreActions] = useState(false);
     const [expanded, setExpanded] = useState(false);
-
-    const getNewestPublishDate = (platforms: PlatformData[]): Date | undefined => {
-        const dates = platforms
-            .map(p => p.date_published)
-            .filter((d): d is string => !!d)
-            .map(d => new Date(d));
-
-        if (dates.length === 0) {
-            return undefined;
-        }
-
-        return new Date(
-            Math.max(...dates.map(d => d.getTime()))
-        );
-    };
 
     const handleClone = async () => {
         await api.post(`/events/${event.event_id}/clone`);
@@ -134,12 +118,13 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
         );
     }
 
+    const [showExpandedMenu, setShowExpandedMenu] = useState(false);
     const [menuPosition, setMenuPosition] = useState({
         top: 0,
         left: 0
     });
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const openMenu = () => {
+    const toggleExpandedMenu = () => {
         if (!buttonRef.current) return;
 
         const rect = buttonRef.current.getBoundingClientRect();
@@ -149,7 +134,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
             left: rect.right - 130
         });
 
-        setShowMoreActions(true);
+        setShowExpandedMenu(!showExpandedMenu);
     };
 
     return (
@@ -255,78 +240,82 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                 {/* Begin Extras Menu */}
                 {!readOnly && !isExpired && (
                     <div className="more-actions">
-                        <button
-                            type="button"
-                            className="btn btn-secondary"
-                            style={{height: "42px"}}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setShowMoreActions(prev => !prev);
-                            }}
-                        >
-                            <img
-                                src="/icons8-more-50.png"
-                                style={{
-                                    width: "16px",
-                                    height: "16px"
-                                }}
-                            />
-                        </button>
-
-                        {showMoreActions && (
-                            <div
-                                className="more-actions-menu"
-                                onClick={(e) => e.stopPropagation()}
+                        <>
+                            <button
+                                ref={buttonRef}
+                                onClick={toggleExpandedMenu}
+                                className="btn btn-secondary"
+                                style={{height: "42px"}}
                             >
-                                {!readOnly && !isExpired && (
-                                    <button
-                                        title="Make duplicate of this Event"
-                                        className="btn btn-secondary"
-                                        onClick={() => {
-                                            setShowMoreActions(false);
-                                            handleClone();
-                                        }}
-                                    >
-                                        <img
-                                            src="/icons8-clone-24.png"
-                                            style={{
-                                                width: "24px",
-                                                height: "24px"
-                                            }}
-                                        />
-                                        Clone
-                                    </button>
-                                )}
+                                <img
+                                    src="/icons8-more-50.png"
+                                    style={{
+                                        width: "16px",
+                                        height: "16px"
+                                    }}
+                                />
+                            </button>
 
-                                {!readOnly && (
-                                    <button
-                                        className="btn btn-danger"
-                                        disabled={event.is_locked}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setShowMoreActions(false);
-                                            setShowConfirm(true);
+                            {showExpandedMenu &&
+                                createPortal(
+                                    <div
+                                        className="more-actions-menu"
+                                        style={{
+                                            top: menuPosition.top,
+                                            left: menuPosition.left
                                         }}
                                     >
-                                        <img
-                                            src={imgSrc}
-                                            alt="delete"
-                                            onMouseOver={() =>
-                                                setImgSrc("/icons8-delete-white.png")
-                                            }
-                                            onMouseOut={() =>
-                                                setImgSrc("/icons8-delete-30.png")
-                                            }
-                                            style={{
-                                                width: "24px",
-                                                height: "24px"
-                                            }}
-                                        />
-                                        Delete
-                                    </button>
-                                )}
-                            </div>
-                        )}
+                                        {!readOnly && !isExpired && (
+                                            <button
+                                                title="Make duplicate of this Event"
+                                                className="btn btn-secondary"
+                                                onClick={() => {
+                                                    setShowExpandedMenu(false);
+                                                    handleClone();
+                                                }}
+                                            >
+                                                <img
+                                                    src="/icons8-clone-24.png"
+                                                    style={{
+                                                        width: "24px",
+                                                        height: "24px"
+                                                    }}
+                                                />
+                                                Clone
+                                            </button>
+                                        )}
+                                        {!readOnly && (
+                                            <button
+                                                className="btn btn-danger"
+                                                disabled={event.is_locked}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setShowMoreActions(false);
+                                                    setShowConfirm(true);
+                                                }}
+                                            >
+                                                <img
+                                                    src={imgSrc}
+                                                    alt="delete"
+                                                    onMouseOver={() =>
+                                                        setImgSrc("/icons8-delete-white.png")
+                                                    }
+                                                    onMouseOut={() =>
+                                                        setImgSrc("/icons8-delete-30.png")
+                                                    }
+                                                    style={{
+                                                        width: "24px",
+                                                        height: "24px"
+                                                    }}
+                                                />
+                                                Delete
+                                            </button>
+                                        )}
+                                    </div>,
+                                    document.body
+                                )
+                            }
+                        </>
                     </div>
                 )}
                 {/* End Extras Menu */}

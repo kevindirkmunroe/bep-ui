@@ -68,7 +68,7 @@ export default function PromoteCompleteDashboard(){
                 <div style={{display: "flex", flexDirection: "column"}}>
                     {/* List completed promotions only: "/events/:eventId" */}
                     <div style={{marginTop: "2px", marginLeft: "20px"}}>
-                        <EventCompletionLog event={event}/>
+                        <EventCompletionLog event={event} handleRefresh={loadEventPlatforms}/>
                     </div>
                     <div style={{
                         backgroundColor: "lightyellow",
