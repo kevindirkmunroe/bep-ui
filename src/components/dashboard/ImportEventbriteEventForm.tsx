@@ -8,6 +8,7 @@ import BaseDialog, {DialogState} from "../BaseDialog";
 import "./form.css";
 import {formatDateTimeLocal} from "../../utils/DateTime";
 import S3ImageUploader from "./S3ImageUploader";
+import {getZipFromAddress} from "./AddressUtils";
 
 export default function ImportEventbriteEventForm({
                                                     userId,
@@ -24,7 +25,7 @@ export default function ImportEventbriteEventForm({
         start_datetime: formatDateTimeLocal(event?.start_datetime) || "",
         location_name: event?.location_name || "",
         address: event?.address || "",
-        zip: event?.zip || "94101",
+        zip: event?.zip || getZipFromAddress(event?.address),
         price: event?.price || "",
         organization: event?.organization || "",
         phone: event?.phone || "",

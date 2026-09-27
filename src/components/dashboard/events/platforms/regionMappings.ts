@@ -9,7 +9,7 @@ const VISITOAKLAND_ZIP_TO_DISTRICT: Record<string, string> = {
     "94609": "Temescal",
     "94610": "Lake Merritt",
     "94611": "Montclair Village/Oakland Hills",
-    "94612": "Uptown",
+    "94612": "Oakland",
     "94613": "Montclair Village/Oakland Hills",
     "94618": "Rockridge",
     "94619": "Laurel District",

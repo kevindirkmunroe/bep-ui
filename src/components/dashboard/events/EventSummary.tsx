@@ -137,6 +137,8 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
         setShowExpandedMenu(!showExpandedMenu);
     };
 
+    const ensureDollar = (str: string) => str.startsWith('\$') ? str : `$${str}`;
+
     return (
         <div className={showAsHeader ? "event-header-style" : "event-list-style"}>
             <div
@@ -212,7 +214,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                             )}
                         </p>
                         <p style={{fontSize: "14px"}}>
-                            {event.price ? `$${event.price}` : 'Free/Unspecified'}
+                            {event.price ? `${ensureDollar(event.price)}` : 'Free/Unspecified'}
                         </p>
                         <div>
                             {event.imported_from && (
@@ -262,7 +264,8 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                                         className="more-actions-menu"
                                         style={{
                                             top: menuPosition.top,
-                                            left: menuPosition.left
+                                            left: menuPosition.left,
+                                            width: '130px'
                                         }}
                                     >
                                         {!readOnly && !isExpired && (
