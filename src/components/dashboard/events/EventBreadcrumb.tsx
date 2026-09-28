@@ -1,5 +1,5 @@
 import { Link, useLocation, useParams } from "react-router-dom";
-import React, {useEffect, useRef} from "react";
+import React from "react";
 
 interface EventBreadcrumbProps {
     eventTitle?: string;
@@ -25,16 +25,6 @@ export default function EventBreadcrumb({
     const onLogPage =
         location.pathname === `${eventsPath}/${eventId}/promoted`;
 
-    const linkRef = useRef<HTMLAnchorElement>(null);
-
-    useEffect(() => {
-        // Automatically triggers the link behavior when the page mounts
-        if (linkRef.current) {
-            linkRef.current.click();
-        }
-    }, []);
-
-
     function truncateString(str: string | undefined, limit: number, ending: string = '...'): string {
         if(!str){
             return "unknown"
@@ -55,7 +45,7 @@ export default function EventBreadcrumb({
                 marginBottom: "20px",
             }}
         >
-            <Link ref={linkRef} to={eventsPath}>
+            <Link to={eventsPath}>
                 <div style={{display: "flex", flexDirection: "row"}}>
                 <img
                     src="/icons8-home-48.link.png"
