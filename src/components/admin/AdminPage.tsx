@@ -86,6 +86,7 @@ export default function AdminPage() {
             >
                 Unfulfilled Only
             </button>
+            &nbsp;({visibleOrders.length})
             <OrderFulfillmentPanel orders={visibleOrders} />
 
             {inviteRequests?.length === 0 && (

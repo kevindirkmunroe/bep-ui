@@ -6,10 +6,10 @@ import {ProgressBar} from "../dashboard/events/platforms/ProgressBar";
 import {PlatformList} from "../dashboard/events/platforms/PlatformList";
 
 import "./orderFulfillment.css";
-import {ProOrder} from "./adminPage.css";
+import {ProOrder} from "./AdminPage";
 import {api} from "../../utils/api";
 import {EventDetail} from "../dashboard/events/eventDetailTypes.interface";
-import {Platform, PlatformData, PlatformStatus} from "../dashboard/events/platforms/platformTypes.interface";
+import {Platform, PlatformStatus} from "../dashboard/events/platforms/platformTypes.interface";
 
 interface OrderFulfillmentPanelProps {
     orders: ProOrder[];
@@ -113,13 +113,8 @@ export default function OrderFulfillmentPanel({   orders,
                                  setSelectedOrder(order)
                              }
                         >
-                            <div className="fulfillment-o rder-title" style={{display: 'flex', flexDirection: 'row'}}>
+                            <div className="fulfillment-o rder-title" style={{display: 'flex', flexDirection: 'row', fontSize: '16px'}}>
                                 <p style={{fontSize: '8px'}}>{order.order_fulfilled_at ? "✅" : "🔴"}</p> &nbsp;{order.title}
-                            </div>
-
-                            <div className="fulfillment-order-number">
-                                Event ID: {order.event_id}<br/>
-                                Order ID: {order.order_id}
                             </div>
                         </div>
                     ))}
@@ -130,7 +125,7 @@ export default function OrderFulfillmentPanel({   orders,
 
             <div className="fulfillment-platforms-pane">
                 <div className="promote-panel-title" style={{width: '94%', padding: '8px', borderRadius: "6px"}}>
-                    🚀&nbsp;{event? event.title : <i>Select Event</i>}
+                    {selectedOrder?.order_fulfilled_at ? "✅" : (!selectedOrder? "🔘️": "🔴")}&nbsp;{event? event.title : <i>Select Event</i>}
                 </div>
                 { event && !selectedOrder && (
                     <div className="no-order-selected">
@@ -138,6 +133,12 @@ export default function OrderFulfillmentPanel({   orders,
                     </div>
                 )}
                 {event && selectedOrder && (
+                    <>
+                    <div className="fulfillment-order-number">
+                        Event ID: {selectedOrder.event_id}<br/>
+                        Order ID: {selectedOrder.order_id}<br/>
+                        Event Date: {event.start_datetime}
+                    </div>
                     <PromoteFulfillmentPanel title="DIY">
                         <ProgressBar
                             platforms={event.platforms}
@@ -150,6 +151,7 @@ export default function OrderFulfillmentPanel({   orders,
                             updatePlatformStatus={updatePlatformStatus}
                         />
                     </PromoteFulfillmentPanel>
+                    </>
                 )}
             </div>
         </div>

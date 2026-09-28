@@ -1,6 +1,6 @@
 .order-fulfillment-panel {
     display: grid;
-    grid-template-columns: 20% 80%;
+    grid-template-columns: 35% 65%;
     width: 100%;
     min-height: 500px;
 }

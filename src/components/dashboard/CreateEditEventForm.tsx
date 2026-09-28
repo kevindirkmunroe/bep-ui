@@ -6,7 +6,7 @@ import {categories} from "./EventCategories";
 import BaseDialog, {DialogState} from "../BaseDialog";
 
 import "./form.css";
-import {formatDateTimeLocal} from "../../utils/DateTime";
+import {formatDateLocal, formatDateTimeLocal, isOlderThanToday} from "../../utils/DateTime";
 import S3ImageUploader from "./S3ImageUploader";
 
 export default function CreateEditEventForm({
@@ -74,8 +74,82 @@ export default function CreateEditEventForm({
         }
     };
 
+    function validateEmail(email: string) {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(email);
+    }
+
+    function validateUrl(url: string) {
+        const pattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/;
+        return pattern.test(url);
+    }
+
     const handleSubmit = async () => {
-        console.log(`[CreateEditEventForm] UPDATE form ${JSON.stringify(form)}`);
+        if(!validateEmail(form.email)){
+            setDialog({
+                type: "error",
+                title: "Create/Edit Event",
+                message: `Invalid email: \"${form.email}\"`
+            });
+            return;
+        }
+        if(form.category === ""){
+            setDialog({
+                type: "error",
+                title: "Create/Edit Event",
+                message: `No Category Selected`
+            });
+            return;
+        }
+        if(form.start_datetime === ""){
+            setDialog({
+                type: "error",
+                title: "Create/Edit Event",
+                message: `Start Date / Time cannot be blank`
+            });
+            return;
+        }
+        if(form.address === ""){
+            setDialog({
+                type: "error",
+                title: "Create/Edit Event",
+                message: `Address cannot be blank`
+            });
+            return;
+        }
+        if(form.website && !validateUrl(form.website)){
+            setDialog({
+                type: "error",
+                title: "Create/Edit Event",
+                message: `Invalid Website: \"${form.website}\"`
+            });
+            return;
+        }
+        if(form.imported_from && !validateUrl(form.imported_from)){
+            setDialog({
+                type: "error",
+                title: "Create/Edit Event",
+                message: `Invalid Import URL: \"${form.imported_from}\"`
+            });
+            return;
+        }
+        if(!form.image){
+            setDialog({
+                type: "error",
+                title: "Create/Edit Event",
+                message: "Please Upload an Event Cover Image to Continue."
+            });
+            return;
+        }
+        if(isOlderThanToday(form.start_datetime)){
+            setDialog({
+                type: "error",
+                title: "Create/Edit Event",
+                message: `Please select a Start Date older than Today (${new Date().toISOString().split('T')[0]}) to Continue.`
+            });
+            return;
+        }
+
         try {
             if (isEdit) {
                 await api.put(`/events/${event.event_id}`, form);

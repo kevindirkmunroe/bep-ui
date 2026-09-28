@@ -19,6 +19,39 @@ import PaymentCancelledPage from "./components/dashboard/events/payments/Payment
 import HistoryView from "./components/HistoryView.tsx";
 
 export default function App() {
+
+    function isSafari() {
+        const ua = navigator.userAgent;
+        // Safari contains "Safari" and "AppleWebKit", but NOT "Chrome" or "Chromium"
+        return ua.indexOf("Safari") > -1 && ua.indexOf("Chrome") === -1;
+    }
+
+    function isChrome() {
+        const ua = navigator.userAgent;
+        const vendor = navigator.vendor;
+
+        // 1. Must contain "Chrome" or "Chromium"
+        const isChromium = ua.indexOf("Chrome") > -1 || ua.indexOf("Chromium") > -1;
+
+        // 2. Exclude Edge, Opera, and Brave which use the Chromium engine
+        const isEdge = ua.indexOf("Edg") > -1;
+        const isOpera = ua.indexOf("OPR") > -1 || ua.indexOf("Opera") > -1;
+
+        // 3. Exclude Safari (Apple vendor) to prevent false positives
+        const isApple = vendor && vendor.indexOf("Apple") > -1;
+
+        return isChromium && !isEdge && !isOpera && !isApple;
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+        if (!isChrome()) {
+            const warning = document.getElementById("browser-warning");
+            if (warning) {
+                warning.style.display = "block";
+            }
+        }
+    });
+
   return (
       <MainLayout>
           <Routes>
