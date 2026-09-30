@@ -10,6 +10,7 @@ import {ProOrder} from "./AdminPage";
 import {api} from "../../utils/api";
 import {EventDetail} from "../dashboard/events/eventDetailTypes.interface";
 import {Platform, PlatformStatus} from "../dashboard/events/platforms/platformTypes.interface";
+import {EventCompletionLog} from "../dashboard/events/EventCompletionLog";
 
 interface OrderFulfillmentPanelProps {
     orders: ProOrder[];
@@ -122,7 +123,6 @@ export default function OrderFulfillmentPanel({   orders,
             </div>
 
             {/* RIGHT: Selected Order */}
-
             <div className="fulfillment-platforms-pane">
                 <div className="promote-panel-title" style={{width: '94%', padding: '8px', borderRadius: "6px"}}>
                     {selectedOrder?.order_fulfilled_at ? "✅" : (!selectedOrder? "🔘️": "🔴")}&nbsp;{event? event.title : <i>Select Event</i>}
@@ -134,23 +134,29 @@ export default function OrderFulfillmentPanel({   orders,
                 )}
                 {event && selectedOrder && (
                     <>
-                    <div className="fulfillment-order-number">
-                        Event ID: {selectedOrder.event_id}<br/>
-                        Order ID: {selectedOrder.order_id}<br/>
-                        Event Date: {event.start_datetime}
-                    </div>
-                    <PromoteFulfillmentPanel title="DIY">
-                        <ProgressBar
-                            platforms={event.platforms}
-                        />
+                        <div className="fulfillment-order-number">
+                            Event ID: {selectedOrder.event_id}<br/>
+                            Order ID: {selectedOrder.order_id}<br/>
+                            Event Date: {event.start_datetime}
+                        </div>
+                        <PromoteFulfillmentPanel title="DIY">
+                            <ProgressBar
+                                platforms={event.platforms}
+                            />
 
-                        <PlatformList
-                            extensionInstalled={true}
-                            event={event}
-                            reload={handleLoadEvent}
-                            updatePlatformStatus={updatePlatformStatus}
-                        />
-                    </PromoteFulfillmentPanel>
+                            <PlatformList
+                                extensionInstalled={true}
+                                event={event}
+                                reload={handleLoadEvent}
+                                updatePlatformStatus={updatePlatformStatus}
+                            />
+                        </PromoteFulfillmentPanel>
+                        <section className="promote-panel" style={{marginTop: "12px"}}>
+                            <div className="promote-panel-title" style={{display: "flex", flexDirection: "row"}}>
+                                <img src={"/icons8-log-64.png"} style={{ width: "34px", height: "34px"}}/><p style={{marginTop: "4px"}}>&nbsp;Log</p>
+                            </div>
+                            <EventCompletionLog event={event} handleRefresh={handleLoadEvent} />
+                        </section>
                     </>
                 )}
             </div>

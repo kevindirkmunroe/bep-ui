@@ -12,6 +12,7 @@ export interface PlatformData {
     platform: Platform;
     status: PlatformStatus;
     external_url?: string;
+    published_url?: string;
     date_published?: string;
 }
 

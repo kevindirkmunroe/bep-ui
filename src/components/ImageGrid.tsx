@@ -26,7 +26,9 @@ export default function ImageGrid() {
         "/carousel/cosmo-alleycats.jpg",
         "/carousel/popup-manny.jpg",
         "/carousel/kareoke.jpg",
+        "/carousel/latine-food-makers.png",
         "/carousel/comedy-oakland.jpeg",
+        "/carousel/first-friday-nights.png",
         "/carousel/fela-vinyl.png"
     ];
 

@@ -8,6 +8,9 @@ interface EventCompletionLogProps {
     handleRefresh: () => Promise<void>;
 }
 export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogProps) {
+
+    console.log(`[EventCompletionLog] platforms= ${JSON.stringify(event.platforms)}`);
+
     const submittedPlatforms = event.platforms.filter(
         p => p.status === "submitted"
     );
@@ -54,8 +57,6 @@ export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogP
                 </div>
             </div>
 
-            <div style={{marginTop: "14px", textAlign: "left"}}>
-                <b>&nbsp;&nbsp;{fulfillmentComplete ? '✅ Complete' : '🟠 In Progress'}</b></div>
             <div className="completion-divider"/>
 
             <table className="completion-table">
@@ -84,7 +85,7 @@ export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogP
                         <td>{formatDate(p.date_published)}</td>
                         <td>{AUTO_PUBLISHED_PLATFORMS.includes(p.platform)? "Published":
                             "Submitted pending Verification"}</td>
-                        <td><a target="_blank" href={p.external_url}>{p.external_url}</a></td>
+                        <td><a target="_blank" href={p.published_url}>{p.published_url}</a></td>
                     </tr>
                 ))}
                 </tbody>

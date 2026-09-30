@@ -32,8 +32,10 @@ const slides = [
     { src: "/carousel/cosmo-alleycats.jpg", label: "Jazz" },
     { src: "/carousel/popup.jpg", label: "Pop-up Events" },
     { src: "/carousel/uptown-sips.jpg", label: "Wine & Charcuterie" },
+    { src: "/carousel/first-friday-nights.png", label: "Natural Sciences" },
     { src: "/carousel/steve-lucky-carmen-getit.png", label: "Swinging Jazz" },
-    { src: "/carousel/comedy-oakland.jpeg", label: "Live Comedy" }
+    { src: "/carousel/comedy-oakland.jpeg", label: "Live Comedy" },
+    { src: "/carousel/latine-food-makers.png", label: "Farmers Market" }
 ];
 
 export default function ImageCarousel() {
