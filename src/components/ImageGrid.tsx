@@ -25,7 +25,9 @@ export default function ImageGrid() {
         "/carousel/function.jpg",
         "/carousel/cosmo-alleycats.jpg",
         "/carousel/popup-manny.jpg",
-        "/carousel/kareoke.jpg"
+        "/carousel/kareoke.jpg",
+        "/carousel/comedy-oakland.jpeg",
+        "/carousel/fela-vinyl.png"
     ];
 
     const [images, setImages] = useState(initialImages);
