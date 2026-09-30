@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../utils/api";
 import {PlatformData} from "../dashboard/events/platforms/platformTypes.interface";
-import OrderFulfillmentPanel from "./OrderFulfillmentPage";
+import OrderFulfillmentPanel from "./OrderFulfillmentPanel";
 import"./adminPage.css";
 
 interface InviteRequest {

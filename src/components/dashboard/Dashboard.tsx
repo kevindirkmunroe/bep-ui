@@ -146,7 +146,16 @@ export default function Dashboard() {
 
     function getActiveEventCount(){
         const activeEvents = (events || []).filter(e => {
-            return getEventStatusFromPlatforms(e) !== "submitted" && !isOlderThanToday(e.start_datetime);;
+            return getEventStatusFromPlatforms(e) !== "submitted" && !isOlderThanToday(e.start_datetime);
+        });
+        return activeEvents.length;
+    }
+
+    function getActiveEventCountWithOrder(){
+        const activeEvents = (events || []).filter(e => {
+            return getEventStatusFromPlatforms(e) !== "submitted" &&
+                !isOlderThanToday(e.start_datetime) &&
+                e.is_locked;
         });
         return activeEvents.length;
     }
@@ -200,13 +209,8 @@ export default function Dashboard() {
     // for display, otherwise erroneously displays event count = 0
     const userContext = useUser();
     userContext.setUserEventCount(getActiveEventCount());
+    userContext.setUserPromoteEventCount(getActiveEventCountWithOrder());
     if (!userId) return <div style={{marginTop: "50px"}}>Loading...</div>;
-
-    const activeEventCount = getActiveEventCount();
-    const submittedEventCount = getSubmittedEventCount();
-    const expiredEventCount = getExpiredEventCount();
-    // const publishedEventCount = getPublishedEventCount();
-
 
     return (
         <div
@@ -373,7 +377,8 @@ export default function Dashboard() {
                             marginBottom: "2px",
                             justifyContent: "space-between"
                         }}>
-                            <EventBreadcrumb eventTitle="" eventCount={getActiveEventCount()}/>
+                            <EventBreadcrumb event={events ? events[0] : null} eventCount={getActiveEventCount()}
+                                promoteEventCount={getActiveEventCountWithOrder()}/>
                             <div>
                                 <div className="more-actions">
                                     <button
@@ -422,7 +427,7 @@ export default function Dashboard() {
                                             onClick={() => setShowCreateEventForm(true)}>
                                         <img alt={"wtf"} style={{width: "30px", height: "28px"}}
                                              src={"/icons8-create-50.png"}/>
-                                        <b>Create</b>
+                                        <b>Add...</b>
                                     </button>
 
                                     {showImportActions && (

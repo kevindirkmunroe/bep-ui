@@ -1,26 +1,28 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import React from "react";
+import {EventDetail} from "./eventDetailTypes.interface";
 
 interface EventBreadcrumbProps {
-    eventTitle?: string;
+    event: EventDetail | null;
     eventCount: number;
-    deliveryCount?: number;
+    promoteEventCount: number;
 }
 
 const BREADCRUMB_MAX_STEP_LENGTH = 34;
 
 export default function EventBreadcrumb({
-                                            eventTitle,
+                                            event,
                                             eventCount,
-                                            deliveryCount,
+                                            promoteEventCount,
                                         }: EventBreadcrumbProps) {
     const { userId, eventId } = useParams();
     const location = useLocation();
+    const TRUNCATE_LIMIT = 22;
 
     const eventsPath = `/dashboard/${userId}/events`;
 
-    const onEventPage =
-        location.pathname === `${eventsPath}/${eventId}`;;
+    const onPromotedEventsPage =
+        location.pathname === `${eventsPath}/${eventId}`;
 
     const onLogPage =
         location.pathname === `${eventsPath}/${eventId}/promoted`;
@@ -58,29 +60,30 @@ export default function EventBreadcrumb({
                         objectFit: "contain",
                     }}
                 />
-                    <b>All</b>
+                    <b>All Events</b>
                     <strong style={{fontSize: "14px"}}>({eventCount})</strong>
                 </div>
             </Link>
 
             {eventId && (
                 <>
-                <span>&gt;</span>
+                <span><b>&gt;</b></span>
 
-                {onEventPage ? (
+                {onPromotedEventsPage ? (
                     <>
-                        <strong><i>{truncateString(eventTitle, BREADCRUMB_MAX_STEP_LENGTH) ?? "Event"}</i></strong>
-                        <span>&gt;</span>
-                        <Link to={`${eventsPath}/${eventId}/promoted`}>
-                            <b>Platforms</b>
-                            <strong style={{fontSize: "14px"}}>({deliveryCount}/5)*</strong>
+                        <b>Tracked Promoted Events</b>
+                        <strong style={{fontSize: "14px"}}>{`(${promoteEventCount})`}</strong>
+                        <span><b>&gt;</b></span>
+                        <Link to={`${eventsPath}/${event?.event_id}/promoted`}>
+                            <b>Results for <i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i></b>
                         </Link>
                     </>
 
                 ) : (
                     <>
-                        <Link to={`${eventsPath}/${eventId}`}>
-                            <strong><i>{truncateString(eventTitle, BREADCRUMB_MAX_STEP_LENGTH) ?? "Event"}</i></strong>
+                        <Link to={`${eventsPath}/${event?.event_id}`}>
+                            <b>Tracked Promoted Events</b>
+                            <strong style={{fontSize: "14px"}}>{`(${promoteEventCount})`}</strong>
                         </Link>
                     </>
                 )}
@@ -89,9 +92,8 @@ export default function EventBreadcrumb({
 
             {onLogPage && (
                 <div style={{display: "flex", flexDirection: "row", fontSize: "18px"}}>
-                    <span>&gt;&nbsp;</span>
-                    <b>Platforms</b>
-                    <strong style={{fontSize: "18px"}}>({deliveryCount || 0}/5)*</strong>
+                    <span><b>&gt;</b></span>
+                    <b>&nbsp;Results for <i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i></b>
                 </div>
             )}
         </div>

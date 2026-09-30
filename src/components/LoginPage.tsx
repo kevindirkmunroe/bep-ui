@@ -57,6 +57,7 @@ export default function LoginPage() {
                 firstName: res.data.firstName,
                 company: res.data.company,
                 eventCount: 0,
+                promoteEventCount: 0,
                 isAdmin: adminList.includes(res.data.email)
             });
             // If password is not bcrypt hashed, it is temporary. Redirect user to password reset.

@@ -60,7 +60,7 @@ a {
 }
 
 a:hover {
-  transform: scale(1.2); /* Increases size by 20% */
+  transform: scale(1.1); /* Increases size by 20% */
 }
 
 body {
@@ -173,6 +173,13 @@ code {
   background-color: white;
   color: black;
   border: 1px solid #ccc;
+}
+
+.btn-secondary-greater {
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  color: black;
+  border: 2px solid #000000;
 }
 
 .btn-secondary:hover {

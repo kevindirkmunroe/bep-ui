@@ -21,6 +21,7 @@ export function ActiveEventsPage() {
     const {user} = useUser();
     if(user){
         user.eventCount = activeEvents.length;
+        user.promoteEventCount = activeEvents.filter((e) => e.is_locked).length;
     }
 
     const handlePromote = (event: EventDetail) => {

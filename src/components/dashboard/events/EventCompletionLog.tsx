@@ -31,6 +31,8 @@ export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogP
         });
     };
 
+    const AUTO_PUBLISHED_PLATFORMS = ["indybay", "dothebay", "sfstation"];
+
     return (
         <div className="completion-log">
             <div className="completion-event-info">
@@ -62,6 +64,7 @@ export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogP
                     <th>Delivery Platform</th>
                     <th>Date Submitted</th>
                     <th>Delivery Status</th>
+                    <th>Event URL ↗</th>
                 </tr>
                 </thead>
 
@@ -79,8 +82,9 @@ export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogP
                         </td>
 
                         <td>{formatDate(p.date_published)}</td>
-                        <td>{p.platform === 'indybay'? "Published":
-                            (p.platform  === 'sfstation' ? "Published after Verification" : "Delivered")}</td>
+                        <td>{AUTO_PUBLISHED_PLATFORMS.includes(p.platform)? "Published":
+                            "Submitted pending Verification"}</td>
+                        <td><a target="_blank" href={p.external_url}>{p.external_url}</a></td>
                     </tr>
                 ))}
                 </tbody>

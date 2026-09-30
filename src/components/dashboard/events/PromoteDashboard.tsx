@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
-import {ProgressBar} from "./platforms/ProgressBar";
-import {PlatformList} from "./platforms/PlatformList";
 import {EventDetail} from "./eventDetailTypes.interface";
 import {useUser} from "../../../UserContext";
 import {api} from "../../../utils/api";
@@ -14,10 +12,10 @@ import ServiceSelectionPage, {ServiceSelectionStatus} from "./payments/ServiceSe
 import EventOrderPage from "./payments/EventOrderPage";
 import {EventOrderManager} from "../../../workflows/payment/EventOrderManager";
 import {EventOrder} from "../../../workflows/payment/EventOrder";
-import PromoteFulfillmentPanel from "./PromoteFulfillmentPanel";
 import {LiveStripeSessionManager} from "../../../workflows/payment/LiveStripeSessionManager";
 import DashboardTabs from "../../DashboardTabs";
 import {StripeSessionManagerFactory} from "../../../workflows/payment/StripeSessionManagerFactory";
+import PromotedEventsPanel from "./PromotedEventsPanel";
 
 
 export default function PromoteDashboard() {
@@ -121,10 +119,6 @@ export default function PromoteDashboard() {
 
     if (!event || !event.platforms) return <div>Loading...</div>;
 
-    const submittedPlatforms = event.platforms.filter(
-        p => p.status === "submitted"
-    );
-
     window.postMessage(
         {
             type: "LOCALBUZZ_PING"
@@ -162,15 +156,15 @@ export default function PromoteDashboard() {
                             alignContent: "left",
                             alignItems: "center"
                         }}>
-                            &nbsp;My Event / Promote
+                            &nbsp;My Events / Promoted
                         </div>
                     </div>
                     <DashboardTabs/>
 
                     <div style={{display: "flex", flexDirection: "row", alignItems: "right"}}>
                         <div style={{flex: "0 0 80%"}}>
-                            <EventBreadcrumb eventTitle={event.title}
-                                             deliveryCount={submittedPlatforms.length}
+                            <EventBreadcrumb event={event}
+                                             promoteEventCount={user?.promoteEventCount || 0}
                                              eventCount={user?.eventCount || 0}/>
                         </div>
                         <div style={{fontSize: "11px", width: "100%", flex: "0 0 20%"}}>
@@ -187,36 +181,9 @@ export default function PromoteDashboard() {
                             }
                         </div>
                     </div>
-                    {
-                        eventOrder?.promote_selection === ServiceSelectionStatus.PRO &&
-                        (
-                            <>
-                                <PromoteFulfillmentPanel title={"PRO"}>
-                                    <div style={{padding: "16px"}}>
-                                        <h2>This Event currently being promoted by&nbsp;
-                                            <b>Airhorn.</b><strong style={{color: "#D2492C"}}>events</strong> <b>PRO</b>
-                                        </h2>
-                                        <br/>
-                                        <Link to={`promoted`}>
-                                            Check Progress
-                                        </Link>
-                                    </div>
-                                </PromoteFulfillmentPanel>
-                            </>
-                        )
-                    }
-                    {( eventOrder?.promote_selection === ServiceSelectionStatus.DIY )&& (
-                        <>
-                            <PromoteFulfillmentPanel title={"DIY"}>
-                                <ProgressBar platforms={event.platforms}/>
-                                <PlatformList
-                                    extensionInstalled={extensionInstalled}
-                                    event={event}
-                                    reload={loadEvent}
-                                    updatePlatformStatus={updatePlatformStatus}/>
-                            </PromoteFulfillmentPanel>
-                        </>
-                    )}
+                    <div>
+                        <PromotedEventsPanel setSelectedEvent={setEvent} selectedEvent={event} selectedEventOrder={eventOrder} />
+                    </div>
 
                     {showEventOrderSelectionModal && (
                         <Modal style={{width: "70%"}} onClose={() => setShowEventOrderSelectionModal(false)}>

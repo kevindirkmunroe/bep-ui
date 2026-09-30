@@ -326,9 +326,9 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                 {!readOnly && !isExpired && (
                     <button
                         title="Promote Event to all Platforms"
-                        className="btn btn-primary-greater" disabled={isExpired} onClick={() => onPromote? onPromote(event) : null}
+                        className={event.is_locked ? "btn btn-secondary-greater" : "btn btn-primary-greater"} disabled={isExpired} onClick={() => onPromote? onPromote(event) : null}
                         style={{marginLeft: "20", fontSize: "16px"}} >
-                        <img src={!event.is_locked ? "/icons8-play-50.png" : "/icons8-progress-64.png"} style={{
+                        <img src={!event.is_locked ? "/icons8-play-50.png" : "/icons8-progress-64-black.png"} style={{
                             width: "24px",
                             height: "24px"
                         }}/>
