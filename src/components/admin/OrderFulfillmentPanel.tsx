@@ -114,7 +114,7 @@ export default function OrderFulfillmentPanel({   orders,
                                  setSelectedOrder(order)
                              }
                         >
-                            <div className="fulfillment-o rder-title" style={{display: 'flex', flexDirection: 'row', fontSize: '16px'}}>
+                            <div className="fulfillment-order-title" style={{display: 'flex', flexDirection: 'row', fontSize: '16px'}}>
                                 <p style={{fontSize: '8px'}}>{order.order_fulfilled_at ? "✅" : "🔴"}</p> &nbsp;{order.title}
                             </div>
                         </div>

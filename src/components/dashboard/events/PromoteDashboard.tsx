@@ -5,7 +5,6 @@ import {EventDetail} from "./eventDetailTypes.interface";
 import {useUser} from "../../../UserContext";
 import {api} from "../../../utils/api";
 import ImageCarousel from "../../ImageCarousel";
-import {Platform, PlatformStatus} from "./platforms/platformTypes.interface";
 import EventBreadcrumb from "./EventBreadcrumb";
 import Modal from "../../Modal";
 import ServiceSelectionPage, {ServiceSelectionStatus} from "./payments/ServiceSelectionPage";
@@ -101,21 +100,6 @@ export default function PromoteDashboard() {
         setShowEventOrderSelectionModal(false);
         setShowEventOrderModal(true);
     }
-
-    const updatePlatformStatus = (platform: Platform, status: PlatformStatus) => {
-        setEvent(prev => {
-            if (!prev) return prev;
-
-            return {
-                ...prev,
-                platforms: prev.platforms.map(p =>
-                    p.platform === platform
-                        ? { ...p, status }
-                        : p
-                )
-            };
-        });
-    };
 
     if (!event || !event.platforms) return <div>Loading...</div>;
 

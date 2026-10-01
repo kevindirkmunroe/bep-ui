@@ -383,6 +383,7 @@ export default function Dashboard() {
                                 <div className="more-actions">
                                     <button
                                         type="button"
+                                        title="Import a Third-party Event"
                                         className="btn btn-secondary"
                                         aria-label="Import event"
                                         aria-expanded={showImportActions}
@@ -422,7 +423,7 @@ export default function Dashboard() {
                                         Import...
                                     </button>
                                     <button className="btn btn-primary-greater"
-                                            title="Create New Event"
+                                            title="Add a New Event"
                                             style={{marginLeft: "4px", fontSize: "16px"}}
                                             onClick={() => setShowCreateEventForm(true)}>
                                         <img alt={"wtf"} style={{width: "30px", height: "28px"}}

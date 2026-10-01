@@ -123,16 +123,19 @@ export default function PromotedEventsPanel({
 
             <div className="fulfillment-platforms-pane">
                 <div className="promote-panel-title" style={{width: '94%', padding: '8px', marginBottom: "8px", marginTop: "15px", borderRadius: "6px"}}>
-                    {!event? "🔘️": "⚪️"}&nbsp;{event? event.title : <i>Select Event</i>}
+                    <img src={!event.is_locked ? "/icons8-play-50.png" : "/icons8-progress-64-black.png"} style={{
+                        width: "24px",
+                        height: "24px"
+                    }}/>{!event? "🔘️": ""}&nbsp;{event? event.title : <i>Select Event</i>}
                 </div>
                 {event && (
                     <>
                         {/* TODO: show in Admin/Debug mode */}
-                        <div className="fulfillment-order-number">
-                            Event ID: {event.event_id}<br/>
-                            Order ID: {eventOrder?.order_id}<br/>
-                            Event Date: {event.start_datetime}
-                        </div>
+                        {/*<div className="fulfillment-order-number">*/}
+                        {/*    Event ID: {event.event_id}<br/>*/}
+                        {/*    Order ID: {eventOrder?.order_id}<br/>*/}
+                        {/*    Event Date: {event.start_datetime}*/}
+                        {/*</div>*/}
                         {/** DIY vs PRO display **/}
                         {eventOrder?.promote_selection === ServiceSelectionStatus.PRO && (
                                 <>
