@@ -69,6 +69,14 @@ export default function OrderFulfillmentPanel({   orders,
         };
     }, [selectedOrder?.event_id]);
 
+    const markOrderFulfilled = async (order) => {
+        try{
+            await api.put(`/admin/fulfill-order`, {order_id: order.order_id});
+        }catch(err){
+            console.error(`[OrderFulfillmentPanel] error overriding fulfill ${order.order_id}: ${err}`);
+        }
+    }
+
     const updatePlatformStatus = async (platform: Platform, status: PlatformStatus) => {
         setEvent(prev => {
             if (!prev) return prev;
@@ -134,11 +142,17 @@ export default function OrderFulfillmentPanel({   orders,
                 )}
                 {event && selectedOrder && (
                     <>
+                        <div>
+                            {selectedOrder.order_fulfilled_at ? <h4>Fulfilled at {selectedOrder.order_fulfilled_at}</h4> :
+                                <h4 onClick={() => markOrderFulfilled(selectedOrder)}>Override: Mark Fulfilled</h4>
+                            }
+                        </div>
                         <div className="fulfillment-order-number">
                             Event ID: {selectedOrder.event_id}<br/>
                             Order ID: {selectedOrder.order_id}<br/>
                             Event Date: {event.start_datetime}
                         </div>
+
                         <PromoteFulfillmentPanel title="DIY">
                             <ProgressBar
                                 platforms={event.platforms}
@@ -153,9 +167,10 @@ export default function OrderFulfillmentPanel({   orders,
                         </PromoteFulfillmentPanel>
                         <section className="promote-panel" style={{marginTop: "12px"}}>
                             <div className="promote-panel-title" style={{display: "flex", flexDirection: "row"}}>
-                                <img src={"/icons8-log-64.png"} style={{ width: "34px", height: "34px"}}/><p style={{marginTop: "4px"}}>&nbsp;Log</p>
+                                <img src={"/icons8-log-64.png"} style={{width: "34px", height: "34px"}}/><p
+                                style={{marginTop: "4px"}}>&nbsp;Log</p>
                             </div>
-                            <EventCompletionLog event={event} handleRefresh={handleLoadEvent} />
+                            <EventCompletionLog event={event} handleRefresh={handleLoadEvent}/>
                         </section>
                     </>
                 )}
