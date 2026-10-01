@@ -160,20 +160,6 @@ export default function Dashboard() {
         return activeEvents.length;
     }
 
-    function getSubmittedEventCount(){
-        const submittedEvents = (events || []).filter(e => {
-            return getEventStatusFromPlatforms(e) === "submitted";
-        });
-        return submittedEvents.length;
-    }
-
-    function getExpiredEventCount(){
-        const submittedEvents = (events || []).filter(e => {
-            return getEventStatusFromPlatforms(e) !== "submitted" && isOlderThanToday(e.start_datetime);;
-        });
-        return submittedEvents.length;
-    }
-
     const loadEvents = async () => {
         setShowCreateEventForm(false);
         try{

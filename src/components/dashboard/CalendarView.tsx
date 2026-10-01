@@ -32,8 +32,7 @@ export default function CalendarView() {
         events,
         setEditingEvent,
         setCreateEventDate,
-        setShowCreateEventForm,
-        reload
+        setShowCreateEventForm
     } = useOutletContext<OutletContext>();
 
 
@@ -53,12 +52,9 @@ export default function CalendarView() {
     // filter by event state
     const filterEventsByState = (events: EventDetail[], state: string): EventDetail[] => {
 
-        // TODO refactor into shared function with *EventsPage
         switch(state){
             case "events":
-                return (events || []).filter(e => {
-                    return getEventStatusFromPlatforms(e) !== "submitted" && !isOlderThanToday(e.start_datetime);
-                });
+                return events;
             case "submitted":
                 return (events || []).filter(e => {
                     return getEventStatusFromPlatforms(e) === "submitted";
@@ -71,7 +67,7 @@ export default function CalendarView() {
 
         return [];
     }
-
+    const isPublishedEvent = (e: EventDetail) => getEventStatusFromPlatforms(e) === "submitted"
 
     const eventsByDay = useMemo(() => {
         const grouped: Record<number, EventDetail[]> = {};
@@ -132,7 +128,7 @@ export default function CalendarView() {
                     <button
                         key={event.event_id}
                         disabled={event.is_locked}
-                        className={event.is_locked ? "calendar-event-disabled" : "calendar-event"}
+                        className={event.is_locked ? (isPublishedEvent(event) ? "calendar-event-published-disabled" : "calendar-event-disabled") : "calendar-event"}
                         onClick={(e) => {
                             e.stopPropagation();
                             editEvent(event);
