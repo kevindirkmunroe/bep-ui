@@ -21,6 +21,9 @@ export default function EventBreadcrumb({
 
     const eventsPath = `/dashboard/${userId}/events`;
 
+    const onHomePage =
+        location.pathname === eventsPath;
+
     const onPromotedEventsPage =
         location.pathname === `${eventsPath}/${eventId}`;
 
@@ -47,7 +50,7 @@ export default function EventBreadcrumb({
                 marginBottom: "20px",
             }}
         >
-            <Link to={eventsPath}>
+            <Link to={eventsPath} style={onHomePage ? {color: "#E27C68", fontSize: "20px"} : {}}>
                 <div style={{display: "flex", flexDirection: "row"}}>
                 <img
                     src="/icons8-home-48.link.png"
@@ -71,11 +74,13 @@ export default function EventBreadcrumb({
 
                 {onPromotedEventsPage ? (
                     <>
-                        <b>Tracked Promoted Events</b>
-                        <strong style={{fontSize: "14px"}}>{`(${promoteEventCount})`}</strong>
-                        <span><b>&gt;</b></span>
+                        <div style={{color: "#E27C68", paddingLeft: "5px", paddingRight: "5px", fontSize: "20px"}}>
+                            <b>Tracked Promoted Events</b>
+                            <strong style={{fontSize: "14px"}}>{`(${promoteEventCount})`}</strong>
+                        </div>
+                        <span>&gt;</span>
                         <Link to={`${eventsPath}/${event?.event_id}/promoted`}>
-                            <b>Results for <i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i></b>
+                        <b>Results for <i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i></b>
                         </Link>
                     </>
 
@@ -91,9 +96,9 @@ export default function EventBreadcrumb({
             )}
 
             {onLogPage && (
-                <div style={{display: "flex", flexDirection: "row", fontSize: "18px"}}>
-                    <span><b>&gt;</b></span>
-                    <b>&nbsp;Results for <i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i></b>
+                <div style={{display: "flex", flexDirection: "row", fontSize: "20px"}}>
+                    <span>&gt;</span>
+                    <b style={{marginLeft: "3px", paddingLeft: "5px", paddingRight: "5px", color: "#E27C68"}}>&nbsp;Results for <i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i></b>
                 </div>
             )}
         </div>

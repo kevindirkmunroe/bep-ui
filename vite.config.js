@@ -15,6 +15,7 @@ export default defineConfig({
       "/orders": "http://localhost:4000",
       "/payments": "http://localhost:4000",
       "/admin": "http://localhost:4000",
+      "/r": "http://localhost:4000",
     },
   },
   define: {

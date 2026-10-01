@@ -14,6 +14,7 @@ export interface PlatformData {
     external_url?: string;
     published_url?: string;
     date_published?: string;
+    tracking_code: number;
 }
 
 export interface PlatformRowProps {

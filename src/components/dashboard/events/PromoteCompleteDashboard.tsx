@@ -67,7 +67,7 @@ export default function PromoteCompleteDashboard(){
                 </div>
                 <div style={{display: "flex", flexDirection: "column"}}>
                     {/* List completed promotions only: "/events/:eventId" */}
-                    <div style={{marginTop: "2px", marginLeft: "20px"}}>
+                    <div style={{marginTop: "2px", marginLeft: "60px"}}>
                         <EventCompletionLog event={event} handleRefresh={loadEventPlatforms}/>
                     </div>
                     <div style={{
@@ -75,6 +75,7 @@ export default function PromoteCompleteDashboard(){
                         width: "85%",
                         fontSize: "15px",
                         marginLeft: "80px",
+                        marginTop: "20px",
                         textAlign: "left"
                     }}><b>*</b> Pending Verification. <strong>Keep an eye on your inbox!</strong> Each platform will send updates about the final
                         status of your submission to the email address you registered with.

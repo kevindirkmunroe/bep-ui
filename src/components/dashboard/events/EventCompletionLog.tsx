@@ -1,21 +1,41 @@
 import {PLATFORM_ICONS, PRINTABLE_PLATFORM} from "./platforms/platformTypes.interface";
 import {EventDetail} from "./eventDetailTypes.interface";
 import "./eventCompletionLog.css";
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {encode} from "../../../utils/Tracking";
+import {api} from "../../../utils/api";
 
 interface EventCompletionLogProps {
     event: EventDetail;
     handleRefresh: () => Promise<void>;
 }
+
 export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogProps) {
 
-    console.log(`[EventCompletionLog] platforms= ${JSON.stringify(event.platforms)}`);
+    const [submittedEvent, setSubmittedEvent] = useState<EventDetail | null>(null);
+    const loadSubmittedEvents = async () => {
+        try {
+            const { data } = await api.get<EventDetail[]>(
+                `/events/${event.event_id}`
+            );
 
-    const submittedPlatforms = event.platforms.filter(
+            setSubmittedEvent(data);
+        }catch(error){
+            console.error(`[EventCompletionLog] Error loading event stats: ${error}`);
+        }
+    };
+
+    const [submittedEvents, setSubmittedEvents] = useState<EventDetail| null>(null)
+    useEffect(() => {
+        if (!event) return;
+        loadSubmittedEvents();
+    }, [event]);
+
+    const submittedPlatforms = submittedEvent?.platforms.filter(
         p => p.status === "submitted"
     );
 
-    const fulfillmentComplete = submittedPlatforms.length === event.platforms.length;
+    // const fulfillmentComplete = submittedPlatforms.length === event.platforms.length;
 
     const formatDate = (date: string | null | undefined) => {
         if (!date) return "—";
@@ -65,12 +85,14 @@ export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogP
                     <th>Delivery Platform</th>
                     <th>Date Submitted</th>
                     <th>Delivery Status</th>
+                    <th>Tracking Code</th>
+                    <th>Clicks</th>
                     <th>Event URL ↗</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                {submittedPlatforms.map(p => (
+                {submittedPlatforms?.map(p => (
                     <tr key={p.platform}>
                         <td>
                             <div className="completion-platform">
@@ -85,6 +107,8 @@ export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogP
                         <td>{formatDate(p.date_published)}</td>
                         <td>{AUTO_PUBLISHED_PLATFORMS.includes(p.platform)? "Published":
                             "Submitted pending Verification"}</td>
+                        <td>{encode(p.tracking_code)}</td>
+                        <td>{p.click_count}</td>
                         <td><a target="_blank" href={p.published_url}>{p.published_url}</a></td>
                     </tr>
                 ))}
