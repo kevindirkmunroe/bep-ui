@@ -15,6 +15,8 @@ interface InviteRequest {
 
 export interface ProOrder {
     email: string;
+    first_name: string;
+    last_name: string;
     order_id: string;
     image: string;
     event_id: string;

@@ -69,7 +69,7 @@ export default function OrderFulfillmentPanel({   orders,
         };
     }, [selectedOrder?.event_id]);
 
-    const markOrderFulfilled = async (order) => {
+    const markOrderFulfilled = async (order: ProOrder) => {
         try{
             await api.put(`/admin/fulfill-order`, {order_id: order.order_id});
         }catch(err){
@@ -122,8 +122,9 @@ export default function OrderFulfillmentPanel({   orders,
                                  setSelectedOrder(order)
                              }
                         >
-                            <div className="fulfillment-order-title" style={{display: 'flex', flexDirection: 'row', fontSize: '16px'}}>
-                                <p style={{fontSize: '8px'}}>{order.order_fulfilled_at ? "✅" : "🔴"}</p> &nbsp;{order.title}
+                            <div className="fulfillment-order-title" style={{display: 'flex', flexDirection: 'column', fontSize: '16px'}}>
+                                <b>👤{order.first_name}&nbsp;{order.last_name}</b>
+                                <div style={{display: 'flex', flexDirection: "row"}}><p style={{fontSize: '8px'}}>{order.order_fulfilled_at ? "✅" : "🔴"}</p> &nbsp;{order.title}</div>
                             </div>
                         </div>
                     ))}
@@ -144,7 +145,11 @@ export default function OrderFulfillmentPanel({   orders,
                     <>
                         <div>
                             {selectedOrder.order_fulfilled_at ? <h4>Fulfilled at {selectedOrder.order_fulfilled_at}</h4> :
-                                <h4 onClick={() => markOrderFulfilled(selectedOrder)}>Override: Mark Fulfilled</h4>
+                                <button className={"btn btn-secondary"}
+                                        style={{margin: "8px"}}
+                                        onClick={() => markOrderFulfilled(selectedOrder)}>
+                                    Override: Mark Fulfilled
+                                </button>
                             }
                         </div>
                         <div className="fulfillment-order-number">
