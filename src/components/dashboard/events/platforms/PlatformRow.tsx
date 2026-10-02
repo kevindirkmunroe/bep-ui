@@ -14,6 +14,7 @@ import {
 } from "./payloadTypes.interface";
 import {PAYLOAD_TRANSFORMATIONS} from "./payloadTransfomations";
 import BaseDialog, {DialogState} from "../../../BaseDialog";
+import {buildTrackingUrl} from "../../../../utils/Tracking";
 
 type PlatformPayload =
     | FunCheapPayload
@@ -61,7 +62,7 @@ async function buildPayload(event: EventDetail, platform: Platform) : Promise<Pl
 }
 
 export function PlatformRow({ event, platformData, updatePlatformStatus, reload, extensionInstalled } : PlatformRowProps) {
-    const { platform, status } = platformData;
+    const { platform, status, tracking_code } = platformData;
     const [dialog, setDialog] = useState<DialogState>(null);
 
     const handleOpen = async () => {
@@ -86,12 +87,11 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
         let pl = null;
         try {
             pl = await buildPayload(event, platform)
-            //console.log(`[PlatformRow] payload for DB, ${platform}: ${JSON.stringify(event)}`);
         }catch(err){
             console.log(`[PlatformRow] error creating payload for ${platform}: ${err}`);
         }
 
-        // 2. Update database
+        // 3. Update database
         try {
             await api.patch(
                 `/events/${event.event_id}/platforms/${platform}`,
@@ -105,7 +105,12 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
             console.log(`[PlatformRow] error updating platform ${platform}: ${err}`);
         }
 
-        // 3. post event for extension
+        // 4. Switch website with tracking URL
+        const trackingUrl= buildTrackingUrl(tracking_code);
+        event.website = trackingUrl;
+        event.description = `${event.description}\n\n${trackingUrl}`;
+
+        // 5. post event for extension
         event.region = pl?.region;
         event.city = pl?.city ?? undefined;
         // Break start time into wall-clock event time.
