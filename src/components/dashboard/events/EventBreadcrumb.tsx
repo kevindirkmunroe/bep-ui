@@ -8,8 +8,6 @@ interface EventBreadcrumbProps {
     promoteEventCount: number;
 }
 
-const BREADCRUMB_MAX_STEP_LENGTH = 34;
-
 export default function EventBreadcrumb({
                                             event,
                                             eventCount,
@@ -17,7 +15,7 @@ export default function EventBreadcrumb({
                                         }: EventBreadcrumbProps) {
     const { userId, eventId } = useParams();
     const location = useLocation();
-    const TRUNCATE_LIMIT = 22;
+    const TRUNCATE_LIMIT = 30;
 
     const eventsPath = `/dashboard/${userId}/events`;
 
@@ -52,46 +50,47 @@ export default function EventBreadcrumb({
         >
             <Link to={eventsPath} style={onHomePage ? {color: "#E27C68", fontSize: "20px"} : {}}>
                 <div style={{display: "flex", flexDirection: "row"}}>
-                <img
-                    src="/icons8-home-48.link.png"
-                    alt="Home"
-                    style={{
-                        height: "20px",
-                        width: "auto",
-                        marginLeft: "10px",
-                        marginRight: "4px",
-                        objectFit: "contain",
-                    }}
-                />
-                    <b>All Events</b>
-                    <strong style={{fontSize: "14px"}}>({eventCount})</strong>
+                    <img
+                        src={onHomePage ? "/icons8-home-48.png" : "/icons8-home-48.link.png"}
+                        alt="Home"
+                        style={{
+                            height: "20px",
+                            width: "auto",
+                            marginLeft: "10px",
+                            marginTop: "3px",
+                            marginRight: "4px",
+                            objectFit: "contain"
+                        }}
+                    />
+                    <b>Active Events</b>
+                    <div style={{paddingLeft: "2px", fontSize: "16px"}}>({eventCount})</div>
                 </div>
             </Link>
 
             {eventId && (
                 <>
-                <span><b>&gt;</b></span>
+                    <span><b>&gt;</b></span>
 
-                {onPromotedEventsPage ? (
-                    <>
-                        <div style={{color: "#E27C68", paddingLeft: "5px", paddingRight: "5px", fontSize: "20px"}}>
-                            <b>Processing</b>
-                            <strong style={{fontSize: "14px"}}>{`(${promoteEventCount})`}</strong>
-                        </div>
-                        <span>&gt;</span>
-                        <Link to={`${eventsPath}/${event?.event_id}/promoted`}>
-                        <b>Results for <i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i></b>
-                        </Link>
-                    </>
+                    {onPromotedEventsPage ? (
+                        <>
+                            <div style={{color: "#E27C68", paddingLeft: "5px", paddingRight: "5px", fontSize: "20px", display: "flex", flexDirection:"row"}}>
+                                <b>Processing</b>
+                                <div style={{paddingLeft: "2px", fontSize: "16px"}}>{`(${promoteEventCount})`}</div>
+                            </div>
+                            <span>&gt;</span>
+                            <Link to={`${eventsPath}/${event?.event_id}/promoted`}>
+                                <b>Results for "</b><i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"
+                            </Link>
+                        </>
 
-                ) : (
-                    <>
-                        <Link to={`${eventsPath}/${event?.event_id}`}>
-                            <b>Processing</b>
-                            <strong style={{fontSize: "14px"}}>{`(${promoteEventCount})`}</strong>
-                        </Link>
-                    </>
-                )}
+                    ) : (
+                        <>
+                            <Link to={`${eventsPath}/${event?.event_id}`}>
+                                <b>Processing</b>
+                                <strong style={{fontSize: "14px"}}>{`(${promoteEventCount})`}</strong>
+                            </Link>
+                        </>
+                    )}
                 </>
             )}
 
