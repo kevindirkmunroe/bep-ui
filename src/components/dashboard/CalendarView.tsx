@@ -74,7 +74,7 @@ export default function CalendarView() {
             return {background: 'green', color: 'white'};
         }else{
             if(event.is_locked){
-                return {background: '#D2492C', color: 'white', borderBottom: '6px solid green'}
+                return {background: '#D2492C', color: 'white'}
             }
             return {background: '#E9A296', color: 'white'}
         }

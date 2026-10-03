@@ -123,9 +123,9 @@ export default function PromotedEventsPanel({
 
             <div className="fulfillment-platforms-pane">
                 <div className="promote-panel-title" style={{width: '94%', padding: '8px', marginBottom: "8px", marginTop: "15px", borderRadius: "6px"}}>
-                    <img src={!event.is_locked ? "/icons8-play-50.png" : "/icons8-progress-64-black.png"} style={{
-                        width: "24px",
-                        height: "24px"
+                    <img src={!event.is_locked ? "/icons8-play-50.png" : "/icons8-megaphone-64.png"} style={{
+                        width: "18px",
+                        height: "18px"
                     }}/>{!event? "🔘️": ""}&nbsp;{event? event.title : <i>Select Event</i>}
                 </div>
                 {event && (

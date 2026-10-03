@@ -149,9 +149,11 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     boxSizing: "border-box",
                     backgroundColor:
                         status === "submitted" || isExpired
-                            ? "#f5f5f5"
-                            : "white"
-                }}
+                            ? "green"
+                            : (event.is_locked ? "#D2492C" : "#E9A296"),
+                    color: "white",
+                    borderRadius: "8px"
+            }}
             >
                 {/* Event Title */}
                 <div
@@ -226,7 +228,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
 
             </div>
             <div style={{width: "60%", display: "flex", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
-                {canEdit && onEdit && !isExpired && (
+                {canEdit && onEdit && !isExpired && !event.is_locked && (
                     <button className="btn btn-secondary"
                             disabled={event.is_locked}
                             onClick={(e) => {
@@ -326,19 +328,23 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                 {!readOnly && !isExpired && (
                     <button
                         title={event.is_locked? "Promote this Event to all Platforms" : "Start Event Promotion process"}
-                        className={event.is_locked ? "btn btn-secondary-greater" : "btn btn-primary-greater"} disabled={isExpired} onClick={() => onPromote? onPromote(event) : null}
+                        className={event.is_locked ? "btn btn-secondary-greater" : "btn btn-primary-greater"}
+                        disabled={isExpired || status === 'submitted'}
+                        onClick={() => onPromote? onPromote(event) : null}
                         style={{marginLeft: "20", fontSize: "16px"}} >
-                        <img src={!event.is_locked ? "/icons8-play-50.png" : "/icons8-progress-64-black.png"} style={{
-                            width: "24px",
-                            height: "24px"
-                        }}/>
-                        <b>{event.is_locked ? `Track....` : `Promote`}</b>
+                        {event.is_locked && (
+                            <img src={"/icons8-megaphone-64.png"} style={{
+                                width: "24px",
+                                height: "24px"
+                            }}/>
+                        )}
+                        <b>{event.is_locked ? (status === 'submitted' ? `Promoted`: `Promote...`) : `Activate Event`}</b>
                     </button>
                 )}
 
                 {isExpired && !readOnly && (
                     <>
-                        <button className="btn btn-danger"
+                    <button className="btn btn-danger"
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setShowConfirm(true);

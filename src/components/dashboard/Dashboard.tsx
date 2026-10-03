@@ -146,7 +146,7 @@ export default function Dashboard() {
 
     function getActiveEventCount(){
         const activeEvents = (events || []).filter(e => {
-            return getEventStatusFromPlatforms(e) !== "submitted" && !isOlderThanToday(e.start_datetime);
+            return !isOlderThanToday(e.start_datetime);
         });
         return activeEvents.length;
     }
@@ -413,7 +413,7 @@ export default function Dashboard() {
                                             style={{marginLeft: "4px", fontSize: "16px"}}
                                             onClick={() => setShowCreateEventForm(true)}>
                                         <img alt={"wtf"} style={{width: "30px", height: "28px"}}
-                                             src={"/icons8-create-50.png"}/>
+                                             src={"/icons8-add-calendar-48-white.png"}/>
                                         <b>Add...</b>
                                     </button>
 

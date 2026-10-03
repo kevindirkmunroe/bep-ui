@@ -22,7 +22,7 @@ export default function EventBreadcrumb({
     const eventsPath = `/dashboard/${userId}/events`;
 
     const onHomePage =
-        location.pathname === eventsPath;
+        location.pathname === eventsPath || location.pathname === `${eventsPath}/calendar`;
 
     const onPromotedEventsPage =
         location.pathname === `${eventsPath}/${eventId}`;
@@ -75,7 +75,7 @@ export default function EventBreadcrumb({
                 {onPromotedEventsPage ? (
                     <>
                         <div style={{color: "#E27C68", paddingLeft: "5px", paddingRight: "5px", fontSize: "20px"}}>
-                            <b>Tracked Promoted Events</b>
+                            <b>Processing</b>
                             <strong style={{fontSize: "14px"}}>{`(${promoteEventCount})`}</strong>
                         </div>
                         <span>&gt;</span>
@@ -87,7 +87,7 @@ export default function EventBreadcrumb({
                 ) : (
                     <>
                         <Link to={`${eventsPath}/${event?.event_id}`}>
-                            <b>Tracked Promoted Events</b>
+                            <b>Processing</b>
                             <strong style={{fontSize: "14px"}}>{`(${promoteEventCount})`}</strong>
                         </Link>
                     </>

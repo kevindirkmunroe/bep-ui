@@ -14,14 +14,17 @@ export function ActiveEventsPage() {
     const { setEditingEvent } = useOutletContext<{ setEditingEvent:  React.Dispatch<React.SetStateAction<EventDetail | null>> }>();
 
     const activeEvents = (events || []).filter(e => {
-        return getEventStatusFromPlatforms(e) !== "submitted" && !isOlderThanToday(e.start_datetime);
+        return !isOlderThanToday(e.start_datetime);
     });
+
 
     const navigate = useNavigate();
     const {user} = useUser();
     if(user){
         user.eventCount = activeEvents.length;
-        user.promoteEventCount = activeEvents.filter((e) => e.is_locked).length;
+        user.promoteEventCount = activeEvents.filter((e) =>
+            e.is_locked &&
+            getEventStatusFromPlatforms(e) !== "submitted").length;
     }
 
     const handlePromote = (event: EventDetail) => {
