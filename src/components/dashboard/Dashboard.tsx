@@ -19,6 +19,7 @@ import BaseDialog, {DialogState} from "../BaseDialog";
 import EventBreadcrumb from "./events/EventBreadcrumb";
 import {useUser} from "../../UserContext";
 import DashboardTabs from "../DashboardTabs";
+import EventDetailView from "./EventDetailView";
 
 export default function Dashboard() {
     const { userId } = useParams();
@@ -247,6 +248,13 @@ export default function Dashboard() {
                     )}
                     {(showCreateEventForm || editingEvent) && userId && (
                         <Modal onClose={() => setShowCreateEventForm(false)}>
+                            <EventDetailView
+                                event={editingEvent}
+                                onClose={() => {
+                                    setShowCreateEventForm(false);
+                                    setEditingEvent(null);
+                                }
+                            }/>
                             <CreateEditEventForm
                                 key={editingEvent?.event_id || "new"}   // 👈 Force react to recreate component
                                 userId={userId}

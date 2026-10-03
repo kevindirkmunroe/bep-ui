@@ -77,6 +77,21 @@ export default function OrderFulfillmentPanel({   orders,
         }
     }
 
+    useEffect(() => {
+        if(!event) return;
+
+        const done = event.platforms.filter(p => p.status === "submitted").length;
+        if (event.platforms.length === done && selectedOrder.order_fulfilled_at) {
+            // mark event as fulfilled.
+            try {
+                console.log(`BLOCKED [OrderFulfillmentPanel] auto marking order fulfilled: ${selectedOrder.order_id}`)
+                //  markOrderFulfilled(selectedOrder);
+            }catch(err){
+                console.log(`Error marking order fulfilled:  ${err}`);
+            }
+        }
+    }, [event]);
+
     const updatePlatformStatus = async (platform: Platform, status: PlatformStatus) => {
         setEvent(prev => {
             if (!prev) return prev;
@@ -148,7 +163,7 @@ export default function OrderFulfillmentPanel({   orders,
                                 <button className={"btn btn-secondary"}
                                         style={{margin: "8px"}}
                                         onClick={() => markOrderFulfilled(selectedOrder)}>
-                                    Override: Mark Fulfilled
+                                    Mark Order Fulfilled
                                 </button>
                             }
                         </div>

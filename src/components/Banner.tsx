@@ -150,7 +150,7 @@ export function Banner() {
                 </div>
             )}
         </div>
-            <div>{user?.isAdmin && (<div style={{padding: "8px", borderRadius: '5px', marginBottom: "8px", backgroundColor: "#FFED29"}}><strong style={{color: 'black'}}>Airhorn</strong><b style={{color: "#D2492C"}}>.admin</b></div>) }</div>
+            <div>{user?.isAdmin && (<div style={{padding: "8px", borderRadius: '5px', marginBottom: "8px", backgroundColor: "#FFED29"}}><b>Logged in as</b>&nbsp;<strong style={{color: 'black'}}>Airhorn</strong><b style={{color: "#D2492C"}}>.admin</b></div>) }</div>
         </>
     );
 }

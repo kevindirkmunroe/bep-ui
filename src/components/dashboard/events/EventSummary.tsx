@@ -240,6 +240,17 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                         Edit
                     </button>
                 )}
+                {event.is_locked && (
+                    <button className="btn btn-secondary"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onEdit(event);
+                            }}
+                    >
+                        <img src={"/icons8-preview-48-coral.png"} style={{width: "24px", height: "24px"}}/>
+                        View
+                    </button>
+                )}
 
                 {/* Begin Extras Menu */}
                 {!readOnly && !isExpired && (
