@@ -30,6 +30,7 @@ export default function Dashboard() {
     const [showImportEventbriteEventForm, setShowImportEventbriteEventForm] = useState(false);
     const [showCreateEventForm, setShowCreateEventForm] = useState(false);
     const [editingEvent, setEditingEvent] = useState<EventDetail | null>(null);
+    const [viewingEvent, setViewingEvent] = useState<EventDetail | null>(null);
     const [facebookImportEvent, setFacebookImportEvent] = useState<FacebookEventDetail | null>(null);
     const [eventbriteImportEvent, setEventbriteImportEvent] = useState<EventbriteEventDetail | null>(null);
     const [createEventDate, setCreateEventDate] = useState<Date | null>(null);
@@ -248,13 +249,6 @@ export default function Dashboard() {
                     )}
                     {(showCreateEventForm || editingEvent) && userId && (
                         <Modal onClose={() => setShowCreateEventForm(false)}>
-                            <EventDetailView
-                                event={editingEvent}
-                                onClose={() => {
-                                    setShowCreateEventForm(false);
-                                    setEditingEvent(null);
-                                }
-                            }/>
                             <CreateEditEventForm
                                 key={editingEvent?.event_id || "new"}   // 👈 Force react to recreate component
                                 userId={userId}
@@ -270,6 +264,17 @@ export default function Dashboard() {
                                     setEditingEvent(null);
                                 }}
                             />
+                        </Modal>
+                    )}
+                    {(viewingEvent) && userId && (
+                        <Modal onClose={() => setShowCreateEventForm(false)}>
+                            <EventDetailView
+                                event={viewingEvent}
+                                onClose={() => {
+                                    setShowCreateEventForm(false);
+                                    setViewingEvent(null);
+                                }
+                                }/>
                         </Modal>
                     )}
 
@@ -548,6 +553,7 @@ export default function Dashboard() {
                                 context={{
                                     events,
                                     setEditingEvent,
+                                    setViewingEvent,
                                     setCreateEventDate,
                                     setShowCreateEventForm,
                                     reload: loadEvents

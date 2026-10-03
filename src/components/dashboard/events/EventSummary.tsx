@@ -30,7 +30,7 @@ const modalStyle = {
     minWidth: "300px"
 };
 
-export function EventSummary({ event, readOnly = false, reload, showRedo= false, showAsHeader=false, onEdit, onPromote }: EventSummaryProps) {
+export function EventSummary({ event, readOnly = false, reload, showRedo= false, showAsHeader=false, onEdit, onView, onPromote }: EventSummaryProps) {
 
     const [showConfirm, setShowConfirm] = useState(false);
     const [imgSrc, setImgSrc] = useState("/icons8-delete-30.png");
@@ -240,11 +240,11 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                         Edit
                     </button>
                 )}
-                {event.is_locked && (
+                {event.is_locked && onView && (
                     <button className="btn btn-secondary"
                             onClick={(e) => {
                                 e.stopPropagation();
-                                onEdit(event);
+                                onView(event);
                             }}
                     >
                         <img src={"/icons8-preview-48-coral.png"} style={{width: "24px", height: "24px"}}/>

@@ -17,6 +17,9 @@ type OutletContext = {
     setEditingEvent: React.Dispatch<
         React.SetStateAction<Event | null>
     >;
+    setViewingEvent: React.Dispatch<
+        React.SetStateAction<Event | null>
+    >;
     setShowCreateEventForm: React.Dispatch<
         React.SetStateAction<boolean>
     >;
@@ -31,6 +34,7 @@ export default function CalendarView() {
     const {
         events,
         setEditingEvent,
+        setViewingEvent,
         setCreateEventDate,
         setShowCreateEventForm
     } = useOutletContext<OutletContext>();
@@ -108,9 +112,11 @@ export default function CalendarView() {
         setCurrentDate(new Date(year, month + 1, 1));
     };
 
-    const editEvent = (event) => {
-        if (state === "active" || state === "events") {
+    const viewOrEditEvent = (event) => {
+        if ((state === "active" || state === "events") && !event.is_locked) {
             setEditingEvent(event);
+        }else{
+            setViewingEvent(event);
         }
     };
 
@@ -138,12 +144,11 @@ export default function CalendarView() {
                 {eventsByDay[day]?.map(event => (
                     <button
                         key={event.event_id}
-                        disabled={event.is_locked}
                         className={"calendar-event"}
                         style={getEventStyle(event)}
                         onClick={(e) => {
                             e.stopPropagation();
-                            editEvent(event);
+                            viewOrEditEvent(event);
                         }}
                     >
                         {event.title}

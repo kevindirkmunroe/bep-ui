@@ -12,6 +12,7 @@ export function ActiveEventsPage() {
         reload: () => Promise<void>;
     }>();
     const { setEditingEvent } = useOutletContext<{ setEditingEvent:  React.Dispatch<React.SetStateAction<EventDetail | null>> }>();
+    const { setViewingEvent } = useOutletContext<{ setViewingEvent:  React.Dispatch<React.SetStateAction<EventDetail | null>> }>();
 
     const activeEvents = (events || []).filter(e => {
         return !isOlderThanToday(e.start_datetime);
@@ -36,7 +37,7 @@ export function ActiveEventsPage() {
             {activeEvents.length === 0 && <p>No Active Events Yet</p>}
             <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                 {activeEvents.map(e => (
-                    <EventSummary key={e.event_id} event={e} reload={reload} onEdit={setEditingEvent} onPromote={handlePromote}/>
+                    <EventSummary key={e.event_id} event={e} reload={reload} onEdit={setEditingEvent} onView={setViewingEvent} onPromote={handlePromote}/>
                 ))}
             </div>
         </div>
