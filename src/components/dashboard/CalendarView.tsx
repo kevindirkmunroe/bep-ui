@@ -69,6 +69,17 @@ export default function CalendarView() {
     }
     const isPublishedEvent = (e: EventDetail) => getEventStatusFromPlatforms(e) === "submitted"
 
+    const getEventStyle = (event: EventDetail) => {
+        if(isPublishedEvent(event)){
+            return {background: 'green', color: 'white'};
+        }else{
+            if(event.is_locked){
+                return {background: '#D2492C', color: 'white', borderBottom: '6px solid green'}
+            }
+            return {background: '#E9A296', color: 'white'}
+        }
+    }
+
     const eventsByDay = useMemo(() => {
         const grouped: Record<number, EventDetail[]> = {};
 
@@ -97,7 +108,7 @@ export default function CalendarView() {
         setCurrentDate(new Date(year, month + 1, 1));
     };
 
-    const editEvent = (event: EventDetail) => {
+    const editEvent = (event) => {
         if (state === "active" || state === "events") {
             setEditingEvent(event);
         }
@@ -128,7 +139,8 @@ export default function CalendarView() {
                     <button
                         key={event.event_id}
                         disabled={event.is_locked}
-                        className={event.is_locked ? (isPublishedEvent(event) ? "calendar-event-published-disabled" : "calendar-event-disabled") : "calendar-event"}
+                        className={"calendar-event"}
+                        style={getEventStyle(event)}
                         onClick={(e) => {
                             e.stopPropagation();
                             editEvent(event);
