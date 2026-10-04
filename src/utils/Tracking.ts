@@ -15,6 +15,7 @@ export function buildTrackingUrl(trackingCode: number){
         "TRACKING:",
         import.meta.env.VITE_TRACKING_BASE_URL
     );
-    return 'scooby doo';
-    // return `${trackingBase}/r/${encode(trackingCode)}`
+    const trackingUrl = `${trackingBase}/r/${encode(trackingCode)}`;
+    console.log(`return tracking url: ${trackingUrl}`);
+    return trackingUrl;
 }
