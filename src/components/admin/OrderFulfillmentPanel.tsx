@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useUser } from "../../UserContext";
 
 import PromoteFulfillmentPanel from "../dashboard/events/PromoteFulfillmentPanel";
@@ -11,6 +11,8 @@ import {api} from "../../utils/api";
 import {EventDetail} from "../dashboard/events/eventDetailTypes.interface";
 import {Platform, PlatformStatus} from "../dashboard/events/platforms/platformTypes.interface";
 import {EventCompletionLog} from "../dashboard/events/EventCompletionLog";
+import Modal from "../Modal";
+import EventDetailView from "../dashboard/EventDetailView";
 
 interface OrderFulfillmentPanelProps {
     orders: ProOrder[];
@@ -24,6 +26,7 @@ export default function OrderFulfillmentPanel({   orders,
     // Work starts with orders...
     const [selectedOrder, setSelectedOrder] =
         useState<ProOrder | null>(orders[0]);
+    const [showEventDetailForm, setShowEventDetailForm] = useState(false);
 
     // Orders point to Events which Admin works on
 
@@ -121,6 +124,16 @@ export default function OrderFulfillmentPanel({   orders,
 
     return (
         <div className="order-fulfillment-panel">
+            { showEventDetailForm && (
+                <Modal onClose={() => setShowEventDetailForm(false)}>
+                    <EventDetailView
+                        event={event}
+                        onClose={() => {
+                            setShowEventDetailForm(false);
+                        }
+                        }/>
+                </Modal>
+            )}
 
             {/* LEFT: Orders */}
             <div className="fulfillment-orders-pane">
@@ -157,20 +170,35 @@ export default function OrderFulfillmentPanel({   orders,
                     </div>
                 )}
                 {event && selectedOrder && (
-                    <>
-                        <div>
-                            {selectedOrder.order_fulfilled_at ? <h4>Fulfilled at {selectedOrder.order_fulfilled_at}</h4> :
-                                <button className={"btn btn-secondary"}
-                                        style={{margin: "8px"}}
-                                        onClick={() => markOrderFulfilled(selectedOrder)}>
-                                    Mark Order Fulfilled
+                    <div>
+                        <div style={{display: "flex", flexDirection: "row", gap: "15px"}}>
+                            <div className="fulfillment-order-number">
+                                Event ID: {selectedOrder.event_id}<br/>
+                                Order ID: {selectedOrder.order_id}<br/>
+                                Event Date: {event.start_datetime}
+                            </div>
+                            {(event) && (
+                                <button className="btn btn-secondary"
+                                        style={{margin: "8px", height: "40px"}}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setShowEventDetailForm(true);
+                                        }}
+                                >
+                                    <img src={"/icons8-preview-48-coral.png"} style={{width: "24px", height: "24px"}}/>
+                                    View
                                 </button>
-                            }
-                        </div>
-                        <div className="fulfillment-order-number">
-                            Event ID: {selectedOrder.event_id}<br/>
-                            Order ID: {selectedOrder.order_id}<br/>
-                            Event Date: {event.start_datetime}
+                            )}
+                            <div>
+                                {selectedOrder.order_fulfilled_at ?
+                                    <h4>Fulfilled at {selectedOrder.order_fulfilled_at}</h4> :
+                                    <button className={"btn btn-secondary"}
+                                            style={{margin: "8px", height: "40px"}}
+                                            onClick={() => markOrderFulfilled(selectedOrder)}>
+                                        Mark Order Fulfilled
+                                    </button>
+                                }
+                            </div>
                         </div>
 
                         <PromoteFulfillmentPanel title="DIY">
@@ -192,7 +220,7 @@ export default function OrderFulfillmentPanel({   orders,
                             </div>
                             <EventCompletionLog event={event} handleRefresh={handleLoadEvent}/>
                         </section>
-                    </>
+                    </div>
                 )}
             </div>
         </div>
