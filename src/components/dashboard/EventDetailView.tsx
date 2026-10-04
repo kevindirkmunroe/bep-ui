@@ -137,7 +137,7 @@ export default function EventDetailView({
                         className="btn btn-secondary"
                         onClick={onClose}
                     >
-                        OK
+                        Close
                     </button>
                 </div>
 

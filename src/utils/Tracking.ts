@@ -11,6 +11,9 @@ export function decode(id: string){
 
 export function buildTrackingUrl(trackingCode: number){
     // import.meta.env.VITE_API_BASE_URL
-
+    console.log(
+        "TRACKING:",
+        import.meta.env.VITE_TRACKING_BASE_URL
+    );
     return `${import.meta.env.VITE_TRACKING_BASE_URL}/r/${encode(trackingCode)}`
 }
