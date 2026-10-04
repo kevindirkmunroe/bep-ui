@@ -9,7 +9,7 @@ export function decode(id: string){
     return hashids.decode(id);
 }
 
-export function buildTrackingUrl(trackingCode: number){
+export default function buildTrackingUrl(trackingCode: number){
     const trackingBase = import.meta.env.VITE_TRACKING_BASE_URL;
     console.log(
         "TRACKING:",

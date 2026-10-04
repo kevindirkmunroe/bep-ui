@@ -2,7 +2,6 @@ import {Platform, PLATFORM_ICONS, PlatformRowProps} from "./platformTypes.interf
 import {getPlatformUrl} from "./platformData";
 import {DateFields, EventDetail} from "../eventDetailTypes.interface";
 import {api} from "../../../../utils/api";
-import {zipToVisitOaklandDistrict} from "./regionMappings";
 import React, {useState} from "react";
 import {
     DoTheBayPayload,
@@ -14,7 +13,7 @@ import {
 } from "./payloadTypes.interface";
 import {PAYLOAD_TRANSFORMATIONS} from "./payloadTransfomations";
 import BaseDialog, {DialogState} from "../../../BaseDialog";
-import {buildTrackingUrl} from "../../../../utils/Tracking";
+import buildTrackingUrl from "../../../../utils/Tracking";
 
 type PlatformPayload =
     | FunCheapPayload
@@ -65,7 +64,12 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
     const { platform, status, tracking_code } = platformData;
     const [dialog, setDialog] = useState<DialogState>(null);
 
+    const [autofillClicked, setAutofillClicked] = useState(status != 'not_started');
+
     const handleOpen = async () => {
+
+        setAutofillClicked(true);
+
         // 1. OPEN IMMEDIATELY (must be sync)
         const partnerWindow = window.open(
             "",
@@ -171,6 +175,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
         "published" : "Published",
     }
 
+
     return (
         <div style={{
             border: "1px solid #d5d5d5",
@@ -225,9 +230,9 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                                         ? "Open partner website and Autofill event"
                                         : "Install the Airhorn.events Chrome extension to enable Autofill"
                                 }
-                                className="btn btn-primary"
+                                className={autofillClicked? "btn btn-secondary" : "btn btn-primary"}
                                 onClick={handleOpen}>
-                            <img alt={"Autofill"} src={"/icons8-form-24.png"} style={{width:"24px", height:"24px"}} />Autofill
+                            <img alt={"Autofill"} src={autofillClicked? "/icons8-form-24-black.png": "/icons8-form-24.png"} style={{width:"24px", height:"24px"}} />Autofill
                         </button>
                     )}
                     {status !== "submitted" && status && (
