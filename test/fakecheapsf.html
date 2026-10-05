@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Your Event to Funcheap</title>
+</head>
+<body>
+    <form method="post" enctype="multipart/form-data" id="gform_18" action="/submit-form/" novalidate>
+        
+        <!-- Anti-Spam Honeypot Field -->
+        <input name="input_135" id="input_18_135" type="text" autocomplete="new-password">
+
+        <!-- EVENT NAME -->
+        <input name="input_1" id="input_18_1" type="text" required aria-required="true">
+
+        <!-- DATE & TIME -->
+        <!-- Start Date -->
+        <input name="input_12" id="input_18_12" type="text" placeholder="mm/dd/yyyy" required aria-required="true" data-mask="99/99/9999">
+        
+        <!-- Frequency Options -->
+        <input name="input_128" type="radio" value="13555" id="choice_18_128_0"> Occurs Once
+        <input name="input_128" type="radio" value="13556" id="choice_18_128_1"> Multi-Date
+        <input name="input_128" type="radio" value="13545" id="choice_18_128_2"> Weekly
+        <input name="input_128" type="radio" value="13554" id="choice_18_128_3"> Monthly
+        <input name="input_128" type="radio" value="13557" id="choice_18_128_4"> Other
+
+        <!-- End Date -->
+        <input name="input_98" id="input_18_98" type="text" placeholder="mm/dd/yyyy" data-mask="99/99/9999">
+
+        <!-- Frequency Details Text -->
+        <textarea name="input_91" id="input_18_91" rows="10" cols="50"></textarea>
+
+        <!-- Start Time (Hours, Minutes, AM/PM) -->
+        <input type="number" name="input_5[]" id="input_18_5_1" min="0" max="12" step="1" placeholder="HH" required aria-required="true">
+        <input type="number" name="input_5[]" id="input_18_5_2" min="0" max="59" step="1" placeholder="MM" required aria-required="true">
+        <select name="input_5[]" id="input_18_5_3">
+            <option value="am">AM</option>
+            <option value="pm">PM</option>
+        </select>
+
+        <!-- End Time (Hours, Minutes, AM/PM) -->
+        <input type="number" name="input_6[]" id="input_18_6_1" min="0" max="12" step="1" placeholder="HH">
+        <input type="number" name="input_6[]" id="input_18_6_2" min="0" max="59" step="1" placeholder="MM">
+        <select name="input_6[]" id="input_18_6_3">
+            <option value="am">AM</option>
+            <option value="pm">PM</option>
+        </select>
+
+        <!-- Annual Event Flag -->
+        <input name="input_89.1" type="checkbox" value="Yes" id="choice_18_89_1">
+
+        <!-- EVENT LOCATION -->
+        <!-- Event Presence -->
+        <input name="input_106.1" type="checkbox" value="13549" id="choice_18_106_1"> In Person
+        <input name="input_106.2" type="checkbox" value="13517" id="choice_18_106_2"> Online
+
+        <!-- Venue Details -->
+        <input name="input_8" id="input_18_8" type="text" required aria-required="true">
+        <input name="input_67" id="input_18_67" type="hidden">
+        <input name="input_9" id="input_18_9" type="text" required aria-required="true">
+
+        <!-- Region Dropdown -->
+        <select name="input_133" id="input_18_133" required aria-required="true">
+            <option value="">Select a Region</option>
+            <option value="13156">East Bay</option>
+            <option value="13453">Greater Sacramento</option>
+            <option value="13158">North Bay</option>
+            <option value="13185">Peninsula</option>
+            <option value="13301">Road Trip</option>
+            <option value="13154">San Francisco</option>
+            <option value="13160">South Bay</option>
+            <option value="13875">Other</option>
+        </select>
+
+        <!-- TICKETS & COST -->
+        <!-- Cost Type -->
+        <input name="input_107" type="radio" value="0" id="choice_18_107_0"> FREE
+        <input name="input_107" type="radio" value="Paid Tickets" id="choice_18_107_1"> Paid Tickets
+
+        <!-- Promo / Discount Options -->
+        <input name="input_117" type="radio" value="Free Tickets with RSVP" id="choice_18_117_0">
+        <input name="input_117" type="radio" value="Free Tickets for First x People" id="choice_18_117_1">
+        <input name="input_117" type="radio" value="Free Tickets with Code xxxx" id="choice_18_117_2">
+        <input name="input_117" type="radio" value="Free Entry Before xxPM" id="choice_18_117_3">
+        <input name="input_117" type="radio" value="Discount Tickets for First x People" id="choice_18_117_4">
+        <input name="input_117" type="radio" value="Discount Tickets with Code xxxx" id="choice_18_117_5">
+        <input name="input_117" type="radio" value="Discount Tickets for Entry Before xxPM" id="choice_18_117_6">
+        <input name="input_117" type="radio" value="No - There are no discount/free tickets" id="choice_18_117_7">
+        <input name="input_117" type="radio" value="OTHER" id="choice_18_117_8">
+
+        <!-- Price Expositions -->
+        <input name="input_121" id="input_18_121" type="text">
+        <input name="input_122" id="input_18_122" type="text">
+        <input name="input_123" id="input_18_123" type="text">
+        <input name="input_111" id="input_18_111" type="text" placeholder="$" required aria-required="true">
+        <input name="input_120" id="input_18_120" type="text" placeholder="$" required aria-required="true">
+        <input name="input_124" id="input_18_124" type="text">
+
+        <!-- Exclusive Pricing details -->
+        <textarea name="input_118" id="input_18_118" rows="10" cols="50" required aria-required="true"></textarea>
+        <input name="input_115" id="input_18_115" type="text" placeholder="$">
+
+        <!-- Admin Price Values -->
+        <input name="input_108" id="input_18_108" type="text" value="0">
+        <input name="input_109" id="input_18_109" type="text" value="Donation">
+        <input name="input_110" id="input_18_110" type="text" value="Pay What You Can">
+        
+        <!-- Cost Details -->
+        <input name="input_54" id="input_18_54" type="text">
+
+        <!-- EVENT DETAILS -->
+        <!-- Website URL -->
+        <input name="input_30" id="input_18_30" type="url" placeholder="https://" required aria-required="true">
+
+        <!-- Categories / Event Types -->
+        <input name="input_3.1" type="checkbox" value="13968" id="choice_18_3_1"> Community
+        <input name="input_3.2" type="checkbox" value="13355" id="choice_18_3_2"> Discount Tix / Promo Codes
+        <input name="input_3.3" type="checkbox" value="13882" id="choice_18_3_3"> Downtown San Francisco
+        <input name="input_3.4" type="checkbox" value="13411" id="choice_18_3_4"> Early Bird / Presale
+        <input name="input_3.5" type="checkbox" value="13367" id="choice_18_3_5"> Nature
+        <input name="input_3.6" type="checkbox" value="13365" id="choice_18_3_6"> Outdoors
+        <input name="input_3.7" type="checkbox" value="13105" id="choice_18_3_7"> Pets
+        <input name="input_3.8" type="checkbox" value="13357" id="choice_18_3_8"> Political Activism
+        <input name="input_3.9" type="checkbox" value="13552" id="choice_18_3_9"> Protests / Causes
+        <input name="input_3.11" type="checkbox" value="13482" id="choice_18_3_11"> 3 Day Weekend
+        <input name="input_3.12" type="checkbox" value="7741" id="choice_18_3_12"> 420
+        <input name="input_3.13" type="checkbox" value="8258" id="choice_18_3_13"> 4th of July
+        <input name="input_3.14" type="checkbox" value="58" id="choice_18_3_14"> Christmas
+        <input name="input_3.15" type="checkbox" value="13039" id="choice_18_3_15"> Cinco de Mayo
+        <input name="input_3.16" type="checkbox" value="109" id="choice_18_3_16"> Dia de los Muertos
+        <input name="input_3.17" type="checkbox" value="1919" id="choice_18_3_17"> Earth Day
+        <input name="input_3.18" type="checkbox" value="1951" id="choice_18_3_18"> Easter
+        <input name="input_3.19" type="checkbox" value="3352" id="choice_18_3_19"> Father's Day
+        <input name="input_3.21" type="checkbox" value="51" id="choice_18_3_21"> Halloween
+        <input name="input_3.22" type="checkbox" value="721" id="choice_18_3_22"> Hanukkah
+        <input name="input_3.23" type="checkbox" value="13593" id="choice_18_3_23"> Juneteenth
+        <input name="input_3.24" type="checkbox" value="8810" id="choice_18_3_24"> Labor Day Weekend
+        <input name="input_3.25" type="checkbox" value="5914" id="choice_18_3_25"> Lunar New Year
+        <input name="input_3.26" type="checkbox" value="13025" id="choice_18_3_26"> Mardi Gras / Fat Tuesday
+        <input name="input_3.27" type="checkbox" value="7700" id="choice_18_3_27"> Memorial Day Weekend
+        <input name="input_3.28" type="checkbox" value="11057" id="choice_18_3_28"> MLK Day
+        <input name="input_3.29" type="checkbox" value="13043" id="choice_18_3_29"> Mother's Day
+        <input name="input_3.31" type="checkbox" value="13018" id="choice_18_3_31"> New Year's Day
+        <input name="input_3.32" type="checkbox" value="707" id="choice_18_3_32"> New Year's Eve
+        <input name="input_3.33" type="checkbox" value="13122" id="choice_18_3_33"> Oktoberfest
+        <input name="input_3.34" type="checkbox" value="13045" id="choice_18_3_34"> Pride
+        <input name="input_3.35" type="checkbox" value="100" id="choice_18_3_35"> St. Patrick's Day
+        <input name="input_3.36" type="checkbox" value="12997" id="choice_18_3_36"> Thanksgiving
+        <input name="input_3.37" type="checkbox" value="13000" id="choice_18_3_37"> Tree + Holiday Lightings
+        <input name="input_3.38" type="checkbox" value="1117" id="choice_18_3_38"> Valentine's Day
+        <input name="input_3.39" type="checkbox" value="13128" id="choice_18_3_39"> Veterans Day
+        <input name="input_3.41" type="checkbox" value="13134" id="choice_18_3_41"> Adults Only
+        <input name="input_3.42" type="checkbox" value="31" id="choice_18_3_42"> Art & Museums
+        <input name="input_3.43" type="checkbox" value="263" id="choice_18_3_43"> Charity & Volunteering
+        <input name="input_3.44" type="checkbox" value="156" id="choice_18_3_44"> Club / DJ
+        <input name="input_3.45" type="checkbox" value="210" id="choice_18_3_45"> Comedy
+        <input name="input_3.46" type="checkbox" value="94" id="choice_18_3_46"> Eating & Drinking
+        <input name="input_3.47" type="checkbox" value="9" id="choice_18_3_47"> Fairs & Festivals
+        <input name="input_3.48" type="checkbox" value="8" id="choice_18_3_48"> Free Food
+        <input name="input_3.49" type="checkbox" value="11" id="choice_18_3_49"> Fun & Games
+        <input name="input_3.51" type="checkbox" value="33" id="choice_18_3_51"> Geek Event
+        <input name="input_3.52" type="checkbox" value="113" id="choice_18_3_52"> Kids & Families
+        <input name="input_3.53" type="checkbox" value="55" id="choice_18_3_53"> Lectures & Workshops
+        <input name="input_3.54" type="checkbox" value="13451" id="choice_18_3_54"> LGBTQ+
+        <input name="input_3.55" type="checkbox" value="78" id="choice_18_3_55"> Literature
+        <input name="input_3.56" type="checkbox" value="10" id="choice_18_3_56"> Live Music
+        <input name="input_3.57" type="checkbox" value="12" id="choice_18_3_57"> Movies
+        <input name="input_3.58" type="checkbox" value="136" id="choice_18_3_58"> Other
+        <input name="input_3.59" type="checkbox" value="99" id="choice_18_3_59"> Shopping & Fashion
+        <input name="input_3.61" type="checkbox" value="71" id="choice_18_3_61"> Sports & Wellness
+        <input name="input_3.62" type="checkbox" value="23" id="choice_18_3_62"> Theater & Performance
+        <input name="input_3.63" type="checkbox" value="659" id="choice_18_3_63"> Walks & Tours
+        <input name="input_3.64" type="checkbox" value="686" id="choice_18_3_64"> Block Party
+        <input name="input_3.65" type="checkbox" value="13125" id="choice_18_3_65"> Haunted House
+        <input name="input_3.66" type="checkbox" value="13129" id="choice_18_3_66"> Holiday Shopping
+        <input name="input_3.67" type="checkbox" value="13095" id="choice_18_3_67"> Rainy Day Fun
+
+        <input name="input_92.1" type="checkbox" value="yes" id="choice_18_92_1">
+        <input name="input_93" id="input_18_93" type="text" required aria-required="true">
+
+        <input name="input_18.1" type="checkbox" value="Yes" id="choice_18_18_1">
+        <textarea name="input_40" id="input_18_40" rows="10" cols="50" required aria-required="true"></textarea>
+        
+        <select name="input_45" id="input_18_45" required aria-required="true">
+            <option value="1">2</option>
+            <option value="2">4</option>
+            <option value="3" selected="selected">6</option>
+            <option value="4">8</option>
+            <option value="5">10</option>
+            <option value="6">12</option>
+            <option value="8">16</option>
+            <option value="10 or more...">20 or more...</option>
+        </select>
+        <input name="input_47" id="input_18_47" type="text" placeholder="yyyy-mm-dd" required aria-required="true" data-mask="9999-99-99">
+
+        <input name="input_46" type="radio" value="Will Call / Guestlist" checked="checked" id="choice_18_46_0">
+        <input name="input_46" type="radio" value="Eventbrite tickets to be issued" id="choice_18_46_1">
+        <input name="input_46" type="radio" value="PDF tickets emailed" id="choice_18_46_2">
+        <input name="input_46" type="radio" value="Tickets need to be mailed" id="choice_18_46_3">
+        <input name="input_46" type="radio" value="gf_other_choice" id="choice_18_46_4">
+        <input id="input_18_46_other" name="input_46_other" type="text" value="Other">
+
+        <textarea name="input_74" id="input_18_74" rows="10" cols="50">Your tickets will be either at will call or on the guestlist. Please bring a photo ID and a printout of this email.</textarea>
+        <textarea name="input_48" id="input_18_48" rows="10" cols="50"></textarea>
+
+        <input name="input_71.1" type="checkbox" value="Email Marketing" id="choice_18_71_1">
+        <input name="input_71.2" type="checkbox" value="Banner Ads" id="choice_18_71_2">
+        <input name="input_71.3" type="checkbox" value="Facebook Marketing" id="choice_18_71_3">
+        <input name="input_71.4" type="checkbox" value="Lead Generation" id="choice_18_71_4">
+        <input name="input_71.5" type="checkbox" value="Event Management & Marketing" id="choice_18_71_5">
+        <input name="input_72" id="input_18_72" type="text" value="$">
+
+        <input type="email" name="input_43" id="input_18_43" required aria-required="true">
+        <input type="email" name="input_43_2" id="input_18_43_2" required aria-required="true">
+        <input name="input_34.1" type="checkbox" value="Yes" id="choice_18_34_1">
+        <input name="input_44" id="input_18_44" type="text">
+        <input name="input_42" id="input_18_42" type="text">
+        <input name="input_69" id="input_18_69" type="tel" placeholder="(999) 999-9999" data-mask="(999) 999-9999">
+
+        <input name="input_36" id="input_18_36" type="hidden" value="Submit Your Event to Funcheap">
+        <input name="input_76" id="input_18_76" type="hidden" value="Event Submission">
+        <input name="input_129" id="input_18_129" type="hidden" value="Gravity Forms">
+        <input name="input_130" id="input_18_130" type="hidden" value="none">
+        
+        <input type="hidden" name="gform_submission_method" value="postback">
+        <input type="hidden" name="gform_theme" value="legacy">
+        <input type="hidden" name="gform_style_settings" value="[]">
+        <input type="hidden" name="is_submit_18" value="1">
+        <input type="hidden" name="gform_submit" value="18">
+        <input type="hidden" name="gform_currency" value="nG3qPXE0fdel2Iwgea1hcBujYHQ9pGu/UDT3gTEcNTlqcBVfB1K+St2vqGgTqYY4sv8yU95z1IkjcNblDlPS9K2RrMB7nzss5k6Bmw1Xq91eVDw=">
+        <input type="hidden" name="gform_unique_id" value="">
+        <input type="hidden" name="state_18" value="WyJ7XCJnZm9ybV9zdWJtaXNzaW9uX21ldGhvZFwiOltcIjEyYmY2NzlkOTY5ZmU0OTFjNDhkNDFjNGVmMjlmYjllXCIsXCJjMzgyMWJiNWVlZmY3NjBhMzI4OWFkNmI0YWQ2MTEzNFwiXSxcImdmb3JtX3RoZW1lXCI6XCJjM2ExYzZhMWYwN2EwNTM5YmIwYmU3NzRiMmJhNzBiZVwiLFwiZ2Zvcm1fc3R5bGVfc2V0dGluZ3NcIjpcImNmZjQ2ODJkOWQxM2EwZDUyYWE0NWNkZTkxNWRiMTY2XCIsXCJmb3JtX2lkXCI6XCIwNDgyMTU0MjdkZTk0MWJhNmY2ZDNjNDg5Zjg0MDI4N1wiLFwidXJsXCI6XCI5YjI3ZDRjZDUxYTU3Zjg3Mjk3MTI1ZWQzODA2OGRlNlwiLFwic3RhdGVfdGltZXN0YW1wXCI6XCI3MGYxNDcxMjE4ZTE5NmQ1MDAzOWQzZGY5MTVjNjIwNlwifSIsIjc3ODk2ZGFlN2UwZjdmYzgyZDIwYTlhZDA1ZDBkMjYxIiwxNzkxMTYyOTg5XQ==">
+        <input type="hidden" name="gform_target_page_number_18" value="0">
+        <input type="hidden" name="gform_source_page_number_18" value="1">
+        <input type="hidden" name="gform_field_values" value="">
+        <input type="hidden" name="gform_uploaded_files" id="gform_uploaded_files_18" value="">
+
+        <button type="submit" id="gform_submit_button_18">Submit</button> 
+    </form>
+</body>
+</html>
