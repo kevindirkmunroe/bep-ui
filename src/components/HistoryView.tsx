@@ -144,7 +144,8 @@ export default function HistoryView() {
                                     </div>
                                 </TabPanel>
                                 <TabPanel value="2" tabIndex={0}>
-                                    <PlatformClicksChart userId={userId}/>
+                                    <PlatformClicksChart title={"Clicks By Platform (Last 30 Days)"} userId={userId} window={30}/>
+                                    <PlatformClicksChart title={"Clicks By Platform (All Time)"} userId={userId}/>
                                 </TabPanel>
                             </TabContext>
                         </div>

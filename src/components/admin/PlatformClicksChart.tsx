@@ -24,11 +24,12 @@ const platformNames: Record<string, string> = {
     indybay: "IndyBay"
 };
 
-export default function PlatformClicksChart({userId}) {
+export default function PlatformClicksChart({title, userId, window}) {
     const [data, setData] = useState<PlatformClicks[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const endpoint = `/admin/analytics/platform-clicks` + (userId? `/${userId}` : '');
+    let endpoint = `/admin/analytics/platform-clicks` + (userId? `/${userId}` : '');
+    endpoint = endpoint + (window? "?window=30" : "");
 
     console.log(`[PlatformClicksChart] endpoint: ${endpoint}`);
     useEffect(() => {
@@ -67,7 +68,7 @@ export default function PlatformClicksChart({userId}) {
 
     return (
         <div className="platform-clicks-chart">
-            <h3>Clicks by Platform (All Time)</h3>
+            <h3>{title}</h3>
 
             <ResponsiveContainer
                 width="100%"

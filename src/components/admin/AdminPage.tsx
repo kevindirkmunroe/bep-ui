@@ -99,15 +99,11 @@ export default function AdminPage() {
                         aria-label="lab tabs"
                         sx={{ borderBottom: 1, borderColor: 'divider' }}
                     >
-                        <Tab label="/📈 Metrics" value="1" style={{fontSize: "18px", color: "black", fontWeight: "bold"}} />
-                        <Tab label="/📦 $PRO Order$" value="2" style={{fontSize: "18px", color: "black", fontWeight: "bold"}} />
+                        <Tab label="/📦 $PRO Order$" value="1" style={{fontSize: "18px", color: "black", fontWeight: "bold"}} />
+                        <Tab label="/📈 Metrics" value="2" style={{fontSize: "18px", color: "black", fontWeight: "bold"}} />
                         <Tab label="/✉️ Invite Requests" value="3" style={{fontSize: "18px", color: "black", fontWeight: "bold"}}/>
                     </TabList>
                     <TabPanel value="1" tabIndex={0}>
-                        <h2 style={{backgroundColor: "#E5E5E5"}}>Platform Performance</h2>
-                        <PlatformClicksChart/>
-                    </TabPanel>
-                    <TabPanel value="2" tabIndex={0}>
                         <h2 style={{backgroundColor: "#E5E5E5"}}>/ PRO Orders</h2>
                         <button
                             type="button"
@@ -122,7 +118,11 @@ export default function AdminPage() {
                         {inviteRequests?.length === 0 && (
                             <p>No pending Orders to fulfill.</p>
                         )}
-                        <br/>
+                    </TabPanel>
+                    <TabPanel value="2" tabIndex={0}>
+                        <h2 style={{backgroundColor: "#E5E5E5"}}>Platform Performance</h2>
+                        <PlatformClicksChart title={"Clicks By Platform (Last 30 Days)"} window={30}/>
+                        <PlatformClicksChart title={"Clicks By Platform (All Time)"}/>
                     </TabPanel>
                     <TabPanel value="3" tabIndex={0}>
                         <h2 style={{backgroundColor: "#E5E5E5"}}>/ Invite Requests</h2>
