@@ -1,6 +1,5 @@
 .history-layout {
     display: grid;
-    margin-left: 40px;
     grid-template-columns: minmax(220px, 24%) minmax(0, 1fr);
     gap: 20px;
     width: 96%;

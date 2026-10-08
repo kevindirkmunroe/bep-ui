@@ -17,7 +17,7 @@ import PlatformClicksChart from "./admin/PlatformClicksChart";
 
 export default function HistoryView() {
     const navigate = useNavigate();
-    const { userId } = useParams<{ userId: string | undefined }>();
+    const { userId } = useParams<{ userId: string }>();
 
 
     const [events, setEvents] = useState<EventDetail[]>([]);
@@ -56,6 +56,8 @@ export default function HistoryView() {
     if (loading) {
         return <div>Loading history...</div>;
     }
+
+    if(!userId) return;
 
     return (
         <div style={{ display: "flex", gap: "2px" }}>
@@ -97,8 +99,8 @@ export default function HistoryView() {
                                     aria-label="lab tabs"
                                     sx={{ borderBottom: 1, borderColor: 'divider' }}
                                 >
-                                    <Tab label="Published" value="1"/>
-                                    <Tab label="Metrics" value="2" />
+                                    <Tab label="Published Events" value="1"/>
+                                    <Tab label="Event Metrics" value="2" />
                                 </TabList>
                                 <TabPanel value="1" tabIndex={0}>
                                     <div className="history-layout">
