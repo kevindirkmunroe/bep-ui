@@ -80,11 +80,12 @@ export default function CreateEditEventForm({
     }
 
     function validateUrl(url: string) {
-        const pattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/;
+        const pattern = /^https?:\/\/[^\s/]+\.[^\s/]+(?:\/[^\s]*)?$/;
         return pattern.test(url);
     }
 
     const handleSubmit = async () => {
+        console.log(`validate email...`);
         if(!validateEmail(form.email)){
             setDialog({
                 type: "error",
@@ -93,6 +94,7 @@ export default function CreateEditEventForm({
             });
             return;
         }
+        console.log(`validate form...`);
         if(form.category === ""){
             setDialog({
                 type: "error",
@@ -101,6 +103,7 @@ export default function CreateEditEventForm({
             });
             return;
         }
+        console.log(`validate datetime...`);
         if(form.start_datetime === ""){
             setDialog({
                 type: "error",
@@ -109,6 +112,7 @@ export default function CreateEditEventForm({
             });
             return;
         }
+        console.log(`validate address...`);
         if(form.address === ""){
             setDialog({
                 type: "error",
@@ -117,6 +121,7 @@ export default function CreateEditEventForm({
             });
             return;
         }
+        console.log(`validate website...`);
         if(form.website && !validateUrl(form.website)){
             setDialog({
                 type: "error",
@@ -125,6 +130,7 @@ export default function CreateEditEventForm({
             });
             return;
         }
+        console.log(`validate imported from...`);
         if(form.imported_from && !validateUrl(form.imported_from)){
             setDialog({
                 type: "error",
@@ -133,6 +139,7 @@ export default function CreateEditEventForm({
             });
             return;
         }
+        console.log(`validate image...`);
         if(!form.image){
             setDialog({
                 type: "error",
@@ -141,6 +148,7 @@ export default function CreateEditEventForm({
             });
             return;
         }
+        console.log(`validate date...`);
         if(isOlderThanToday(form.start_datetime)){
             setDialog({
                 type: "error",
@@ -152,10 +160,16 @@ export default function CreateEditEventForm({
 
         try {
             if (isEdit) {
+                console.log(`edit...`);
+
                 await api.put(`/events/${event.event_id}`, form);
             } else {
+                console.log(`create...`);
+
                 await api.post(`/users/${userId}/events`, form);
             }
+            console.log(`onsuccess...`);
+
             onSuccess(); // reload events
         } catch (err) {
             console.error(err);
