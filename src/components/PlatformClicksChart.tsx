@@ -31,7 +31,6 @@ export default function PlatformClicksChart({title, userId, window}) {
     let endpoint = `/admin/analytics/platform-clicks` + (userId? `/${userId}` : '');
     endpoint = endpoint + (window? "?window=30" : "");
 
-    console.log(`[PlatformClicksChart] endpoint: ${endpoint}`);
     useEffect(() => {
         fetch(endpoint)
             .then(res => {
@@ -68,7 +67,7 @@ export default function PlatformClicksChart({title, userId, window}) {
 
     return (
         <div className="platform-clicks-chart">
-            <h3>{title}</h3>
+            <strong>{title}</strong>
 
             <ResponsiveContainer
                 width="100%"

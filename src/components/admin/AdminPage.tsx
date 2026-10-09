@@ -10,7 +10,7 @@ import { api } from "../../utils/api";
 import {PlatformData} from "../dashboard/events/platforms/platformTypes.interface";
 import OrderFulfillmentPanel from "./OrderFulfillmentPanel";
 import"./adminPage.css";
-import PlatformClicksChart from "./PlatformClicksChart";
+import PlatformClicksChart from "../PlatformClicksChart";
 
 interface InviteRequest {
     request_id: number;

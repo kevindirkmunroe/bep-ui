@@ -13,7 +13,7 @@ import {EventCompletionLog} from "./dashboard/events/EventCompletionLog";
 
 import "./historyView.css";
 import {api} from "../utils/api";
-import PlatformClicksChart from "./admin/PlatformClicksChart";
+import PlatformClicksChart from "./PlatformClicksChart";
 
 export default function HistoryView() {
     const navigate = useNavigate();
@@ -62,7 +62,7 @@ export default function HistoryView() {
     return (
         <div style={{ display: "flex", gap: "2px" }}>
             {/* LEFT: Carousel */}
-            <div style={{ flex: "0 0 200px" }}>
+            <div style={{ flex: "0 0 160px" }}>
                 <ImageCarousel />
             </div>
             {/* RIGHT: History */}
@@ -88,9 +88,7 @@ export default function HistoryView() {
                     </div>
                 </div>
                 <>
-                    <button className="btn btn-secondary" style={{fontSize: "16px"}} onClick={() => navigate(-1)}>
-                        ← Back
-                    </button>
+
                     <Box sx={{ width: '100%', typography: 'body1'}}>
                         <div style={{padding: "8px",marginLeft: "36px"}}>
                             <TabContext value={tabValue}>
@@ -99,7 +97,7 @@ export default function HistoryView() {
                                     aria-label="lab tabs"
                                     sx={{ borderBottom: 1, borderColor: 'divider' }}
                                 >
-                                    <Tab label="Published Events" value="1"/>
+                                    <Tab label="Submitted / Published Events" value="1"/>
                                     <Tab label="Event Metrics" value="2" />
                                 </TabList>
                                 <TabPanel value="1" tabIndex={0}>
@@ -150,7 +148,9 @@ export default function HistoryView() {
                             </TabContext>
                         </div>
                     </Box>
-
+                    <button className="btn btn-secondary" style={{fontSize: "16px"}} onClick={() => navigate(-1)}>
+                        ← Back
+                    </button>
                     <p/>
                 </>
             </div>
