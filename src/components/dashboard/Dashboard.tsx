@@ -135,7 +135,7 @@ export default function Dashboard() {
                 website: raw.input_url,
                 organization: raw.hosts.map((item: Host) => item.name).join(", "),
                 region: raw.location_city,
-                category: raw.categories[0],
+                category: raw.categories ? raw.categories[0]: "",
                 city: raw.location_city,
                 imported_from: facebookEventUrl,
                 is_locked: false,
