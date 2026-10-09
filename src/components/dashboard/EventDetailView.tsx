@@ -1,5 +1,6 @@
 import "./eventDetailView.css";
 import {EventDetail} from "./events/eventDetailTypes.interface";
+import {ImageModal} from "../ImageModal";
 
 interface EventDetailViewProps {
     event: EventDetail;
@@ -35,6 +36,8 @@ export default function EventDetailView({
         );
     };
 
+    const modal = new ImageModal();
+
     return (
         <div className="event-detail-overlay">
             <div className="event-detail-form">
@@ -44,6 +47,7 @@ export default function EventDetailView({
                         <img
                             src={event.image}
                             alt={event.title}
+                            onClick={() => modal.open(`${event.image}`)}
                             className="event-detail-image"
                         />
                     )}

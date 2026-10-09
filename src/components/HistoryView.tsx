@@ -14,6 +14,7 @@ import {EventCompletionLog} from "./dashboard/events/EventCompletionLog";
 import "./historyView.css";
 import {api} from "../utils/api";
 import PlatformClicksChart from "./PlatformClicksChart";
+import EventClicksChart from "./EventClicksChart";
 
 export default function HistoryView() {
     const navigate = useNavigate();
@@ -143,6 +144,7 @@ export default function HistoryView() {
                                 </TabPanel>
                                 <TabPanel value="2" tabIndex={0}>
                                     <PlatformClicksChart title={"Clicks By Platform (Last 30 Days)"} userId={userId} window={30}/>
+                                    <EventClicksChart user_id={userId} />
                                     <PlatformClicksChart title={"Clicks By Platform (All Time)"} userId={userId}/>
                                 </TabPanel>
                             </TabContext>

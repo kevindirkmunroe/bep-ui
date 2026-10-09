@@ -303,7 +303,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                                         {!readOnly && (
                                             <button
                                                 className="btn btn-danger"
-                                                disabled={event.is_locked}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     setShowMoreActions(false);

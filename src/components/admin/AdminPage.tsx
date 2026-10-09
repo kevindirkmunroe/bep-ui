@@ -11,6 +11,7 @@ import {PlatformData} from "../dashboard/events/platforms/platformTypes.interfac
 import OrderFulfillmentPanel from "./OrderFulfillmentPanel";
 import"./adminPage.css";
 import PlatformClicksChart from "../PlatformClicksChart";
+import EventClicksChart from "../EventClicksChart";
 
 interface InviteRequest {
     request_id: number;
@@ -122,6 +123,7 @@ export default function AdminPage() {
                     <TabPanel value="2" tabIndex={0}>
                         <h2 style={{backgroundColor: "#E5E5E5"}}>Platform Performance</h2>
                         <PlatformClicksChart title={"Clicks By Platform (Last 30 Days)"} window={30}/>
+                        <EventClicksChart />
                         <PlatformClicksChart title={"Clicks By Platform (All Time)"}/>
                     </TabPanel>
                     <TabPanel value="3" tabIndex={0}>
