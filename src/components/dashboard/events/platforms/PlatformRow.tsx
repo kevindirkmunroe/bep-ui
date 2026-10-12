@@ -1,8 +1,8 @@
 import {Platform, PLATFORM_ICONS, PlatformRowProps} from "./platformTypes.interface"
-import {getPlatformUrl} from "./platformData";
+import {getPlatformUrl, getPlatformFromUrl} from "./platformData";
 import {DateFields, EventDetail} from "../eventDetailTypes.interface";
 import {api} from "../../../../utils/api";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     DoTheBayPayload,
     FunCheapPayload,
@@ -65,6 +65,39 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
     const [dialog, setDialog] = useState<DialogState>(null);
 
     const [autofillClicked, setAutofillClicked] = useState(status != 'not_started');
+
+    useEffect(() => {
+        console.log("[PlatformRow] useEffect SETUP");
+
+        const handler = (event: Event) => {
+            const { platformUrl } = (
+                event as CustomEvent<{ platformUrl: string }>
+            ).detail;
+
+
+            if(platform === getPlatformFromUrl(platformUrl)){
+                handleSubmit().then(v => {
+                    console.log(`[PlatformRow]  ${platform} updated by message ${getPlatformFromUrl(platformUrl)}`);
+                }).catch(e =>{
+                    console.log(`error updating ${platformUrl}: ${e}`);
+                });
+            }
+        };
+
+        window.addEventListener(
+            "AIRHORN_PLATFORM_SUBMITTED",
+            handler
+        );
+
+        return () => {
+            console.log("[PlatformRow] useEffect CLEANUP");
+
+            window.removeEventListener(
+                "AIRHORN_PLATFORM_SUBMITTED",
+                handler
+            );
+        };
+    }, []);
 
     const handleOpen = async () => {
 
@@ -131,6 +164,14 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
             },
             "*"
         );
+
+        // Listen:
+        window.addEventListener('message', (e) => {
+            if (e.source !== window || e.data?.source !== 'airhorn.events.ext') return;
+            if (e.data.event === 'submitted') console.log('User clicked Submit on', e.data.pageUrl);
+            if (e.data.event === 'result')    console.log('Result URL:', e.data.resultUrl);
+        });
+
         updatePlatformStatus(platform, 'in_progress');
         await reload();
     };
@@ -245,12 +286,11 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                             <img alt={"Mark Submitted"} src={"/icons8-checklist-48.png"} style={{width:"24px", height:"24px"}} />Mark Submitted
                         </button>
                     )}
-                    {status === "published" && (
-                        <div>
-                            <button className="btn btn-primary" onClick={handleReopen}>
-                                Edit / Resubmit
-                            </button>
-                        </div>
+                    {status === "submitted" && status && (
+                        <button className="btn btn-primary" onClick={handleReopen}>
+                            <img alt={"Redo Autofill"} src={"/icons8-redo-48.png"} style={{width:"24px", height:"24px"}} />
+                            Start Over Autofill
+                        </button>
                     )}
                 </div>
             </div>

@@ -1,14 +1,20 @@
 import {Platform} from "./platformTypes.interface";
 
-export function getPlatformUrl(platform: Platform){
-    const urls: Record<Platform, string> = {
-        funcheapsf: "https://sf.funcheap.com/submit-form",
-        visitoakland: "https://www.visitoakland.com/events/submit-an-event/",
-        sfstation: "https://www.sfstation.com/event/add",
-        indybay: "https://www.indybay.org/calendar/event_add.php",
-        dothebay: "https://dothebay.com/events/new",
-        sfweekly: "https://www.sfweekly.com/events/"
-    };
+const PLATFORM_URLS: Record<Platform, string> = {
+    funcheapsf: "https://sf.funcheap.com/submit-form",
+    visitoakland: "https://www.visitoakland.com/events/submit-an-event/",
+    sfstation: "https://www.sfstation.com/event/add",
+    indybay: "https://www.indybay.org/calendar/event_add.php",
+    dothebay: "https://dothebay.com/events/new",
+    sfweekly: "https://www.sfweekly.com/events/",
+    airhorntest: "http://localhost:8000/training-data/fakecheapsf/fakecheapsf-raw.html"
+};
 
-    return urls[platform];
+export function getPlatformUrl(platform: Platform){
+    return PLATFORM_URLS[platform];
+}
+
+export const getPlatformFromUrl = (url: string): Platform | undefined => {
+    return (Object.keys(PLATFORM_URLS) as Platform[])
+        .find(k => PLATFORM_URLS[k] === url);
 }

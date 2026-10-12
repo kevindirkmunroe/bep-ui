@@ -9,6 +9,13 @@ export function     PlatformList(
          reload: () => Promise<void>;
          updatePlatformStatus: (platform: Platform, status: PlatformStatus) => void}
     ) {
+
+    const TEST_PLATFORM_DATA: PlatformData = {
+        platform: "airhorntest",
+        status: "not_started",
+        tracking_code: 9999,
+    }
+
     return (
         <div style={{height: '450px', // Fixed height
             marginTop: '10px',
@@ -26,6 +33,13 @@ export function     PlatformList(
                     extensionInstalled={extensionInstalled}
                 />
             ))}
+            <PlatformRow
+                event={event}
+                platformData={TEST_PLATFORM_DATA}
+                updatePlatformStatus={() => {}}
+                reload={()=> {}}
+                extensionInstalled={true}
+                />
         </div>
     );
 }

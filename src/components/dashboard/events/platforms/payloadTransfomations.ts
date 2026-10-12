@@ -151,6 +151,7 @@ const visitOaklandTransformation: PayloadTransformation = async (event, platform
 export const PAYLOAD_TRANSFORMATIONS : PayloadTransformationMap = {
     indybay: indybayTransformation,
     funcheapsf: funcheapsfTransformation,
+    airhorntest: funcheapsfTransformation,
     sfstation: sfstationTransformation,
     visitoakland: visitOaklandTransformation,
     dothebay: dothebayTransformation,

@@ -24,7 +24,13 @@ const platformNames: Record<string, string> = {
     indybay: "IndyBay"
 };
 
-export default function PlatformClicksChart({title, userId, window}) {
+interface PlatformClicksChartProps{
+    title: string;
+    userId?: string;
+    window?: number;
+}
+
+export default function PlatformClicksChart({title, userId, window} : PlatformClicksChartProps) {
     const [data, setData] = useState<PlatformClicks[]>([]);
     const [loading, setLoading] = useState(true);
 

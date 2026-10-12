@@ -143,8 +143,10 @@ export default function HistoryView() {
                                     </div>
                                 </TabPanel>
                                 <TabPanel value="2" tabIndex={0}>
-                                    <PlatformClicksChart title={"Clicks By Platform (Last 30 Days)"} userId={userId} window={30}/>
+                                    <h2 style={{backgroundColor: "#E5E5E5", alignItems: "left"}}>Event Performance</h2>
                                     <EventClicksChart user_id={userId} />
+                                    <h2 style={{backgroundColor: "#E5E5E5"}}>Platform Performance</h2>
+                                    <PlatformClicksChart title={"Clicks By Platform (Last 30 Days)"} userId={userId} window={30}/>
                                     <PlatformClicksChart title={"Clicks By Platform (All Time)"} userId={userId}/>
                                 </TabPanel>
                             </TabContext>

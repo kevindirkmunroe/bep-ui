@@ -105,7 +105,6 @@ export default function AdminPage() {
                         <Tab label="/✉️ Invite Requests" value="3" style={{fontSize: "18px", color: "black", fontWeight: "bold"}}/>
                     </TabList>
                     <TabPanel value="1" tabIndex={0}>
-                        <h2 style={{backgroundColor: "#E5E5E5"}}>/ PRO Orders</h2>
                         <button
                             type="button"
                             className={`filter-toggle ${unfulfilledOnly ? "active" : ""}`}
@@ -121,10 +120,11 @@ export default function AdminPage() {
                         )}
                     </TabPanel>
                     <TabPanel value="2" tabIndex={0}>
-                        <h2 style={{backgroundColor: "#E5E5E5"}}>Platform Performance</h2>
+                        <h3 style={{backgroundColor: "#E5E5E5"}}>Platform Performance</h3>
                         <PlatformClicksChart title={"Clicks By Platform (Last 30 Days)"} window={30}/>
-                        <EventClicksChart />
                         <PlatformClicksChart title={"Clicks By Platform (All Time)"}/>
+                        <h3 style={{backgroundColor: "#E5E5E5"}}>Event Performance</h3>
+                        <EventClicksChart />
                     </TabPanel>
                     <TabPanel value="3" tabIndex={0}>
                         <h2 style={{backgroundColor: "#E5E5E5"}}>/ Invite Requests</h2>

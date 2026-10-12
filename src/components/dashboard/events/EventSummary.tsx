@@ -118,6 +118,14 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
         );
     }
 
+    const handleListedEventClicked = () => {
+        if(canEdit && onEdit && !isExpired && !event.is_locked){
+            onEdit(event);
+        }else if(event.is_locked && onView){
+            onView(event);
+        }
+    }
+
     const [showExpandedMenu, setShowExpandedMenu] = useState(false);
     const [menuPosition, setMenuPosition] = useState({
         top: 0,
@@ -173,18 +181,18 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     </button>
 
                     {/* Column 2: date */}
-                    <div style={{fontSize: "14px", fontFamily: "Arial, sans-serif", alignItems: "flex-start"}}>
+                    <div onClick={() => handleListedEventClicked()} style={{fontSize: "14px", fontFamily: "Arial, sans-serif", alignItems: "flex-start"}}>
                         {formatDateLocal(event.start_datetime)}
                     </div>
 
 
                     {/* Column 2: title */}
-                    <div style={{fontSize: "14px", fontFamily: "Arial, sans-serif"}} className="event-summary-title">
+                    <div onClick={() => handleListedEventClicked()} style={{fontSize: "14px", fontFamily: "Arial, sans-serif"}} className="event-summary-title">
                         {event.title}
                     </div>
 
-                    {/* Column 3: imported-from */}
-                    <div className="event-summary-imported">
+                    {/* Column 3: image */}
+                    <div onClick={() => handleListedEventClicked()} className="event-summary-imported">
                         { event.image ? (
                             <img src={event.image} alt="Image" style={{
                                 maxWidth: "60px",
@@ -227,31 +235,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                 )}
 
             </div>
-            <div style={{width: "60%", display: "flex", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
-                {canEdit && onEdit && !isExpired && !event.is_locked && (
-                    <button className="btn btn-secondary"
-                            disabled={event.is_locked}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                onEdit(event);
-                            }}
-                    >
-                        <img src={"/icons8-edit-64.png"} style={{width: "24px", height: "24px"}}/>
-                        Edit
-                    </button>
-                )}
-                {event.is_locked && onView && (
-                    <button className="btn btn-secondary"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                onView(event);
-                            }}
-                    >
-                        <img src={"/icons8-preview-48-coral.png"} style={{width: "24px", height: "24px"}}/>
-                        View
-                    </button>
-                )}
-
+            <div style={{width: "32%", display: "flex", marginLeft: "4px", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
                 {/* Begin Extras Menu */}
                 {!readOnly && !isExpired && (
                     <div className="more-actions">
@@ -281,6 +265,29 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                                             width: '130px'
                                         }}
                                     >
+                                        {canEdit && onEdit && !isExpired && !event.is_locked && (
+                                            <button className="btn btn-secondary"
+                                                    disabled={event.is_locked}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        onEdit(event);
+                                                    }}
+                                            >
+                                                <img src={"/icons8-edit-64.png"} style={{width: "24px", height: "24px"}}/>
+                                                Edit
+                                            </button>
+                                        )}
+                                        {event.is_locked && onView && (
+                                            <button className="btn btn-secondary"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        onView(event);
+                                                    }}
+                                            >
+                                                <img src={"/icons8-preview-48-coral.png"} style={{width: "24px", height: "24px"}}/>
+                                                View
+                                            </button>
+                                        )}
                                         {!readOnly && !isExpired && (
                                             <button
                                                 title="Make duplicate of this Event"
