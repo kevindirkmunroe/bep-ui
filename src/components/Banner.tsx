@@ -114,6 +114,21 @@ export function Banner() {
                             {user.company && ` | ${user.company}`}
                         </div>
                     )}
+                    {user.isAdmin && (
+                        <div
+                            data-tooltip-id="my-tooltip"
+                            data-tooltip-content="How'd YOU get here?"
+                            onClick={handleAdmin}
+                            style={{
+                                marginLeft: '4px',
+                                marginRight: '34px',
+                                marginTop: "1px",
+                                fontSize: "14px",
+                                cursor: "pointer"
+                            }}>
+                            <p style={{fontSize: "20px", fontWeight: 500}}>&nbsp;&nbsp;🔥Admin</p>
+                        </div>
+                    )}
                     <div style={{marginLeft: '28px', marginTop: "1px", fontSize: "14px" , cursor: "pointer"}}
                          data-tooltip-id="my-tooltip"
                          data-tooltip-content="About Airhorn.events ...">
@@ -122,21 +137,6 @@ export function Banner() {
                     <div style={{marginLeft: '16px', marginRight: '32px', marginTop: "1px", fontSize: "14px", cursor: "pointer"}}>
                         <p onClick={handleLogout}>Logout</p>
                     </div>
-                    {user.isAdmin && (
-                        <div
-                            data-tooltip-id="my-tooltip"
-                            data-tooltip-content="How'd YOU get here?"
-                            onClick={handleAdmin}
-                            style={{
-                            marginLeft: '4px',
-                            marginRight: '34px',
-                            marginTop: "1px",
-                            fontSize: "14px",
-                            cursor: "pointer"
-                        }}>
-                            <p>🔥Admin</p>
-                        </div>
-                    )}
                     <div>
                         <CalendarDate/>
                     </div>
@@ -150,7 +150,6 @@ export function Banner() {
                 </div>
             )}
         </div>
-            <div>{user?.isAdmin && (<div style={{padding: "8px", borderRadius: '5px', marginBottom: "8px", backgroundColor: "#FFED29"}}><b>Logged in as</b>&nbsp;<strong style={{color: 'black'}}>Airhorn</strong><b style={{color: "#D2492C"}}>.admin</b></div>) }</div>
         </>
     );
 }

@@ -204,7 +204,7 @@ export default function Dashboard() {
         <div
             style={{
                 display: "flex",
-                gap: 24,
+                gap: 10,
                 flex: 1,
                 minHeight: 0,
                 overflow: "hidden"
@@ -228,11 +228,11 @@ export default function Dashboard() {
                     minHeight: 0,
                     display: "flex",
                     flexDirection: "column",
+                    marginTop: "1px",
                     overflow: "hidden"
                 }}>
                 <div
                     style={{
-                        paddingLeft: 18,
                         height: "100%",
                         minHeight: 0,
                         overflow: "hidden"
@@ -351,7 +351,8 @@ export default function Dashboard() {
                     }}>
                         <div className="banner-div" style={{
                             width: "100%",
-                            height: "100px",
+                            height: "80px",
+                            marginLeft: "3px",
                             objectFit: "cover",
                             objectPosition: "top",
                             fontWeight: 800,

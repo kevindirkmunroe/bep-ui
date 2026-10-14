@@ -104,29 +104,39 @@ export default function AdminPage() {
                         <Tab label="/📈 Metrics" value="2" style={{fontSize: "18px", color: "black", fontWeight: "bold"}} />
                         <Tab label="/✉️ Invite Requests" value="3" style={{fontSize: "18px", color: "black", fontWeight: "bold"}}/>
                     </TabList>
-                    <TabPanel value="1" tabIndex={0}>
-                        <button
-                            type="button"
-                            className={`filter-toggle ${unfulfilledOnly ? "active" : ""}`}
-                            onClick={() => setUnfulfilledOnly(prev => !prev)}
-                        >
-                            Unfulfilled Only
-                        </button>
-                        &nbsp;({visibleOrders.length})
-                        <OrderFulfillmentPanel orders={visibleOrders}/>
+                    <Box sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        flex: 1,
+                        minHeight: 0,
+                        height: "600px",
+                        overflow: "auto"
+                    }}>
+                        <TabPanel value="1" tabIndex={0}>
+                            <h2 style={{backgroundColor: "#E5E5E5"}}>/ PRO Orders</h2>
+                            <button
+                                type="button"
+                                className={`filter-toggle ${unfulfilledOnly ? "active" : ""}`}
+                                onClick={() => setUnfulfilledOnly(prev => !prev)}
+                            >
+                                Unfulfilled Only
+                            </button>
+                            &nbsp;({visibleOrders.length})
+                            <OrderFulfillmentPanel orders={visibleOrders}/>
 
-                        {inviteRequests?.length === 0 && (
-                            <p>No pending Orders to fulfill.</p>
-                        )}
-                    </TabPanel>
-                    <TabPanel value="2" tabIndex={0}>
-                        <h3 style={{backgroundColor: "#E5E5E5"}}>Platform Performance</h3>
-                        <PlatformClicksChart title={"Clicks By Platform (Last 30 Days)"} window={30}/>
-                        <PlatformClicksChart title={"Clicks By Platform (All Time)"}/>
-                        <h3 style={{backgroundColor: "#E5E5E5"}}>Event Performance</h3>
-                        <EventClicksChart />
-                    </TabPanel>
-                    <TabPanel value="3" tabIndex={0}>
+                            {inviteRequests?.length === 0 && (
+                                <p>No pending Orders to fulfill.</p>
+                            )}
+                        </TabPanel>
+                        <TabPanel value="2" tabIndex={0} >
+                            <h2 style={{backgroundColor: "#E5E5E5"}}>/ Metrics</h2>
+                            <h3 style={{backgroundColor: "#E5E5E5"}}>Platform Performance</h3>
+                            <PlatformClicksChart title={"Clicks By Platform (Last 30 Days)"} window={30}/>
+                            <PlatformClicksChart title={"Clicks By Platform (All Time)"}/>
+                            <h3 style={{backgroundColor: "#E5E5E5"}}>Event Performance</h3>
+                            <EventClicksChart/>
+                        </TabPanel>
+                        <TabPanel value="3" tabIndex={0}>
                         <h2 style={{backgroundColor: "#E5E5E5"}}>/ Invite Requests</h2>
                         <table
                             style={{
@@ -176,9 +186,9 @@ export default function AdminPage() {
                             </tbody>
                         </table>
                     </TabPanel>
+                    </Box>
                 </TabContext>
             </Box>
-
         </div>
     );
 }

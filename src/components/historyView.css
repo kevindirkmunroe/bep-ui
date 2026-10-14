@@ -1,8 +1,8 @@
 .history-layout {
     display: grid;
-    grid-template-columns: minmax(220px, 24%) minmax(0, 1fr);
+    grid-template-columns: minmax(220px, 18%) minmax(0, 1fr);
     gap: 20px;
-    width: 96%;
+    width: 100%;
     min-height: 500px;
 }
 
@@ -14,7 +14,7 @@
 }
 
 .history-event-list-scroll {
-    max-height: 50vh;
+    max-height: 54vh;
     overflow-y: auto;
 }
 

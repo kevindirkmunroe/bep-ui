@@ -35,7 +35,16 @@ export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogP
         p => p.status === "submitted"
     );
 
-    // const fulfillmentComplete = submittedPlatforms.length === event.platforms.length;
+    function truncateString(str: string | undefined, limit: number, ending: string = '...'): string {
+        if(!str){
+            return "unknown"
+        }
+
+        if (str.length <= limit) {
+            return str;
+        }
+        return str.slice(0, limit - ending.length) + ending;
+    }
 
     const formatDate = (date: string | null | undefined) => {
         if (!date) return "—";
@@ -61,7 +70,7 @@ export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogP
             <div className="completion-event-info">
                 <div style={{display: "flex", flexDirection: "row"}}>
                     <div style={{display: "flex", flexDirection: "column"}}>
-                        <strong style={{fontSize: "15px"}}><b>{event.title}</b></strong>
+                        <strong style={{fontSize: "18px", fontWeight: "600"}}><b>{event.title}</b></strong>
                         <p style={{fontSize: "14px"}}>{event.event_id}</p>
                     </div>
                     <div style={{marginLeft: "80px"}}/>
@@ -79,41 +88,43 @@ export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogP
 
             <div className="completion-divider"/>
 
-            <table className="completion-table">
-                <thead>
-                <tr>
-                    <th>Delivery Platform</th>
-                    <th>Date Submitted</th>
-                    <th>Delivery Status</th>
-                    <th>Tracking Code</th>
-                    <th>Clicks</th>
-                    <th>Event URL ↗</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                {submittedPlatforms?.map(p => (
-                    <tr key={p.platform}>
-                        <td>
-                            <div className="completion-platform">
-                                <img
-                                    src={PLATFORM_ICONS[p.platform]}
-                                    alt=""
-                                />
-                                {PRINTABLE_PLATFORM[p.platform] ?? p.platform}
-                            </div>
-                        </td>
-
-                        <td>{formatDate(p.date_published)}</td>
-                        <td>{AUTO_PUBLISHED_PLATFORMS.includes(p.platform)? "Published":
-                            "Submitted pending Verification"}</td>
-                        <td>{encode(p.tracking_code)}</td>
-                        <td>{p.click_count}</td>
-                        <td><a target="_blank" href={p.published_url}>{p.published_url}</a></td>
+            <div className="table-container">
+                <table className="completion-table">
+                    <thead>
+                    <tr>
+                        <th>Delivery Platform</th>
+                        <th>Date Submitted</th>
+                        <th>Delivery Status</th>
+                        <th>Tracking Code</th>
+                        <th>Clicks</th>
+                        <th>Event URL ↗</th>
                     </tr>
-                ))}
-                </tbody>
-            </table>
+                    </thead>
+
+                    <tbody>
+                    {submittedPlatforms?.map(p => (
+                        <tr key={p.platform}>
+                            <td style={{minWidth: "200px"}}>
+                                <div className="completion-platform">
+                                    <img
+                                        src={PLATFORM_ICONS[p.platform]}
+                                        alt=""
+                                    />
+                                    {PRINTABLE_PLATFORM[p.platform] ?? p.platform}
+                                </div>
+                            </td>
+
+                            <td style={{minWidth: "180px"}}>{formatDate(p.date_published)}</td>
+                            <td>{AUTO_PUBLISHED_PLATFORMS.includes(p.platform)? "Published":
+                                "Submitted pending Verification"}</td>
+                            <td>{encode(p.tracking_code)}</td>
+                            <td>{p.click_count}</td>
+                            <td style={{maxWidth: "240px"}}><a target="_blank" href={p.published_url}>{p.published_url}</a></td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
 
         </div>
     );
