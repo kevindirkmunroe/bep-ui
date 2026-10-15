@@ -7,7 +7,7 @@ const PLATFORM_URLS: Record<Platform, string> = {
     indybay: "https://www.indybay.org/calendar/event_add.php",
     dothebay: "https://dothebay.com/events/new",
     sfweekly: "https://www.sfweekly.com/events/",
-    airhorntest: "http://localhost:8000/training-data/fakecheapsf/fakecheapsf-raw.html"
+    eastbaymagazine: "https://hub.cityspark.com/Event/Submission/EastBayMagazine"
 };
 
 export function getPlatformUrl(platform: Platform){

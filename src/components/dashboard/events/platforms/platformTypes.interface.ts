@@ -1,6 +1,6 @@
 import {EventDetail} from "../eventDetailTypes.interface";
 
-export type Platform = "funcheapsf" | "visitoakland" | "sfstation" | "indybay" | "dothebay" | "sfweekly" | "airhorntest";
+export type Platform = "funcheapsf" | "visitoakland" | "sfstation" | "indybay" | "dothebay" | "sfweekly" | "eastbaymagazine";
 
 export type PlatformStatus =
     | "not_started"
@@ -32,7 +32,7 @@ export const PLATFORM_ICONS = {
     "indybay":"/indybay.jpg",
     "dothebay": "/do_the_bay.jpg",
     "sfweekly": "/sfweekly2.jpg",
-    "airhorntest": "/airhorn-icon.png"
+    "eastbaymagazine": "/east-bay-magazine.png"
 }
 
 export const PRINTABLE_PLATFORM = {
@@ -41,5 +41,9 @@ export const PRINTABLE_PLATFORM = {
     "sfstation": "SF Station",
     "indybay":"IndyBay",
     "dothebay": "Do The Bay",
-    "sfweekly": "SF Weekly"
+    "sfweekly": "SF Weekly",
+    "eastbaymagazine": "East Bay Magazine"
 }
+
+export const AI_PLATFORMS = ["eastbaymagazine"]
+export const REQUIRED_AUTH_PLATFORMS = ["sfstation", "eastbaymagazine"]

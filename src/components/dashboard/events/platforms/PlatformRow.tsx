@@ -1,4 +1,11 @@
-import {Platform, PLATFORM_ICONS, PlatformRowProps} from "./platformTypes.interface"
+import {
+    AI_PLATFORMS,
+    Platform,
+    PLATFORM_ICONS,
+    PlatformRowProps,
+    PRINTABLE_PLATFORM,
+    REQUIRED_AUTH_PLATFORMS
+} from "./platformTypes.interface"
 import {getPlatformUrl, getPlatformFromUrl} from "./platformData";
 import {DateFields, EventDetail} from "../eventDetailTypes.interface";
 import {api} from "../../../../utils/api";
@@ -67,8 +74,6 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
     const [autofillClicked, setAutofillClicked] = useState(status != 'not_started');
 
     useEffect(() => {
-        console.log("[PlatformRow] useEffect SETUP");
-
         const handler = (event: Event) => {
             const { platformUrl } = (
                 event as CustomEvent<{ platformUrl: string }>
@@ -98,6 +103,55 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
             );
         };
     }, []);
+
+    const handleAutofill = async () => {
+        if(AI_PLATFORMS.includes(platform)){
+            await handleAIOpen();
+        }else{
+            await handleOpen();
+        }
+    }
+
+    const handleAIOpen = async () => {
+
+        console.log(`[PlatformRow] handleAIOpen start`);
+        setAutofillClicked(true);
+
+        // 1. OPEN IMMEDIATELY (must be sync)
+        const partnerWindow = window.open(
+            "",
+            "LocalBuzzPromotionWindow",
+            "width=1400,height=1000"
+        );
+
+        const platformUrl = getPlatformUrl(platform);
+        if(partnerWindow){
+            partnerWindow.location.href = platformUrl;
+        }else{
+            setDialog({
+                type: "error",
+                title: "Open Platform",
+                message: `${platformUrl} failed to open. Please try again.`
+            });
+        }
+
+        // 2. Send message to gather form inputs
+        console.log(`[PlatformRow] sending msg AIRHORN_INSPECT_FORM`);
+        window.postMessage({
+            type: "AIRHORN_INSPECT_FORM",
+            platform: "eastbaymagazine"
+        }, window.location.origin);
+
+        // 3. Listen for submit
+        window.addEventListener('message', (e) => {
+            if (e.source !== window || e.data?.source !== 'airhorn.events.ext') return;
+            if (e.data.event === 'submitted') console.log('User clicked Submit on', e.data.pageUrl);
+            if (e.data.event === 'result')    console.log('Result URL:', e.data.resultUrl);
+        });
+
+        updatePlatformStatus(platform, 'in_progress');
+        reload();
+    };
 
     const handleOpen = async () => {
 
@@ -181,7 +235,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
         updatePlatformStatus(platform, "in_progress");
 
         // reopen autofill
-        await handleOpen();
+        await handleAutofill();
     };
 
     const handleSubmit = async () => {
@@ -246,12 +300,12 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                     alignItems: "flex-start"
                 }}>
                     <div style={{fontSize: "18px", fontWeight:"bold", justifyContent: "left"}}>
-                        {platform}{platform === "sfstation" ? <div style={{fontSize: "12px"}}
+                        {PRINTABLE_PLATFORM[platform]}{REQUIRED_AUTH_PLATFORMS.includes(platform) ? <div style={{fontSize: "12px"}}
                                                                    onClick={() =>             setDialog({
                                                                        type: "confirm",
                                                                        title: "Platform Login",
                                                                        message: "This platform \"sfstation\" requires a login to post events. Open sfstation.com in a new tab, login then return to this tab."
-                                                                   })}>🔐 Restricted</div> : ""}
+                                                                   })}>🔑 Login</div> : ""}
                     </div>
                     <div style={{fontSize: "14px"}}>
                         {getStatusEmoji(status)}&nbsp;&nbsp;&nbsp;{PRINTABLE_STATUS[status]} &nbsp;
@@ -259,8 +313,11 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                 </div>
                 <div style={{marginLeft: "auto"}}>
                     <div style={{padding: "4px"}}/>
+                    { AI_PLATFORMS.includes(platform) &&
+                        <img alt={"Robot"} src={"/icons8-robot-48.png"} style={{width:"24px", height:"24px"}} />
+                    }
                     {status === "not_started" && (
-                        <button disabled={!extensionInstalled} className="btn btn-primary" onClick={handleOpen}>
+                        <button disabled={!extensionInstalled} className="btn btn-primary" onClick={handleAutofill}>
                             <img alt={"Autofill"} src={"/icons8-form-24.png"} style={{width:"24px", height:"24px"}} />Autofill
                         </button>
                     )}
@@ -272,7 +329,8 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                                         : "Install the Airhorn.events Chrome extension to enable Autofill"
                                 }
                                 className={autofillClicked? "btn btn-secondary" : "btn btn-primary"}
-                                onClick={handleOpen}>
+                                onClick={handleAutofill}>
+
                             <img alt={"Autofill"} src={autofillClicked? "/icons8-form-24-black.png": "/icons8-form-24.png"} style={{width:"24px", height:"24px"}} />Autofill
                         </button>
                     )}
