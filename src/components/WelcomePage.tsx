@@ -21,7 +21,7 @@ export function WelcomePage() {
                 {/* RIGHT: Existing content */}
                 <div style={{display: "flex", flexDirection: "column", minHeight: "100vh", minWidth: "100vh"}}>
                     <div style={{paddingLeft: 40, marginTop: "2%"}}>
-                        <strong style={{fontSize: "24px", color: "#D2492C"}}>Put Your <b style={{color: "black", fontSize: "28px"}}>Local
+                        <strong style={{fontSize: "24px", color: "#D2492C"}}>Promote Your <b style={{color: "black", fontSize: "28px"}}>Local
                             </b> <b>Bay Area</b> Events</strong>
                         <div style={{marginTop: 50}}>
                             <nav style={{display: "flex", justifyContent: "center", gap: "20px"}}>
@@ -60,9 +60,20 @@ export function WelcomePage() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
+                        <img style={{transform: "scale(0.6)", width: "200px", height: "64px"}} src={"/east-bay-magazine.png"}/>
+                        <img style={{transform: "scale(0.6)"}} src={"/indybay.jpg"}/>
+
+                    </div>
+                    <div style={{
+                        display: "flex",
+                        marginBottom: "4px",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        alignItems: "center"
+                    }}>
                         <img style={{transform: "scale(0.6)"}} src={"/funcheapsf.jpg"}/>
                         <img style={{transform: "scale(0.6)"}} src={"/do_the_bay.jpg"}/>
-                        <img style={{transform: "scale(0.6)"}} src={"/indybay.jpg"}/>
+                        <img style={{transform: "scale(0.6)", width: "200px", height: "64px"}} src={"/east-bay-times.png"}/>
                     </div>
                     <div style={{
                         marginTop: "4px",

@@ -8,6 +8,12 @@ interface BaseEventPayload {
     date: string;
     region?: string;
     city?: string;
+    address_fields?: {
+        street?: string;
+        city?: string;
+        state?: string;
+        zip?: string;
+    }
 }
 
 interface ContactPayload {
@@ -49,6 +55,13 @@ export interface SFStationPayload extends BaseEventPayload {
     location: string;
     ticket_link?: string;
     category?: string;
+}
+
+export interface CitySparkPayload extends BaseEventPayload, ContactPayload {
+    location: string;
+    category?: string;
+    organization?: string;
+    website?: string;
 }
 
 export interface IndyBayPayload extends BaseEventPayload, ContactPayload {

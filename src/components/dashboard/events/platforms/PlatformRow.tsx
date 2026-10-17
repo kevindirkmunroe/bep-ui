@@ -11,6 +11,7 @@ import {DateFields, EventDetail} from "../eventDetailTypes.interface";
 import {api} from "../../../../utils/api";
 import React, {useEffect, useState} from "react";
 import {
+    CitySparkPayload,
     DoTheBayPayload,
     FunCheapPayload,
     IndyBayPayload,
@@ -28,6 +29,7 @@ type PlatformPayload =
     | VisitOaklandPayload
     | SFStationPayload
     | SFWeeklyPayload
+    | CitySparkPayload
     | IndyBayPayload;
 
 function buildDateFields(startDatetime: string) : DateFields {
@@ -204,13 +206,15 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
         // 5. post event for extension
         event.region = pl?.region;
         event.city = pl?.city ?? undefined;
+        event.address_fields = pl?.address_fields;
         // Break start time into wall-clock event time.
         const localDT = toLocalDateTimeString(event.start_datetime);
         event.date_fields = buildDateFields(localDT);
 
+        console.log(`[PlatformRow] transform for platform ${platform} payload:\n${JSON.stringify(pl)}`);
         window.postMessage(
             {
-                type: `LOCALBUZZ_AUTOFILL_${platform}`,
+                type: `AIRHORN_AUTOFILL_${platform}`,
                 platform,
                 payload: {
                     ...event,

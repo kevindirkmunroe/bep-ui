@@ -1,6 +1,6 @@
 import {EventDetail} from "../eventDetailTypes.interface";
 
-export type Platform = "funcheapsf" | "visitoakland" | "sfstation" | "indybay" | "dothebay" | "sfweekly" | "eastbaymagazine";
+export type Platform = "funcheapsf" | "visitoakland" | "sfstation" | "indybay" | "dothebay" | "sfweekly" | "eastbaymagazine" | "eastbaytimes";
 
 export type PlatformStatus =
     | "not_started"
@@ -32,7 +32,8 @@ export const PLATFORM_ICONS = {
     "indybay":"/indybay.jpg",
     "dothebay": "/do_the_bay.jpg",
     "sfweekly": "/sfweekly2.jpg",
-    "eastbaymagazine": "/east-bay-magazine.png"
+    "eastbaymagazine": "/east-bay-magazine.png",
+    "eastbaytimes": "/east-bay-times.png"
 }
 
 export const PRINTABLE_PLATFORM = {
@@ -42,8 +43,9 @@ export const PRINTABLE_PLATFORM = {
     "indybay":"IndyBay",
     "dothebay": "Do The Bay",
     "sfweekly": "SF Weekly",
-    "eastbaymagazine": "East Bay Magazine"
+    "eastbaymagazine": "East Bay Magazine",
+    "eastbaytimes": "East Bay Times"
 }
 
-export const AI_PLATFORMS = ["eastbaymagazine"]
-export const REQUIRED_AUTH_PLATFORMS = ["sfstation", "eastbaymagazine"]
+export const AI_PLATFORMS: Platform[] = [] // TODO: enable when AI Agent is ready  ["eastbaytimes", "eastbaymagazine"]
+export const REQUIRED_AUTH_PLATFORMS: Platform[] = ["sfstation", "eastbaymagazine", "eastbaytimes"]

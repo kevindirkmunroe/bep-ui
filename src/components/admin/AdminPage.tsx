@@ -113,7 +113,7 @@ export default function AdminPage() {
                         overflow: "auto"
                     }}>
                         <TabPanel value="1" tabIndex={0}>
-                            <h2 style={{backgroundColor: "#E5E5E5"}}>/ PRO Orders</h2>
+                            <h2 style={{backgroundColor: "#E5E5E5"}}>/ Orders</h2>
                             <button
                                 type="button"
                                 className={`filter-toggle ${unfulfilledOnly ? "active" : ""}`}

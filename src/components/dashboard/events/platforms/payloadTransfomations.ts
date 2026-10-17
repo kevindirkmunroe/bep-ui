@@ -1,4 +1,5 @@
 import {
+    CitySparkPayload,
     DoTheBayPayload,
     FunCheapPayload,
     IndyBayPayload,
@@ -8,6 +9,7 @@ import {
     VisitOaklandPayload
 } from "./payloadTypes.interface";
 import {api} from "../../../../utils/api";
+import {parseAddress} from "../../../../utils/Address";
 import {Platform} from "./platformTypes.interface";
 import {zipToVisitOaklandDistrict} from "./regionMappings";
 
@@ -84,6 +86,20 @@ const sfstationTransformation: PayloadTransformation = async (event, platform) :
     };
 }
 
+const citySparkTransformation: PayloadTransformation = async (event, platform) : Promise<CitySparkPayload> => {
+    console.log(`citySparkTransformation: address fields: ${JSON.stringify(event.address)}`);
+    return {
+        name: event.name,
+        email: event.email,
+        title: event.title,
+        description: event.description,
+        date: event.start_datetime,
+        location: event.location_name,
+        category: event.category,
+        address_fields: parseAddress(event.address || "")
+    };
+}
+
 const dothebayTransformation: PayloadTransformation = async (event, platform) : Promise<DoTheBayPayload> => {
     return {
         name: event.name,
@@ -151,9 +167,10 @@ const visitOaklandTransformation: PayloadTransformation = async (event, platform
 export const PAYLOAD_TRANSFORMATIONS : PayloadTransformationMap = {
     indybay: indybayTransformation,
     funcheapsf: funcheapsfTransformation,
-    airhorntest: funcheapsfTransformation,
     sfstation: sfstationTransformation,
     visitoakland: visitOaklandTransformation,
     dothebay: dothebayTransformation,
     sfweekly: sfweeklyTransformation,
+    eastbaymagazine: citySparkTransformation,
+    eastbaytimes: citySparkTransformation
 }

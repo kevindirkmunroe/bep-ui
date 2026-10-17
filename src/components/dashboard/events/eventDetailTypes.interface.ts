@@ -1,5 +1,6 @@
 import {PlatformData} from "./platforms/platformTypes.interface";
 import React from "react";
+import {AddressFields} from "../../../utils/Address";
 
 export interface EventDetail {
     name: string;
@@ -10,6 +11,7 @@ export interface EventDetail {
     location_name: string;
     start_datetime: string;
     address?: string;
+    address_fields? : AddressFields;
     zip?: string;
     price?: string;
     website?: string;
@@ -52,6 +54,7 @@ export type EventSummaryProps = {
     showRedo?: boolean;
     reload?: () => void;
     onEdit?: React.Dispatch<React.SetStateAction<EventDetail | null>>;
-    onView?: React.Dispatch<React.SetStateAction<EventDetail | null>>;
+    onView?: React.Dispatch<React.SetStateAction<EventDetail | null>>
+    ;
     onPromote?: (event: EventDetail) => void;
 };
