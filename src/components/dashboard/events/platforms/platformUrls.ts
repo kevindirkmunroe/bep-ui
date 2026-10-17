@@ -8,7 +8,8 @@ const PLATFORM_URLS: Record<Platform, string> = {
     dothebay: "https://dothebay.com/events/new",
     sfweekly: "https://www.sfweekly.com/events/",
     eastbaymagazine: "https://hub.cityspark.com/Event/Submission/EastBayMagazine",
-    eastbaytimes: "https://hub.cityspark.com/Event/Submission/EastBayTimes"
+    eastbaytimes: "https://hub.cityspark.com/Event/Submission/EastBayTimes",
+    patch: "https://patch.com/compose/event"
 };
 
 export function getPlatformUrl(platform: Platform){

@@ -3,6 +3,7 @@ import {
     DoTheBayPayload,
     FunCheapPayload,
     IndyBayPayload,
+    PatchPayload,
     PayloadTransformation,
     SFStationPayload,
     SFWeeklyPayload,
@@ -83,6 +84,15 @@ const sfstationTransformation: PayloadTransformation = async (event, platform) :
         location: event.location_name,
         ticket_link : event.website,
         category: event.category,
+    };
+}
+
+const patchTransformation: PayloadTransformation = async (event, platform) : Promise<PatchPayload> => {
+    return {
+        title: event.title,
+        description: event.description,
+        date: event.start_datetime,
+        link : event.website,
     };
 }
 
@@ -172,5 +182,6 @@ export const PAYLOAD_TRANSFORMATIONS : PayloadTransformationMap = {
     dothebay: dothebayTransformation,
     sfweekly: sfweeklyTransformation,
     eastbaymagazine: citySparkTransformation,
-    eastbaytimes: citySparkTransformation
+    eastbaytimes: citySparkTransformation,
+    patch: patchTransformation
 }

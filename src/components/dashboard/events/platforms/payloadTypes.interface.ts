@@ -57,6 +57,10 @@ export interface SFStationPayload extends BaseEventPayload {
     category?: string;
 }
 
+export interface PatchPayload extends BaseEventPayload {
+    link?: string;
+}
+
 export interface CitySparkPayload extends BaseEventPayload, ContactPayload {
     location: string;
     category?: string;

@@ -62,6 +62,7 @@ export function WelcomePage() {
                     }}>
                         <img style={{transform: "scale(0.6)", width: "200px", height: "64px"}} src={"/east-bay-magazine.png"}/>
                         <img style={{transform: "scale(0.6)"}} src={"/indybay.jpg"}/>
+                        <img style={{transform: "scale(0.6)", width: "200px", height: "64px"}} src={"/patch.png"}/>
 
                     </div>
                     <div style={{

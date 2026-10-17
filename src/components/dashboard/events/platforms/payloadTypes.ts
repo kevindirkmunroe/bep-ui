@@ -5,7 +5,7 @@ import {
     SFStationPayload,
     VisitOaklandPayload,
     SFWeeklyPayload,
-    CitySparkPayload
+    CitySparkPayload, PatchPayload
 } from "./payloadTypes.interface";
 
 export type PlatformPayload =
@@ -16,3 +16,4 @@ export type PlatformPayload =
     | VisitOaklandPayload
     | SFWeeklyPayload
     | CitySparkPayload
+    | PatchPayload

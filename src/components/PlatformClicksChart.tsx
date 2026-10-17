@@ -21,7 +21,10 @@ const platformNames: Record<string, string> = {
     sfweekly: "SF Weekly",
     sfstation: "SF Station",
     visitoakland: "Visit Oakland",
-    indybay: "IndyBay"
+    indybay: "IndyBay",
+    eastbaymagazine: "East Bay Magazine",
+    eastbaytimes: "East Bay Times",
+    patch: "Patch"
 };
 
 interface PlatformClicksChartProps{

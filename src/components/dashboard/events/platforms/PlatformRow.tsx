@@ -6,7 +6,7 @@ import {
     PRINTABLE_PLATFORM,
     REQUIRED_AUTH_PLATFORMS
 } from "./platformTypes.interface"
-import {getPlatformUrl, getPlatformFromUrl} from "./platformData";
+import {getPlatformUrl, getPlatformFromUrl} from "./platformUrls";
 import {DateFields, EventDetail} from "../eventDetailTypes.interface";
 import {api} from "../../../../utils/api";
 import React, {useEffect, useState} from "react";
@@ -14,7 +14,7 @@ import {
     CitySparkPayload,
     DoTheBayPayload,
     FunCheapPayload,
-    IndyBayPayload,
+    IndyBayPayload, PatchPayload,
     SFStationPayload,
     SFWeeklyPayload,
     VisitOaklandPayload
@@ -30,6 +30,7 @@ type PlatformPayload =
     | SFStationPayload
     | SFWeeklyPayload
     | CitySparkPayload
+    | PatchPayload
     | IndyBayPayload;
 
 function buildDateFields(startDatetime: string) : DateFields {
@@ -304,12 +305,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                     alignItems: "flex-start"
                 }}>
                     <div style={{fontSize: "18px", fontWeight:"bold", justifyContent: "left"}}>
-                        {PRINTABLE_PLATFORM[platform]}{REQUIRED_AUTH_PLATFORMS.includes(platform) ? <div style={{fontSize: "12px"}}
-                                                                   onClick={() =>             setDialog({
-                                                                       type: "confirm",
-                                                                       title: "Platform Login",
-                                                                       message: "This platform \"sfstation\" requires a login to post events. Open sfstation.com in a new tab, login then return to this tab."
-                                                                   })}>🔑 Login</div> : ""}
+                        {PRINTABLE_PLATFORM[platform]}{REQUIRED_AUTH_PLATFORMS.includes(platform) ? " 🔑": ""}
                     </div>
                     <div style={{fontSize: "14px"}}>
                         {getStatusEmoji(status)}&nbsp;&nbsp;&nbsp;{PRINTABLE_STATUS[status]} &nbsp;
