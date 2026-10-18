@@ -1,6 +1,7 @@
 .platform-clicks-chart {
     width: 100%;
-    padding: 20px;
+    padding: 10px;
+    font-size: 16px;
 }
 
 .platform-clicks-chart h3 {

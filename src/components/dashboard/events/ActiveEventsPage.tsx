@@ -18,6 +18,7 @@ export function ActiveEventsPage() {
         return !isOlderThanToday(e.start_datetime);
     });
 
+    const pastEvents = events.filter((e) => !activeEvents.includes(e));
 
     const navigate = useNavigate();
     const {user} = useUser();
@@ -38,6 +39,12 @@ export function ActiveEventsPage() {
             <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                 {activeEvents.map(e => (
                     <EventSummary key={e.event_id} event={e} reload={reload} onEdit={setEditingEvent} onView={setViewingEvent} onPromote={handlePromote}/>
+                ))}
+            </div>
+            <hr style={{height: "2px", width: "95%"}} />
+            <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                {pastEvents.map(e => (
+                    <EventSummary key={e.event_id} event={e} reload={reload} onView={setViewingEvent} />
                 ))}
             </div>
         </div>

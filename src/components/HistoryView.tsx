@@ -181,9 +181,11 @@ export default function HistoryView() {
                                             Performance</h2>
                                         <EventClicksChart user_id={userId}/>
                                         <h2 style={{backgroundColor: "#E5E5E5"}}>Platform Performance</h2>
-                                        <PlatformClicksChart title={"Clicks By Platform (Last 30 Days)"} userId={userId}
-                                                             window={30}/>
-                                        <PlatformClicksChart title={"Clicks By Platform (All Time)"} userId={userId}/>
+                                        <div style={{display: "flex", flexDirection: "row"}}>
+                                            <PlatformClicksChart title={"Clicks By Platform (Last 30 Days)"} userId={userId}
+                                                                 window={30}/>
+                                            <PlatformClicksChart title={"Clicks By Platform (All Time)"} userId={userId}/>
+                                        </div>
                                 </TabPanel>
                                 </Box>
                             </TabContext>

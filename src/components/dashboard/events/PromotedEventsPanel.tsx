@@ -7,7 +7,7 @@ import {PlatformList} from "./platforms/PlatformList";
 
 import "../../admin/orderFulfillment.css";
 import {EventDetail} from "./eventDetailTypes.interface";
-import {Platform, PlatformStatus} from "./platforms/platformTypes.interface";
+import {Platform, PLATFORM_ICONS, PlatformStatus} from "./platforms/platformTypes.interface";
 import {api} from "../../../utils/api";
 import {Link, useParams} from "react-router-dom";
 import {EventOrder} from "../../../workflows/payment/EventOrder";
@@ -90,6 +90,19 @@ export default function PromotedEventsPanel({
         setEvent(res.data);
     }
 
+    const allPlatformIcons = (
+        <div style={{marginTop: '60px', width: "80%"}}>
+            {Object.values(PLATFORM_ICONS).map((iconUrl, index) => (
+                <img
+                    key={index}
+                    src={iconUrl}
+                    style={{transform: "scale(0.85)", filter: "grayscale(100%)", width: "100px", height: "40px"}}
+                    alt={`Platform icon ${index}`}
+                />
+            ))}
+        </div>
+    )
+
     return (
         <div className="order-fulfillment-panel">
 
@@ -148,6 +161,7 @@ export default function PromotedEventsPanel({
                                             <Link to={`promoted`}>
                                                 View Progress
                                             </Link>
+                                            <div style={{marginLeft: "90px", alignItems: "center"}}>{allPlatformIcons}</div>
                                         </div>
                                     </PromoteFulfillmentPanel>
                                 </>

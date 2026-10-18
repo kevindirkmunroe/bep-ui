@@ -157,7 +157,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     boxSizing: "border-box",
                     backgroundColor:
                         status === "submitted" || isExpired
-                            ? "green"
+                            ? (isExpired ? "#8F9E8B" :"green" )
                             : (event.is_locked ? "#D2492C" : "#E9A296"),
                     color: "white",
                     borderRadius: "8px"

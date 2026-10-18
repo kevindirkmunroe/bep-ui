@@ -8,6 +8,7 @@ import {
     ResponsiveContainer,
     LabelList
 } from "recharts";
+import './platformClicksChart.css';
 
 interface PlatformClicks {
     platform: string;
@@ -24,7 +25,8 @@ const platformNames: Record<string, string> = {
     indybay: "IndyBay",
     eastbaymagazine: "East Bay Magazine",
     eastbaytimes: "East Bay Times",
-    patch: "Patch"
+    patch: "Patch",
+    metrosiliconvalley: "Metro Silicon Valley"
 };
 
 interface PlatformClicksChartProps{

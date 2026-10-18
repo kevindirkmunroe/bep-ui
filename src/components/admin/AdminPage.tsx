@@ -131,8 +131,10 @@ export default function AdminPage() {
                         <TabPanel value="2" tabIndex={0} >
                             <h2 style={{backgroundColor: "#E5E5E5"}}>/ Metrics</h2>
                             <h3 style={{backgroundColor: "#E5E5E5"}}>Platform Performance</h3>
-                            <PlatformClicksChart title={"Clicks By Platform (Last 30 Days)"} window={30}/>
-                            <PlatformClicksChart title={"Clicks By Platform (All Time)"}/>
+                            <div style={{display: "flex", flexDirection: "row"}}>
+                                <PlatformClicksChart title={"Clicks By Platform (Last 30 Days)"} window={30}/>
+                                <PlatformClicksChart title={"Clicks By Platform (All Time)"}/>
+                            </div>
                             <h3 style={{backgroundColor: "#E5E5E5"}}>Event Performance</h3>
                             <EventClicksChart/>
                         </TabPanel>

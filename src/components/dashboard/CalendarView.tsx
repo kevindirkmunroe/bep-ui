@@ -75,7 +75,7 @@ export default function CalendarView() {
 
     const getEventStyle = (event: EventDetail) => {
         if(isPublishedEvent(event)){
-            return {background: 'green', color: 'white'};
+            return {background: isOlderThanToday(event.start_datetime) ? "#8F9E8B": 'green', color: 'white'};
         }else{
             if(event.is_locked){
                 return {background: '#D2492C', color: 'white'}
