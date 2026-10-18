@@ -9,7 +9,8 @@ const PLATFORM_URLS: Record<Platform, string> = {
     sfweekly: "https://www.sfweekly.com/events/",
     eastbaymagazine: "https://hub.cityspark.com/Event/Submission/EastBayMagazine",
     eastbaytimes: "https://hub.cityspark.com/Event/Submission/EastBayTimes",
-    patch: "https://patch.com/compose/event"
+    patch: "https://patch.com/compose/event",
+    metrosiliconvalley: "https://hub.cityspark.com/Event/Submission/MetroSiliconValley"
 };
 
 export function getPlatformUrl(platform: Platform){

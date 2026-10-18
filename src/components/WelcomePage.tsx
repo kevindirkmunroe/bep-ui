@@ -16,13 +16,14 @@ export function WelcomePage() {
             <div style={{ display: "flex", gap: "2px" }}>
                 {/* LEFT: Carousel */}
                 <div style={{ flex: "0 0 300px" }}>
-                    <ImageCarousel />
+                    <ImageCarousel timeout={6000} />
                 </div>
                 {/* RIGHT: Existing content */}
                 <div style={{display: "flex", flexDirection: "column", minHeight: "100vh", minWidth: "100vh"}}>
                     <div style={{paddingLeft: 40, marginTop: "2%"}}>
                         <strong style={{fontSize: "24px", color: "#D2492C"}}>Promote Your <b style={{color: "black", fontSize: "28px"}}>Local
                             </b> <b>Bay Area</b> Events</strong>
+                        <p style={{marginTop: "20px"}}>"Make it Once, Promote it Everywhere"</p>
                         <div style={{marginTop: 50}}>
                             <nav style={{display: "flex", justifyContent: "center", gap: "20px"}}>
                                 <NavLink style={{fontSize: "24px"}}
@@ -60,10 +61,9 @@ export function WelcomePage() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <img style={{transform: "scale(0.6)", width: "200px", height: "64px"}} src={"/east-bay-magazine.png"}/>
-                        <img style={{transform: "scale(0.6)"}} src={"/indybay.jpg"}/>
-                        <img style={{transform: "scale(0.6)", width: "200px", height: "64px"}} src={"/patch.png"}/>
-
+                        <img style={{borderRadius: "5px", transform: "scale(0.6)", width: "200px", height: "64px"}} src={"/east-bay-magazine.png"}/>
+                        <img style={{borderRadius: "5px",transform: "scale(0.6)"}} src={"/funcheapsf.jpg"}/>
+                        <img style={{borderRadius: "5px",transform: "scale(0.6)", width: "200px", height: "64px"}} src={"/patch.png"}/>
                     </div>
                     <div style={{
                         display: "flex",
@@ -72,9 +72,9 @@ export function WelcomePage() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <img style={{transform: "scale(0.6)"}} src={"/funcheapsf.jpg"}/>
-                        <img style={{transform: "scale(0.6)"}} src={"/do_the_bay.jpg"}/>
-                        <img style={{transform: "scale(0.6)", width: "200px", height: "64px"}} src={"/east-bay-times.png"}/>
+                        <img style={{borderRadius: "5px",transform: "scale(0.6)"}} src={"/do_the_bay.jpg"}/>
+                        <img style={{borderRadius: "5px",transform: "scale(0.6)"}} src={"/sfstation.jpg"}/>
+                        <img style={{borderRadius: "5px",transform: "scale(0.6)", width: "390px", height: "104px"}} src={"/metro-silicon-valley.png"}/>
                     </div>
                     <div style={{
                         marginTop: "4px",
@@ -84,9 +84,10 @@ export function WelcomePage() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <img style={{transform: "scale(0.6)"}} src={"/sfstation.jpg"}/>
-                        <img style={{transform: "scale(0.6)"}} src={"/visit_oakland.jpg"}/>
-                        <img style={{transform: "scale(0.8)", width: "64px", height: "64px"}} src={"/sfweekly2.jpg"}/>
+                        <img style={{borderRadius: "5px",transform: "scale(0.6)"}} src={"/indybay.jpg"}/>
+                        <img style={{borderRadius: "5px",transform: "scale(0.6)", width: "200px", height: "64px"}} src={"/east-bay-times.png"}/>
+                        <img style={{borderRadius: "5px",transform: "scale(0.6)"}} src={"/visit_oakland.jpg"}/>
+                        <img style={{borderRadius: "5px",transform: "scale(0.8)", width: "64px", height: "64px"}} src={"/sfweekly2.jpg"}/>
                     </div>
                     <div style={{marginBottom: "30px", padding: "20px", fontSize: "14px"}}>All trademarks and logos are
                         the property of their respective owners.

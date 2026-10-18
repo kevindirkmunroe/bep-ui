@@ -183,5 +183,6 @@ export const PAYLOAD_TRANSFORMATIONS : PayloadTransformationMap = {
     sfweekly: sfweeklyTransformation,
     eastbaymagazine: citySparkTransformation,
     eastbaytimes: citySparkTransformation,
+    metrosiliconvalley: citySparkTransformation,
     patch: patchTransformation
 }

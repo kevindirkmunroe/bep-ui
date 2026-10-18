@@ -1,6 +1,7 @@
 import {EventDetail} from "../eventDetailTypes.interface";
 
-export type Platform = "funcheapsf" | "visitoakland" | "sfstation" | "indybay" | "dothebay" | "sfweekly" | "eastbaymagazine" | "eastbaytimes" | "patch";
+export type Platform = "funcheapsf" | "visitoakland" | "sfstation" | "indybay" | "dothebay" |
+                        "sfweekly" | "eastbaymagazine" | "eastbaytimes" | "patch" | "metrosiliconvalley"
 
 export type PlatformStatus =
     | "not_started"
@@ -34,7 +35,8 @@ export const PLATFORM_ICONS = {
     "sfweekly": "/sfweekly2.jpg",
     "eastbaymagazine": "/east-bay-magazine.png",
     "eastbaytimes": "/east-bay-times.png",
-    "patch": "/patch.png"
+    "patch": "/patch.png",
+    "metrosiliconvalley" : "/metro-silicon-valley.png"
 }
 
 export const PRINTABLE_PLATFORM = {
@@ -46,7 +48,8 @@ export const PRINTABLE_PLATFORM = {
     "sfweekly": "SF Weekly",
     "eastbaymagazine": "East Bay Magazine",
     "eastbaytimes": "East Bay Times",
-    "patch": "Patch"
+    "patch": "Patch",
+    "metrosiliconvalley": "Metro Silicon Valley"
 }
 
 export const AI_PLATFORMS: Platform[] = [] // TODO: enable when AI Agent is ready  ["eastbaytimes", "eastbaymagazine"]

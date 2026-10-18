@@ -38,7 +38,7 @@ const slides = [
     { src: "/carousel/latine-food-makers.png", label: "Farmers Market" }
 ];
 
-export default function ImageCarousel() {
+export default function ImageCarousel({timeout = 30000}) {
     const [index, setIndex] = useState(0);
 
     useEffect(() => {
@@ -46,7 +46,7 @@ export default function ImageCarousel() {
             setIndex((prev) => {
                 return (prev + 1) % slides.length;
             });
-        }, 30000);
+        }, timeout);
 
         return () => clearInterval(interval);
     }, []);

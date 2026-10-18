@@ -146,7 +146,7 @@ export default function PromotedEventsPanel({
                                             </h2>
                                             <br/>
                                             <Link to={`promoted`}>
-                                                View Results
+                                                View Progress
                                             </Link>
                                         </div>
                                     </PromoteFulfillmentPanel>
