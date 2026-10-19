@@ -83,7 +83,7 @@
 
 .event-summary-header {
     display: grid;
-    grid-template-columns: 14px 80px minmax(0, 0.95fr) 24px;
+    grid-template-columns: 48px 100px minmax(0, 0.95fr) 14px;
     column-gap: 6px;
     align-items: center;
     width: 100%;
@@ -114,7 +114,7 @@
 }
 
 .imported-from-icon {
-    filter: grayscale(100%);
+    filter: brightness(0) invert(1);
 }
 
 .event-summary-details {

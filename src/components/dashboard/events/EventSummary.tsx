@@ -1,6 +1,6 @@
 import React, {useRef, useState} from "react";
 
-import {EventSummaryProps} from "./eventDetailTypes.interface";
+import {EventDetail, EventSummaryProps} from "./eventDetailTypes.interface";
 import {getEventStatusFromPlatforms, getIsExpired} from "./EventStatus";
 import {api} from "../../../utils/api";
 import {FaCircleExclamation} from "react-icons/fa6";
@@ -30,7 +30,38 @@ const modalStyle = {
     minWidth: "300px"
 };
 
-export function EventSummary({ event, readOnly = false, reload, showRedo= false, showAsHeader=false, onEdit, onView, onPromote }: EventSummaryProps) {
+const ensureDollar = (str: string) => str.startsWith('\$') ? str : `$${str}`;
+
+function formatEventDate(dateString: string) {
+    const date = new Date(dateString);
+
+    const day = date.getDate();
+
+    const suffix =
+        day % 10 === 1 && day !== 11 ? "st" :
+            day % 10 === 2 && day !== 12 ? "nd" :
+                day % 10 === 3 && day !== 13 ? "rd" :
+                    "th";
+
+    const datePart = date.toLocaleDateString("en-US", {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+    });
+
+    const timePart = date.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit"
+    }).toLowerCase();
+
+    return datePart.replace(
+        `${day},`,
+        `${day}${suffix} `
+    ) + `, ${timePart}`;
+}
+
+export function EventSummary({ event, reload, showRedo= false, showAsHeader=false, onEdit, onView, onPromote }: EventSummaryProps) {
 
     const [showConfirm, setShowConfirm] = useState(false);
     const [imgSrc, setImgSrc] = useState("/icons8-delete-30.png");
@@ -50,35 +81,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     const status = getEventStatusFromPlatforms(event);
     const isExpired = getIsExpired(event);
     const canEdit = status === "not_started" || status === "in_progress";
-
-    function formatEventDate(dateString: string) {
-        const date = new Date(dateString);
-
-        const day = date.getDate();
-
-        const suffix =
-            day % 10 === 1 && day !== 11 ? "st" :
-                day % 10 === 2 && day !== 12 ? "nd" :
-                    day % 10 === 3 && day !== 13 ? "rd" :
-                        "th";
-
-        const datePart = date.toLocaleDateString("en-US", {
-            weekday: "long",
-            month: "long",
-            day: "numeric",
-            year: "numeric"
-        });
-
-        const timePart = date.toLocaleTimeString("en-US", {
-            hour: "numeric",
-            minute: "2-digit"
-        }).toLowerCase();
-
-        return datePart.replace(
-            `${day},`,
-            `${day}${suffix} `
-        ) + `, ${timePart}`;
-    }
 
     type ImportedFromLinkProps = {
         importedFrom?: string | null;
@@ -121,8 +123,22 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
     const handleListedEventClicked = () => {
         if(canEdit && onEdit && !isExpired && !event.is_locked){
             onEdit(event);
-        }else if(event.is_locked && onView){
+        }else if(onView){
             onView(event);
+        }
+    }
+
+    const getEventColor = (event: EventDetail, status: string, isExpired: boolean) => {
+        if(status === "submitted"){
+            if(isExpired){
+                return '#8F9E8B';
+            }
+            return 'green';
+        }else{
+            if(isExpired){
+                return '#D19187';
+            }
+            return '#D2492C';
         }
     }
 
@@ -145,8 +161,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
         setShowExpandedMenu(!showExpandedMenu);
     };
 
-    const ensureDollar = (str: string) => str.startsWith('\$') ? str : `$${str}`;
-
     return (
         <div className={showAsHeader ? "event-header-style" : "event-list-style"}>
             <div
@@ -155,10 +169,7 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     width: "100%",
                     paddingLeft: "8px",
                     boxSizing: "border-box",
-                    backgroundColor:
-                        status === "submitted" || isExpired
-                            ? (isExpired ? "#8F9E8B" :"green" )
-                            : (event.is_locked ? "#D2492C" : "#E9A296"),
+                    backgroundColor: getEventColor(event, status, isExpired),
                     color: "white",
                     borderRadius: "8px"
             }}
@@ -170,7 +181,42 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                         fontSize: "18px",
                         fontWeight: "bold",
                     }}>
-                    {/* Column 1: toggle */}
+                    {/* Column 1: image */}
+                    <div onClick={() => handleListedEventClicked()} className="event-summary-imported">
+                        { event.image ? (
+                            <img src={event.image} alt="Image" style={{
+                                width: "60px",
+                                height: "40px",
+                                padding: "8px",
+                                marginLeft: "20px",
+                                marginRight: "4px",
+                                borderRadius: "6px",
+                                objectFit: "cover" }} />
+                        ) : (
+                            <img src={"/icons8-image-64.png"} alt="No Image" style={{
+                                width: "32px",
+                                height: "28px",
+                                marginLeft: "8px",
+                                borderRadius: "6px",
+                                objectFit: "contain" }} />
+                        )
+                        }
+                    </div>
+
+                    {/* Column 2: date */}
+                    <div onClick={() => handleListedEventClicked()} style={{fontSize: "16px", fontFamily: "Arial, sans-serif", alignItems: "flex-start"}}>
+                        {formatDateLocal(event.start_datetime)}
+                    </div>
+
+
+                    {/* Column 2: title */}
+                    <div onClick={() => handleListedEventClicked()} style={{fontSize: "16px", fontFamily: "Arial, sans-serif"}} className="event-summary-title">
+                        {event.title}
+                    </div>
+
+
+
+                    {/* Column 4: toggle */}
                     <button
                         style={{marginLeft: "8px", paddingRight: "16px"}}
                         type="button"
@@ -180,36 +226,6 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                         {expanded ? "▼" : "▲"}
                     </button>
 
-                    {/* Column 2: date */}
-                    <div onClick={() => handleListedEventClicked()} style={{fontSize: "14px", fontFamily: "Arial, sans-serif", alignItems: "flex-start"}}>
-                        {formatDateLocal(event.start_datetime)}
-                    </div>
-
-
-                    {/* Column 2: title */}
-                    <div onClick={() => handleListedEventClicked()} style={{fontSize: "14px", fontFamily: "Arial, sans-serif"}} className="event-summary-title">
-                        {event.title}
-                    </div>
-
-                    {/* Column 3: image */}
-                    <div onClick={() => handleListedEventClicked()} className="event-summary-imported">
-                        { event.image ? (
-                            <img src={event.image} alt="Image" style={{
-                                maxWidth: "60px",
-                                maxHeight: "60px",
-                                marginLeft: "30px",
-                                borderRadius: "6px",
-                                objectFit: "contain" }} />
-                            ) : (
-                            <img src={"/icons8-image-64.png"} alt="No Image" style={{
-                                width: "32px",
-                                height: "28px",
-                                marginLeft: "30px",
-                                borderRadius: "6px",
-                                objectFit: "contain" }} />
-                            )
-                        }
-                    </div>
                 </div>
 
                 {/* Toggleable Event details */}
@@ -236,113 +252,9 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
 
             </div>
             <div style={{width: "32%", display: "flex", marginLeft: "4px", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
-                {/* Begin Extras Menu */}
-                {!readOnly && !isExpired && (
-                    <div className="more-actions">
-                        <>
-                            <button
-                                ref={buttonRef}
-                                onClick={toggleExpandedMenu}
-                                className="btn btn-secondary"
-                                style={{height: "42px"}}
-                            >
-                                <img
-                                    src="/icons8-more-50.png"
-                                    style={{
-                                        width: "16px",
-                                        height: "16px"
-                                    }}
-                                />
-                            </button>
 
-                            {showExpandedMenu &&
-                                createPortal(
-                                    <div
-                                        className="more-actions-menu"
-                                        style={{
-                                            top: menuPosition.top,
-                                            left: menuPosition.left,
-                                            width: '130px'
-                                        }}
-                                    >
-                                        {canEdit && onEdit && !isExpired && !event.is_locked && (
-                                            <button className="btn btn-secondary"
-                                                    disabled={event.is_locked}
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        onEdit(event);
-                                                    }}
-                                            >
-                                                <img src={"/icons8-edit-64.png"} style={{width: "24px", height: "24px"}}/>
-                                                Edit
-                                            </button>
-                                        )}
-                                        {event.is_locked && onView && (
-                                            <button className="btn btn-secondary"
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        onView(event);
-                                                    }}
-                                            >
-                                                <img src={"/icons8-preview-48-coral.png"} style={{width: "24px", height: "24px"}}/>
-                                                View
-                                            </button>
-                                        )}
-                                        {!readOnly && !isExpired && (
-                                            <button
-                                                title="Make duplicate of this Event"
-                                                className="btn btn-secondary"
-                                                onClick={() => {
-                                                    setShowExpandedMenu(false);
-                                                    handleClone();
-                                                }}
-                                            >
-                                                <img
-                                                    src="/icons8-clone-24.png"
-                                                    style={{
-                                                        width: "24px",
-                                                        height: "24px"
-                                                    }}
-                                                />
-                                                Clone
-                                            </button>
-                                        )}
-                                        {!readOnly && (
-                                            <button
-                                                className="btn btn-danger"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    setShowMoreActions(false);
-                                                    setShowConfirm(true);
-                                                }}
-                                            >
-                                                <img
-                                                    src={imgSrc}
-                                                    alt="delete"
-                                                    onMouseOver={() =>
-                                                        setImgSrc("/icons8-delete-white.png")
-                                                    }
-                                                    onMouseOut={() =>
-                                                        setImgSrc("/icons8-delete-30.png")
-                                                    }
-                                                    style={{
-                                                        width: "24px",
-                                                        height: "24px"
-                                                    }}
-                                                />
-                                                Delete
-                                            </button>
-                                        )}
-                                    </div>,
-                                    document.body
-                                )
-                            }
-                        </>
-                    </div>
-                )}
-                {/* End Extras Menu */}
-
-                {!readOnly && !isExpired && (
+                {/* Promotion */}
+                {!isExpired && (
                     <button
                         title={event.is_locked? "Promote this Event to all Platforms" : "Start Event Promotion process"}
                         className={event.is_locked ? "btn btn-secondary-greater" : "btn btn-primary-greater"}
@@ -359,21 +271,111 @@ export function EventSummary({ event, readOnly = false, reload, showRedo= false,
                     </button>
                 )}
 
-                {isExpired && !readOnly && (
+                {/* Begin Extras Menu */}
+                <div className="more-actions">
                     <>
-                    <button className="btn btn-danger"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setShowConfirm(true);
-                                }}
+                        <button
+                            ref={buttonRef}
+                            onClick={toggleExpandedMenu}
+                            className="btn btn-secondary"
+                            style={{height: "42px"}}
                         >
-                            <img src={imgSrc} alt={"delete"}
-                                 onMouseOver={() => setImgSrc('/icons8-delete-white.png')}
-                                 onMouseOut={() => setImgSrc('/icons8-delete-30.png')}
-                                 style={{width: "24px", height: "24px"}}/>Delete
+                            <img
+                                src="/icons8-hamburger-menu-64.png"
+                                style={{
+                                    width: "16px",
+                                    height: "16px"
+                                }}
+                            />
                         </button>
+
+                        {showExpandedMenu &&
+                            createPortal(
+                                <div
+                                    className="more-actions-menu"
+                                    style={{
+                                        top: menuPosition.top,
+                                        left: menuPosition.left,
+                                        width: '130px'
+                                    }}
+                                    onMouseLeave={toggleExpandedMenu}
+                                >
+                                    {canEdit && onEdit && !isExpired && !event.is_locked && (
+                                        <button className="btn btn-secondary"
+                                                disabled={event.is_locked}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    onEdit(event);
+                                                }}
+                                        >
+                                            <img src={"/icons8-edit-64.png"} style={{width: "24px", height: "24px"}}/>
+                                            Edit
+                                        </button>
+                                    )}
+                                    {onView && (
+                                        <button className="btn btn-secondary"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    onView(event);
+                                                }}
+                                        >
+                                            <img src={"/icons8-preview-48-coral.png"} style={{width: "24px", height: "24px"}}/>
+                                            View
+                                        </button>
+                                    )}
+                                    {
+                                        <button
+                                            title="Make duplicate of this Event"
+                                            className="btn btn-secondary"
+                                            onClick={() => {
+                                                setShowExpandedMenu(false);
+                                                handleClone();
+                                            }}
+                                        >
+                                            <img
+                                                src="/icons8-clone-24.png"
+                                                style={{
+                                                    width: "24px",
+                                                    height: "24px"
+                                                }}
+                                            />
+                                            Clone
+                                        </button>
+                                    }
+                                    {
+                                        <button
+                                            className="btn btn-danger"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setShowMoreActions(false);
+                                                setShowConfirm(true);
+                                            }}
+                                        >
+                                            <img
+                                                src={imgSrc}
+                                                alt="delete"
+                                                onMouseOver={() =>
+                                                    setImgSrc("/icons8-delete-white.png")
+                                                }
+                                                onMouseOut={() =>
+                                                    setImgSrc("/icons8-delete-30.png")
+                                                }
+                                                style={{
+                                                    width: "24px",
+                                                    height: "24px"
+                                                }}
+                                            />
+                                            Delete
+                                        </button>
+                                    }
+                                </div>,
+                                document.body
+                            )
+                        }
                     </>
-                )}
+                </div>
+                {/* End Extras Menu */}
+
                 {showConfirm && (
                     <div style={overlayStyle}>
                         <div style={modalStyle}>

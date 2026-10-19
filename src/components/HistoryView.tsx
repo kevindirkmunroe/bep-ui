@@ -16,6 +16,20 @@ import {api} from "../utils/api";
 import PlatformClicksChart from "./PlatformClicksChart";
 import EventClicksChart from "./EventClicksChart";
 
+const getEventColor = (event: EventDetail, status: string, isExpired: boolean) => {
+    if(status === "submitted"){
+        if(isExpired){
+            return '#8F9E8B';
+        }
+        return 'green';
+    }else{
+        if(isExpired){
+            return '#D19187';
+        }
+        return '#D2492C';
+    }
+}
+
 export default function HistoryView() {
     const navigate = useNavigate();
     const { userId } = useParams<{ userId: string }>();
