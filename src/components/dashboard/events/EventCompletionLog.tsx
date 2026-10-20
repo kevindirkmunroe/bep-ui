@@ -63,7 +63,7 @@ export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogP
         });
     };
 
-    const AUTO_PUBLISHED_PLATFORMS = ["indybay", "dothebay", "sfstation"];
+    const AUTO_PUBLISHED_PLATFORMS = ["indybay", "dothebay", "sfstation", "patch", "eastbaytimes", "eastbaymagazine", "metrosiliconvalley"];
 
     return (
         <div className="completion-log">

@@ -347,7 +347,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                     {status === "submitted" && status && (
                         <button className="btn btn-primary" onClick={handleReopen}>
                             <img alt={"Redo Autofill"} src={"/icons8-redo-48.png"} style={{width:"24px", height:"24px"}} />
-                            Start Over Autofill
+                            Redo
                         </button>
                     )}
                 </div>

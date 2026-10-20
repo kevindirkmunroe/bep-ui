@@ -63,10 +63,12 @@ export default function EventClicksChart({
             setError(null);
             setData([]);
 
+            const API_URL = import.meta.env.VITE_API_BASE_URL || "";
+
             try {
                 const url = user_id
-                    ? `/admin/analytics/event-clicks/${encodeURIComponent(user_id)}`
-                    : "/admin/analytics/event-clicks";
+                    ? `${API_URL}/admin/analytics/event-clicks/${encodeURIComponent(user_id)}`
+                    : `${API_URL}/admin/analytics/event-clicks`;
 
                 const response = await fetch(url, {
                     signal: controller.signal

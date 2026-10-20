@@ -39,7 +39,9 @@ export default function PlatformClicksChart({title, userId, window} : PlatformCl
     const [data, setData] = useState<PlatformClicks[]>([]);
     const [loading, setLoading] = useState(true);
 
-    let endpoint = `/admin/analytics/platform-clicks` + (userId? `/${userId}` : '');
+    const API_URL = import.meta.env.VITE_API_BASE_URL || "";
+
+    let endpoint = `${API_URL}/admin/analytics/platform-clicks` + (userId? `/${userId}` : '');
     endpoint = endpoint + (window? "?window=30" : "");
 
     useEffect(() => {
