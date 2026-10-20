@@ -78,6 +78,7 @@ export default function App() {
                       </ProtectedRoute>
                   }
                   >
+                  <Route index element={<Navigate to="events" replace />} />
                   <Route path="events" element={<ActiveEventsPage />} />
                   <Route path=":state/calendar" element={<CalendarView />} />
               </Route>

@@ -20,6 +20,7 @@ import EventBreadcrumb from "./events/EventBreadcrumb";
 import {useUser} from "../../UserContext";
 import DashboardTabs from "../DashboardTabs";
 import EventDetailView from "./EventDetailView";
+import {isOlderThanToday} from "../../utils/DateTime";
 
 export default function Dashboard() {
     const { userId } = useParams();
@@ -36,10 +37,6 @@ export default function Dashboard() {
     const [createEventDate, setCreateEventDate] = useState<Date | null>(null);
     const [dialog, setDialog] = useState<DialogState>(null);
     const [showImportActions, setShowImportActions] = useState(false);
-
-    function isOlderThanToday(date: string) {
-        return new Date(date) < new Date();
-    }
 
     async function handleImportEventbriteEvent(eventbriteEventUrl: string) {
         if (!eventbriteEventUrl || !eventbriteEventUrl.startsWith('https://www.eventbrite.com/e/')) {
@@ -380,7 +377,7 @@ export default function Dashboard() {
                             <EventBreadcrumb event={events ? events[0] : null} eventCount={getActiveEventCount()}
                                 promoteEventCount={getActiveEventCountWithOrder()}/>
                             <div>
-                                <div className="more-actions">
+                                <div className="more-actions" onMouseLeave={() => setShowImportActions(prev => !prev)}>
                                     <button
                                         type="button"
                                         title="Import a Third-party Event"

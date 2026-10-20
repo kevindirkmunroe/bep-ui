@@ -25,16 +25,15 @@ const imageStyle: React.CSSProperties = {
 };
 
 const slides = [
-    { src: "/carousel/cocktails.png", label: "Cocktails" },
     { src: "/carousel/cats-corner.jpg", label: "Dance Parties" },
     { src: "/carousel/food.jpg", label: "Food & Wine" },
     { src: "/carousel/wine.jpg", label: "Wine Bars" },
     { src: "/carousel/cosmo-alleycats.jpg", label: "Jazz" },
+    { src: "/carousel/cocktails.png", label: "Cocktails" },
     { src: "/carousel/popup.jpg", label: "Pop-up Events" },
     { src: "/carousel/uptown-sips.jpg", label: "Wine & Charcuterie" },
     { src: "/carousel/first-friday-nights.png", label: "Natural Sciences" },
     { src: "/carousel/steve-lucky-carmen-getit.png", label: "Swinging Jazz" },
-    { src: "/carousel/comedy-oakland.jpeg", label: "Live Comedy" },
     { src: "/carousel/latine-food-makers.png", label: "Farmers Market" }
 ];
 

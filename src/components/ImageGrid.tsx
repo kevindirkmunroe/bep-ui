@@ -29,6 +29,10 @@ export default function ImageGrid() {
         "/carousel/latine-food-makers.png",
         "/carousel/comedy-oakland.jpeg",
         "/carousel/first-friday-nights.png",
+        "/carousel/best-of-sf-comedy.png",
+        "/carousel/crazy-funny-asians.png",
+        "/carousel/matinee.png",
+        "/carousel/market-street-arts.png",
         "/carousel/fela-vinyl.png"
     ];
 

@@ -123,12 +123,13 @@ export default function PromoteDashboard() {
             </div>
             {/* RIGHT: Existing content */}
             <div style={{ flex: 1 }}>
-                <div style={{paddingLeft: 40}}>
-
+                <div style={{paddingLeft: "6px"}}>
                     <div style={{ width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "2px" }}>
                         <div className="banner-div" style={{
                             width: "100%",
-                            height: "100px",
+                            height: "80px",
+                            marginLeft: "5px",
+                            marginTop: "1px",
                             objectFit: "cover",
                             objectPosition: "top",
                             fontWeight: 800,

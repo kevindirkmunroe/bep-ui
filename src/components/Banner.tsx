@@ -91,52 +91,54 @@ export function Banner() {
             )}
             {user && (
                 <div style={{display: "flex", alignItems: "right", marginRight: "50px", marginTop: "16px"}}>
-                    <img
-                        style={{width: "22px", height: "22px", verticalAlign: "text-bottom", cursor: "pointer"}} src={"/icons8-home-48.png"} alt={'.'}
-                    />&nbsp;
                     {user?.firstName && (
-                        <div style={{...userInfoStyle, cursor: "pointer"}}
+                        <div className="banner-button" style={{...userInfoStyle, cursor: "pointer"}}
                              data-tooltip-id="my-tooltip"
                              data-tooltip-content="Home"
                              onClick={() => navigate('/')}>
+                            <img
+                                style={{width: "22px", height: "22px", verticalAlign: "text-bottom", cursor: "pointer"}} src={"/icons8-home-48.png"} alt={'.'}
+                            />&nbsp;
                             Home
+                            &nbsp;
                         </div>
                     )}
-                    <img
-                        style={{width: "22px", height: "22px", marginLeft: "18px", verticalAlign: "text-bottom"}} src={"/icons8-user-male-30.png"} alt={'.'}
-                    />&nbsp;
+
                     {user?.firstName && (
-                        <div style={{...userInfoStyle, cursor: "pointer"}}
+                        <div className="banner-button" style={{...userInfoStyle, cursor: "pointer"}}
                              data-tooltip-id="my-tooltip"
                              data-tooltip-content="Change Password"
                              onClick={handleChangePassword}>
+                            <img
+                                style={{width: "22px", height: "22px", marginLeft: "18px", verticalAlign: "text-bottom"}} src={"/icons8-user-male-30.png"} alt={'.'}
+                            />&nbsp;
                             {user.firstName}
                             {user.company && ` | ${user.company}`}
                         </div>
                     )}
+                    <div className="banner-button" style={{marginLeft: '28px', marginTop: "1px", fontSize: "16px" , cursor: "pointer"}}
+                         data-tooltip-id="my-tooltip"
+                         data-tooltip-content="About Airhorn.events ...">
+                        <p onClick={handleAbout}>About</p>
+                    </div>
+                    <div className="banner-button" style={{marginLeft: '16px', marginRight: '32px', marginTop: "1px", fontSize: "16px", cursor: "pointer"}}>
+                        <p onClick={handleLogout}>Logout</p>
+                    </div>
                     {user.isAdmin && (
                         <div
                             data-tooltip-id="my-tooltip"
                             data-tooltip-content="How'd YOU get here?"
                             onClick={handleAdmin}
                             style={{
-                                marginLeft: '4px',
-                                marginRight: '34px',
-                                marginTop: "1px",
-                                fontSize: "14px",
-                                cursor: "pointer"
+                                marginLeft: '34px',
+                                fontSize: "16px",
+                                borderRadius: "4px",
+                                cursor: "pointer",
+                                backgroundColor: "#FEF2F2"
                             }}>
                             <p style={{fontSize: "20px", fontWeight: 500}}>&nbsp;&nbsp;🔥Admin</p>
                         </div>
                     )}
-                    <div style={{marginLeft: '28px', marginTop: "1px", fontSize: "14px" , cursor: "pointer"}}
-                         data-tooltip-id="my-tooltip"
-                         data-tooltip-content="About Airhorn.events ...">
-                        <p onClick={handleAbout}>About</p>
-                    </div>
-                    <div style={{marginLeft: '16px', marginRight: '32px', marginTop: "1px", fontSize: "14px", cursor: "pointer"}}>
-                        <p onClick={handleLogout}>Logout</p>
-                    </div>
                     <div>
                         <CalendarDate/>
                     </div>

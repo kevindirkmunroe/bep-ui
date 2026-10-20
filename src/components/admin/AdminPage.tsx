@@ -91,7 +91,7 @@ export default function AdminPage() {
     };
 
     return (
-        <div style={{padding: "30px", textAlign: "left"}}>
+        <div style={{padding: "30px", textAlign: "left", backgroundColor: "#FEF2F2"}}>
 
             <Box sx={{ width: '100%', typography: 'body1' }}>
                 <TabContext value={tabValue}>

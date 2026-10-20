@@ -16,3 +16,7 @@
     overflow-y: hidden;
     overflow-x: hidden;
 }
+
+.banner-button:hover {
+    background: #FEF2F2;
+}

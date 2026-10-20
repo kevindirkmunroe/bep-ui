@@ -18,7 +18,7 @@ function CalendarDate() {
             <div style={{
                     color: "#D2492C",
                     marginLeft: "10px"}}>
-                    <p style={{fontSize: '18px', fontWeight: "bold"}}>{time.toLocaleDateString('en-US', {
+                    <p style={{fontSize: '20px', fontWeight: "bold"}}>{time.toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric'

@@ -15,19 +15,28 @@ import "./historyView.css";
 import {api} from "../utils/api";
 import PlatformClicksChart from "./PlatformClicksChart";
 import EventClicksChart from "./EventClicksChart";
+import {getEventStatusFromPlatforms} from "./dashboard/events/EventStatus";
+import {isOlderThanToday} from "../utils/DateTime";
 
-const getEventColor = (event: EventDetail, status: string, isExpired: boolean) => {
+const getEventColor = (event: EventDetail) => {
+    const status = getEventStatusFromPlatforms(event);
+    const isExpired = isOlderThanToday(event.start_datetime);
+
+    let color = "lightyellow";
     if(status === "submitted"){
         if(isExpired){
-            return '#8F9E8B';
+            color = '#8F9E8B';
+        }else{
+            color =  'green';
         }
-        return 'green';
     }else{
         if(isExpired){
-            return '#D19187';
+            color =  '#D19187';
+        }else{
+            color =  '#D2492C';
         }
-        return '#D2492C';
     }
+    return `10px solid ${color}`;
 }
 
 export default function HistoryView() {
@@ -98,7 +107,7 @@ export default function HistoryView() {
                             alignContent: "left",
                             alignItems: "center"
                         }}>
-                            &nbsp;My History
+                            &nbsp;My Events / &nbsp;<strong style={{fontSize: "34px"}}>History</strong>
                         </div>
                     </div>
                 </div>
@@ -107,12 +116,12 @@ export default function HistoryView() {
                     <Box sx={{ width: '100%', typography: 'body1',
                         display: "flex",
                         flexDirection: "column",
-                        height: "600px",
+                        height: "780px",
                         minHeight: 0,
                         overflow: "hidden"}}>
                         <div style={{
                             padding: "8px",
-                            marginLeft: "10px",
+                            margin: "0 10px 10px",
                             display: "flex",
                             flexDirection: "column",
                             flex: 1,
@@ -139,7 +148,7 @@ export default function HistoryView() {
                                         sx={{borderBottom: 1, borderColor: 'divider'}}
                                     >
                                         <Tab label="Submitted / Published Events" value="1"/>
-                                        <Tab label="Event Metrics" value="2"/>
+                                        <Tab label="Metrics" value="2"/>
                                     </TabList>
                                 <TabPanel value="1" tabIndex={0}>
                                     <div className="history-layout">
@@ -150,28 +159,29 @@ export default function HistoryView() {
                                                 Event History ({events.length})
                                             </div>
 
-                                            <div className="history-event-list-scroll">
-                                                {events.map(event => (
-                                                    <button
-                                                        key={event.event_id}
-                                                        className={
-                                                            "history-event-row " +
-                                                            (selectedEvent?.event_id === event.event_id
-                                                                ? "selected"
-                                                                : "")
-                                                        }
-                                                        onClick={() => setSelectedEvent(event)}
-                                                    >
-                                                        <span className="history-event-title">
-                                                            {event.title}
-                                                        </span>
-                                                        <span className="history-event-date">
-                                                            {new Date(event.start_datetime).toLocaleDateString()}
-                                                        </span>
-                                                    </button>
-                                                ))}
+                                                <div className="history-event-list-scroll">
+                                                    {events.map(event => (
+                                                        <button
+                                                            key={event.event_id}
+                                                            className={
+                                                                "history-event-row " +
+                                                                (selectedEvent?.event_id === event.event_id
+                                                                    ? "selected"
+                                                                    : "")
+                                                            }
+                                                            style={{borderLeft: getEventColor(event)}}
+                                                            onClick={() => setSelectedEvent(event)}
+                                                        >
+                                                            <span className="history-event-title">
+                                                                {event.title}
+                                                            </span>
+                                                                                                <span className="history-event-date">
+                                                                {new Date(event.start_datetime).toLocaleDateString()}
+                                                            </span>
+                                                        </button>
+                                                    ))}
+                                                </div>
                                             </div>
-                                        </div>
 
                                         {/* DETAIL */}
                                         <div className="history-event-detail">

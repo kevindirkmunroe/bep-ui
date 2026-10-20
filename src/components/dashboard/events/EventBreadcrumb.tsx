@@ -15,7 +15,7 @@ export default function EventBreadcrumb({
                                         }: EventBreadcrumbProps) {
     const { userId, eventId } = useParams();
     const location = useLocation();
-    const TRUNCATE_LIMIT = 30;
+    const TRUNCATE_LIMIT = 40;
 
     const eventsPath = `/dashboard/${userId}/events`;
 
@@ -79,7 +79,7 @@ export default function EventBreadcrumb({
                             </div>
                             <span>&gt;</span>
                             <Link to={`${eventsPath}/${event?.event_id}/promoted`}>
-                                <b>Results for "</b><i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"
+                               "<i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"
                             </Link>
                         </>
 
@@ -97,7 +97,7 @@ export default function EventBreadcrumb({
             {onLogPage && (
                 <div style={{display: "flex", flexDirection: "row", fontSize: "20px"}}>
                     <span>&gt;</span>
-                    <b style={{marginLeft: "3px", paddingLeft: "5px", paddingRight: "5px", color: "#E27C68"}}>&nbsp;Results for <i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i></b>
+                    <b style={{marginLeft: "3px", paddingLeft: "5px", paddingRight: "5px", color: "#E27C68"}}>&nbsp;"<i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"</b>
                 </div>
             )}
         </div>

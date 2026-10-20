@@ -208,13 +208,10 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                         {formatDateLocal(event.start_datetime)}
                     </div>
 
-
-                    {/* Column 2: title */}
+                    {/* Column 3: title */}
                     <div onClick={() => handleListedEventClicked()} style={{fontSize: "16px", fontFamily: "Arial, sans-serif"}} className="event-summary-title">
                         {event.title}
                     </div>
-
-
 
                     {/* Column 4: toggle */}
                     <button

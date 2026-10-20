@@ -4,6 +4,7 @@ import {EventDetail} from "./events/eventDetailTypes.interface";
 import {useOutletContext} from "react-router-dom";
 import {getEventStatusFromPlatforms} from "./events/EventStatus";
 import { useParams } from "react-router-dom";
+import {isOlderThanToday} from "../../utils/DateTime";
 
 interface Event {
     event_id: number;
@@ -43,9 +44,6 @@ export default function CalendarView() {
 
     const [currentDate, setCurrentDate] = useState(new Date());
 
-    function isOlderThanToday(date: string) {
-        return new Date(date) < new Date();
-    }
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
 
@@ -111,6 +109,10 @@ export default function CalendarView() {
         setCurrentDate(new Date(year, month + 1, 1));
     };
 
+    const today = () => {
+        setCurrentDate(new Date());
+    };
+
     const viewOrEditEvent = (event) => {
         if ((state === "active" || state === "events") && !event.is_locked) {
             setEditingEvent(event);
@@ -161,7 +163,10 @@ export default function CalendarView() {
         <>
             <div className="calendar">
                 <div className="calendar-header">
-                    <button onClick={previousMonth}>←</button>
+                    <div>
+                        <button className="btn btn-secondary" onClick={today}>This Month</button>
+                        <button className="btn btn-secondary" onClick={previousMonth}>←</button>
+                    </div>
 
                     <h2>
                         {currentDate.toLocaleString("default", {
@@ -170,7 +175,7 @@ export default function CalendarView() {
                         })}
                     </h2>
 
-                    <button onClick={nextMonth}>→</button>
+                    <button className="btn btn-secondary" onClick={nextMonth}>→</button>
                 </div>
 
                 <div className="calendar-grid calendar-weekdays">

@@ -82,7 +82,7 @@ export default function LoginPage() {
 
         <div style={{ display: "flex", gap: "24px" }}>
             {/* LEFT: Image grid */}
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1, marginTop: "34px" }}>
                 <ImageGrid />
             </div>
 

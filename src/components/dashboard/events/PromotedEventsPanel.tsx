@@ -12,7 +12,7 @@ import {api} from "../../../utils/api";
 import {Link, useParams} from "react-router-dom";
 import {EventOrder} from "../../../workflows/payment/EventOrder";
 import {ServiceSelectionStatus} from "./payments/ServiceSelectionPage";
-import {isOlderThanToday} from "../../../utils/DateTime";
+import {formatDateTimeLocal, isOlderThanToday} from "../../../utils/DateTime";
 import {getEventStatusFromPlatforms} from "./EventStatus";
 
 interface PromotedEventsPanelProps {
@@ -161,6 +161,12 @@ export default function PromotedEventsPanel({
                                             <Link to={`promoted`}>
                                                 View Progress
                                             </Link>
+                                            <br/>
+                                            <div style={{marginTop: "4px", padding: "4px", fontSize: "15px"}}>Order Placed <strong>{new Date(eventOrder.created_at).toLocaleDateString('en-US', {
+                                                    year: 'numeric',
+                                                    month: 'long',
+                                                    day: 'numeric'
+                                                })}</strong></div>
                                             <div style={{marginLeft: "90px", alignItems: "center"}}>{allPlatformIcons}</div>
                                         </div>
                                     </PromoteFulfillmentPanel>
