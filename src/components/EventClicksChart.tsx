@@ -10,6 +10,7 @@ import {
     Tooltip,
     Cell
 } from "recharts";
+import {api} from "../utils/api";
 
 interface EventClick {
     event_id: string;
@@ -70,17 +71,17 @@ export default function EventClicksChart({
                     ? `${API_URL}/admin/analytics/event-clicks/${encodeURIComponent(user_id)}`
                     : `${API_URL}/admin/analytics/event-clicks`;
 
-                const response = await fetch(url, {
+                const response = await api.get(url, {
                     signal: controller.signal
                 });
 
-                if (!response.ok) {
+                if (!(response.status === 200)) {
                     throw new Error(
                         `Failed to load event clicks (${response.status})`
                     );
                 }
 
-                const events: EventClick[] = await response.json();
+                const events: EventClick[] = await response.data;
 
                 const chartData = events
                     .map(event => ({

@@ -9,6 +9,7 @@ import {
     LabelList
 } from "recharts";
 import './platformClicksChart.css';
+import {api} from "../utils/api";
 
 interface PlatformClicks {
     platform: string;
@@ -45,13 +46,13 @@ export default function PlatformClicksChart({title, userId, window} : PlatformCl
     endpoint = endpoint + (window? "?window=30" : "");
 
     useEffect(() => {
-        fetch(endpoint)
+        api.get(endpoint)
             .then(res => {
-                if (!res.ok) {
+                if (!(res.status === 200)) {
                     throw new Error("Failed to load platform clicks");
                 }
 
-                return res.json();
+                return res.data;
             })
             .then(rows => {
                 setData(
