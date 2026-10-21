@@ -1,6 +1,7 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import React from "react";
 import {EventDetail} from "./eventDetailTypes.interface";
+import {isOlderThanToday} from "../../../utils/DateTime";
 
 interface EventBreadcrumbProps {
     event: EventDetail | null;
@@ -78,21 +79,22 @@ export default function EventBreadcrumb({
                     <span><b>&gt;</b></span>
 
                     {onEventStatusPage && (
-                        <div style={{
-                            color: "#E27C68",
-                            paddingLeft: "5px",
-                            paddingRight: "5px",
-                            fontSize: "20px",
-                            display: "flex",
-                            flexDirection: "row"
-                        }}>
-                            <b style={{
-                                marginLeft: "3px",
+                        <>
+                            <b>{isOlderThanToday(event?.start_datetime) ? 'Expired' : 'Live'}</b>
+                            <b>&gt;</b>
+                            <div style={{
+                                color: "#E27C68",
                                 paddingLeft: "5px",
                                 paddingRight: "5px",
-                                color: "#E27C68"
-                            }}>&nbsp;"<i>{truncateString(event?.title)}</i>"</b>
-                        </div>
+                                fontSize: "20px",
+                                display: "flex",
+                                flexDirection: "row"
+                            }}>
+                                <div style={{
+                                    color: "#E27C68"
+                                }}>&nbsp;"<i>{truncateString(event?.title)}</i>"</div>
+                            </div>
+                        </>
                     )}
 
                     {onPromotedEventsPage ? (
@@ -108,7 +110,7 @@ export default function EventBreadcrumb({
                                 <b>Promoted</b>
                                 <div style={{paddingLeft: "2px", fontSize: "16px"}}>{`(${promoteEventCount})`}</div>
                             </div>
-                            <span>&gt;</span>
+                            <b><span>&gt;</span></b>
                             <Link to={`${eventsPath}/${event?.event_id}/promoted`}>
                                Published&nbsp;"<i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"
                             </Link>
@@ -118,8 +120,10 @@ export default function EventBreadcrumb({
                         <>
                             {!onEventStatusPage && (
                                 <Link to={`${eventsPath}/${event?.event_id}`}>
-                                <b>Promoted</b>
-                                <strong style={{fontSize: "14px"}}>{`(${promoteEventCount})`}</strong>
+                                    <div style={{display: "flex", flexDirection: "row"}}>
+                                        <b>Promoted</b>
+                                        <div style={{paddingLeft: "2px", fontSize: "16px"}}>{`(${promoteEventCount})`}</div>
+                                    </div>
                                 </Link>)}
                         </>
                     )}
@@ -128,8 +132,8 @@ export default function EventBreadcrumb({
 
             {onLogPage && (
                 <div style={{display: "flex", flexDirection: "row", fontSize: "20px"}}>
-                    <span>&gt;</span>
-                    <b style={{marginLeft: "3px", paddingLeft: "5px", paddingRight: "5px", color: "#E27C68"}}>Published&nbsp;"<i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"</b>
+                    <b><span>&gt;</span></b>
+                    <b style={{marginLeft: "3px", paddingLeft: "5px", paddingRight: "5px", color: "#E27C68"}}>Published&nbsp;"<i style={{fontWeight: "400"}}>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"</b>
                 </div>
             )}
         </div>
