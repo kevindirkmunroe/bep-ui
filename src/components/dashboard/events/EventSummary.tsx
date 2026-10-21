@@ -257,13 +257,11 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                         className={event.is_locked ? "btn btn-secondary-greater" : "btn btn-primary-greater"}
                         onClick={() => onPromote? onPromote(event) : null}
                         style={{marginLeft: "20", fontSize: "16px"}} >
-                        {event.is_locked && (
-                            <img src={"/icons8-megaphone-64.png"} style={{
+                        <img src={event.is_locked ? "/icons8-megaphone-64.png" : "/icons8-lightning-64-white.png"} style={{
                                 width: "24px",
                                 height: "24px"
                             }}/>
-                        )}
-                        <b>{event.is_locked ? `Promote...` : `Activate Event`}</b>
+                        <b>{event.is_locked ? `Promote...` : `Activate...`}</b>
                     </button>
                 )}
 
@@ -280,7 +278,7 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                                 height: "24px"
                             }}/>
                         )}
-                        <b>Show Live</b>
+                        <b>View Live</b>
                     </button>
                 )}
 
@@ -288,10 +286,14 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                 {isExpired && (
                     <button
                         title={"View Expired Event"}
-                        className={"btn btn-secondary-greater"}
+                        className={"btn btn-secondary"}
                         onClick={() => onViewEventStatus? onViewEventStatus(event) : null}
                         style={{marginLeft: "20", fontSize: "16px"}} >
-                        <b>View Expired</b>
+                        <img src={"/icons8-history-48.png"} style={{
+                            width: "24px",
+                            height: "24px"
+                        }}/>
+                        <b>View</b>
                     </button>
                 )}
 
