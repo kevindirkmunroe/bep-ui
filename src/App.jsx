@@ -95,6 +95,15 @@ export default function App() {
 
               {/* Completion Log */}
               <Route
+                  path="/dashboard/:userId/events/:eventId/status"
+                  element={
+                      <ProtectedRoute>
+                          <PromoteCompleteDashboard />
+                      </ProtectedRoute>
+                  }
+              />
+
+              <Route
                   path="/dashboard/:userId/events/:eventId/promoted"
                   element={
                       <ProtectedRoute>

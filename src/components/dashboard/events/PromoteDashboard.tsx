@@ -141,7 +141,7 @@ export default function PromoteDashboard() {
                             alignContent: "left",
                             alignItems: "center"
                         }}>
-                            &nbsp;My Events / Promoted
+                            &nbsp;My Events / Promote
                         </div>
                     </div>
                     <DashboardTabs/>
@@ -149,6 +149,7 @@ export default function PromoteDashboard() {
                     <div style={{display: "flex", flexDirection: "row", alignItems: "right"}}>
                         <div style={{flex: "0 0 80%"}}>
                             <EventBreadcrumb event={event}
+                                             totalEventCount={user?.totalEventCount || 0}
                                              promoteEventCount={user?.promoteEventCount || 0}
                                              eventCount={user?.eventCount || 0}/>
                         </div>

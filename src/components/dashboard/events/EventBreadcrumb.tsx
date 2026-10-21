@@ -4,12 +4,14 @@ import {EventDetail} from "./eventDetailTypes.interface";
 
 interface EventBreadcrumbProps {
     event: EventDetail | null;
-    eventCount: number;
+    eventCount: number;  // TODO: rename to activeEventCount
+    totalEventCount: number;
     promoteEventCount: number;
 }
 
 export default function EventBreadcrumb({
                                             event,
+                                            totalEventCount,
                                             eventCount,
                                             promoteEventCount,
                                         }: EventBreadcrumbProps) {
@@ -25,10 +27,13 @@ export default function EventBreadcrumb({
     const onPromotedEventsPage =
         location.pathname === `${eventsPath}/${eventId}`;
 
+    const onEventStatusPage =
+        location.pathname === `${eventsPath}/${eventId}/status`;
+
     const onLogPage =
         location.pathname === `${eventsPath}/${eventId}/promoted`;
 
-    function truncateString(str: string | undefined, limit: number, ending: string = '...'): string {
+    function truncateString(str: string | undefined, limit: number = 80, ending: string = '...'): string {
         if(!str){
             return "unknown"
         }
@@ -48,6 +53,7 @@ export default function EventBreadcrumb({
                 marginBottom: "20px",
             }}
         >
+            {/* Anchor */}
             <Link to={eventsPath} style={onHomePage ? {color: "#E27C68", fontSize: "20px"} : {}}>
                 <div style={{display: "flex", flexDirection: "row"}}>
                     <img
@@ -62,8 +68,8 @@ export default function EventBreadcrumb({
                             objectFit: "contain"
                         }}
                     />
-                    <b>Active Events</b>
-                    <div style={{paddingLeft: "2px", fontSize: "16px"}}>({eventCount})</div>
+                    <b>All Events</b>
+                    <div style={{paddingLeft: "2px", fontSize: "16px"}}>({totalEventCount} | {eventCount} Scheduled)</div>
                 </div>
             </Link>
 
@@ -71,24 +77,50 @@ export default function EventBreadcrumb({
                 <>
                     <span><b>&gt;</b></span>
 
+                    {onEventStatusPage && (
+                        <div style={{
+                            color: "#E27C68",
+                            paddingLeft: "5px",
+                            paddingRight: "5px",
+                            fontSize: "20px",
+                            display: "flex",
+                            flexDirection: "row"
+                        }}>
+                            <b style={{
+                                marginLeft: "3px",
+                                paddingLeft: "5px",
+                                paddingRight: "5px",
+                                color: "#E27C68"
+                            }}>&nbsp;"<i>{truncateString(event?.title)}</i>"</b>
+                        </div>
+                    )}
+
                     {onPromotedEventsPage ? (
                         <>
-                            <div style={{color: "#E27C68", paddingLeft: "5px", paddingRight: "5px", fontSize: "20px", display: "flex", flexDirection:"row"}}>
-                                <b>Processing</b>
+                            <div style={{
+                                color: "#E27C68",
+                                paddingLeft: "5px",
+                                paddingRight: "5px",
+                                fontSize: "20px",
+                                display: "flex",
+                                flexDirection: "row"
+                            }}>
+                                <b>Promoted</b>
                                 <div style={{paddingLeft: "2px", fontSize: "16px"}}>{`(${promoteEventCount})`}</div>
                             </div>
                             <span>&gt;</span>
                             <Link to={`${eventsPath}/${event?.event_id}/promoted`}>
-                               "<i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"
+                               Published&nbsp;"<i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"
                             </Link>
                         </>
 
                     ) : (
                         <>
-                            <Link to={`${eventsPath}/${event?.event_id}`}>
-                                <b>Processing</b>
+                            {!onEventStatusPage && (
+                                <Link to={`${eventsPath}/${event?.event_id}`}>
+                                <b>Promoted</b>
                                 <strong style={{fontSize: "14px"}}>{`(${promoteEventCount})`}</strong>
-                            </Link>
+                                </Link>)}
                         </>
                     )}
                 </>
@@ -97,7 +129,7 @@ export default function EventBreadcrumb({
             {onLogPage && (
                 <div style={{display: "flex", flexDirection: "row", fontSize: "20px"}}>
                     <span>&gt;</span>
-                    <b style={{marginLeft: "3px", paddingLeft: "5px", paddingRight: "5px", color: "#E27C68"}}>&nbsp;"<i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"</b>
+                    <b style={{marginLeft: "3px", paddingLeft: "5px", paddingRight: "5px", color: "#E27C68"}}>Published&nbsp;"<i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"</b>
                 </div>
             )}
         </div>

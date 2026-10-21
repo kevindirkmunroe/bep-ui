@@ -61,7 +61,7 @@ function formatEventDate(dateString: string) {
     ) + `, ${timePart}`;
 }
 
-export function EventSummary({ event, reload, showRedo= false, showAsHeader=false, onEdit, onView, onPromote }: EventSummaryProps) {
+export function EventSummary({ event, reload, showRedo= false, showAsHeader=false, onEdit, onView, onPromote, onViewEventStatus }: EventSummaryProps) {
 
     const [showConfirm, setShowConfirm] = useState(false);
     const [imgSrc, setImgSrc] = useState("/icons8-delete-30.png");
@@ -250,12 +250,11 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
             </div>
             <div style={{width: "32%", display: "flex", marginLeft: "4px", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
 
-                {/* Promotion */}
-                {!isExpired && (
+                {/* New or Active + In Progress */}
+                {!isExpired && status !== 'submitted' && (
                     <button
                         title={event.is_locked? "Promote this Event to all Platforms" : "Start Event Promotion process"}
                         className={event.is_locked ? "btn btn-secondary-greater" : "btn btn-primary-greater"}
-                        disabled={isExpired || status === 'submitted'}
                         onClick={() => onPromote? onPromote(event) : null}
                         style={{marginLeft: "20", fontSize: "16px"}} >
                         {event.is_locked && (
@@ -264,9 +263,38 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                                 height: "24px"
                             }}/>
                         )}
-                        <b>{event.is_locked ? (status === 'submitted' ? `Promoted`: `Promote...`) : `Activate Event`}</b>
+                        <b>{event.is_locked ? `Promote...` : `Activate Event`}</b>
                     </button>
                 )}
+
+                {/* Active + Published */}
+                {!isExpired && status === 'submitted' && (
+                    <button
+                        title={"View Submitted Event"}
+                        className={"btn btn-secondary-greater"}
+                        onClick={() => onViewEventStatus? onViewEventStatus(event) : null}
+                        style={{marginLeft: "20", fontSize: "16px"}} >
+                        {event.is_locked && (
+                            <img src={"/icons8-newspaper-48.png"} style={{
+                                width: "24px",
+                                height: "24px"
+                            }}/>
+                        )}
+                        <b>Show Live</b>
+                    </button>
+                )}
+
+                {/* Expired */}
+                {isExpired && (
+                    <button
+                        title={"View Expired Event"}
+                        className={"btn btn-secondary-greater"}
+                        onClick={() => onViewEventStatus? onViewEventStatus(event) : null}
+                        style={{marginLeft: "20", fontSize: "16px"}} >
+                        <b>View Expired</b>
+                    </button>
+                )}
+
 
                 {/* Begin Extras Menu */}
                 <div className="more-actions">

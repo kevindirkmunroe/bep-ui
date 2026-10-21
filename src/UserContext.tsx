@@ -8,6 +8,7 @@ export interface UserData {
     email: string;
     company?: string;
     eventCount: number;
+    totalEventCount: number;
     promoteEventCount: number;
     isAdmin: boolean;
 }
@@ -16,6 +17,7 @@ interface UserContextType {
     user: UserData | null;
     setUser: (user: UserData | null) => void;
     setUserEventCount: (count: number) => void;
+    setUserTotalEventCount: (count: number) => void;
     setUserPromoteEventCount: (count: number) => void;
     loading: boolean;
 }
@@ -25,6 +27,7 @@ export const UserContext = createContext<UserContextType | undefined>(undefined)
 export function UserProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<UserData | null>(null);
     const [userEventCount, setUserEventCount] = useState(0);
+    const [userTotalEventCount, setUserTotalEventCount] = useState(0);
     const [userPromoteEventCount, setUserPromoteEventCount] = useState(0);
     const [loading, setLoading] = useState(true);
 
@@ -48,7 +51,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     }, []);
 
     return (
-        <UserContext.Provider value={{ user, setUser, setUserPromoteEventCount, setUserEventCount, loading }}>
+        <UserContext.Provider value={{ user, setUser, setUserPromoteEventCount, setUserTotalEventCount, setUserEventCount, loading }}>
             {children}
         </UserContext.Provider>
     );

@@ -194,6 +194,7 @@ export default function Dashboard() {
     // for display, otherwise erroneously displays event count = 0
     const userContext = useUser();
     userContext.setUserEventCount(getActiveEventCount());
+    userContext.setUserTotalEventCount(events?.length || 0);
     userContext.setUserPromoteEventCount(getActiveEventCountWithOrder());
     if (!userId) return <div style={{marginTop: "50px"}}>Loading...</div>;
 
@@ -374,7 +375,7 @@ export default function Dashboard() {
                             marginBottom: "2px",
                             justifyContent: "space-between"
                         }}>
-                            <EventBreadcrumb event={events ? events[0] : null} eventCount={getActiveEventCount()}
+                            <EventBreadcrumb event={events ? events[0] : null} totalEventCount={events?.length || 0} eventCount={getActiveEventCount()}
                                 promoteEventCount={getActiveEventCountWithOrder()}/>
                             <div>
                                 <div className="more-actions" onMouseLeave={() => setShowImportActions(prev => !prev)}>

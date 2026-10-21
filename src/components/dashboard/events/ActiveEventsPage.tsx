@@ -24,6 +24,7 @@ export function ActiveEventsPage() {
     const {user} = useUser();
     if(user){
         user.eventCount = activeEvents.length;
+        user.totalEventCount = events.length;
         user.promoteEventCount = activeEvents.filter((e) =>
             e.is_locked &&
             getEventStatusFromPlatforms(e) !== "submitted").length;
@@ -33,18 +34,32 @@ export function ActiveEventsPage() {
         navigate(`/dashboard/${user?.userId}/events/${event.event_id}`);
     };
 
+    const handleViewEventStatus= (event:EventDetail) => {
+        navigate(`/dashboard/${user?.userId}/events/${event.event_id}/status`)
+    }
+
     return (
         <div style={{marginTop: 10}}>
             {activeEvents.length === 0 && <p>No Active Events Yet</p>}
             <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                 {activeEvents.map(e => (
-                    <EventSummary key={e.event_id} event={e} reload={reload} onEdit={setEditingEvent} onView={setViewingEvent} onPromote={handlePromote}/>
+                    <EventSummary key={e.event_id}
+                                  event={e}
+                                  reload={reload}
+                                  onEdit={setEditingEvent}
+                                  onView={setViewingEvent}
+                                  onViewEventStatus={handleViewEventStatus}
+                                  onPromote={handlePromote}/>
                 ))}
             </div>
             <hr style={{color: "lightgray", marginBottom: "12px", width: "95%"}} />
             <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                 {pastEvents.map(e => (
-                    <EventSummary key={e.event_id} event={e} reload={reload} onView={setViewingEvent} />
+                    <EventSummary key={e.event_id}
+                                  event={e}
+                                  reload={reload}
+                                  onView={setViewingEvent}
+                                  onViewEventStatus={handleViewEventStatus} />
                 ))}
             </div>
         </div>

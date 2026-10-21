@@ -58,12 +58,13 @@ export default function PromoteCompleteDashboard(){
                             alignContent: "left",
                             alignItems: "center"
                         }}>
-                            &nbsp;My Event / Submission Results
+                            &nbsp;My Events / Publish
                         </div>
                     </div>
                     <DashboardTabs/>
 
                     <EventBreadcrumb event={event}
+                                     totalEventCount={user?.totalEventCount || 0}
                                      promoteEventCount={user?.promoteEventCount || 0}
                                      eventCount={user?.eventCount || 0}/>
                 </div>
