@@ -24,6 +24,10 @@ export default function FacebookURLInputForm({
             await onImport(facebookEventUrl.trim());
             setFacebookEventUrl("");
             onClose();
+        }catch(err){
+            console.log(`Error importing Facebook event: ${err}`);
+            setFacebookEventUrl("");
+            onClose();
         } finally {
             setLoading(false);
         }

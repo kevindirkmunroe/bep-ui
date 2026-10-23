@@ -9,10 +9,9 @@ import {api} from "../../utils/api";
 import FacebookURLInputForm from "./FacebookURLInputForm";
 import ImportFacebookEventForm from "./ImportFacebookEventForm";
 import ImportEventbriteEventForm from "./ImportEventbriteEventForm";
-import {FacebookEventRaw, FacebookEventResponseType} from "./ImportFacebookEventResponseType";
+import {ImportedFacebookEvent} from "./ImportedFacebookEvent";
 import ViewToggle from "./events/ViewToggle";
 import EventbriteURLInputForm from "./EventbriteURLInputForm";
-import {MOCK_FACEBOOK} from "./MOCK_IMPORT_DATA";
 import {eventbriteJsonLdToEventDetail, getEventbriteJsonLd} from "./EventbriteIngestor";
 import './dashboard.css';
 import BaseDialog, {DialogState} from "../BaseDialog";
@@ -21,6 +20,7 @@ import {useUser} from "../../UserContext";
 import DashboardTabs from "../DashboardTabs";
 import EventDetailView from "./EventDetailView";
 import {isOlderThanToday} from "../../utils/DateTime";
+import {MOCK_IMPORTED_FACEBOOK_EVENT} from "./MOCK_APIFY_SCRAPER_FACEBOOK_EVENT";
 
 export default function Dashboard() {
     const { userId } = useParams();
@@ -68,20 +68,20 @@ export default function Dashboard() {
             //  Put Facebook import behind flag VITE_MOCK_FACEBOOK_IMPORT.
             //
 
-            let raw: FacebookEventRaw | undefined;
+            let raw: ImportedFacebookEvent | undefined;
             if(import.meta.env.VITE_MOCK_FACEBOOK_IMPORT === "true") {
                 console.log(`[Dashboard] Using MOCK Facebook data, import.meta.env.VITE_MOCK_FACEBOOK_IMPORT = ${import.meta.env.VITE_MOCK_FACEBOOK_IMPORT}`);
-                raw = MOCK_FACEBOOK;
+                raw = MOCK_IMPORTED_FACEBOOK_EVENT;
             }else{
                 let result = null;
                 try{
-                    result = await api.post<FacebookEventResponseType>("/events/import/facebook", {
+                    result = await api.post<ImportedFacebookEvent>("/events/import/facebook", {
                         facebookEventUrl
                     });
                     setDialog({
                         type: "alert",
                         title: "Import",
-                        message: `Imported Facebook event: ${JSON.stringify(result.data.data.title)}`
+                        message: `Imported Facebook event: ${JSON.stringify(result.data.name)}`
                     });
                 }catch(err: Error | any){
                     if(err.status === 404){
@@ -99,7 +99,7 @@ export default function Dashboard() {
                     }
                 }
 
-                raw = result?.data.raw;
+                raw = result?.data;
                 if(!raw){
                     setDialog({
                         type: "error",
@@ -114,27 +114,20 @@ export default function Dashboard() {
             const cleanDescription = raw.description?.replace(/\\n/g, "\n")
                 .replace(/\\t/g, "\t");
 
-            interface Host  {
-                name: string;
-                url: string;
-                type: string;
-            }
-
             const fbImportEvent: FacebookEventDetail = {
                 facebookEventURL: facebookEventUrl,
                 name: raw.name,
-                email: 'bayareaeventpromoter@gmail.com',
+                email: 'info@airhorn.events',
                 title: raw.name,
                 description: cleanDescription,
-                location_name: raw.location_name,
-                start_datetime: raw.start_date,
-                address: raw.location_address,
-                website: raw.input_url,
-                organization: raw.hosts.map((item: Host) => item.name).join(", "),
-                region: raw.location_city,
-                category: raw.categories ? raw.categories[0]: "",
-                city: raw.location_city,
-                imported_from: facebookEventUrl,
+                location_name: raw.location.name,
+                start_datetime: raw.utcStartDate,
+                address: raw.location.streetAddress,
+                website: raw.location.url,
+                organization: raw.organizedBy,
+                category: raw.discoveryCategories[0]?.label,
+                city: raw.location.city,
+                imported_from: raw.inputUrl,
                 is_locked: false,
             }
             setFacebookImportEvent(fbImportEvent);
