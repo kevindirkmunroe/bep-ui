@@ -77,6 +77,9 @@ export default function CalendarView() {
             if(isOlderThanToday(event.start_datetime)){
                 return {background: '#D19187', color: 'white'}
             }
+            if(!event.is_locked){
+                return {background: 'white', color: 'black'}
+            }
             return {background: '#D2492C', color: 'white'}
         }
     }

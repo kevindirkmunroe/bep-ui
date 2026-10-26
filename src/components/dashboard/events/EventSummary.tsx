@@ -136,7 +136,7 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
             return 'green';
         }else{
             if(!event.is_locked){
-                return '#A9A9A9';
+                return 'white';
             }else{
                 if(isExpired){
                     return '#D19187';
@@ -144,6 +144,13 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                 return '#D2492C';
             }
         }
+    }
+
+    const getEventTextColor = (event: EventDetail, status: string) => {
+        if(status !== "submitted" && !event.is_locked){
+            return 'black';
+        }
+        return "white";
     }
 
 
@@ -175,7 +182,7 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                     paddingLeft: "8px",
                     boxSizing: "border-box",
                     backgroundColor: getEventColor(event, status, isExpired),
-                    color: "white",
+                    color: getEventTextColor(event, status),
                     borderRadius: "8px"
             }}
             >
@@ -332,9 +339,8 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                                     }}
                                     onMouseLeave={toggleExpandedMenu}
                                 >
-                                    {canEdit && onEdit && !isExpired && !event.is_locked && (
+                                    {canEdit && onEdit && !isExpired && (
                                         <button className="btn btn-secondary"
-                                                disabled={event.is_locked}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     onEdit(event);

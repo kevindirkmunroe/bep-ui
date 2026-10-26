@@ -383,8 +383,8 @@ export default function Dashboard() {
                                 </div>
                                 <div style={{display: "flex", flexDirection: "row", paddingLeft: "8px", justifyContent: "center", marginLeft: "4px", borderRadius: "8px", border: "1px solid darkgray "}}>
                                     <svg
-                                        width="18"
-                                        height="40"
+                                        width="14"
+                                        height="46"
                                         viewBox="0 0 24 24"
                                         vertical-align="middle"
                                         fill="none"
@@ -410,7 +410,7 @@ export default function Dashboard() {
                                             strokeLinecap="round"
                                         />
                                     </svg>
-                                    <div style={{alignItems: "center", justifyItems: "center",fontSize: "16px", padding: "2px", marginLeft: "6px", marginRight: "8px", fontWeight: "bold", marginTop: "6px", color: "darkgray"}}>
+                                    <div style={{alignItems: "center", justifyItems: "center",fontSize: "16px", padding: "2px 0px 2px 2px", marginLeft: "6px", marginRight: "8px", fontWeight: "bold", marginTop: "6px", color: "darkgray"}}>
                                         Import
                                     </div>
                                     <button className="btn btn-primary eventbrite-button"
