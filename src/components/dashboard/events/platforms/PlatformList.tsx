@@ -10,6 +10,8 @@ export function     PlatformList(
          updatePlatformStatus: (platform: Platform, status: PlatformStatus) => void}
     ) {
 
+    const sortedPlatforms = event.platforms.sort((a, b) => a.platform.localeCompare(b.platform))
+
     return (
         <div style={{height: '450px', // Fixed height
             marginTop: '10px',
@@ -17,7 +19,7 @@ export function     PlatformList(
             overflowY: 'auto', // Enable vertical scrolling
             border: '1px solid #ccc',
             borderRadius: 2}}>
-            {event.platforms.map((p: PlatformData) => (
+            {sortedPlatforms.map((p: PlatformData) => (
                 <PlatformRow
                     key={p.platform}
                     event={event}

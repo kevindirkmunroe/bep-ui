@@ -135,12 +135,17 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
             }
             return 'green';
         }else{
-            if(isExpired){
-                return '#D19187';
+            if(!event.is_locked){
+                return '#A9A9A9';
+            }else{
+                if(isExpired){
+                    return '#D19187';
+                }
+                return '#D2492C';
             }
-            return '#D2492C';
         }
     }
+
 
     const [showExpandedMenu, setShowExpandedMenu] = useState(false);
     const [menuPosition, setMenuPosition] = useState({

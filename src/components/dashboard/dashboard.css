@@ -1,6 +1,6 @@
 .facebook-button {
     background-color: #1877F2;
-
+    border: 2px solid black;
 }
 
 .facebook-button:hover {
@@ -9,7 +9,7 @@
 
 .eventbrite-button {
     background-color: #F8485E;
-
+    border: 2px solid black;
 }
 
 /* The hover effect */
