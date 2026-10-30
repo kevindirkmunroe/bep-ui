@@ -98,7 +98,22 @@ export default function PromoteDashboard() {
         }
 
         setShowEventOrderSelectionModal(false);
-        setShowEventOrderModal(true);
+        //
+        // In BETA DIY mode is free. Mark the order as paid.
+        //
+        const isBeta = import.meta.env.VITE_APP_MODE_BETA;
+        if(isBeta === 'true'){
+            const updatedOrder = {
+                promote_selection: ServiceSelectionStatus.DIY,
+                payment_completed_at: new Date(),
+                order_fulfilled_at: new Date()
+            }
+            await api.put(`/orders/${eventOrder?.order_id}`, updatedOrder);
+
+        }else{
+            // Show Stripe integration
+            setShowEventOrderModal(true);
+        }
     }
 
     if (!event || !event.platforms) return <div>Loading...</div>;

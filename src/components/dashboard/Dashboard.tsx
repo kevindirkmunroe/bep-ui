@@ -99,7 +99,7 @@ export default function Dashboard() {
                     }
                 }
 
-                raw = result?.data;
+                raw = result?.data.raw;
                 if(!raw){
                     setDialog({
                         type: "error",
@@ -381,36 +381,10 @@ export default function Dashboard() {
                                         <b>Add Event...</b>
                                     </button>
                                 </div>
-                                <div style={{display: "flex", flexDirection: "row", paddingLeft: "8px", justifyContent: "center", marginLeft: "4px", borderRadius: "8px", border: "1px solid darkgray "}}>
-                                    <svg
-                                        width="14"
-                                        height="46"
-                                        viewBox="0 0 24 24"
-                                        vertical-align="middle"
-                                        fill="none"
-                                        aria-hidden="true"
-                                    >
-                                        <path
-                                            d="M12 3v12"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                        />
-                                        <path
-                                            d="M7 10l5 5 5-5"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                        <path
-                                            d="M5 20h14"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                        />
-                                    </svg>
-                                    <div style={{alignItems: "center", justifyItems: "center",fontSize: "16px", padding: "2px 0px 2px 2px", marginLeft: "6px", marginRight: "8px", fontWeight: "bold", marginTop: "6px", color: "darkgray"}}>
+                                <div style={{display: "flex", flexDirection: "row", paddingLeft: "8px", justifyContent: "center", marginLeft: "8px", borderRadius: "8px", border: "1px solid darkgray "}}>
+                                    <img alt={"wtf"} style={{width: "30px", height: "28px", marginTop: "8px"}}
+                                         src={"/icons8-add-calendar-48.png"}/>
+                                    <div style={{alignItems: "center", justifyItems: "center",fontSize: "16px", padding: "2px 0px 2px 2px", marginLeft: "6px", marginRight: "8px", fontWeight: "bold", marginTop: "6px", color: "dimgray"}}>
                                         Import
                                     </div>
                                     <button className="btn btn-primary eventbrite-button"
