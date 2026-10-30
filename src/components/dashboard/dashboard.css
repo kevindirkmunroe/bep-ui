@@ -1,6 +1,6 @@
 .facebook-button {
     background-color: #1877F2;
-    border: 2px solid black;
+    border: 1px solid dimgray;
 }
 
 .facebook-button:hover {
@@ -9,7 +9,17 @@
 
 .eventbrite-button {
     background-color: #F8485E;
-    border: 2px solid black;
+    border: 1px solid dimgray;
+}
+
+.google-button {
+    background-color: white;
+    border: 1px solid dimgray;
+    color: black;
+}
+
+.google-button:hover {
+    background-color: #F2F0EF;
 }
 
 /* The hover effect */

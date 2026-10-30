@@ -70,7 +70,7 @@ export default function EventBreadcrumb({
                         }}
                     />
                     <b>All Events</b>
-                    <div style={{paddingLeft: "2px", fontSize: "16px"}}>({totalEventCount} | {eventCount} Scheduled)</div>
+                    <div style={{paddingLeft: "2px", fontSize: "16px"}}>({totalEventCount} | {eventCount} Upcoming)</div>
                 </div>
             </Link>
 

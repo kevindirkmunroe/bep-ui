@@ -37,7 +37,7 @@ export default function ServiceSelectionPage({userId, onSelectService}  : Servic
                             <p>Use your Airhorn account and promotion workflow yourself.</p>
 
                             <div className="priceRow">
-                                <div className="mini"><span>ONE-TIME EVENT</span><strong><br/>$19.95</strong></div>
+                                <div className="mini"><span>ONE-TIME EVENT</span><strong><br/>FREE</strong></div>
                             </div>
 
                             <ul>
@@ -47,7 +47,7 @@ export default function ServiceSelectionPage({userId, onSelectService}  : Servic
                                 <li>Platform status tracking</li>
                             </ul>
 
-                            <button className="btn" style={{fontSize: "16px", color: diyEnabled ? 'lightgray' : 'darkgrey'}}
+                            <button className="btn" style={{fontSize: "16px", color: diyEnabled ? 'darkgray' : 'lightgrey'}}
                                     onClick={diyEnabled ? (e) => {
                                         e.stopPropagation();
                                         onSelectService(ServiceSelectionStatus.DIY)
