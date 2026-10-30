@@ -47,7 +47,7 @@ export default function ServiceSelectionPage({userId, onSelectService}  : Servic
                                 <li>Platform status tracking</li>
                             </ul>
 
-                            <button className="btn" style={{fontSize: "16px", color: diyEnabled ? 'darkgray' : 'lightgrey'}}
+                            <button className="btn" style={{fontSize: "16px", color: diyEnabled ? 'black' : 'lightgrey'}}
                                     onClick={diyEnabled ? (e) => {
                                         e.stopPropagation();
                                         onSelectService(ServiceSelectionStatus.DIY)

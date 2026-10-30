@@ -8,7 +8,7 @@ import { createPortal } from "react-dom";
 
 
 import './eventSummary.css';
-import {formatDateLocal, formatDateTimeLocal} from "../../../utils/DateTime";
+import {formatDateLocal, formatDateTimeLocal, isOlderThanToday} from "../../../utils/DateTime";
 
 const overlayStyle = {
     position: "fixed" as const,
@@ -136,7 +136,7 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
             return 'green';
         }else{
             if(!event.is_locked){
-                return 'white';
+                return '#F5F5F6';
             }else{
                 if(isExpired){
                     return '#D19187';
@@ -148,6 +148,9 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
 
     const getEventTextColor = (event: EventDetail, status: string) => {
         if(status !== "submitted" && !event.is_locked){
+            if(isOlderThanToday(event.start_datetime)){
+                return "gray";
+            }
             return 'black';
         }
         return "white";
@@ -183,7 +186,7 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                     boxSizing: "border-box",
                     backgroundColor: getEventColor(event, status, isExpired),
                     color: getEventTextColor(event, status),
-                    borderRadius: "8px"
+                    borderRadius: "8px",
             }}
             >
                 {/* Event Title */}

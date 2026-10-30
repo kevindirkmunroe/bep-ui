@@ -107,12 +107,12 @@ export default function EventBreadcrumb({
                                 display: "flex",
                                 flexDirection: "row"
                             }}>
-                                <b>Promoted</b>
+                                <b>Promoted Events</b>
                                 <div style={{paddingLeft: "2px", fontSize: "16px"}}>{`(${promoteEventCount})`}</div>
                             </div>
                             <b><span>&gt;</span></b>
                             <Link to={`${eventsPath}/${event?.event_id}/promoted`}>
-                               Published&nbsp;"<i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"
+                               "<i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"
                             </Link>
                         </>
 
@@ -121,7 +121,7 @@ export default function EventBreadcrumb({
                             {!onEventStatusPage && (
                                 <Link to={`${eventsPath}/${event?.event_id}`}>
                                     <div style={{display: "flex", flexDirection: "row"}}>
-                                        <b>Promoted</b>
+                                        <b>Promoted Events</b>
                                         <div style={{paddingLeft: "2px", fontSize: "16px"}}>{`(${promoteEventCount})`}</div>
                                     </div>
                                 </Link>)}
@@ -133,7 +133,7 @@ export default function EventBreadcrumb({
             {onLogPage && (
                 <div style={{display: "flex", flexDirection: "row", fontSize: "20px"}}>
                     <b><span>&gt;</span></b>
-                    <b style={{marginLeft: "3px", paddingLeft: "5px", paddingRight: "5px", color: "#E27C68"}}>Published&nbsp;"<i style={{fontWeight: "400"}}>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"</b>
+                    <b style={{marginLeft: "3px", paddingLeft: "5px", paddingRight: "5px", color: "#E27C68"}}>"<i style={{fontWeight: "400"}}>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"</b>
                 </div>
             )}
         </div>
