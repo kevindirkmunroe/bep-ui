@@ -36,7 +36,6 @@ export default function Dashboard() {
     const [eventbriteImportEvent, setEventbriteImportEvent] = useState<EventbriteEventDetail | null>(null);
     const [createEventDate, setCreateEventDate] = useState<Date | null>(null);
     const [dialog, setDialog] = useState<DialogState>(null);
-    const [showImportActions, setShowImportActions] = useState(false);
 
     async function handleImportEventbriteEvent(eventbriteEventUrl: string) {
         if (!eventbriteEventUrl || !eventbriteEventUrl.startsWith('https://www.eventbrite.com/e/')) {
@@ -371,7 +370,7 @@ export default function Dashboard() {
                             <EventBreadcrumb event={events ? events[0] : null} totalEventCount={events?.length || 0} eventCount={getActiveEventCount()}
                                 promoteEventCount={getActiveEventCountWithOrder()}/>
                             <div style={{display: "flex", flexDirection: "row"}}>
-                                <div className="more-actions" onMouseLeave={() => setShowImportActions(prev => !prev)}>
+                                <div className="more-actions">
                                     <button className="btn btn-primary-greater"
                                             title="Add a New Event"
                                             style={{marginLeft: "4px", fontSize: "16px"}}
@@ -395,7 +394,6 @@ export default function Dashboard() {
                                                 height: "32px"                                            }}
                                             onClick={() => {
                                                 setShowImportEventbriteURLForm(true);
-                                                setShowImportActions(prev => !prev);
                                             }}>
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                              viewBox="0 0 999.9999389648438 1213.9000244140625" height="14">
@@ -416,7 +414,6 @@ export default function Dashboard() {
                                             }}
                                             onClick={() => {
                                                 setShowImportFacebookURLForm(true);
-                                                setShowImportActions(prev => !prev);
                                             }
                                             }>
                                         <svg xmlns="http://w3.org" viewBox="0 0 320 512" width="14" height="14"
@@ -435,7 +432,6 @@ export default function Dashboard() {
                                             }}
                                             onClick={() => {
                                                 setShowImportFacebookURLForm(true);
-                                                setShowImportActions(prev => !prev);
                                             }
                                             }>
                                         <img src={'/public/Google-Calendar-Logo.png'} style={{width: "40px", height: "24px"}}/>

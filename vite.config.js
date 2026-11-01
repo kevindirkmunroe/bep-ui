@@ -8,14 +8,15 @@ export default defineConfig({
     port: 4150,
     strictPort: true, // Optional: if true, Vite will exit if the port is already in use
     proxy: {
-      "/users": "http://localhost:4000",
+      "/admin": "http://localhost:4000",
+      "/api": "http://localhost:4000",
       "/events": "http://localhost:4000",
       "/mapRegion": "http://localhost:4000",
       "/mapCity": "http://localhost:4000",
       "/orders": "http://localhost:4000",
       "/payments": "http://localhost:4000",
-      "/admin": "http://localhost:4000",
       "/r": "http://localhost:4000",
+      "/users": "http://localhost:4000",
     },
   },
   define: {

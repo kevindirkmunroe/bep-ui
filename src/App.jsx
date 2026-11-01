@@ -17,6 +17,8 @@ import AdminPage from "./components/admin/AdminPage.js";
 import PaymentSuccessPage from "./components/dashboard/events/payments/PaymentSuccessPage.js";
 import PaymentCancelledPage from "./components/dashboard/events/payments/PaymentCancelledPage.js";
 import HistoryView from "./components/HistoryView.tsx";
+import EventDetailView from "./components/dashboard/EventDetailView.js";
+import {EventCrossReferenceWindow} from "./components/dashboard/events/platforms/EventCrossReferenceWindow.js";
 
 export default function App() {
 
@@ -90,6 +92,14 @@ export default function App() {
                       <ProtectedRoute>
                           <PromoteDashboard />
                       </ProtectedRoute>
+                  }
+              />
+
+              {/* One Event as cross-reference at promotion step */}
+              <Route
+                  path="/xr/events/:eventId"
+                  element={
+                          <EventCrossReferenceWindow />
                   }
               />
 

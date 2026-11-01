@@ -1,10 +1,11 @@
 import "./eventDetailView.css";
 import {EventDetail} from "./events/eventDetailTypes.interface";
 import {ImageModal} from "../ImageModal";
+import {useState} from "react";
 
-interface EventDetailViewProps {
+export interface EventDetailViewProps {
     event: EventDetail;
-    onClose: () => void;
+    onClose?: () => void;
 }
 
 export default function EventDetailView({
@@ -21,17 +22,46 @@ export default function EventDetailView({
 
     const Field = ({
                        label,
-                       value
+                       value,
+                       copyable = false
                    }: {
         label: string;
         value?: string | null;
+        copyable?: boolean;
     }) => {
+        const [copied, setCopied] = useState(false);
+
         if (!value) return null;
+
+        const handleCopy = async () => {
+            try {
+                await navigator.clipboard.writeText(value);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 1500);
+            } catch (error) {
+                console.error("Failed to copy:", error);
+            }
+        };
 
         return (
             <div className="event-detail-field">
                 <label>{label}</label>
-                <div>{value}</div>
+
+                <div className="field-value-row">
+                    <div className="field-value">{value}</div>
+
+                    {copyable && (
+                        <button
+                            type="button"
+                            className="field-copy-button"
+                            onClick={handleCopy}
+                            title={copied ? "Copied!" : `Copy ${label}`}
+                            aria-label={copied ? "Copied!" : `Copy ${label}`}
+                        >
+                            {copied ? "✓" : "⧉"}
+                        </button>
+                    )}
+                </div>
             </div>
         );
     };
@@ -64,87 +94,102 @@ export default function EventDetailView({
                                 ? formatDateTime(event.start_datetime)
                                 : undefined
                         }
+                        copyable
                     />
 
                     <Field
                         label="Location"
                         value={event.location_name}
+                        copyable
                     />
 
                     <Field
                         label="Address"
                         value={event.address}
+                        copyable
                     />
 
                     <Field
                         label="City"
                         value={event.city}
+                        copyable
                     />
 
                     <Field
                         label="ZIP"
                         value={event.zip}
+                        copyable
                     />
 
                     <Field
                         label="Region"
                         value={event.region}
+                        copyable
                     />
 
                     <Field
                         label="Category"
                         value={event.category}
+                        copyable
                     />
 
                     <div className="event-detail-description">
                         <Field
                             label="Description"
                             value={event.description}
+                            copyable
                         />
                     </div>
 
                     <Field
                         label="Price"
                         value={event.price}
+                        copyable
                     />
 
                     <Field
                         label="Website"
                         value={event.website}
+                        copyable
                     />
 
                     <Field
                         label="Organization"
                         value={event.organization}
+                        copyable
                     />
 
                     <Field
                         label="Contact"
                         value={event.name}
+                        copyable
                     />
 
                     <Field
                         label="Email"
                         value={event.email}
+                        copyable
                     />
 
                     <Field
                         label="Phone"
                         value={event.phone}
+                        copyable
                     />
 
                 </div>
 
-                <div className="event-detail-actions">
-                    <button
-                        type="button"
-                        className="btn btn-secondary"
-                        onClick={onClose}
-                    >
-                        Close
-                    </button>
-                </div>
-
+                { onClose && (
+                    <div className="event-detail-actions">
+                        <button
+                            type="button"
+                            className="btn btn-secondary"
+                            onClick={onClose}
+                        >
+                            Close
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -54,6 +54,33 @@
     color: #666;
 }
 
+.field-value-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.field-value {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.field-copy-button {
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 2px 5px;
+    color: #777;
+    font-size: 16px;
+}
+
+.field-copy-button:hover {
+    color: #222;
+}
+
 .event-detail-field div {
     font-size: 14px;
     white-space: pre-wrap;

@@ -14,6 +14,7 @@ import {EventOrder} from "../../../workflows/payment/EventOrder";
 import {ServiceSelectionStatus} from "./payments/ServiceSelectionPage";
 import {formatDateTimeLocal, isOlderThanToday} from "../../../utils/DateTime";
 import {getEventStatusFromPlatforms} from "./EventStatus";
+import {ColorProgressBar} from "./platforms/ColorProgressBar";
 
 interface PromotedEventsPanelProps {
     setSelectedEvent: (newEvent: EventDetail) => void;
@@ -175,7 +176,7 @@ export default function PromotedEventsPanel({
                         {( eventOrder?.promote_selection === ServiceSelectionStatus.DIY ) && (
                             <>
                                 <PromoteFulfillmentPanel title="DIY">
-                                    <ProgressBar
+                                    <ColorProgressBar
                                         platforms={event.platforms}
                                     />
 

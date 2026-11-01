@@ -127,6 +127,22 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
             "width=1400,height=1000"
         );
 
+        const refUrl = `https://${window.location.host}/xr/events/${event.event_id}`;
+        const referenceWindow = window.open(
+            refUrl,
+            `airhorn-reference-${event.event_id}`,
+            "width=460,height=760,left=100,top=100"
+        );
+        if(referenceWindow){
+            referenceWindow.location.href = refUrl;
+        }else{
+            setDialog({
+                type: "error",
+                title: "Open Event Reference",
+                message: `${refUrl} failed to open. Please try again.`
+            });
+        }
+
         const platformUrl = getPlatformUrl(platform);
         if(partnerWindow){
             partnerWindow.location.href = platformUrl;
@@ -160,22 +176,25 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
 
         setAutofillClicked(true);
 
-        // 1. OPEN IMMEDIATELY (must be sync)
-        const partnerWindow = window.open(
-            "",
-            "LocalBuzzPromotionWindow",
-            "width=1400,height=1000"
-        );
+        // 1. Order Extension to open windows
+        console.log(`[PlatformRow] Opening form + reference window...`);
+
         const platformUrl = getPlatformUrl(platform);
-        if(partnerWindow){
-            partnerWindow.location.href = platformUrl;
-        }else{
-            setDialog({
-                type: "error",
-                title: "Open Platform",
-                message: `${platformUrl} failed to open. Please try again.`
-            });
-        }
+        const url = new URL(
+            `/xr/events/${event.event_id}`,
+            window.location.origin
+        );
+        const referenceUrl = url.href;
+
+        window.postMessage(
+            {
+                source: "AIRHORN_UI",
+                type: `OPEN_SUBMISSION_WINDOWS`,
+                platformUrl,
+                referenceUrl
+            },
+            window.location.origin
+        );
 
         // 2. Create payload with platform and region
         let pl = null;
@@ -347,7 +366,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                     {status === "submitted" && status && (
                         <button className="btn btn-primary" onClick={handleReopen}>
                             <img alt={"Redo Autofill"} src={"/icons8-redo-48.png"} style={{width:"24px", height:"24px"}} />
-                            Re-Submit
+                            Re-Submit Event
                         </button>
                     )}
                 </div>
