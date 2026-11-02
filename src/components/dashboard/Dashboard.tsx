@@ -425,6 +425,7 @@ export default function Dashboard() {
                                     </button>
                                     <button className="btn btn-primary google-button"
                                             title="Import Google Calendar Events"
+                                            disabled
                                             style={{
                                                 marginTop: "5px",
                                                 fontSize: "14px",

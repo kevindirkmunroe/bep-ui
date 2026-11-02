@@ -282,9 +282,9 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                         title={event.is_locked? "Promote this Event to all Platforms" : "Start Event Promotion process"}
                         className={event.is_locked ? "btn btn-secondary-greater" : "btn btn-primary-greater"}
                         onClick={() => onPromote? onPromote(event) : null}
-                        style={{marginLeft: "20", fontSize: "16px"}} >
+                        style={{marginLeft: "20", fontSize: "14px"}} >
 
-                        <b>{event.is_locked ? `Promote` : `At`}</b>
+                        <b>{event.is_locked ? `Promote` : `Activate`}</b>
                     </button>
                 )}
 
@@ -295,7 +295,7 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                         disabled={!isPartiallyLive(event)}
                         className={"btn btn-secondary-greater"}
                         onClick={() => onViewEventStatus? onViewEventStatus(event) : null}
-                        style={{marginLeft: "20", fontSize: "16px"}} >
+                        style={{marginLeft: "20", fontSize: "14px"}} >
                         {event.is_locked && (
                             <img src={"/icons8-newspaper-48.png"} style={{
                                 width: "24px",
@@ -312,7 +312,7 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                         title={"View Expired Event"}
                         className={"btn btn-secondary"}
                         onClick={() => onViewEventStatus? onViewEventStatus(event) : null}
-                        style={{marginLeft: "20", fontSize: "16px"}} >
+                        style={{marginLeft: "20", fontSize: "14px"}} >
                         <img src={"/icons8-history-48.png"} style={{
                             width: "24px",
                             height: "24px"

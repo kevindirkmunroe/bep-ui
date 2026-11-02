@@ -19,6 +19,7 @@ import PaymentCancelledPage from "./components/dashboard/events/payments/Payment
 import HistoryView from "./components/HistoryView.tsx";
 import EventDetailView from "./components/dashboard/EventDetailView.js";
 import {EventCrossReferenceWindow} from "./components/dashboard/events/platforms/EventCrossReferenceWindow.js";
+import {PlatformControlPanel} from "./components/dashboard/events/platforms/PlatformControlPanel.js";
 
 export default function App() {
 
@@ -100,6 +101,12 @@ export default function App() {
                   path="/xr/events/:eventId"
                   element={
                           <EventCrossReferenceWindow />
+                  }
+              />
+              <Route
+                  path="/xr/close"
+                  element={
+                      <PlatformControlPanel/>
                   }
               />
 
