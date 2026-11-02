@@ -70,6 +70,10 @@ export default function CalendarView() {
     }
     const isPublishedEvent = (e: EventDetail) => getEventStatusFromPlatforms(e) === "submitted"
 
+    const isPartiallyLive = (event: EventDetail) => {
+        return event.platforms.filter(p => p.status === "submitted").length > 0;
+    }
+
     const getEventStyle = (event: EventDetail) => {
         if(isPublishedEvent(event)){
             return {background: isOlderThanToday(event.start_datetime) ? "#8F9E8B": 'green', color: 'white'};
@@ -79,6 +83,12 @@ export default function CalendarView() {
             }
             if(!event.is_locked){
                 return {background: 'white', color: 'black'}
+            }
+            if(isPartiallyLive(event)){
+                if(isOlderThanToday(event.start_datetime)){
+                    return {background:'#FFBB69', color: "white"};
+                }
+                return {background: 'orange', color: 'white'};
             }
             return {background: '#D2492C', color: 'white'}
         }

@@ -443,7 +443,9 @@ export default function Dashboard() {
                     </div>
 
                     {/* Toggle views of event list */}
-                    <ViewToggle/>
+                    <div style={{paddingTop: "2px"}}>
+                        <ViewToggle/>
+                    </div>
 
                     {/* EVENTS */}
                     <div className="dashboard-events">

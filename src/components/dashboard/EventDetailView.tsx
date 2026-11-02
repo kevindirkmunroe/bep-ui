@@ -88,6 +88,12 @@ export default function EventDetailView({
                 <div className="event-detail-fields">
 
                     <Field
+                        label="Event ID"
+                        value={event.event_id}
+                        copyable
+                    />
+
+                    <Field
                         label="Date & Time"
                         value={
                             event.start_datetime

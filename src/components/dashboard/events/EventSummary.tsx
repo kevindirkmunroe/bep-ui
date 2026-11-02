@@ -128,6 +128,10 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
         }
     }
 
+    const isPartiallyLive = (event: EventDetail) => {
+        return event.platforms.filter(p => p.status === "submitted").length > 0;
+    }
+
     const getEventColor = (event: EventDetail, status: string, isExpired: boolean) => {
         if(status === "submitted"){
             if(isExpired){
@@ -138,10 +142,17 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
             if(!event.is_locked){
                 return '#F5F5F6';
             }else{
-                if(isExpired){
-                    return '#D19187';
+                if(isPartiallyLive(event)){
+                    if(isExpired){
+                        return '#FFBB69';
+                    }
+                    return 'orange';
+                }else{
+                    if(isExpired){
+                        return '#D19187';
+                    }
+                    return '#D2492C';
                 }
-                return '#D2492C';
             }
         }
     }
@@ -272,18 +283,16 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                         className={event.is_locked ? "btn btn-secondary-greater" : "btn btn-primary-greater"}
                         onClick={() => onPromote? onPromote(event) : null}
                         style={{marginLeft: "20", fontSize: "16px"}} >
-                        <img src={event.is_locked ? "/icons8-megaphone-64.png" : "/icons8-lightning-64-white.png"} style={{
-                                width: "24px",
-                                height: "24px"
-                            }}/>
-                        <b>{event.is_locked ? `Promote...` : `Activate...`}</b>
+
+                        <b>{event.is_locked ? `Promote` : `At`}</b>
                     </button>
                 )}
 
                 {/* Active + Published */}
-                {!isExpired && status === 'submitted' && (
+                {!isExpired && status !== 'not_started' && (
                     <button
                         title={"View Submitted Event"}
+                        disabled={!isPartiallyLive(event)}
                         className={"btn btn-secondary-greater"}
                         onClick={() => onViewEventStatus? onViewEventStatus(event) : null}
                         style={{marginLeft: "20", fontSize: "16px"}} >
@@ -293,7 +302,7 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                                 height: "24px"
                             }}/>
                         )}
-                        <b>View Live</b>
+                        <b>Live</b>
                     </button>
                 )}
 

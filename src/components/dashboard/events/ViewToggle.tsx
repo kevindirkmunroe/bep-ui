@@ -13,6 +13,14 @@ export default function ViewToggle() {
         ? location.pathname
         : `${location.pathname}/calendar`;
 
+    const chartStyle = {
+        marginLeft: "10px",
+        marginTop: "7px",
+        width: "12px",
+        height: "12px",
+        color: "gray",
+    }
+
     return (
         <div className="view-toggle" style={{fontSize: "14px", display: "flex", justifyContent: "flex-start", marginLeft: "12px"}}>
             {isCalendar ? (
@@ -28,6 +36,11 @@ export default function ViewToggle() {
             ) : (
                 <Link to={calendarPath}>Calendar</Link>
             )}
+
+            <div style={{...chartStyle, marginLeft: "12px", border: "1px solid black", backgroundColor: "#F5F5F6"}}></div>&nbsp;New/Inactive
+            <div style={{...chartStyle, backgroundColor: "#D2492C"}}></div>&nbsp;Active
+            <div style={{...chartStyle, backgroundColor: "orange"}}></div>&nbsp;Partially Live
+            <div style={{...chartStyle, backgroundColor: "green"}}></div>&nbsp;Live
         </div>
     );
 }

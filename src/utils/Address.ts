@@ -19,6 +19,7 @@ export function parseAddress(address: string): AddressFields {
 
     // Extract ZIP code from the end
     let remaining = parts.join(", ");
+    console.log(`[Address] extracting zip from ${remaining}`);
     const zipMatch = remaining.match(/\b(\d{5}(?:-\d{4})?)$/);
 
     if (zipMatch) {

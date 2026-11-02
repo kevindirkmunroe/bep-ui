@@ -231,7 +231,6 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
         const localDT = toLocalDateTimeString(event.start_datetime);
         event.date_fields = buildDateFields(localDT);
 
-        console.log(`[PlatformRow] transform for platform ${platform} payload:\n${JSON.stringify(pl)}`);
         window.postMessage(
             {
                 type: `AIRHORN_AUTOFILL_${platform}`,
