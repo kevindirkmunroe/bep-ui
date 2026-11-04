@@ -155,6 +155,14 @@ export default function Dashboard() {
         return activeEvents.length;
     }
 
+    function getFirstPromotedEvent(events: EventDetail[]){
+        return events.find(event => {
+            const platforms = event.platforms || [];  // 👈 fix
+            const statuses = platforms.map(p => p.status);
+            return (statuses.some(s => s === "in_progress"))
+        })
+    }
+
     const loadEvents = async () => {
         setShowCreateEventForm(false);
         try{
@@ -371,7 +379,7 @@ export default function Dashboard() {
                             marginBottom: "2px",
                             justifyContent: "space-between"
                         }}>
-                            <EventBreadcrumb event={events ? events[0] : null} totalEventCount={events?.length || 0} eventCount={getActiveEventCount()}
+                            <EventBreadcrumb event={events ? getFirstPromotedEvent(events) : null} totalEventCount={events?.length || 0} eventCount={getActiveEventCount()}
                                 promoteEventCount={getActiveEventCountWithOrder()}/>
                             <div style={{display: "flex", flexDirection: "row"}}>
                                 <div className="more-actions">
@@ -407,7 +415,7 @@ export default function Dashboard() {
                                                     fill="#fff"></path>
                                             </g>
                                         </svg>
-                                         Eventbrite
+                                        {/* Eventbrite */}
                                     </button>
                                     <button className="btn btn-primary facebook-button"
                                             title="Import Facebook Event"
@@ -425,7 +433,7 @@ export default function Dashboard() {
                                             <path fill="currentColor"
                                                   d="M80 299.3V256H12V171.3H80V114.4C80 47.3 120.7 10 181 10c28.8 0 53.6 2.1 60.8 3v70.5h-41.7c-32.6 0-38.9 15.5-38.9 38.2V171.2h78.2L229.3 256H161.2V512H80V299.3z"/>
                                         </svg>
-                                         Facebook
+                                        {/* Facebook */}
                                     </button>
                                     <button className="btn btn-primary google-button"
                                             title="Import Google Calendar Events"
@@ -439,8 +447,8 @@ export default function Dashboard() {
                                                 setShowImportFacebookURLForm(true);
                                             }
                                             }>
-                                        <img src={'/public/Google-Calendar-Logo.png'} style={{width: "40px", height: "24px"}}/>
-                                        Google
+                                        <img src={'/public/Google-Calendar-Logo.png'} style={{ height: "24px"}}/>
+                                        {/* Google */}
                                     </button>
                                 </div>
                             </div>

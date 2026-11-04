@@ -74,6 +74,18 @@ export default function EventBreadcrumb({
                 </div>
             </Link>
 
+            {!onPromotedEventsPage && !onLogPage &&(
+                <>
+                    <span><b>&gt;</b></span>
+                    <Link to={`${eventsPath}/${event?.event_id}`}>
+                        <div style={{display: "flex", flexDirection: "row"}}>
+                            <b>Promoted Events</b>
+                            <div style={{paddingLeft: "2px", fontSize: "16px"}}>{`(${promoteEventCount})`}</div>
+                        </div>
+                    </Link>
+                </>
+)}
+
             {eventId && (
                 <>
                     <span><b>&gt;</b></span>
