@@ -46,11 +46,15 @@ export default function Dashboard() {
             });
         }else{
             // get raw data using JSON-LD
-            const raw = await getEventbriteJsonLd(eventbriteEventUrl);
-            const eventbriteImportEvent = eventbriteJsonLdToEventDetail(raw, eventbriteEventUrl);
+            try {
+                const raw = await getEventbriteJsonLd(eventbriteEventUrl);
+                const eventbriteImportEvent = eventbriteJsonLdToEventDetail(raw, eventbriteEventUrl);
 
-            setEventbriteImportEvent(eventbriteImportEvent);
-            setShowImportEventbriteEventForm(true);
+                setEventbriteImportEvent(eventbriteImportEvent);
+                setShowImportEventbriteEventForm(true);
+            }catch(e){
+                alert(`Error importing Eventbrite: Event not found, or is ineligible for import.`);
+            }
         }
     }
 

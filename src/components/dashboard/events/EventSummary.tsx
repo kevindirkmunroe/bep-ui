@@ -192,7 +192,7 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
             <div
                 style={{
                     position: "relative",
-                    width: "100%",
+                    width: "84%",
                     paddingLeft: "8px",
                     boxSizing: "border-box",
                     backgroundColor: getEventColor(event, status, isExpired),
@@ -272,7 +272,11 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                         </div>
                     </div>
                 )}
+            </div>
 
+            {/* Divider */}
+            <div style={{width: "4px", backgroundColor: "white", height: expanded ? "150px" : "50px", marginLeft: "4px", borderRight: "1px solid darkgray"}}>
+                &nbsp;
             </div>
             <div style={{width: "32%", display: "flex", marginLeft: "4px", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
 
@@ -282,9 +286,12 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                         title={event.is_locked? "Promote this Event to all Platforms" : "Start Event Promotion process"}
                         className={event.is_locked ? "btn btn-secondary-greater" : "btn btn-primary-greater"}
                         onClick={() => onPromote? onPromote(event) : null}
-                        style={{marginLeft: "20", fontSize: "14px"}} >
-
-                        <b>{event.is_locked ? `Promote` : `Activate`}</b>
+                        style={{marginLeft: "20", fontSize: "16px"}} >
+                        <img src={event.is_locked ? "/icons8-megaphone-64.png" : "/icons8-lightning-64-white.png"} style={{
+                                width: "18px",
+                                height: "18px"
+                            }}/>
+                        <b>{event.is_locked ? `Promote...` : `Activate...`}</b>
                     </button>
                 )}
 
@@ -296,12 +303,10 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                         className={"btn btn-secondary-greater"}
                         onClick={() => onViewEventStatus? onViewEventStatus(event) : null}
                         style={{marginLeft: "20", fontSize: "14px"}} >
-                        {event.is_locked && (
-                            <img src={"/icons8-newspaper-48.png"} style={{
-                                width: "24px",
-                                height: "24px"
+                        <img src={"/icons8-newspaper-48.png"} style={{
+                                width: "18px",
+                                height: "18px"
                             }}/>
-                        )}
                         <b>Live</b>
                     </button>
                 )}
