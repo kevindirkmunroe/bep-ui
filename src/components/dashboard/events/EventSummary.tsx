@@ -278,7 +278,7 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
             <div style={{width: "4px", backgroundColor: "white", height: expanded ? "150px" : "50px", marginLeft: "4px", borderRight: "1px solid darkgray"}}>
                 &nbsp;
             </div>
-            <div style={{width: "32%", display: "flex", marginLeft: "4px", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
+            <div style={{width: "18%", display: "flex", marginLeft: "4px", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
 
                 {/* New or Active + In Progress */}
                 {!isExpired && status !== 'submitted' && (
@@ -287,42 +287,11 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                         className={event.is_locked ? "btn btn-secondary-greater" : "btn btn-primary-greater"}
                         onClick={() => onPromote? onPromote(event) : null}
                         style={{marginLeft: "20", fontSize: "16px"}} >
-                        <img src={event.is_locked ? "/icons8-megaphone-64.png" : "/icons8-lightning-64-white.png"} style={{
+                        <img src={event.is_locked ? "/icons8-share-48.png" : "/icons8-lightning-64-white.png"} style={{
                                 width: "18px",
                                 height: "18px"
                             }}/>
                         <b>{event.is_locked ? `Promote...` : `Activate...`}</b>
-                    </button>
-                )}
-
-                {/* Active + Published */}
-                {!isExpired && status !== 'not_started' && (
-                    <button
-                        title={"View Submitted Event"}
-                        disabled={!isPartiallyLive(event)}
-                        className={"btn btn-secondary-greater"}
-                        onClick={() => onViewEventStatus? onViewEventStatus(event) : null}
-                        style={{marginLeft: "20", fontSize: "14px"}} >
-                        <img src={"/icons8-newspaper-48.png"} style={{
-                                width: "18px",
-                                height: "18px"
-                            }}/>
-                        <b>Live</b>
-                    </button>
-                )}
-
-                {/* Expired */}
-                {isExpired && (
-                    <button
-                        title={"View Expired Event"}
-                        className={"btn btn-secondary"}
-                        onClick={() => onViewEventStatus? onViewEventStatus(event) : null}
-                        style={{marginLeft: "20", fontSize: "14px"}} >
-                        <img src={"/icons8-history-48.png"} style={{
-                            width: "24px",
-                            height: "24px"
-                        }}/>
-                        <b>View</b>
                     </button>
                 )}
 
@@ -356,6 +325,38 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                                     }}
                                     onMouseLeave={toggleExpandedMenu}
                                 >
+                                    {/* Active + Published */}
+                                    {!isExpired && status !== 'not_started' && (
+                                        <button
+                                            title={"View Submitted Event"}
+                                            disabled={!isPartiallyLive(event)}
+                                            className={"btn btn-secondary-greater"}
+                                            onClick={() => onViewEventStatus? onViewEventStatus(event) : null}
+                                            style={{marginLeft: "20", fontSize: "14px"}} >
+                                            <img src={"/icons8-newspaper-48.png"} style={{
+                                                width: "18px",
+                                                height: "18px"
+                                            }}/>
+                                            <b>Live</b>
+                                        </button>
+                                    )}
+
+
+                                    {/* Expired */}
+                                    {isExpired && (
+                                        <button
+                                            title={"View Expired Event"}
+                                            className={"btn btn-secondary"}
+                                            onClick={() => onViewEventStatus? onViewEventStatus(event) : null}
+                                            style={{marginLeft: "20", fontSize: "14px"}} >
+                                            <img src={"/icons8-history-48.png"} style={{
+                                                width: "24px",
+                                                height: "24px"
+                                            }}/>
+                                            <b>History</b>
+                                        </button>
+                                    )}
+
                                     {canEdit && onEdit && !isExpired && (
                                         <button className="btn btn-secondary"
                                                 onClick={(e) => {

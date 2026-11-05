@@ -83,7 +83,7 @@
 
 .event-summary-header {
     display: grid;
-    grid-template-columns: 48px 100px minmax(0, 0.97fr) 14px;
+    grid-template-columns: 48px 140px minmax(0, 0.98fr) 14px;
     column-gap: 6px;
     align-items: center;
     width: 100%;

@@ -74,7 +74,7 @@ export default function EventBreadcrumb({
                 </div>
             </Link>
 
-            {!onPromotedEventsPage && !onLogPage &&(
+            {!onPromotedEventsPage && !onLogPage && !isOlderThanToday(event?.start_datetime) && (
                 <>
                     <span><b>&gt;</b></span>
                     <Link to={`${eventsPath}/${event?.event_id}`}>
