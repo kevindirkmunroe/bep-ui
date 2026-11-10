@@ -1,0 +1,9 @@
+.parent {
+    height: 45vh; /* Or any fixed/percentage height for the parent container */
+}
+
+.scrollable-div {
+    height: 94%;
+    overflow-y: auto; /* Adds a vertical scrollbar when content exceeds 50% height */
+    border: 1px solid #ccc;
+}

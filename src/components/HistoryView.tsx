@@ -30,7 +30,10 @@ const getEventColor = (event: EventDetail) => {
             color =  'green';
         }
     }else{
-        if(isExpired){
+        if(status === 'not_started'){
+            console.log(`event ${event.title} default color, status=${status}`);
+            color = 'lightgray';
+        }else if(isExpired){
             color =  '#D19187';
         }else{
             color =  '#D2492C';
@@ -95,7 +98,7 @@ export default function HistoryView() {
                     <div style={{width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "2px"}}>
                         <div className="banner-div" style={{
                             width: "100%",
-                            height: "80px",
+                            height: "60px",
                             objectFit: "cover",
                             objectPosition: "top",
                             fontWeight: 800,

@@ -1,4 +1,5 @@
 import {EventbriteEventDetail, EventDetail, FacebookEventDetail} from "./events/eventDetailTypes.interface";
+import {MappedEvent} from "../../utils/googleSheetsMapper";
 
 export interface CreateEventFormProps {
     userId: string; // we'll handle null before rendering
@@ -23,6 +24,13 @@ export interface ImportFacebookEventFormProps {
 export interface ImportEventbriteEventFormProps {
     userId: string; // we'll handle null before rendering
     event?: EventbriteEventDetail;  // Edit mode
+    onSuccess: () => void;
+    onCancel: () => void;
+}
+
+export interface ImportGoogleSheetsEventFormProps {
+    userId: string; // we'll handle null before rendering
+    event?: MappedEvent;  // Edit mode
     onSuccess: () => void;
     onCancel: () => void;
 }

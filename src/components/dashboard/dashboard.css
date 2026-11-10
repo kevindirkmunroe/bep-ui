@@ -13,13 +13,13 @@
 }
 
 .google-button {
-    background-color: white;
     border: 1px solid dimgray;
     color: black;
+    background-color: #0ebc5f;
 }
 
 .google-button:hover {
-    background-color: #F2F0EF;
+    background-color: #009954;
 }
 
 /* The hover effect */

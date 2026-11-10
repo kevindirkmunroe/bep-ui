@@ -8,13 +8,15 @@ export function getEventStatusFromPlatforms(event: EventDetail) {
         return "submitted";
     }
 
-    if (statuses.some(s => s === "in_progress" || s === "not_started")) {
-        return "in_progress";
-    }
 
     if (statuses.some(s => s === "published")) {
         return "published";
     }
+
+    if (statuses.some(s => s === "in_progress")) {
+        return "in_progress";
+    }
+
 
     return "not_started";
 }

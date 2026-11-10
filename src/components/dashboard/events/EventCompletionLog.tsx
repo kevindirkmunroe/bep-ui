@@ -102,6 +102,7 @@ export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogP
                     </thead>
 
                     <tbody>
+                    {submittedPlatforms?.length === 0 && (<tr><td style={{textAlign: "center"}} colSpan={6}>No Data</td></tr>)}
                     {submittedPlatforms?.map(p => (
                         <tr key={p.platform}>
                             <td style={{minWidth: "200px"}}>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 
 import {EventDetail} from "./eventDetailTypes.interface";
@@ -19,11 +19,11 @@ import PromotedEventsPanel from "./PromotedEventsPanel";
 
 export default function PromoteDashboard() {
     const { userId, eventId } = useParams();
+    const { user } = useUser();
+    const navigate = useNavigate();
     if (!eventId) {
         throw new Error("eventId is required");
     }
-
-    const navigate = useNavigate();
 
     const [event, setEvent] = useState<EventDetail | null>(null);
     const [eventOrder, setEventOrder] = useState<EventOrder | null>(null);
@@ -31,29 +31,32 @@ export default function PromoteDashboard() {
     const [showEventOrderModal, setShowEventOrderModal] = useState(false);
     const [showEventOrderSelectionModal, setShowEventOrderSelectionModal] = useState(false);
 
-    const eventOrderManager = new EventOrderManager();
+    const eventOrderManager = useMemo(
+        () => new EventOrderManager(),
+        []
+    );
 
     useEffect(() => {
+        const loadEvent = async () => {
+            // get event...
+            const res = await api.get(`/events/${eventId}`);
+            setEvent(res.data);
+
+            // get event order...
+            const order = await eventOrderManager.getOrCreateEventOrder(eventId);
+            setEventOrder(order);
+            if(!order){
+                return;
+            }
+            if(order.promote_selection === ServiceSelectionStatus.NO_SELECTION){
+                setShowEventOrderSelectionModal(true);
+            }else{
+                setShowEventOrderModal(true);
+            }
+        };
+
         loadEvent();
     }, [eventId]);
-
-    const loadEvent = async () => {
-        // get event...
-        const res = await api.get(`/events/${eventId}`);
-        setEvent(res.data);
-
-        // get event order...
-        const order = await eventOrderManager.getOrCreateEventOrder(eventId);
-        setEventOrder(order);
-        if(!order){
-            return;
-        }
-        if(order.promote_selection === ServiceSelectionStatus.NO_SELECTION){
-            setShowEventOrderSelectionModal(true);
-        }else{
-            setShowEventOrderModal(true);
-        }
-    };
 
     const [extensionInstalled , setExtensionInstalled] = useState(false);
     const [extensionVersion, setExtensionVersion] = useState("Unknown");
@@ -125,7 +128,6 @@ export default function PromoteDashboard() {
         "*"
     );
 
-    const { user } = useUser();
     if(!user) return <div>Error retrieving User, please Login again.</div>
 
     const extensionUrl = import.meta.env.VITE_CHROME_WEB_STORE_EXTENSION_URL;
@@ -142,7 +144,7 @@ export default function PromoteDashboard() {
                     <div style={{ width: "100%", display: "flex", flexDirection: "row", gap: "20px", marginBottom: "2px" }}>
                         <div className="banner-div" style={{
                             width: "100%",
-                            height: "80px",
+                            height: "60px",
                             marginLeft: "5px",
                             marginTop: "1px",
                             objectFit: "cover",
@@ -182,9 +184,11 @@ export default function PromoteDashboard() {
                             }
                         </div>
                     </div>
-                    <div>
-                        <PromotedEventsPanel setSelectedEvent={setEvent} selectedEvent={event} selectedEventOrder={eventOrder} />
-                    </div>
+                    {eventOrder && (
+                        <div>
+                            <PromotedEventsPanel setSelectedEvent={setEvent} selectedEvent={event} selectedEventOrder={eventOrder} />
+                        </div>
+                    )}
 
                     {showEventOrderSelectionModal && (
                         <Modal style={{width: "70%"}} onClose={() => setShowEventOrderSelectionModal(false)}>

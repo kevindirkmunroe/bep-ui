@@ -19,6 +19,16 @@ export default function EventBreadcrumb({
     const { userId, eventId } = useParams();
     const location = useLocation();
     const TRUNCATE_LIMIT = 40;
+    function truncateString(str: string | undefined, limit: number = 80, ending: string = '...'): string {
+        if(!str){
+            return "unknown"
+        }
+
+        if (str.length <= limit) {
+            return str;
+        }
+        return str.slice(0, limit - ending.length) + ending;
+    }
 
     const eventsPath = `/dashboard/${userId}/events`;
 
@@ -34,15 +44,72 @@ export default function EventBreadcrumb({
     const onLogPage =
         location.pathname === `${eventsPath}/${eventId}/promoted`;
 
-    function truncateString(str: string | undefined, limit: number = 80, ending: string = '...'): string {
-        if(!str){
-            return "unknown"
-        }
+    const homePagePathStep = () => {
+        return <Link to={eventsPath} style={onHomePage ? {color: "#E27C68", fontSize: "20px"} : {}}>
+            <div style={{display: "flex", flexDirection: "row"}}>
+                <img
+                    src={onHomePage ? "/icons8-home-48.png" : "/icons8-home-48.link.png"}
+                    alt="Home"
+                    style={{
+                        height: "20px",
+                        width: "auto",
+                        marginLeft: "10px",
+                        marginTop: "3px",
+                        marginRight: "4px",
+                        objectFit: "contain"
+                    }}
+                />
 
-        if (str.length <= limit) {
-            return str;
-        }
-        return str.slice(0, limit - ending.length) + ending;
+                <b>All Events</b>
+                <div style={{paddingLeft: "2px", fontSize: "16px"}}>({totalEventCount} | {eventCount} Upcoming)</div>
+            </div>
+        </Link>
+    }
+
+    const promotedEventsPathStep = () => {
+        return <>
+            <div style={{
+                color: "#E27C68",
+                paddingLeft: "5px",
+                paddingRight: "5px",
+                fontSize: "20px",
+                display: "flex",
+                flexDirection: "row"
+            }}>
+                <b>Publish Ready Events</b>
+                <div style={{paddingLeft: "2px", fontSize: "16px"}}>{`(${promoteEventCount})`}</div>
+            </div>
+            <b><span>&gt;</span></b>
+            <Link to={`${eventsPath}/${event?.event_id}/promoted`}>
+                "<i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"
+            </Link>
+        </>
+    }
+
+    const logPagePathStep = () => {
+        return  <div style={{display: "flex", flexDirection: "row", fontSize: "20px"}}>
+            <b style={{marginLeft: "3px", paddingLeft: "5px", paddingRight: "5px", color: "#E27C68"}}>"<i style={{fontWeight: "400"}}>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"</b>
+        </div>
+    }
+
+    const eventStatusPathStep = () => {
+        return                         <>
+            <b>&gt;</b>
+            <b>{isOlderThanToday(event?.start_datetime) ? 'Expired' : 'Live'}</b>
+            <b>&gt;</b>
+            <div style={{
+                color: "#E27C68",
+                paddingLeft: "5px",
+                paddingRight: "5px",
+                fontSize: "20px",
+                display: "flex",
+                flexDirection: "row"
+            }}>
+                <div style={{
+                    color: "#E27C68"
+                }}>&nbsp;"<i>{truncateString(event?.title)}</i>"</div>
+            </div>
+        </>
     }
 
     return (
@@ -55,99 +122,30 @@ export default function EventBreadcrumb({
             }}
         >
             {/* Anchor */}
-            <Link to={eventsPath} style={onHomePage ? {color: "#E27C68", fontSize: "20px"} : {}}>
-                <div style={{display: "flex", flexDirection: "row"}}>
-                    <img
-                        src={onHomePage ? "/icons8-home-48.png" : "/icons8-home-48.link.png"}
-                        alt="Home"
-                        style={{
-                            height: "20px",
-                            width: "auto",
-                            marginLeft: "10px",
-                            marginTop: "3px",
-                            marginRight: "4px",
-                            objectFit: "contain"
-                        }}
-                    />
-                    <b>All Events</b>
-                    <div style={{paddingLeft: "2px", fontSize: "16px"}}>({totalEventCount} | {eventCount} Upcoming)</div>
-                </div>
-            </Link>
+            {homePagePathStep()}
 
-            {!onPromotedEventsPage && !onLogPage && !isOlderThanToday(event?.start_datetime) && (
+            {onPromotedEventsPage &&
                 <>
-                    <span><b>&gt;</b></span>
+                    <b>&gt;</b>
+                    {promotedEventsPathStep()}
+                </>
+            }
+
+            {onLogPage && (
+                <>
+                    <b>&gt;</b>
                     <Link to={`${eventsPath}/${event?.event_id}`}>
                         <div style={{display: "flex", flexDirection: "row"}}>
-                            <b>Promoted Events</b>
+                            <b>Publish Ready Events</b>
                             <div style={{paddingLeft: "2px", fontSize: "16px"}}>{`(${promoteEventCount})`}</div>
                         </div>
                     </Link>
-                </>
-)}
-
-            {eventId && (
-                <>
-                    <span><b>&gt;</b></span>
-
-                    {onEventStatusPage && (
-                        <>
-                            <b>{isOlderThanToday(event?.start_datetime) ? 'Expired' : 'Live'}</b>
-                            <b>&gt;</b>
-                            <div style={{
-                                color: "#E27C68",
-                                paddingLeft: "5px",
-                                paddingRight: "5px",
-                                fontSize: "20px",
-                                display: "flex",
-                                flexDirection: "row"
-                            }}>
-                                <div style={{
-                                    color: "#E27C68"
-                                }}>&nbsp;"<i>{truncateString(event?.title)}</i>"</div>
-                            </div>
-                        </>
-                    )}
-
-                    {onPromotedEventsPage ? (
-                        <>
-                            <div style={{
-                                color: "#E27C68",
-                                paddingLeft: "5px",
-                                paddingRight: "5px",
-                                fontSize: "20px",
-                                display: "flex",
-                                flexDirection: "row"
-                            }}>
-                                <b>Promoted Events</b>
-                                <div style={{paddingLeft: "2px", fontSize: "16px"}}>{`(${promoteEventCount})`}</div>
-                            </div>
-                            <b><span>&gt;</span></b>
-                            <Link to={`${eventsPath}/${event?.event_id}/promoted`}>
-                               "<i>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"
-                            </Link>
-                        </>
-
-                    ) : (
-                        <>
-                            {!onEventStatusPage && (
-                                <Link to={`${eventsPath}/${event?.event_id}`}>
-                                    <div style={{display: "flex", flexDirection: "row"}}>
-                                        <b>Promoted Events</b>
-                                        <div style={{paddingLeft: "2px", fontSize: "16px"}}>{`(${promoteEventCount})`}</div>
-                                    </div>
-                                </Link>)}
-                        </>
-                    )}
+                    <b>&gt;</b>
+                    {logPagePathStep()}
                 </>
             )}
 
-            {onLogPage && (
-                <div style={{display: "flex", flexDirection: "row", fontSize: "20px"}}>
-                    <b><span>&gt;</span></b>
-                    <b style={{marginLeft: "3px", paddingLeft: "5px", paddingRight: "5px", color: "#E27C68"}}>"<i style={{fontWeight: "400"}}>{truncateString(event?.title, TRUNCATE_LIMIT)}</i>"</b>
-                </div>
-            )}
+            {onEventStatusPage && eventStatusPathStep()}
         </div>
     );
 }

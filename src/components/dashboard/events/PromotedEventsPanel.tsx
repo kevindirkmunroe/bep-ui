@@ -83,8 +83,7 @@ export default function PromotedEventsPanel({
     useEffect(() => {
         if (!userId) return;
         loadEvents();
-
-    }, [userId]);
+    }, [userId] );
 
     const handleLoadEvent = async () : Promise<void> => {
         const res = await api.get(`/events/${event.event_id}`);

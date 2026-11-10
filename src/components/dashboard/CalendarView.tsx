@@ -82,7 +82,7 @@ export default function CalendarView() {
                 return {background: '#D19187', color: 'white'}
             }
             if(!event.is_locked){
-                return {background: 'white', color: 'black'}
+                return {background: 'white', color: 'black', border: "1px solid black"}
             }
             if(isPartiallyLive(event)){
                 if(isOlderThanToday(event.start_datetime)){

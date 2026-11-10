@@ -42,8 +42,8 @@ export default function ViewToggle() {
         <div style={{fontSize: "14px", display: "flex", justifyContent: "flex-start", marginLeft: "2px"}}>
             <div style={{...chartStyle, border: "1px solid black", backgroundColor: "#F5F5F6"}}></div>&nbsp;New/Inactive
             <div style={{...chartStyle, backgroundColor: "#D2492C"}}></div>&nbsp;Active
-            <div style={{...chartStyle, backgroundColor: "orange"}}></div>&nbsp;Partially Live
-            <div style={{...chartStyle, backgroundColor: "green"}}></div>&nbsp;Live
+            <div style={{...chartStyle, backgroundColor: "orange"}}></div>
+            <div style={{...chartStyle, marginLeft: "1px", backgroundColor: "green"}}></div>&nbsp;Live
         </div>
         </div>
     );

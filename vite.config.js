@@ -9,7 +9,6 @@ export default defineConfig({
     strictPort: true, // Optional: if true, Vite will exit if the port is already in use
     proxy: {
       "/admin": "http://localhost:4000",
-      "/api": "http://localhost:4000",
       "/events": "http://localhost:4000",
       "/mapRegion": "http://localhost:4000",
       "/mapCity": "http://localhost:4000",

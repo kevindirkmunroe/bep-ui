@@ -284,14 +284,16 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                 {!isExpired && status !== 'submitted' && (
                     <button
                         title={event.is_locked? "Promote this Event to all Platforms" : "Start Event Promotion process"}
-                        className={event.is_locked ? "btn btn-secondary-greater" : "btn btn-primary-greater"}
+                        className={event.is_locked ? "btn btn-secondary-greater" : "btn btn-primary-lesser-alt"}
                         onClick={() => onPromote? onPromote(event) : null}
-                        style={{marginLeft: "20", fontSize: "16px"}} >
-                        <img src={event.is_locked ? "/icons8-share-48.png" : "/icons8-lightning-64-white.png"} style={{
+                        style={{marginLeft: "20", fontSize: "14px"}} >
+                        {event.is_locked && (
+                            <img src={"/icons8-share-48.png"} style={{
                                 width: "18px",
                                 height: "18px"
                             }}/>
-                        <b>{event.is_locked ? `Promote...` : `Activate...`}</b>
+                        )}
+                        <b>{event.is_locked ? `Publish` : `Activate...`}</b>
                     </button>
                 )}
 
@@ -326,10 +328,9 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                                     onMouseLeave={toggleExpandedMenu}
                                 >
                                     {/* Active + Published */}
-                                    {!isExpired && status !== 'not_started' && (
+                                    {!isExpired && status !== 'not_started' && isPartiallyLive(event) && (
                                         <button
                                             title={"View Submitted Event"}
-                                            disabled={!isPartiallyLive(event)}
                                             className={"btn btn-secondary-greater"}
                                             onClick={() => onViewEventStatus? onViewEventStatus(event) : null}
                                             style={{marginLeft: "20", fontSize: "14px"}} >
@@ -337,7 +338,7 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                                                 width: "18px",
                                                 height: "18px"
                                             }}/>
-                                            <b>Live</b>
+                                            <b>Show Live</b>
                                         </button>
                                     )}
 

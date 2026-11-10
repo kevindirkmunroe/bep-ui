@@ -21,12 +21,15 @@ import DashboardTabs from "../DashboardTabs";
 import EventDetailView from "./EventDetailView";
 import {isOlderThanToday} from "../../utils/DateTime";
 import {MOCK_IMPORTED_FACEBOOK_EVENT} from "./MOCK_APIFY_SCRAPER_FACEBOOK_EVENT";
+import GoogleSheetsURLInputForm from "./events/GoogleSheetsURLInputForm";
+import {GoogleSheetsData} from "../../utils/googleSheetsMapper";
 
 export default function Dashboard() {
     const { userId } = useParams();
     const [events, setEvents] = useState<EventDetail[] | null>([]);
     const [showImportFacebookURLForm, setShowImportFacebookURLForm] = useState(false);
     const [showImportEventbriteURLForm, setShowImportEventbriteURLForm] = useState(false);
+    const [showImportGoogleSheetsURLForm, setShowImportGoogleSheetsURLForm] = useState(false);
     const [showImportFacebookEventForm, setShowImportFacebookEventForm] = useState(false);
     const [showImportEventbriteEventForm, setShowImportEventbriteEventForm] = useState(false);
     const [showCreateEventForm, setShowCreateEventForm] = useState(false);
@@ -36,6 +39,29 @@ export default function Dashboard() {
     const [eventbriteImportEvent, setEventbriteImportEvent] = useState<EventbriteEventDetail | null>(null);
     const [createEventDate, setCreateEventDate] = useState<Date | null>(null);
     const [dialog, setDialog] = useState<DialogState>(null);
+
+    async function readGoogleSheet(
+        sheetUrl: string
+    ): Promise<GoogleSheetsData> {
+        const params = new URLSearchParams({ sheetUrl });
+
+        const response = await fetch(
+            `${import.meta.env.VITE_GOOGLE_SHEETS_AUTH_BASE_URL}/api/google/read?${params}`,
+            {
+                credentials: "include"
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.error ?? "Unable to read Google Sheet"
+            );
+        }
+
+        return data as GoogleSheetsData;
+    }
 
     async function handleImportEventbriteEvent(eventbriteEventUrl: string) {
         if (!eventbriteEventUrl || !eventbriteEventUrl.startsWith('https://www.eventbrite.com/e/')) {
@@ -193,6 +219,25 @@ export default function Dashboard() {
         loadEvents();
     }, [userId]);
 
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+
+        if (params.get("googleSheets") === "connected") {
+            setShowImportGoogleSheetsURLForm(true);
+
+            params.delete("googleSheets");
+
+            const query = params.toString();
+
+            window.history.replaceState(
+                {},
+                "",
+                window.location.pathname +
+                (query ? `?${query}` : "") +
+                window.location.hash
+            );
+        }
+    }, []);
 
     // Breadcrumbs depends on event count being correct
     // for display, otherwise erroneously displays event count = 0
@@ -289,6 +334,19 @@ export default function Dashboard() {
                         </Modal>
                     )}
 
+                    {showImportGoogleSheetsURLForm && userId && (
+                        <Modal onClose={() => setShowImportGoogleSheetsURLForm(false)}>
+                            <GoogleSheetsURLInputForm readGoogleSheet={readGoogleSheet}
+                                                      userId={userId}
+                                                      open={true}
+                                                      onClose={() => {
+                                                          setShowImportGoogleSheetsURLForm(false);
+                                                          loadEvents();}
+                                                      }
+                            />
+                        </Modal>
+                    )}
+
                     {showImportFacebookURLForm && userId && (
                         <Modal onClose={() => setShowImportFacebookURLForm(false)}>
                             <FacebookURLInputForm onImport={handleImportFacebookEvent}
@@ -353,7 +411,7 @@ export default function Dashboard() {
                     }}>
                         <div className="banner-div" style={{
                             width: "100%",
-                            height: "80px",
+                            height: "60px",
                             marginLeft: "3px",
                             objectFit: "cover",
                             objectPosition: "top",
@@ -436,18 +494,19 @@ export default function Dashboard() {
                                         {/* Facebook */}
                                     </button>
                                     <button className="btn btn-primary google-button"
-                                            title="Import Google Calendar Events"
-                                            disabled
+                                            title="Import Google Sheet Events"
+
                                             style={{
                                                 marginTop: "5px",
                                                 fontSize: "14px",
-                                                height: "32px"
+                                                height: "32px",
+                                                width: "60px"
                                             }}
                                             onClick={() => {
-                                                setShowImportFacebookURLForm(true);
+                                                setShowImportGoogleSheetsURLForm(true);
                                             }
                                             }>
-                                        <img src={'/public/Google-Calendar-Logo.png'} style={{ height: "24px"}}/>
+                                        <img src={'/public/google-sheets.png'} style={{ height: "28px"}}/>
                                         {/* Google */}
                                     </button>
                                 </div>
@@ -455,7 +514,7 @@ export default function Dashboard() {
                         </div>
                     </div>
 
-                    {/* Toggle views of event list */}
+                    {/* Toggle views of event list: Calendar | List */}
                     <div style={{paddingTop: "2px"}}>
                         <ViewToggle/>
                     </div>
