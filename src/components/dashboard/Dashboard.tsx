@@ -506,7 +506,7 @@ export default function Dashboard() {
                                                 setShowImportGoogleSheetsURLForm(true);
                                             }
                                             }>
-                                        <img src={'/public/google-sheets.png'} style={{ height: "28px"}}/>
+                                        <img src={'/google-sheets.png'} style={{ height: "28px"}}/>
                                         {/* Google */}
                                     </button>
                                 </div>
