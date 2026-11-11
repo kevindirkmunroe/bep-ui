@@ -153,9 +153,20 @@ export default function CalendarView() {
                     setShowCreateEventForm(true);
                 }}
             >
-                <div className="calendar-date">{day}</div>
+                <div className="calendar-date">
+                    {new Date().getDate() === day && currentDate.toLocaleString("default", {
+                        month: "long",
+                        year: "numeric"
+                    }) === new Date().toLocaleString("default", {
+                        month: "long",
+                        year: "numeric"
+                    }) ?
+                        <div style={{backgroundColor: "#D2492C", color: "white", fontWeight: "bold", width: "30px", height:"30px", borderRadius:"50%"}}>{day}</div>
+                        : day
+                    }
+                </div>
 
-                {eventsByDay[day]?.map(event => (
+                {eventsByDay[day]?.sort((a, b) => a.start_datetime.localeCompare(b.start_datetime)).map(event => (
                     <button
                         key={event.event_id}
                         className={"calendar-event"}
@@ -165,7 +176,10 @@ export default function CalendarView() {
                             viewOrEditEvent(event);
                         }}
                     >
-                        {event.title}
+                        {event.title}<br/>{new Date(event.start_datetime).toLocaleTimeString("en-US", {
+                        hour: "numeric",
+                        minute: "2-digit"
+                    }).toLowerCase()}
                     </button>
                 ))}
             </div>
