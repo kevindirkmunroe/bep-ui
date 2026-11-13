@@ -2,7 +2,11 @@ import React, {useEffect, useState} from "react";
 import {GoogleSheetsData, mapGoogleSheetEvents, MappedEvent} from "../../../utils/googleSheetsMapper";
 import "./googleSheets.css";
 import Modal from "../../Modal";
-import ImportFacebookEventForm from "../ImportGoogleSheetsEventForm";
+import ImportGoogleSheetsEventForm from "../ImportGoogleSheetsEventForm";
+import BulkImport from "./BulkImport";
+import LoadingSpinner from "../../LoadingSpinner";
+import {BulkImportResult} from "./BulkImportManager";
+import {BulkActivate} from "./BulkActivate";
 
 interface ImportGoogleSheetsFormProps {
     open: boolean;
@@ -23,14 +27,17 @@ export default function GoogleSheetsURLInputForm({
     const [googleConnected, setGoogleConnected] = useState(false);
     const [checkingGoogleAuth, setCheckingGoogleAuth] = useState(true);
 
-    const [sheetData, setSheetData] =
-        useState<GoogleSheetsData | null>(null);
     const [readingSheet, setReadingSheet] = useState(false);
     const [sheetError, setSheetError] = useState<string | null>(null);
     const [mappedEvents, setMappedEvents] = useState<MappedEvent[]>([]);
     const [savedEvents, setSavedEvents] = useState<MappedEvent[]>([]);
     const [selectedEvent, setSelectedEvent] = useState<MappedEvent | null>(null);
     const [showMappedEventsList, setShowMappedEventsList] = useState(false);
+    const [showBulkImport, setShowBulkImport] = useState(false);
+    const [bulkImportResult, setBulkImportResult] = useState<BulkImportResult | null>(null);
+    const [showBulkActivate, setShowBulkActivate] = useState(false);
+
+
     const API_BASE_URL= import.meta.env.VITE_GOOGLE_SHEETS_AUTH_BASE_URL;
 
     if (!open) return null;
@@ -51,13 +58,8 @@ export default function GoogleSheetsURLInputForm({
 
         try {
             const data = await readGoogleSheet(googleSheetsUrl);
-
-            setSheetData(data);
             const events = mapGoogleSheetEvents(data);
             setMappedEvents(events);
-
-            console.log("Mapped events:", JSON.stringify(events));
-
         } catch (err) {
             setSheetError(
                 err instanceof Error
@@ -74,6 +76,7 @@ export default function GoogleSheetsURLInputForm({
     };
 
     const handleGoogleAuth = () => {
+        setGoogleAuthLoading(true);
         const returnTo =
             window.location.pathname +
             window.location.search;
@@ -133,7 +136,7 @@ export default function GoogleSheetsURLInputForm({
         });
     };
 
-    const handleImport = async () => {
+    const handleImportSheet = async () => {
         if (!googleSheetsUrl.trim()) return;
 
         setMappedEvents([]);
@@ -150,13 +153,29 @@ export default function GoogleSheetsURLInputForm({
     };
 
     const [showEditModal, setShowEditModal] = useState(false);
+    const [googleAuthLoading, setGoogleAuthLoading] = useState<boolean>(false);
 
     return (
         <div className="modal-overlay">
             <div className="modal">
+                {googleAuthLoading && (
+                    <div>
+                            <LoadingSpinner message="Redirecting to Google OAuth, please hold on..." />
+                    </div>
+                )}
+                {readingSheet && (
+                    <div>
+                        <LoadingSpinner message="Reading Google Sheets, please hold on..." />
+                    </div>
+                )}
+                {showBulkActivate &&
+                    <Modal style={{zIndex: 1300}} onClose={() => setShowBulkActivate(false)}>
+                        <BulkActivate size={bulkImportResult?.events.length || 0} onClose={() => setShowBulkActivate(false)}/>
+                    </Modal>
+                }
                 {showEditModal && (
                     <Modal style={{zIndex: 1200}} onClose={() => setShowEditModal(false)}>
-                        <ImportFacebookEventForm
+                        <ImportGoogleSheetsEventForm
                             userId={userId}
                             event={selectedEvent}
                             onSuccess={() => {
@@ -169,6 +188,22 @@ export default function GoogleSheetsURLInputForm({
                         />
                     </Modal>
                 )}
+                {showBulkImport && (
+                    <BulkImport
+                        userId={userId}
+                        events={mappedEvents}
+                        previousBulkImportResult={bulkImportResult}
+                        onClose={() => setShowBulkImport(false)}
+                        onImportComplete={(imported, bulkImportResult:any) => {
+                            console.log(`[GoogleSheetsURLInputForm] bulkImportResult=\n${JSON.stringify(bulkImportResult)}`);
+
+                            setShowMappedEventsList(false);
+                            // TODO: do we need imported parameter at all
+                            setBulkImportResult(bulkImportResult.bulkInsertResult);
+                        }}
+                    />
+                )}
+
                 <img src={'/google-sheets.png'} style={{ height: "34px", transform: "scale(0.85)", filter: "grayscale(100%)",}}/>
                 <h2>Import Google Sheets Events</h2>
                 <div style={{backgroundColor: "#d3d3d3", borderRadius: "8px", marginTop: "20px"}}>
@@ -181,25 +216,47 @@ export default function GoogleSheetsURLInputForm({
                 </div>
                 <br/>
 
-                <p style={{marginBottom: "8px"}}>
-                    Paste your Google Sheets URL to import event details:
-                </p>
+                {googleConnected && (
+                    <>
+                        <p style={{marginBottom: "8px"}}>
+                            Paste your Google Sheets URL to import event details:
+                        </p>
 
-                <input
-                    id="google-sheets-url"
-                    type="url"
-                    placeholder="https://docs.google.com/spreadsheets/..."
-                    value={googleSheetsUrl}
-                    onChange={(e) => setGoogleSheetsUrl(e.target.value)}
-                    style={{width: "80%", marginTop: "4px", marginBottom: "20px", marginRight:"8px"}}
-                />
+                        <input
+                            id="google-sheets-url"
+                            type="url"
+                            placeholder="https://docs.google.com/spreadsheets/..."
+                            value={googleSheetsUrl}
+                            onChange={(e) => setGoogleSheetsUrl(e.target.value)}
+                            style={{width: "80%", marginTop: "4px", marginBottom: "20px", marginRight:"8px"}}
+                        />
 
-                <button className="btn btn-primary-greater"
-                        onClick={handleImport}
-                        disabled={loading || !googleSheetsUrl.trim() || !googleConnected}
-                >
-                    {loading ? "Importing..." : "Import"}
-                </button>
+
+                        <button className="btn btn-primary-greater"
+                                onClick={handleImportSheet}
+                                disabled={loading || !googleSheetsUrl.trim() || !googleConnected}
+                        >
+                            {loading ? "Importing..." : "Import"}
+                        </button>
+                    </>
+                )}
+
+                { bulkImportResult && (
+                    <>
+                        <h4>Bulk Add Report</h4>
+                        <div style={{fontSize: "16px"}}>
+                            <div style={{display:"flex", flexDirection: "row", alignItems: "left"}}>
+                                <div style={{fontWeight: "bold", width: "160px"}}>Events Saved</div><div style={{color: "green"}}>{bulkImportResult?.events?.length}</div>
+                            </div>
+                            <div style={{display:"flex", flexDirection: "row", alignItems: "left"}}>
+                                <div style={{fontWeight: "bold",width: "160px"}}>Duplicates</div><div>{bulkImportResult?.duplicates?.length}</div>
+                            </div>
+                            <div style={{display:"flex", flexDirection: "row", alignItems: "left"}}>
+                                <div style={{fontWeight: "bold",width: "160px"}}>Errors</div><div style={{color: "red"}}>{bulkImportResult?.errors?.length}</div>
+                            </div>
+                        </div>
+                    </>
+                )}
                 {
                     showMappedEventsList && mappedEvents?.length > 0 && (
                         <div className="modal">
@@ -231,7 +288,7 @@ export default function GoogleSheetsURLInputForm({
                                                 setShowEditModal(true);
                                                 }
                                             }>
-                                                <img src={"/icons8-edit-64.png"} style={{width: "24px", height: "24px"}}/> Edit
+                                                <img src={"/icons8-add-48.png"} style={{width: "24px", height: "24px"}}/> Add
                                             </button>
                                         </div>
                                     ))}
@@ -248,24 +305,53 @@ export default function GoogleSheetsURLInputForm({
                     style={{
                         display: "flex",
                         marginTop: "20px",
-                        justifyContent: "flex-end",
+                        justifyContent: "center",
                         gap: "12px",
                     }}
                 >
                     {mappedEvents.length > 0 && (
-                        <button className="btn btn-secondary" onClick={() => {
-                            setMappedEvents([]);
-                            setLastUrl("")}}
-                        >
-                            Clear Imported Events
-                        </button>
+                        <>
+                            <button
+                                className="btn btn-primary"
+                                onClick={() => setShowBulkImport(true)}
+                            >
+                                <img src={"/icons8-add-48-white.png"} style={{width: "24px", height: "24px"}}/>{bulkImportResult ? "Retry ": ""} Bulk Add
+                            </button>
+                            { bulkImportResult &&
+                                (
+                                    <button
+                                        className="btn btn-primary-greater"
+                                        onClick={() => setShowBulkActivate(true)}
+                                        disabled={bulkImportResult?.events.length === 0}
+                                    >
+                                        <img src={"/icons8-lightning-64-white.png"} style={{width: "24px", height: "24px"}}/>Bulk Activate...
+                                    </button>
+                                )
+                            }
+                        </>
                         )
                     }
 
+                </div>
+                <div
+                    style={{
+                        display: "flex",
+                        marginTop: "20px",
+                        justifyContent: "flex-end",
+                        gap: "12px",
+                    }}
+                >
+                    <button className="btn btn-secondary" onClick={() => {
+                        setMappedEvents([]);
+                        setBulkImportResult(null);
+                        setLastUrl("")}}
+                            disabled={mappedEvents.length === 0}
+                    >
+                        Clear Import
+                    </button>
                     <button className="btn btn-secondary" onClick={onClose}>
                         Done
                     </button>
-
                 </div>
             </div>
         </div>

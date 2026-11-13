@@ -92,7 +92,7 @@ export default function PromoteDashboard() {
                 event_id: eventId,
                 retry_count: 0
             }
-            const result = await api.post(`/orders/create`, newOrder);
+            const result = await api.post(`/orders`, newOrder);
             setEventOrder(result.data as EventOrder);
         }else{
             // update order selection

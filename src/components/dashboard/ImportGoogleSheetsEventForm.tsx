@@ -8,7 +8,7 @@ import S3ImageUploader from "./S3ImageUploader";
 import {getZipFromAddress} from "./AddressUtils";
 import {MappedEvent} from "../../utils/googleSheetsMapper";
 
-export default function ImportFacebookEventForm({
+export default function ImportGoogleSheetsEventForm({
                                                     userId,
                                                     event,
                                                     onSuccess,

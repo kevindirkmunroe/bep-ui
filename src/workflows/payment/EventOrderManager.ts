@@ -5,7 +5,7 @@ import {ServiceSelectionStatus} from "../../components/dashboard/events/payments
 export class EventOrderManager {
 
     async createEventOrder(po: EventOrderPayload): Promise<EventOrder> {
-        const result = await api.post(`/orders/create`, po);
+        const result = await api.post(`/orders`, po);
         return result.data;
     }
 
