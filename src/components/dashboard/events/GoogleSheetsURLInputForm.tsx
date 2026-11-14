@@ -170,7 +170,7 @@ export default function GoogleSheetsURLInputForm({
                 )}
                 {showBulkActivate &&
                     <Modal style={{zIndex: 1300}} onClose={() => setShowBulkActivate(false)}>
-                        <BulkActivate size={bulkImportResult?.events.length || 0} onClose={() => setShowBulkActivate(false)}/>
+                        <BulkActivate events={bulkImportResult?.events || []} onClose={() => setShowBulkActivate(false)}/>
                     </Modal>
                 }
                 {showEditModal && (
@@ -192,6 +192,7 @@ export default function GoogleSheetsURLInputForm({
                     <BulkImport
                         userId={userId}
                         events={mappedEvents}
+                        source={lastUrl}
                         previousBulkImportResult={bulkImportResult}
                         onClose={() => setShowBulkImport(false)}
                         onImportComplete={(imported, bulkImportResult:any) => {

@@ -359,7 +359,7 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                                     : "Install the Airhorn.events Chrome extension to enable Mark Submitted"}
                                 className="btn btn-primary-greater-ok"
                                 onClick={handleSubmit}>
-                            <img alt={"Mark Submitted"} src={"/icons8-checklist-48.png"} style={{width:"24px", height:"24px"}} />Mark Submitted
+                            <img alt={"Mark Submitted"} src={"/icons8-rocket-60-white.png"} style={{width:"24px", height:"24px"}} />Mark Submitted
                         </button>
                     )}
                     {status === "submitted" && status && (

@@ -2,10 +2,12 @@ import React, { useMemo, useState } from "react";
 import Modal from "../../Modal";
 import {BulkImportManager, BulkImportResult} from "./BulkImportManager";
 import {MappedEvent} from "../../../utils/googleSheetsMapper";
+import LoadingSpinner from "../../LoadingSpinner";
 
 interface BulkImportProps {
     userId: string;
     events: MappedEvent[];
+    source: string;
     previousBulkImportResult: BulkImportResult;
     onClose: () => void;
     onImportComplete?: (imported: MappedEvent[], bulkImportResult: BulkImportResult) => void;
@@ -17,8 +19,8 @@ interface EditableRow {
     event: MappedEvent;
 }
 
-function generateSyncKey(name: string, title: string, start_datetime: string) {
-    const input = `${name}-${title}-${start_datetime}`;
+function generateSyncKey(userId: string, name: string, title: string, start_datetime: string) {
+    const input = `${userId}-${name}-${title}-${start_datetime}`;
 
     let hash = 0x811c9dc5;
     for (let i = 0; i < input.length; i++) {
@@ -33,13 +35,13 @@ function generateSyncKey(name: string, title: string, start_datetime: string) {
 export default function BulkImport({
                                        userId,
                                        events,
+                                       source,
                                        previousBulkImportResult,
                                        onClose,
                                        onImportComplete
                                    }: BulkImportProps) {
 
-    const duplicateKeys = previousBulkImportResult?.duplicates?.map((event) => generateSyncKey(event.name, event.title, event.start_datetime)) || [];
-    console.log(`duplicateKeys=${JSON.stringify(duplicateKeys)}`);
+    const duplicateKeys = previousBulkImportResult?.duplicates?.map((event) => generateSyncKey(userId, event.name, event.title, event.start_datetime)) || [];
     const filterUniqueEvents = (events, duplicateKeys: string[]) => {
         return events.filter((e) => !duplicateKeys.includes(generateSyncKey(e.title, e.start_datetime)));
     }
@@ -127,7 +129,7 @@ export default function BulkImport({
         setError(null);
 
         try {
-            const bulkImportResult = await bulkImportManager.importEvents(userId, selectedEvents);
+            const bulkImportResult = await bulkImportManager.importEvents(userId, source, selectedEvents);
             // TODO: use this list for bulk activate
 
             onImportComplete?.(selectedEvents, bulkImportResult);
@@ -165,7 +167,11 @@ export default function BulkImport({
                     {" "}
                     <strong>{selectedCount} selected for import.</strong>
                 </div>
-
+                {importing && (
+                    <div>
+                        <LoadingSpinner message={`Bulk Importing ${selectedCount} Events, please wait...`} />
+                    </div>
+                )}
                 <div style={{
                     overflow: "auto",
                     flex: 1,

@@ -1,21 +1,41 @@
 import React, {useEffect, useState} from "react";
-import Modal from "../../Modal";
 import LoadingSpinner from "../../LoadingSpinner";
-import {MappedEvent} from "../../../utils/googleSheetsMapper";
-import {BulkImportResult} from "./BulkImportManager";
+import {BulkImportResult, BulkInsertEventItem} from "./BulkImportManager";
+import {api} from "../../../utils/api";
+import {ServiceSelectionStatus} from "./payments/ServiceSelectionPage";
 
 interface BulkActivateProps {
-    size: number;
+    events: BulkInsertEventItem[];
     onClose: () => void;
 }
 
-export function BulkActivate({size, onClose} : BulkActivateProps) {
-
+export function BulkActivate({events, onClose} : BulkActivateProps) {
+    const size = events.length;
     const [loading, setLoading] = useState<boolean>(true);
 
-    useEffect(() => {
-        const timer = setTimeout(() => setLoading(false), 3000);
-        return () => clearTimeout(timer);
+    const doBulkActivate = async () => {
+        setLoading(true);
+
+
+        // get array of event keys...
+        const eventDetails = events.flatMap(item =>
+            Object.entries(item).map(([eventId, event]) => ({
+                ...event,
+                event_id: eventId
+            }))
+        );
+
+        // PRO only for now...
+        const promote_selection = ServiceSelectionStatus.PRO;
+        const response = await api.post<BulkImportResult>(
+            `/orders/bulk`,
+            { promote_selection, events: eventDetails }
+        );
+        setLoading(false);
+    }
+
+    useEffect( () => {
+        doBulkActivate();
     }, []);
 
 

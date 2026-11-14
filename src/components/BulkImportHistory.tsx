@@ -146,11 +146,11 @@ export default function BulkImportHistory({userId}) {
                                 }}
                                 title="Sort by creation date"
                             >
-                                Created At {sortDirection === "asc" ? "▲" : "▼"}
+                                Imported At {sortDirection === "asc" ? "▲" : "▼"}
                             </button>
                         </th>
 
-                        {["ID", "Count", "Source", "Delete"].map(header => (
+                        {["ID", "Events", "Source", "Deleted At"].map(header => (
                             <th
                                 key={header}
                                 style={{

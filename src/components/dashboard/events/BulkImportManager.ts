@@ -4,7 +4,7 @@ import {MappedEvent} from "../../../utils/googleSheetsMapper";
 import {formatDateTimeLocal} from "../../../utils/DateTime";
 import {getZipFromAddress} from "../AddressUtils";
 
-interface BulkInsertEventItem {
+export interface BulkInsertEventItem {
     [eventId: string]: EventDetail;
 }
 
@@ -50,6 +50,7 @@ export class BulkImportManager {
 
     async importEvents(
         userId: string,
+        source: string,
         events: MappedEvent[]
     ): Promise<BulkImportResult> {
 
@@ -57,7 +58,7 @@ export class BulkImportManager {
 
             const response = await api.post<BulkImportResult>(
                 `/users/${userId}/events/bulk`,
-                { events }
+                { source, events }
             );
 
             return response.data;

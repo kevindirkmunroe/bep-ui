@@ -1,9 +1,12 @@
 export interface GoogleSheetsData {
     spreadsheetId: string;
-    eventYear: number;
     mappings: string[][];
     defaults: string[][];
-    events: string[][];
+    eventSheets: {
+        eventsTab: string;
+        eventYear: number;
+        events: string[][];
+    }[];
 }
 
 export type MappedEvent = Record<string, string>;
@@ -68,6 +71,7 @@ function parseEventDateTime(
     ].join("T");
 }
 
+
 export function mapGoogleSheetEvents(
     data: GoogleSheetsData
 ): MappedEvent[] {
@@ -75,47 +79,52 @@ export function mapGoogleSheetEvents(
     const mappings = toDictionary(data.mappings);
     const defaults = toDictionary(data.defaults);
 
-    const [headers, ...rows] = data.events;
+    return data.eventSheets.flatMap(sheet => {
 
-    if (!headers) return [];
+        const [headers, ...rows] = sheet.events;
 
-    return rows
-        .filter(row => row.some(value => value?.trim()))
-        .map(row => {
-            const source: Record<string, string> = {};
+        if (!headers) return [];
 
-            headers.forEach((header, index) => {
-                if (header?.trim()) {
-                    source[header.trim()] = row[index]?.trim() ?? "";
+        return rows
+            .filter(row => row.some(value => value?.trim()))
+            .map(row => {
+                const source: Record<string, string> = {};
+
+                headers.forEach((header, index) => {
+                    if (header?.trim()) {
+                        source[header.trim()] =
+                            row[index]?.trim() ?? "";
+                    }
+                });
+
+                // Defaults first; mapped event values override them.
+                const event: MappedEvent = { ...defaults };
+
+                for (const [airhornField, sourceColumns] of
+                    Object.entries(mappings)) {
+
+                    const columns = sourceColumns
+                        .split(",")
+                        .map(col => col.trim());
+
+                    const values = columns
+                        .map(col => source[col])
+                        .filter(Boolean);
+
+                    if (values.length > 0) {
+                        event[airhornField] = values.join(" ");
+                    }
                 }
+
+                if (event.start_datetime) {
+                    event.start_datetime = parseEventDateTime(
+                        event.start_datetime,
+                        sheet.eventYear
+                    );
+                }
+
+                return event;
             });
-
-            // Defaults first; mapped event values override them.
-            const event: MappedEvent = { ...defaults };
-
-            for (const [airhornField, sourceColumns] of
-                Object.entries(mappings)) {
-
-                const columns = sourceColumns
-                    .split(",")
-                    .map(col => col.trim());
-
-                const values = columns
-                    .map(col => source[col])
-                    .filter(Boolean);
-
-                if (values.length > 0) {
-                    event[airhornField] = values.join(" ");
-                }
-            }
-
-            if (event.start_datetime) {
-                event.start_datetime = parseEventDateTime(
-                    event.start_datetime,
-                    data.eventYear
-                );
-            }
-
-            return event;
-        });
+    });
 }
+
