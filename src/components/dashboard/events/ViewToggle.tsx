@@ -1,9 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
+import React from "react";
 
-export default function ViewToggle() {
+interface ViewToggleProps {
+    setIsListView: (isListView: boolean) => void;
+}
+export default function ViewToggle({setIsListView} : ViewToggleProps) {
     const location = useLocation();
 
     const isCalendar = location.pathname.endsWith("/calendar");
+    setIsListView(!isCalendar);
 
     const listPath = isCalendar
         ? location.pathname.replace(/\/calendar$/, "")
@@ -27,8 +32,10 @@ export default function ViewToggle() {
                 {isCalendar ? (
                     <Link to={listPath}>List</Link>
                 ) : (
-                    <span><b>List</b></span>
-                )}
+                    <>
+                        <span><b>List</b></span>
+                    </>
+            )}
 
                 <span> &nbsp;|&nbsp; </span>
 

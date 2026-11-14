@@ -196,8 +196,6 @@ export default function GoogleSheetsURLInputForm({
                         previousBulkImportResult={bulkImportResult}
                         onClose={() => setShowBulkImport(false)}
                         onImportComplete={(imported, bulkImportResult:any) => {
-                            console.log(`[GoogleSheetsURLInputForm] bulkImportResult=\n${JSON.stringify(bulkImportResult)}`);
-
                             setShowMappedEventsList(false);
                             // TODO: do we need imported parameter at all
                             setBulkImportResult(bulkImportResult.bulkInsertResult);

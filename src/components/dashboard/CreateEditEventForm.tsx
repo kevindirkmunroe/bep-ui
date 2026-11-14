@@ -6,7 +6,7 @@ import {categories} from "./EventCategories";
 import BaseDialog, {DialogState} from "../BaseDialog";
 
 import "./form.css";
-import {formatDateLocal, formatDateTimeLocal, isOlderThanToday} from "../../utils/DateTime";
+import { formatDateTimeLocal, isOlderThanToday} from "../../utils/DateTime";
 import S3ImageUploader from "./S3ImageUploader";
 
 export default function CreateEditEventForm({

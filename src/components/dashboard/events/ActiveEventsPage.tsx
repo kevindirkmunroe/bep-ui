@@ -7,9 +7,10 @@ import {useUser} from "../../../UserContext";
 
 
 export function ActiveEventsPage() {
-    const { events, reload } = useOutletContext<{
+    const { events, reload, eventScrollRef } = useOutletContext<{
         events: EventDetail[];
         reload: () => Promise<void>;
+        eventScrollRef: React.RefObject<null>;
     }>();
     const { setEditingEvent } = useOutletContext<{ setEditingEvent:  React.Dispatch<React.SetStateAction<EventDetail | null>> }>();
     const { setViewingEvent } = useOutletContext<{ setViewingEvent:  React.Dispatch<React.SetStateAction<EventDetail | null>> }>();
@@ -40,7 +41,7 @@ export function ActiveEventsPage() {
 
     return (
         <div style={{marginTop: 10}}>
-            {activeEvents.length === 0 && <p>No Active Events Yet</p>}
+            {activeEvents.length === 0 && <p>No Active Events</p>}
             <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                 {activeEvents.map(e => (
                     <EventSummary key={e.event_id}
@@ -52,7 +53,7 @@ export function ActiveEventsPage() {
                                   onPromote={handlePromote}/>
                 ))}
             </div>
-            <hr style={{color: "lightgray", marginBottom: "12px", width: "95%"}} />
+            <hr ref={eventScrollRef} style={{color: "lightgray", marginBottom: "12px", width: "95%"}} />
             <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                 {pastEvents.map(e => (
                     <EventSummary key={e.event_id}

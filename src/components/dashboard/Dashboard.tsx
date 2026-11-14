@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Outlet, useParams} from "react-router-dom";
 import CreateEditEventForm from "./CreateEditEventForm";
 import {getEventStatusFromPlatforms} from "./events/EventStatus";
@@ -246,6 +246,18 @@ export default function Dashboard() {
     userContext.setUserTotalEventCount(events?.length || 0);
     userContext.setUserPromoteEventCount(getActiveEventCountWithOrder());
     if (!userId) return <div style={{marginTop: "50px"}}>Loading...</div>;
+
+    // Apparatus for 'scroll to Today' button.
+    const eventScrollRef = useRef(null);
+    const handleScroll = () => {
+        eventScrollRef.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'end', // Options: 'start', 'center', 'end', 'nearest'
+        });
+    };
+
+    // ViewToggle changes whether 'Today' button is visible
+    const [isListView, setIsListView] = useState(true);
 
     return (
         <div
@@ -516,10 +528,14 @@ export default function Dashboard() {
 
                     {/* Toggle views of event list: Calendar | List */}
                     <div style={{paddingTop: "2px"}}>
-                        <ViewToggle/>
+                        <ViewToggle setIsListView={setIsListView}/>
                     </div>
 
                     {/* EVENTS */}
+                    { isListView &&
+                        <button style={{marginBottom: "8px"}} className={'btn btn-secondary'} onClick={handleScroll}>Today</button>
+                    }
+
                     <div className="dashboard-events">
                         <div
                             style={{
@@ -534,7 +550,8 @@ export default function Dashboard() {
                                     setViewingEvent,
                                     setCreateEventDate,
                                     setShowCreateEventForm,
-                                    reload: loadEvents
+                                    reload: loadEvents,
+                                    eventScrollRef
                                 }}
                             />
                         </div>
