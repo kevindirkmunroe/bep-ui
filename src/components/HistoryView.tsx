@@ -17,6 +17,7 @@ import PlatformClicksChart from "./PlatformClicksChart";
 import EventClicksChart from "./EventClicksChart";
 import {getEventStatusFromPlatforms} from "./dashboard/events/EventStatus";
 import {isOlderThanToday} from "../utils/DateTime";
+import BulkImportHistory from "./BulkImportHistory";
 
 const getEventColor = (event: EventDetail) => {
     const status = getEventStatusFromPlatforms(event);
@@ -31,7 +32,6 @@ const getEventColor = (event: EventDetail) => {
         }
     }else{
         if(status === 'not_started'){
-            console.log(`event ${event.title} default color, status=${status}`);
             color = 'lightgray';
         }else if(isExpired){
             color =  '#D19187';
@@ -126,12 +126,12 @@ export default function HistoryView() {
                             padding: "8px",
                             margin: "0 10px 10px",
                             display: "flex",
-                            flexDirection: "column",
+                            flexDirection: "row",
                             flex: 1,
                             minHeight: 0,
                             overflow: "hidden"
                         }}>
-                            <div style={{backgroundColor: "#fff"}}>
+                            <div style={{marginTop: "12px", marginRight: "10px", backgroundColor: "#fff"}}>
                                 <button className="btn btn-secondary" style={{fontSize: "16px"}}
                                         onClick={() => navigate(-1)}>
                                     ← Back
@@ -152,6 +152,7 @@ export default function HistoryView() {
                                     >
                                         <Tab label="Submitted / Published Events" value="1"/>
                                         <Tab label="Metrics" value="2"/>
+                                        <Tab label="Bulk Actions" value="3"/>
                                     </TabList>
                                 <TabPanel value="1" tabIndex={0}>
                                     <div className="history-layout">
@@ -194,7 +195,7 @@ export default function HistoryView() {
                                         </div>
                                     </div>
                                 </TabPanel>
-                                <TabPanel value="2" tabIndex={0}
+                                <TabPanel value="2" tabIndex={1}
                                           sx={{
                                               flex: 1,
                                               minHeight: 0,
@@ -213,6 +214,9 @@ export default function HistoryView() {
                                                                  window={30}/>
                                             <PlatformClicksChart title={"Clicks By Platform (All Time)"} userId={userId}/>
                                         </div>
+                                </TabPanel>
+                                <TabPanel value="3" tabIndex={2}>
+                                    <BulkImportHistory userId={userId}/>
                                 </TabPanel>
                                 </Box>
                             </TabContext>
