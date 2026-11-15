@@ -343,22 +343,6 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                                     }}
                                     onMouseLeave={toggleExpandedMenu}
                                 >
-                                    {/* Active + Published */}
-                                    {!isExpired && status !== 'not_started' && isPartiallyLive(event) && (
-                                        <button
-                                            title={"View Submitted Event"}
-                                            className={"btn btn-secondary-greater"}
-                                            onClick={() => onViewEventStatus? onViewEventStatus(event) : null}
-                                            style={{marginLeft: "20", fontSize: "14px"}} >
-                                            <img src={"/icons8-newspaper-48.png"} style={{
-                                                width: "18px",
-                                                height: "18px"
-                                            }}/>
-                                            <b>Show Live</b>
-                                        </button>
-                                    )}
-
-
                                     {/* Expired */}
                                     {isExpired && (
                                         <button
