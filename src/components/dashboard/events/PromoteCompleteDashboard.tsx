@@ -58,30 +58,34 @@ export default function PromoteCompleteDashboard(){
                             alignContent: "left",
                             alignItems: "center"
                         }}>
-                            &nbsp;My Events / Publish
+                            &nbsp;My Events / Live
                         </div>
                     </div>
-                    <DashboardTabs/>
+                    <div style={{display: "flex", flexDirection: "row"}}>
+                        <DashboardTabs/>
 
-                    <EventBreadcrumb event={event}
-                                     totalEventCount={user?.totalEventCount || 0}
-                                     promoteEventCount={user?.promoteEventCount || 0}
-                                     eventCount={user?.eventCount || 0}/>
-                </div>
-                <div style={{display: "flex", flexDirection: "column"}}>
-                    {/* List completed promotions only: "/events/:eventId" */}
-                    <div style={{marginTop: "2px", marginLeft: "60px"}}>
-                        <EventCompletionLog event={event} handleRefresh={loadEventPlatforms}/>
-                    </div>
-                    <div style={{
-                        backgroundColor: "lightyellow",
-                        width: "85%",
-                        fontSize: "15px",
-                        marginLeft: "80px",
-                        marginTop: "20px",
-                        textAlign: "left"
-                    }}><b>*</b> Pending Verification. <strong>Keep an eye on your inbox!</strong> Each platform will send updates about the final
-                        status of your submission to the email address you registered with.
+                        <div style={{display: "flex", flexDirection: "column"}}>
+                            <div style={{display: "flex", flexDirection: "column", marginTop: "10px"}}>
+                                <EventBreadcrumb event={event}
+                                                 totalEventCount={user?.totalEventCount || 0}
+                                                 promoteEventCount={user?.promoteEventCount || 0}
+                                                 eventCount={user?.eventCount || 0}/>
+                            </div>
+                            {/* List completed promotions only: "/events/:eventId" */}
+                            <div style={{marginTop: "2px", marginLeft: "60px"}}>
+                                <EventCompletionLog event={event} handleRefresh={loadEventPlatforms}/>
+                            </div>
+                            <div style={{
+                                backgroundColor: "lightyellow",
+                                width: "85%",
+                                fontSize: "15px",
+                                marginLeft: "80px",
+                                marginTop: "20px",
+                                textAlign: "left"
+                            }}><b>*</b> Pending Verification. <strong>Keep an eye on your inbox!</strong> Each platform will send updates about the final
+                                status of your submission to the email address you registered with.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

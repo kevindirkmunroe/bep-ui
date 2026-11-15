@@ -113,7 +113,6 @@ export default function AdminPage() {
                         overflow: "auto"
                     }}>
                         <TabPanel value="1" tabIndex={0}>
-                            <h2 style={{backgroundColor: "#E5E5E5"}}>/ Orders</h2>
                             <button
                                 type="button"
                                 className={`filter-toggle ${unfulfilledOnly ? "active" : ""}`}
@@ -129,7 +128,6 @@ export default function AdminPage() {
                             )}
                         </TabPanel>
                         <TabPanel value="2" tabIndex={0} >
-                            <h2 style={{backgroundColor: "#E5E5E5"}}>/ Metrics</h2>
                             <h3 style={{backgroundColor: "#E5E5E5"}}>Platform Performance</h3>
                             <div style={{display: "flex", flexDirection: "row"}}>
                                 <PlatformClicksChart title={"Clicks By Platform (Last 30 Days)"} window={30}/>
@@ -139,7 +137,6 @@ export default function AdminPage() {
                             <EventClicksChart/>
                         </TabPanel>
                         <TabPanel value="3" tabIndex={0}>
-                        <h2 style={{backgroundColor: "#E5E5E5"}}>/ Invite Requests</h2>
                         <table
                             style={{
                                 width: "100%",

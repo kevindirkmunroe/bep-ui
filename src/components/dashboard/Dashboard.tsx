@@ -110,7 +110,7 @@ export default function Dashboard() {
                     setDialog({
                         type: "alert",
                         title: "Import",
-                        message: `Imported Facebook event: ${JSON.stringify(result.data.name)}`
+                        message: `Imported Facebook Event: ${JSON.stringify(result.data.name)}`
                     });
                 }catch(err: Error | any){
                     if(err.status === 404){
@@ -378,7 +378,7 @@ export default function Dashboard() {
                                     setDialog({
                                         type: "alert",
                                         title: "Import",
-                                        message: `Imported Facebook event: ${JSON.stringify(facebookImportEvent?.title)}`
+                                        message: `Imported Facebook Event: ${JSON.stringify(facebookImportEvent?.title)}`
                                     });
                                     setFacebookImportEvent(null);
                                     loadEvents();
@@ -439,121 +439,125 @@ export default function Dashboard() {
                             &nbsp;My Events
                         </div>
                     </div>
-                    <DashboardTabs/>
+                    <div style={{display: "flex", flexDirection: "row"}}>
+                        <DashboardTabs/>
+                        <div style={{display: "flex", flexDirection: "column"}}>
+                            <div style={{marginTop: "10px", display: "flex", flexDirection: "column"}}>
+                                <div style={{
+                                    display: "flex",
+                                    width: "100%",
+                                    flexDirection: "row",
+                                    marginBottom: "2px",
+                                    justifyContent: "space-between"
+                                }}>
+                                    <EventBreadcrumb event={events ? getFirstPromotedEvent(events) : null} totalEventCount={events?.length || 0} eventCount={getActiveEventCount()}
+                                                     promoteEventCount={getActiveEventCountWithOrder()}/>
+                                    <div style={{display: "flex", flexDirection: "row"}}>
+                                        <div className="more-actions">
+                                            <button className="btn btn-primary-greater"
+                                                    title="Add a New Event"
+                                                    style={{marginLeft: "4px", fontSize: "16px"}}
+                                                    onClick={() => setShowCreateEventForm(true)}>
+                                                <img alt={"wtf"} style={{width: "30px", height: "28px"}}
+                                                     src={"/icons8-add-calendar-48-white.png"}/>
+                                                <b>Add Event...</b>
+                                            </button>
+                                        </div>
+                                        <div style={{display: "flex", flexDirection: "row", paddingLeft: "8px", justifyContent: "center", marginLeft: "8px", borderRadius: "8px", border: "1px solid darkgray "}}>
+                                            <img alt={"wtf"} style={{width: "30px", height: "28px", marginTop: "8px"}}
+                                                 src={"/icons8-add-calendar-48.png"}/>
+                                            <div style={{alignItems: "center", justifyItems: "center",fontSize: "16px", padding: "2px 0px 2px 2px", marginLeft: "6px", marginRight: "8px", fontWeight: "bold", marginTop: "6px", color: "dimgray"}}>
+                                                Import
+                                            </div>
+                                            <button className="btn btn-primary eventbrite-button"
+                                                    title="Import Eventbrite Event"
+                                                    style={{
+                                                        marginTop: "5px",
+                                                        fontSize: "14px",
+                                                        height: "32px"                                            }}
+                                                    onClick={() => {
+                                                        setShowImportEventbriteURLForm(true);
+                                                    }}>
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                     viewBox="0 0 999.9999389648438 1213.9000244140625" height="14">
+                                                    <g>
+                                                        <path
+                                                            d="M917 814.9L515.3 501.7c-6.7-5.1.2-15.4 7.5-11.3l156.9 87.9c71.1 39.9 161 16.8 204.1-52.4 45.4-73 21.4-169.1-53.2-212.2L600.4 180.6c-7.3-4.3-1.9-15.3 6-12.2l105.8 42.3c.2.1 2.7 1 3.7 1.3 11.2 3.9 23.3 6.1 35.9 6.1 57.4 0 104.5-45.4 108.6-99.4C865.5 48.9 812 0 748.2 0h-489c-62.8 0-115.5 51.3-114.7 113.9.4 33.3 15.3 63 38.7 83.4 17.6 15.3 76.9 62.8 105.1 85.3 5 4 2.2 12.1-4.3 12.1h-97.9C83.2 295.3 0 378.9 0 482c0 52.1 21.3 99.2 55.6 133.1l566.6 538.5c40.1 37.4 93.9 60.3 153.1 60.3 124.1 0 224.7-100.6 224.7-224.7 0-70.3-32.4-133.1-83-174.3z"
+                                                            fill="#fff"></path>
+                                                    </g>
+                                                </svg>
+                                                {/* Eventbrite */}
+                                            </button>
+                                            <button className="btn btn-primary facebook-button"
+                                                    title="Import Facebook Event"
+                                                    style={{
+                                                        marginTop: "5px",
+                                                        fontSize: "14px",
+                                                        height: "32px"
+                                                    }}
+                                                    onClick={() => {
+                                                        setShowImportFacebookURLForm(true);
+                                                    }
+                                                    }>
+                                                <svg xmlns="http://w3.org" viewBox="0 0 320 512" width="14" height="14"
+                                                     style={{color: "white"}}>
+                                                    <path fill="currentColor"
+                                                          d="M80 299.3V256H12V171.3H80V114.4C80 47.3 120.7 10 181 10c28.8 0 53.6 2.1 60.8 3v70.5h-41.7c-32.6 0-38.9 15.5-38.9 38.2V171.2h78.2L229.3 256H161.2V512H80V299.3z"/>
+                                                </svg>
+                                                {/* Facebook */}
+                                            </button>
+                                            <button className="btn btn-primary google-button"
+                                                    title="Import Google Sheet Events"
 
-                    <div style={{marginTop: "10px", display: "flex", flexDirection: "column"}}>
-                        <div style={{
-                            display: "flex",
-                            width: "100%",
-                            flexDirection: "row",
-                            marginBottom: "2px",
-                            justifyContent: "space-between"
-                        }}>
-                            <EventBreadcrumb event={events ? getFirstPromotedEvent(events) : null} totalEventCount={events?.length || 0} eventCount={getActiveEventCount()}
-                                promoteEventCount={getActiveEventCountWithOrder()}/>
-                            <div style={{display: "flex", flexDirection: "row"}}>
-                                <div className="more-actions">
-                                    <button className="btn btn-primary-greater"
-                                            title="Add a New Event"
-                                            style={{marginLeft: "4px", fontSize: "16px"}}
-                                            onClick={() => setShowCreateEventForm(true)}>
-                                        <img alt={"wtf"} style={{width: "30px", height: "28px"}}
-                                             src={"/icons8-add-calendar-48-white.png"}/>
-                                        <b>Add Event...</b>
-                                    </button>
-                                </div>
-                                <div style={{display: "flex", flexDirection: "row", paddingLeft: "8px", justifyContent: "center", marginLeft: "8px", borderRadius: "8px", border: "1px solid darkgray "}}>
-                                    <img alt={"wtf"} style={{width: "30px", height: "28px", marginTop: "8px"}}
-                                         src={"/icons8-add-calendar-48.png"}/>
-                                    <div style={{alignItems: "center", justifyItems: "center",fontSize: "16px", padding: "2px 0px 2px 2px", marginLeft: "6px", marginRight: "8px", fontWeight: "bold", marginTop: "6px", color: "dimgray"}}>
-                                        Import
+                                                    style={{
+                                                        marginTop: "5px",
+                                                        fontSize: "14px",
+                                                        height: "32px",
+                                                        width: "60px"
+                                                    }}
+                                                    onClick={() => {
+                                                        setShowImportGoogleSheetsURLForm(true);
+                                                    }
+                                                    }>
+                                                <img src={'/google-sheets.png'} style={{ height: "28px"}}/>
+                                                {/* Google */}
+                                            </button>
+                                        </div>
                                     </div>
-                                    <button className="btn btn-primary eventbrite-button"
-                                            title="Import Eventbrite Event"
-                                            style={{
-                                                marginTop: "5px",
-                                                fontSize: "14px",
-                                                height: "32px"                                            }}
-                                            onClick={() => {
-                                                setShowImportEventbriteURLForm(true);
-                                            }}>
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                             viewBox="0 0 999.9999389648438 1213.9000244140625" height="14">
-                                            <g>
-                                                <path
-                                                    d="M917 814.9L515.3 501.7c-6.7-5.1.2-15.4 7.5-11.3l156.9 87.9c71.1 39.9 161 16.8 204.1-52.4 45.4-73 21.4-169.1-53.2-212.2L600.4 180.6c-7.3-4.3-1.9-15.3 6-12.2l105.8 42.3c.2.1 2.7 1 3.7 1.3 11.2 3.9 23.3 6.1 35.9 6.1 57.4 0 104.5-45.4 108.6-99.4C865.5 48.9 812 0 748.2 0h-489c-62.8 0-115.5 51.3-114.7 113.9.4 33.3 15.3 63 38.7 83.4 17.6 15.3 76.9 62.8 105.1 85.3 5 4 2.2 12.1-4.3 12.1h-97.9C83.2 295.3 0 378.9 0 482c0 52.1 21.3 99.2 55.6 133.1l566.6 538.5c40.1 37.4 93.9 60.3 153.1 60.3 124.1 0 224.7-100.6 224.7-224.7 0-70.3-32.4-133.1-83-174.3z"
-                                                    fill="#fff"></path>
-                                            </g>
-                                        </svg>
-                                        {/* Eventbrite */}
-                                    </button>
-                                    <button className="btn btn-primary facebook-button"
-                                            title="Import Facebook Event"
-                                            style={{
-                                                marginTop: "5px",
-                                                fontSize: "14px",
-                                                height: "32px"
-                                            }}
-                                            onClick={() => {
-                                                setShowImportFacebookURLForm(true);
-                                            }
-                                            }>
-                                        <svg xmlns="http://w3.org" viewBox="0 0 320 512" width="14" height="14"
-                                             style={{color: "white"}}>
-                                            <path fill="currentColor"
-                                                  d="M80 299.3V256H12V171.3H80V114.4C80 47.3 120.7 10 181 10c28.8 0 53.6 2.1 60.8 3v70.5h-41.7c-32.6 0-38.9 15.5-38.9 38.2V171.2h78.2L229.3 256H161.2V512H80V299.3z"/>
-                                        </svg>
-                                        {/* Facebook */}
-                                    </button>
-                                    <button className="btn btn-primary google-button"
-                                            title="Import Google Sheet Events"
-
-                                            style={{
-                                                marginTop: "5px",
-                                                fontSize: "14px",
-                                                height: "32px",
-                                                width: "60px"
-                                            }}
-                                            onClick={() => {
-                                                setShowImportGoogleSheetsURLForm(true);
-                                            }
-                                            }>
-                                        <img src={'/google-sheets.png'} style={{ height: "28px"}}/>
-                                        {/* Google */}
-                                    </button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    {/* Toggle views of event list: Calendar | List */}
-                    <div style={{paddingTop: "2px"}}>
-                        <ViewToggle setIsListView={setIsListView}/>
-                    </div>
+                            {/* Toggle views of event list: Calendar | List */}
+                            <div style={{paddingTop: "2px"}}>
+                                <ViewToggle setIsListView={setIsListView}/>
+                            </div>
 
-                    {/* EVENTS */}
-                    { isListView &&
-                        <button style={{marginBottom: "8px"}} className={'btn btn-secondary'} onClick={handleScroll}>Today</button>
-                    }
+                            {/* EVENTS */}
+                            { isListView &&
+                                <button style={{marginBottom: "8px", width: "60px", marginTop: "10px", marginLeft: "32px", alignItems: "center"}}
+                                        className={'btn btn-secondary'} onClick={handleScroll}>Today</button>
+                            }
 
-                    <div className="dashboard-events">
-                        <div
-                            style={{
-                                flex: 1,
-                                minHeight: 0,
-                                overflowY: "auto"
-                            }}>
-                            <Outlet
-                                context={{
-                                    events,
-                                    setEditingEvent,
-                                    setViewingEvent,
-                                    setCreateEventDate,
-                                    setShowCreateEventForm,
-                                    reload: loadEvents,
-                                    eventScrollRef
-                                }}
-                            />
+                            <div className="dashboard-events">
+                                <div
+                                    style={{
+                                        flex: 1,
+                                        minHeight: 0,
+                                        overflowY: "auto"
+                                    }}>
+                                    <Outlet
+                                        context={{
+                                            events,
+                                            setEditingEvent,
+                                            setViewingEvent,
+                                            setCreateEventDate,
+                                            setShowCreateEventForm,
+                                            reload: loadEvents,
+                                            eventScrollRef
+                                        }}
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

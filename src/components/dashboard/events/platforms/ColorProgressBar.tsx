@@ -35,7 +35,7 @@ export function ColorProgressBar({platforms}  : {platforms :PlatformData[]}) {
 
     return (
         <>
-            <div style={{padding: "2px", fontSize: "15px"}}><b>Submitted Platforms:</b>&nbsp;{Math.ceil((stepCount / totalSteps) * 100)}%&nbsp;{getStatusEmoji(stepCount, totalSteps)}</div>
+            <div style={{padding: "2px", fontSize: "15px"}}><b>Platforms:</b>&nbsp;{Math.ceil((stepCount / totalSteps) * 100)}%&nbsp;{getStatusEmoji(stepCount, totalSteps)}</div>
             <div style={{
                 width: "100%",
                 height: "32px",

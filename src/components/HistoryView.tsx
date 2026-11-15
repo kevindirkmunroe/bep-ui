@@ -18,6 +18,7 @@ import EventClicksChart from "./EventClicksChart";
 import {getEventStatusFromPlatforms} from "./dashboard/events/EventStatus";
 import {isOlderThanToday} from "../utils/DateTime";
 import BulkImportHistory from "./BulkImportHistory";
+import DashboardTabs from "./DashboardTabs";
 
 const getEventColor = (event: EventDetail) => {
     const status = getEventStatusFromPlatforms(event);
@@ -31,12 +32,12 @@ const getEventColor = (event: EventDetail) => {
             color =  'green';
         }
     }else{
-        if(status === 'not_started'){
-            color = 'lightgray';
-        }else if(isExpired){
+        if(isExpired && event.is_locked){
             color =  '#D19187';
-        }else{
+        }else if(event.is_locked){
             color =  '#D2492C';
+        }else{
+            color = 'lightgray';
         }
     }
     return `10px solid ${color}`;
@@ -115,113 +116,110 @@ export default function HistoryView() {
                     </div>
                 </div>
                 <>
-
-                    <Box sx={{ width: '100%', typography: 'body1',
-                        display: "flex",
-                        flexDirection: "column",
-                        height: "780px",
-                        minHeight: 0,
-                        overflow: "hidden"}}>
-                        <div style={{
-                            padding: "8px",
-                            margin: "0 10px 10px",
+                    <div style={{display: "flex", flexDirection: "row"}}>
+                        <DashboardTabs/>
+                        <Box sx={{ width: '100%', typography: 'body1',
                             display: "flex",
-                            flexDirection: "row",
-                            flex: 1,
+                            flexDirection: "column",
+                            height: "780px",
                             minHeight: 0,
-                            overflow: "hidden"
-                        }}>
-                            <div style={{marginTop: "12px", marginRight: "10px", backgroundColor: "#fff"}}>
-                                <button className="btn btn-secondary" style={{fontSize: "16px"}}
-                                        onClick={() => navigate(-1)}>
-                                    ← Back
-                                </button>
-                            </div>
-                            <TabContext value={tabValue}>
-                                <Box sx={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    flex: 1,
-                                    minHeight: 0,
-                                    overflow: "hidden"
-                                }}>
-                                    <TabList
-                                        onChange={handleChange}
-                                        aria-label="lab tabs"
-                                        sx={{borderBottom: 1, borderColor: 'divider'}}
-                                    >
-                                        <Tab label="Submitted / Published Events" value="1"/>
-                                        <Tab label="Metrics" value="2"/>
-                                        <Tab label="Bulk Actions" value="3"/>
-                                    </TabList>
-                                <TabPanel value="1" tabIndex={0}>
-                                    <div className="history-layout">
+                            overflow: "hidden"}}>
+                            <div style={{
+                                padding: "8px",
+                                margin: "0 10px 10px",
+                                display: "flex",
+                                flexDirection: "row",
+                                flex: 1,
+                                minHeight: 0,
+                                overflow: "hidden"
+                            }}>
+                                <TabContext value={tabValue}>
+                                    <Box sx={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        flex: 1,
+                                        minHeight: 0,
+                                        overflow: "hidden"
+                                    }}>
+                                        <TabList
+                                            onChange={handleChange}
+                                            aria-label="lab tabs"
+                                            sx={{borderBottom: 1, borderColor: 'divider'}}
+                                        >
+                                            <Tab label="Submitted / Published Events" value="1"/>
+                                            <Tab label="Metrics" value="2"/>
+                                            <Tab label="Bulk Actions" value="3"/>
+                                        </TabList>
+                                    <TabPanel value="1" tabIndex={0}>
+                                        <div className="history-layout">
 
-                                        {/* MASTER */}
-                                        <div className="history-event-list">
-                                            <div className="history-list-header">
-                                                Event History ({events.length})
-                                            </div>
-
-                                                <div className="history-event-list-scroll">
-                                                    {events.map(event => (
-                                                        <button
-                                                            key={event.event_id}
-                                                            className={
-                                                                "history-event-row " +
-                                                                (selectedEvent?.event_id === event.event_id
-                                                                    ? "selected"
-                                                                    : "")
-                                                            }
-                                                            style={{borderLeft: getEventColor(event)}}
-                                                            onClick={() => setSelectedEvent(event)}
-                                                        >
-                                                            <span className="history-event-title">
-                                                                {event.title}
-                                                            </span>
-                                                                                                <span className="history-event-date">
-                                                                {new Date(event.start_datetime).toLocaleDateString()}
-                                                            </span>
-                                                        </button>
-                                                    ))}
+                                            {/* MASTER */}
+                                            <div className="history-event-list">
+                                                <div className="history-list-header">
+                                                    Event History ({events.length})
                                                 </div>
+
+                                                    <div className="history-event-list-scroll">
+                                                        {events.map(event => (
+                                                            <button
+                                                                key={event.event_id}
+                                                                className={
+                                                                    "history-event-row " +
+                                                                    (selectedEvent?.event_id === event.event_id
+                                                                        ? "selected"
+                                                                        : "")
+                                                                }
+                                                                style={{borderLeft: getEventColor(event)}}
+                                                                onClick={() => setSelectedEvent(event)}
+                                                            >
+                                                                <span className="history-event-title">
+                                                                    {event.title}
+                                                                </span>
+                                                                                                    <span className="history-event-date">
+                                                                    {new Date(event.start_datetime).toLocaleDateString()}
+                                                                </span>
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                </div>
+
+                                            {/* DETAIL */}
+                                            <div className="history-event-detail">
+                                                {selectedEvent && (
+                                                    <EventCompletionLog event={selectedEvent} handleRefresh={loadEvents}/>
+                                                )}
                                             </div>
-
-                                        {/* DETAIL */}
-                                        <div className="history-event-detail">
-                                            {selectedEvent && (
-                                                <EventCompletionLog event={selectedEvent} handleRefresh={loadEvents}/>
-                                            )}
                                         </div>
-                                    </div>
-                                </TabPanel>
-                                <TabPanel value="2" tabIndex={1}
-                                          sx={{
-                                              flex: 1,
-                                              minHeight: 0,
-                                              display: "flex",
-                                              flexDirection: "column",
-                                              overflow: "auto",
-                                              p: 0
-                                          }}>
+                                    </TabPanel>
+                                    <TabPanel value="2" tabIndex={1}
+                                              sx={{
+                                                  flex: 1,
+                                                  minHeight: 0,
+                                                  display: "flex",
+                                                  flexDirection: "column",
+                                                  overflow: "auto",
+                                                  p: 0
+                                              }}>
 
-                                        <h2 style={{backgroundColor: "#E5E5E5", alignItems: "left"}}>Event
-                                            Performance</h2>
-                                        <EventClicksChart user_id={userId}/>
-                                        <h2 style={{backgroundColor: "#E5E5E5"}}>Platform Performance</h2>
-                                        <div style={{display: "flex", flexDirection: "row"}}>
-                                            <PlatformClicksChart title={"Clicks By Platform (Last 30 Days)"} userId={userId}
-                                                                 window={30}/>
-                                            <PlatformClicksChart title={"Clicks By Platform (All Time)"} userId={userId}/>
-                                        </div>
-                                </TabPanel>
-                                <TabPanel value="3" tabIndex={2}>
-                                    <BulkImportHistory userId={userId}/>
-                                </TabPanel>
-                                </Box>
-                            </TabContext>
-                        </div>
-                    </Box>
+                                            <h2 style={{backgroundColor: "#E5E5E5", alignItems: "left"}}>Event
+                                                Performance</h2>
+                                            <EventClicksChart user_id={userId}/>
+                                            <h2 style={{backgroundColor: "#E5E5E5"}}>Platform Performance</h2>
+                                            <div style={{display: "flex", flexDirection: "row"}}>
+                                                <PlatformClicksChart title={"Clicks By Platform (Last 30 Days)"} userId={userId}
+                                                                     window={30}/>
+                                                <PlatformClicksChart title={"Clicks By Platform (All Time)"} userId={userId}/>
+                                            </div>
+                                    </TabPanel>
+                                    <TabPanel value="3" tabIndex={2}>
+                                        <BulkImportHistory userId={userId}/>
+                                    </TabPanel>
+                                    </Box>
+                                </TabContext>
+                            </div>
+                        </Box>
+                    </div>
+
                     <p/>
                 </>
             </div>

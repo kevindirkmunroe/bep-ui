@@ -281,21 +281,37 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
             <div style={{width: "18%", display: "flex", marginLeft: "4px", flexGrow: 1, flexDirection: "row", justifyContent: "right"}}>
 
                 {/* New or Active + In Progress */}
-                {!isExpired && status !== 'submitted' && (
-                    <button
-                        title={event.is_locked? "Promote this Event to all Platforms" : "Start Event Promotion process"}
-                        className={event.is_locked ? "btn btn-secondary-greater" : "btn btn-primary-lesser-alt"}
-                        onClick={() => onPromote? onPromote(event) : null}
-                        style={{marginLeft: "20", fontSize: "14px"}} >
-                        {event.is_locked && (
-                            <img src={"/icons8-share-48.png"} style={{
+                <div style={{display: "flex", flexDirection: "column"}}>
+                    {!isExpired && status !== 'submitted' && (
+                        <button
+                            title={event.is_locked? "Promote this Event to all Platforms" : "Start Event Promotion process"}
+                            className={event.is_locked ? "btn btn-secondary-greater" : "btn btn-primary-lesser-alt"}
+                            onClick={() => onPromote? onPromote(event) : null}
+                            style={{marginLeft: "20", fontSize: "14px", marginBottom: "4px"}} >
+                            {event.is_locked && (
+                                <img src={"/icons8-share-48.png"} style={{
+                                    width: "18px",
+                                    height: "18px"
+                                }}/>
+                            )}
+                            <b>{event.is_locked ? `Publish` : `Activate...`}</b>
+                        </button>
+                    )}
+
+                    {!isExpired && status !== 'not_started' && isPartiallyLive(event) && (
+                        <button
+                            title={"View Submitted Event"}
+                            className={"btn btn-secondary-greater"}
+                            onClick={() => onViewEventStatus? onViewEventStatus(event) : null}
+                            style={{marginLeft: "20", fontSize: "14px"}} >
+                            <img src={"/icons8-rocket-60.png"} style={{
                                 width: "18px",
                                 height: "18px"
                             }}/>
-                        )}
-                        <b>{event.is_locked ? `Publish` : `Activate...`}</b>
-                    </button>
-                )}
+                            <b>Go Live</b>
+                        </button>
+                    )}
+                </div>
 
 
                 {/* Begin Extras Menu */}

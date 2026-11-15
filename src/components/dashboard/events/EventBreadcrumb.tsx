@@ -60,7 +60,7 @@ export default function EventBreadcrumb({
                     }}
                 />
 
-                <b>All Events</b>
+                <b>All</b>
                 <div style={{paddingLeft: "2px", fontSize: "16px"}}>({totalEventCount} | {eventCount} Upcoming)</div>
             </div>
         </Link>

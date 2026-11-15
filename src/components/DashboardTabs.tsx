@@ -12,7 +12,7 @@ export default function DashboardTabs() {
         <div className="dashboard-tab-bar">
             <NavLink
                 to={`/dashboard/${userId}/events`}
-                className="dashboard-tab active"
+                className="dashboard-tab"
             >
                 Scheduled
             </NavLink>

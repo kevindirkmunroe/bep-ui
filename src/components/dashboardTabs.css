@@ -5,29 +5,35 @@
 .dashboard-tab-bar {
     display: flex;
     gap: 24px;
+    flex-direction: column;
+    font-size: 16px;
 
-    margin-top: 4px;
+    margin-top: 84px;
+    margin-left: 6px;
+    margin-right: 4px;
     border-bottom: 1px solid #ddd;
     margin-bottom: 16px;
+    background-color: whitesmoke;
+    border-radius: 8px;
 }
 
 .dashboard-tab {
-    padding: 10px 4px;
+    padding: 10px 8px;
 
     text-decoration: none;
     color: #666;
     font-weight: 500;
 
-    border-bottom: 3px solid transparent;
+    border-left: 6px solid transparent;
 }
 
 .dashboard-tab:hover {
-    color: #D2492C;
+    color: darkblue;
 }
 
 .dashboard-tab.active {
-    color: #D2492C;
-    border-bottom-color: #D2492C;
+    color: darkblue;
+    border-left-color: darkblue;
 }
 
 .dashboard-tab-content {

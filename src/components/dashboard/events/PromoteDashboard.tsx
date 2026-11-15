@@ -158,61 +158,66 @@ export default function PromoteDashboard() {
                             alignContent: "left",
                             alignItems: "center"
                         }}>
-                            &nbsp;My Events / Promote
+                            &nbsp;My Events / Publish
                         </div>
                     </div>
-                    <DashboardTabs/>
 
-                    <div style={{display: "flex", flexDirection: "row", alignItems: "right"}}>
-                        <div style={{flex: "0 0 80%"}}>
-                            <EventBreadcrumb event={event}
-                                             totalEventCount={user?.totalEventCount || 0}
-                                             promoteEventCount={user?.promoteEventCount || 0}
-                                             eventCount={user?.eventCount || 0}/>
-                        </div>
-                        <div style={{fontSize: "11px", width: "100%", flex: "0 0 20%"}}>
-                            {extensionInstalled ? "🟢 Extension OK | " + extensionVersion :
-                                <div>
-                                    <div>⚠️ Extension Not Installed</div>
-                                    <div><a href={extensionUrl} target="_blank">Install Extension</a><br/>
-                                        <button className="btn btn-secondary"
-                                                onClick={() => window.location.reload()}>
-                                            Refresh to Connect Extension
-                                        </button>
-                                    </div>
+                    <div style={{display: "flex", flexDirection: "row"}}>
+                        <DashboardTabs/>
+                        <div style={{display: "flex", flexDirection: "column", marginTop: "10px"}}>
+                            <div style={{display: "flex", flexDirection: "row", alignItems: "right"}}>
+                                <div style={{flex: "0 0 80%"}}>
+                                    <EventBreadcrumb event={event}
+                                                     totalEventCount={user?.totalEventCount || 0}
+                                                     promoteEventCount={user?.promoteEventCount || 0}
+                                                     eventCount={user?.eventCount || 0}/>
                                 </div>
-                            }
-                        </div>
-                    </div>
-                    {eventOrder && (
-                        <div>
-                            <PromotedEventsPanel setSelectedEvent={setEvent} selectedEvent={event} selectedEventOrder={eventOrder} />
-                        </div>
-                    )}
+                                <div style={{fontSize: "11px", width: "100%", flex: "0 0 20%"}}>
+                                    {extensionInstalled ? "🟢 Extension OK | " + extensionVersion :
+                                        <div>
+                                            <div>⚠️ Extension Not Installed</div>
+                                            <div><a href={extensionUrl} target="_blank">Install Extension</a><br/>
+                                                <button className="btn btn-secondary"
+                                                        onClick={() => window.location.reload()}>
+                                                    Refresh to Connect Extension
+                                                </button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
 
-                    {showEventOrderSelectionModal && (
-                        <Modal style={{width: "70%"}} onClose={() => setShowEventOrderSelectionModal(false)}>
-                            <ServiceSelectionPage userId={user?.userId} event={event} onSelectService={onCreateUpdateOrder} />
-                        </Modal>
-                    )}
-                    {showEventOrderModal && eventOrder && !eventOrder.payment_completed_at && (
-                        <Modal style={{width: "70%"}} onClose={() => setShowEventOrderModal(false)}>
-                            <EventOrderPage     eventOrder={eventOrder}
-                                                eventOrderManager={eventOrderManager}
-                                                stripeSessionManager={StripeSessionManagerFactory.create()}
-                                                onPaymentComplete={() => {
-                                                    setShowEventOrderModal(false);
-                                                    setShowEventOrderSelectionModal(false);
-                                                    }
-                                                }
-                                                onPaymentIncomplete={() =>  {
+                            {eventOrder && (
+                                <div>
+                                    <PromotedEventsPanel setSelectedEvent={setEvent} selectedEvent={event} selectedEventOrder={eventOrder} />
+                                </div>
+                            )}
+                        </div>
+
+                        {showEventOrderSelectionModal && (
+                            <Modal style={{width: "70%"}} onClose={() => setShowEventOrderSelectionModal(false)}>
+                                <ServiceSelectionPage userId={user?.userId} event={event} onSelectService={onCreateUpdateOrder} />
+                            </Modal>
+                        )}
+                        {showEventOrderModal && eventOrder && !eventOrder.payment_completed_at && (
+                            <Modal style={{width: "70%"}} onClose={() => setShowEventOrderModal(false)}>
+                                <EventOrderPage     eventOrder={eventOrder}
+                                                    eventOrderManager={eventOrderManager}
+                                                    stripeSessionManager={StripeSessionManagerFactory.create()}
+                                                    onPaymentComplete={() => {
                                                         setShowEventOrderModal(false);
-                                                        navigate(`/dashboard/${userId}/events`);
+                                                        setShowEventOrderSelectionModal(false);
+                                                        }
                                                     }
-                                                }
-                                                />
-                        </Modal>
-                    )}
+                                                    onPaymentIncomplete={() =>  {
+                                                            setShowEventOrderModal(false);
+                                                            navigate(`/dashboard/${userId}/events`);
+                                                        }
+                                                    }
+                                                    />
+                            </Modal>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
