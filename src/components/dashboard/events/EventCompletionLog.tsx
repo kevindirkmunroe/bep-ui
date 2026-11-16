@@ -69,6 +69,10 @@ export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogP
         <div className="completion-log">
             <div className="completion-event-info">
                 <div style={{display: "flex", flexDirection: "row"}}>
+                    <img src={"/noun_ResearchPaper_3678033_@700.png"} style={{
+                        width: "28px",
+                        height: "28px"
+                    }}/>
                     <div style={{display: "flex", flexDirection: "column"}}>
                         <strong style={{fontSize: "18px", fontWeight: "600"}}><b>{event.title}</b></strong>
                         <p style={{fontSize: "14px"}}>{event.event_id}</p>

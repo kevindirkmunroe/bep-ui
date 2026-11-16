@@ -48,7 +48,7 @@ export default function EventBreadcrumb({
         return <Link to={eventsPath} style={onHomePage ? {color: "#E27C68", fontSize: "20px"} : {}}>
             <div style={{display: "flex", flexDirection: "row"}}>
                 <img
-                    src={onHomePage ? "/icons8-home-48.png" : "/icons8-home-48.link.png"}
+                    src={onHomePage ? "/icons8-event-48-color.png" : "/icons8-event-48-link.png"}
                     alt="Home"
                     style={{
                         height: "20px",

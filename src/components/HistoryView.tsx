@@ -146,9 +146,9 @@ export default function HistoryView() {
                                             aria-label="lab tabs"
                                             sx={{borderBottom: 1, borderColor: 'divider'}}
                                         >
-                                            <Tab label="Submitted / Published Events" value="1"/>
-                                            <Tab label="Metrics" value="2"/>
-                                            <Tab label="Bulk Actions" value="3"/>
+                                            <Tab label="🚀 Submitted / Published Events" value="1"/>
+                                            <Tab label="📈 Metrics" value="2"/>
+                                            <Tab label="📦 Bulk Actions" value="3"/>
                                         </TabList>
                                     <TabPanel value="1" tabIndex={0}>
                                         <div className="history-layout">

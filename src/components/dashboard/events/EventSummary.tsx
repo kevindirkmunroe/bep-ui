@@ -288,12 +288,17 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                             className={event.is_locked ? "btn btn-secondary-greater" : "btn btn-primary-lesser-alt"}
                             onClick={() => onPromote? onPromote(event) : null}
                             style={{marginLeft: "20", fontSize: "14px", marginBottom: "4px"}} >
-                            {event.is_locked && (
+                            {event.is_locked ? (
                                 <img src={"/icons8-share-48.png"} style={{
                                     width: "18px",
                                     height: "18px"
                                 }}/>
-                            )}
+                            ) : (
+                                <img src={"/icons8-lightning-64-white.png"} style={{
+                                width: "18px",
+                                height: "18px"
+                                }}/>)
+                            }
                             <b>{event.is_locked ? `Publish` : `Activate...`}</b>
                         </button>
                     )}
@@ -303,16 +308,15 @@ export function EventSummary({ event, reload, showRedo= false, showAsHeader=fals
                             title={"View Submitted Event"}
                             className={"btn btn-secondary-greater"}
                             onClick={() => onViewEventStatus? onViewEventStatus(event) : null}
-                            style={{marginLeft: "20", fontSize: "14px"}} >
-                            <img src={"/icons8-rocket-60.png"} style={{
+                            style={{fontSize: "14px", width: "120px", padding: "10px", paddingTop: "7px", paddingBottom: "7px"}} >
+                            <img src={"/noun_ResearchPaper_3678033_@700.png"} style={{
                                 width: "18px",
                                 height: "18px"
                             }}/>
-                            <b>Go Live</b>
+                            <b>View Live</b>
                         </button>
                     )}
                 </div>
-
 
                 {/* Begin Extras Menu */}
                 <div className="more-actions">

@@ -1,6 +1,6 @@
 .order-fulfillment-panel {
     display: grid;
-    grid-template-columns: 18% 82%;
+    grid-template-columns: 20% 80%;
     width: 100%;
     min-height: 500px;
 }
@@ -41,7 +41,6 @@
 }
 
 .fulfillment-order.selected {
-    border-left: 8px solid #D2492C;
     background: #fafafa;
 }
 

@@ -131,7 +131,7 @@ export default function EventClicksChart({
 
     return (
         <div style={{ width: "100%" }}>
-            <h3>Most Popular Events by Clicks (Top 5)</h3>
+            <h3>Most Popular Events by Clicks (Top 10)</h3>
 
             <ResponsiveContainer
                 width="100%"

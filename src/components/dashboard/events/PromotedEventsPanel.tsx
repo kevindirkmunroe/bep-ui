@@ -109,6 +109,13 @@ export default function PromotedEventsPanel({
             {/* LEFT: Events */}
             <div className="fulfillment-orders-pane">
                 <div>
+                    <div style={{display: "flex", flexDirection:"row", marginBottom: "16px"}}>
+                        <img src={"/icons8-event-48-one.png"} style={{
+                            width: "24px",
+                            height: "24px"
+                        }}/>
+                        <strong>Events</strong>
+                    </div>
                     {events.map(e => (
                         <div role={"button"}
                              key={e.event_id}
@@ -124,8 +131,8 @@ export default function PromotedEventsPanel({
                                 }
                              }
                         >
-                            <div className="fulfillment-o rder-title" style={{display: 'flex', flexDirection: 'row', fontSize: '16px'}}>
-                                <p style={{fontSize: '8px'}}>⚪️</p> &nbsp;{e?.title}
+                            <div className="fulfillment-order-title" style={{display: 'flex', flexDirection: 'row', fontSize: '16px'}}>
+&nbsp;{e?.title}
                             </div>
                         </div>
                     ))}
@@ -136,9 +143,9 @@ export default function PromotedEventsPanel({
 
             <div className="fulfillment-platforms-pane">
                 <div className="promote-panel-title" style={{width: '94%', padding: '8px', marginBottom: "8px", marginTop: "15px", borderRadius: "6px"}}>
-                    <img src={!event.is_locked ? "/icons8-play-50.png" : "/icons8-megaphone-64.png"} style={{
-                        width: "18px",
-                        height: "18px"
+                    <img src={"/icons8-share-48.png"} style={{
+                        width: "24px",
+                        height: "24px"
                     }}/>{!event? "🔘️": ""}&nbsp;{event? event.title : <i>Select Event</i>}
                 </div>
                 {event && (
