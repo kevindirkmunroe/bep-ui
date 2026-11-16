@@ -5,6 +5,8 @@ import {useOutletContext} from "react-router-dom";
 import {getEventStatusFromPlatforms} from "./events/EventStatus";
 import { useParams } from "react-router-dom";
 import {isOlderThanToday} from "../../utils/DateTime";
+import {useUser} from "../../UserContext";
+import {useNavigate} from "react-router-dom";
 
 interface Event {
     event_id: number;
@@ -41,6 +43,16 @@ export default function CalendarView() {
 
 
     const { state } = useParams<{ state: string }>();
+    const navigate = useNavigate();
+    const { user } = useUser();
+
+    const handlePromote = (event: EventDetail) => {
+        navigate(`/dashboard/${user?.userId}/events/${event.event_id}`);
+    };
+
+    const handleViewEventStatus= (event:EventDetail) => {
+        navigate(`/dashboard/${user?.userId}/events/${event.event_id}/status`)
+    }
 
     const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -69,6 +81,12 @@ export default function CalendarView() {
         return [];
     }
     const isPublishedEvent = (e: EventDetail) => getEventStatusFromPlatforms(e) === "submitted"
+
+    const getIsExpired = (event: EventDetail) => {
+        if (!event.start_datetime) return false;
+
+        return new Date(event.start_datetime) < new Date();
+    };
 
     const isPartiallyLive = (event: EventDetail) => {
         return event.platforms.filter(p => p.status === "submitted").length > 0;
@@ -167,20 +185,58 @@ export default function CalendarView() {
                 </div>
 
                 {eventsByDay[day]?.sort((a, b) => a.start_datetime.localeCompare(b.start_datetime)).map(event => (
-                    <button
-                        key={event.event_id}
-                        className={"calendar-event"}
-                        style={getEventStyle(event)}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            viewOrEditEvent(event);
-                        }}
-                    >
-                        {event.title}<br/>{new Date(event.start_datetime).toLocaleTimeString("en-US", {
-                        hour: "numeric",
-                        minute: "2-digit"
-                    }).toLowerCase()}
-                    </button>
+                    <div style={getIsExpired(event) ? {} : {borderRadius: "4px", padding: "2px", marginBottom: "6px", border: "1px solid #333333"}}>
+                        <button
+                            key={event.event_id}
+                            className={"calendar-event"}
+                            style={getEventStyle(event)}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                viewOrEditEvent(event);
+                            }}
+                        >
+                            {event.title}<br/>{new Date(event.start_datetime).toLocaleTimeString("en-US", {
+                            hour: "numeric",
+                            minute: "2-digit"
+                        }).toLowerCase()}
+                        </button>
+                        <>
+                            {!getIsExpired(event) && getEventStatusFromPlatforms(event) !== 'submitted' && (
+                                <button
+                                    title={event.is_locked? "Promote this Event to all Platforms" : "Start Event Promotion process"}
+                                    className={event.is_locked ? "btn btn-secondary-greater" : "btn btn-primary-lesser-alt"}
+                                    onClick={() => handlePromote(event)}
+                                    style={{fontSize: "12px", marginBottom: "4px"}} >
+                                    {event.is_locked ? (
+                                        <img src={"/icons8-share-48.png"} style={{
+                                            width: "16px",
+                                            height: "16px"
+                                        }}/>
+                                    ) : (
+                                        <img src={"/icons8-lightning-64-white.png"} style={{
+                                            width: "16px",
+                                            height: "16px"
+                                        }}/>)
+                                    }
+                                    <b>{event.is_locked ? `Publish` : `Activate...`}</b>
+                                </button>
+                            )}
+
+                            {!getIsExpired(event) && getEventStatusFromPlatforms(event) !== 'not_started' && isPartiallyLive(event) && (
+                                <button
+                                    title={"View Submitted Event"}
+                                    className={"btn btn-secondary-greater"}
+                                    onClick={() => handleViewEventStatus(event)}
+                                    style={{fontSize: "12px", width: "120px", padding: "6px"}} >
+                                    <img src={"/noun_ResearchPaper_3678033_@700.png"} style={{
+                                        width: "16px",
+                                        height: "16px"
+                                    }}/>
+                                    <b>View Live</b>
+                                </button>
+                            )}
+                        </>
+                    </div>
                 ))}
             </div>
         );

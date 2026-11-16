@@ -90,6 +90,11 @@ export default function PromotedEventsPanel({
         setEvent(res.data);
     }
 
+        if(selectedEvent){
+            const element = document.getElementById(selectedEvent.event_id);
+            element?.scrollIntoView();
+        }
+
     const allPlatformIcons = (
         <div style={{marginTop: '60px', width: "80%"}}>
             {Object.values(PLATFORM_ICONS).map((iconUrl, index) => (
@@ -118,6 +123,7 @@ export default function PromotedEventsPanel({
                     </div>
                     {events.map(e => (
                         <div role={"button"}
+                             id={e.event_id}
                              key={e.event_id}
                              className={
                                  event?.event_id === e.event_id
