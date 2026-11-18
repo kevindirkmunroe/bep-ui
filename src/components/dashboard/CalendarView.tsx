@@ -206,7 +206,7 @@ export default function CalendarView() {
                                     title={event.is_locked? "Promote this Event to all Platforms" : "Start Event Promotion process"}
                                     className={event.is_locked ? "btn btn-secondary-greater" : "btn btn-primary-lesser-alt"}
                                     onClick={() => handlePromote(event)}
-                                    style={{fontSize: "12px", marginBottom: "4px"}} >
+                                    style={{fontSize: "12px", marginBottom: "3px"}} >
                                     {event.is_locked ? (
                                         <img src={"/icons8-share-48.png"} style={{
                                             width: "16px",
@@ -227,7 +227,7 @@ export default function CalendarView() {
                                     title={"View Submitted Event"}
                                     className={"btn btn-secondary-greater"}
                                     onClick={() => handleViewEventStatus(event)}
-                                    style={{fontSize: "12px", width: "120px", padding: "6px"}} >
+                                    style={{fontSize: "12px", paddingLeft: "10px", paddingRight: "10px",  marginBottom: "3px"}} >
                                     <img src={"/noun_ResearchPaper_3678033_@700.png"} style={{
                                         width: "16px",
                                         height: "16px"
