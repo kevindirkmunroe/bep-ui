@@ -1,5 +1,4 @@
 import {
-    AI_PLATFORMS,
     Platform,
     PLATFORM_ICONS,
     PlatformRowProps,
@@ -108,69 +107,8 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
     }, []);
 
     const handleAutofill = async () => {
-        if(AI_PLATFORMS.includes(platform)){
-            await handleAIOpen();
-        }else{
-            await handleOpen();
-        }
+        await handleOpen();
     }
-
-    const handleAIOpen = async () => {
-
-        console.log(`[PlatformRow] handleAIOpen start`);
-        setAutofillClicked(true);
-
-        // 1. OPEN IMMEDIATELY (must be sync)
-        const partnerWindow = window.open(
-            "",
-            "LocalBuzzPromotionWindow",
-            "width=1400,height=1000"
-        );
-
-        const refUrl = `https://${window.location.host}/xr/events/${event.event_id}`;
-        const referenceWindow = window.open(
-            refUrl,
-            `airhorn-reference-${event.event_id}`,
-            "width=460,height=760,left=100,top=100"
-        );
-        if(referenceWindow){
-            referenceWindow.location.href = refUrl;
-        }else{
-            setDialog({
-                type: "error",
-                title: "Open Event Reference",
-                message: `${refUrl} failed to open. Please try again.`
-            });
-        }
-
-        const platformUrl = getPlatformUrl(platform);
-        if(partnerWindow){
-            partnerWindow.location.href = platformUrl;
-        }else{
-            setDialog({
-                type: "error",
-                title: "Open Platform",
-                message: `${platformUrl} failed to open. Please try again.`
-            });
-        }
-
-        // 2. Send message to gather form inputs
-        console.log(`[PlatformRow] sending msg AIRHORN_INSPECT_FORM`);
-        window.postMessage({
-            type: "AIRHORN_INSPECT_FORM",
-            platform: "eastbaymagazine"
-        }, window.location.origin);
-
-        // 3. Listen for submit
-        window.addEventListener('message', (e) => {
-            if (e.source !== window || e.data?.source !== 'airhorn.events.ext') return;
-            if (e.data.event === 'submitted') console.log('User clicked Submit on', e.data.pageUrl);
-            if (e.data.event === 'result')    console.log('Result URL:', e.data.resultUrl);
-        });
-
-        updatePlatformStatus(platform, 'in_progress');
-        reload();
-    };
 
     const handleOpen = async () => {
 
@@ -331,9 +269,6 @@ export function PlatformRow({ event, platformData, updatePlatformStatus, reload,
                 </div>
                 <div style={{marginLeft: "auto"}}>
                     <div style={{padding: "4px"}}/>
-                    { AI_PLATFORMS.includes(platform) &&
-                        <img alt={"Robot"} src={"/icons8-robot-48.png"} style={{width:"24px", height:"24px"}} />
-                    }
                     {status === "not_started" && (
                         <button disabled={!extensionInstalled} className="btn btn-primary" onClick={handleAutofill}>
                             <img alt={"Autofill"} src={"/icons8-form-24.png"} style={{width:"24px", height:"24px"}} />Autofill

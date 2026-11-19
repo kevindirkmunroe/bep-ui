@@ -52,5 +52,4 @@ export const PRINTABLE_PLATFORM = {
     "metrosiliconvalley": "Metro Silicon Valley"
 }
 
-export const AI_PLATFORMS: Platform[] = [] // TODO: enable when AI Agent is ready  ["eastbaytimes", "eastbaymagazine"]
 export const REQUIRED_AUTH_PLATFORMS: Platform[] = ["sfstation", "eastbaymagazine", "eastbaytimes", "patch", "metrosiliconvalley"]
