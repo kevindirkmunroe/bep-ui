@@ -20,6 +20,7 @@ import HistoryView from "./components/HistoryView.tsx";
 import EventDetailView from "./components/dashboard/EventDetailView.js";
 import {EventCrossReferenceWindow} from "./components/dashboard/events/platforms/EventCrossReferenceWindow.js";
 import {PlatformControlPanel} from "./components/dashboard/events/platforms/PlatformControlPanel.js";
+import Favorites from "./components/Favorites.js";
 
 export default function App() {
 
@@ -135,6 +136,16 @@ export default function App() {
                   element={
                       <ProtectedRoute>
                           <HistoryView />
+                      </ProtectedRoute>
+                  }
+              />
+
+              {/* Favorites Tab */}
+              <Route
+                  path="/dashboard/:userId/favorites"
+                  element={
+                      <ProtectedRoute>
+                          <Favorites />
                       </ProtectedRoute>
                   }
               />

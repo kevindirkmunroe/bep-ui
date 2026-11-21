@@ -1,0 +1,69 @@
+.favorites {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 90%;
+    max-height: 700px; /* Constrains the box so content can overflow */
+    overflow-y: auto;
+    margin: 20px;
+    align-content: center;
+}
+
+.favorites-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.favorites-section-header h3 {
+    margin: 0;
+}
+
+.favorites-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.favorites table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.favorites th,
+.favorites td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.favorites th {
+    background: #f5f5f5;
+}
+
+.favorites td input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 100px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.favorites .delete-button {
+    color: #c62828;
+    cursor: pointer;
+}
+
+.favorites-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.favorites-error {
+    color: #c62828;
+}
+
+.favorites-success {
+    color: #2e7d32;
+}

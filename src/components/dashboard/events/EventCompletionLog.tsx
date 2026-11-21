@@ -4,6 +4,8 @@ import "./eventCompletionLog.css";
 import React, {useEffect, useState} from "react";
 import {encode} from "../../../utils/Tracking";
 import {api} from "../../../utils/api";
+import Modal from "../../Modal";
+import EventDetailView from "../EventDetailView";
 
 interface EventCompletionLogProps {
     event: EventDetail;
@@ -12,6 +14,7 @@ interface EventCompletionLogProps {
 
 export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogProps) {
 
+    const [showEventDetailForm, setShowEventDetailForm] = useState(false);
     const [submittedEvent, setSubmittedEvent] = useState<EventDetail | null>(null);
     const loadSubmittedEvents = async () => {
         try {
@@ -67,6 +70,16 @@ export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogP
 
     return (
         <div className="completion-log">
+            { showEventDetailForm && (
+                <Modal onClose={() => setShowEventDetailForm(false)}>
+                    <EventDetailView
+                        event={event}
+                        onClose={() => {
+                            setShowEventDetailForm(false);
+                        }
+                        }/>
+                </Modal>
+            )}
             <div className="completion-event-info">
                 <div style={{display: "flex", flexDirection: "row"}}>
                     <img src={"/noun_ResearchPaper_3678033_@700.png"} style={{
@@ -78,13 +91,23 @@ export function EventCompletionLog({ event, handleRefresh }: EventCompletionLogP
                         <p style={{fontSize: "14px"}}>{event.event_id}</p>
                     </div>
                     <div style={{marginLeft: "80px"}}/>
-                    <div style={{alignContent: "right", justifyContent: "flex-end"}}>
+                    <div style={{alignContent: "right", justifyContent: "flex-end", display: "flex", flexDirection: "row"}}>
+                        <button className="btn btn-secondary"
+                                style={{margin: "8px"}}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setShowEventDetailForm(true);
+                                }}
+                        >
+                            <img src={"/icons8-preview-48-coral.png"} style={{width: "24px", height: "24px"}}/>
+                            View
+                        </button>
                         <button
-                            style={{width: "120px"}}
+                            style={{margin: "8px"}}
                             onClick={handleRefresh}
                             className={"btn btn-secondary"}>
                             <img alt="Refresh" src={"/icons8-refresh-30.png"} style={{width: "24px", height: "24px"}}/>
-                            Refresh
+                            Refresh Publish Status
                         </button>
                     </div>
                 </div>

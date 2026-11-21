@@ -107,7 +107,7 @@ export default function PromoteDashboard() {
         const isBeta = import.meta.env.VITE_APP_MODE_BETA;
         if(isBeta === 'true'){
             const updatedOrder = {
-                promote_selection: ServiceSelectionStatus.DIY,
+                // promote_selection: ServiceSelectionStatus.DIY,
                 payment_completed_at: new Date(),
                 order_fulfilled_at: new Date()
             }

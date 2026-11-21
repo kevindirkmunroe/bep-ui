@@ -7,6 +7,8 @@ import {EventDetail} from "./eventDetailTypes.interface";
 import {EventCompletionLog} from "./EventCompletionLog";
 import {useUser} from "../../../UserContext";
 import DashboardTabs from "../../DashboardTabs";
+import Modal from "../../Modal";
+import EventDetailView from "../EventDetailView";
 
 export default function PromoteCompleteDashboard(){
 
@@ -14,6 +16,7 @@ export default function PromoteCompleteDashboard(){
     const { user } = useUser();
 
     const [event, setEvent] = useState<EventDetail | null>(null);
+    const [showEventDetailForm, setShowEventDetailForm] = useState(false);
 
     useEffect(() => {
         loadEventPlatforms();
@@ -34,6 +37,16 @@ export default function PromoteCompleteDashboard(){
 
     return (
         <div style={{ display: "flex", gap: "2px" }}>
+            { showEventDetailForm && (
+                <Modal onClose={() => setShowEventDetailForm(false)}>
+                    <EventDetailView
+                        event={event}
+                        onClose={() => {
+                            setShowEventDetailForm(false);
+                        }
+                        }/>
+                </Modal>
+            )}
             {/* LEFT: Carousel */}
             <div style={{ flex: "0 0 200px" }}>
                 <ImageCarousel />
@@ -71,8 +84,9 @@ export default function PromoteCompleteDashboard(){
                                                  promoteEventCount={user?.promoteEventCount || 0}
                                                  eventCount={user?.eventCount || 0}/>
                             </div>
+
                             {/* List completed promotions only: "/events/:eventId" */}
-                            <div style={{marginTop: "2px", marginLeft: "60px"}}>
+                            <div style={{marginTop: "2px", marginLeft: "60px", display: "flex", flexDirection: "column"}}>
                                 <EventCompletionLog event={event} handleRefresh={loadEventPlatforms}/>
                             </div>
                             <div style={{
